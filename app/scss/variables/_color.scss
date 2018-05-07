@@ -1,0 +1,15 @@
+//color
+$font-color: #000;
+$body-bg: #eee;
+$border-color: #ccc;
+$accentColor: #95de64;
+$lighten-accent-color: lighten($accentColor, 20%);
+$darken-accent-color: darken($accentColor, 10%);
+$shade-accentColor: darken($accentColor,20%);
+
+$white: #fff;
+//sidebar
+$sideBar-bg: #fff;
+$sideBar-active-bg: lighten($accentColor, 20%);
+$sideBar-active-border-color: darken($accentColor, 10%);
+$sideBar-border: lighten($sideBar-bg, 10%);

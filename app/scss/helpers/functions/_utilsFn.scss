@@ -1,0 +1,47 @@
+//check the the $value is in list($values)
+@function is($value, $values) {
+  @return not not index($values, $value);
+}
+
+// Returns the highest value
+// ---
+// @param [argList] $values: numbers
+// ---
+@function max($values...) {
+  $max: nth($values, 1);
+
+  @for $i from 2 through length($values) {
+    $value: nth($values, $i);
+    @if $value > $max {
+      $max: $value;
+    }
+  }
+
+  @return $max;
+}
+
+//strip units
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+
+    @return $number;
+}
+
+@function remove($list, $value, $recursive: false) {
+    $result: ();
+
+    @for $i from 1 through length($list) {
+        @if type-of(nth($list, $i)) == list and $recursive {
+            $result: append($result, remove(nth($list, $i), $value, $recursive));
+        }
+
+        @else if nth($list, $i) != $value {
+            $result: append($result, nth($list, $i));
+        }
+    }
+
+    @return $result;
+}
+

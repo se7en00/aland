@@ -1,0 +1,24 @@
+@import "~SCSS_PATH/modules";
+
+.fade {
+    @include e(enter) {
+        opacity: 0;
+        max-height: 0;
+        @include m(active) {
+            opacity: 1;
+            max-height: rem(200px);
+            transition: all 0.8s ease-in-out;
+        }
+    }
+
+    @include e(exit) {
+        opacity: 0.5;
+        max-height: rem(100px);
+        transition: all 0.8s ease-in-out;
+        @include m(active) {
+            opacity: 0;
+            max-height: 0;
+            transition: all 0.8s ease-in-out;
+        }
+    }
+}

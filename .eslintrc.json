@@ -1,0 +1,104 @@
+{
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "globals": {
+        "__dirname": false,
+        "require": false,
+        "document": false,
+        "window": false,
+        "console": false,
+        "module": false
+    },
+    "rules": {
+        "no-param-reassign": [2, { "props": false }],
+        "no-extra-boolean-cast": 2,
+        "no-cond-assign": 2,
+        "strict": [2, "global"],
+        "curly": [2, "multi-line"],
+        "max-len": [1, 180, 4],
+        "new-cap": [1, { "capIsNew": false }],
+        "no-console": 0,
+        "no-debugger": 1,
+        "block-spacing": 0,
+        "no-underscore-dangle": 0,
+        "prefer-const": 1,
+        "prefer-template": 1,                               //es6中``操作符优先，替代+操作符
+        "object-shorthand": 1,
+        "comma-dangle": [2, "never"],
+        "no-restricted-syntax": 0,
+        "newline-per-chained-call": 0,
+        "import/no-mutable-exports": 0,
+        "max-params": [2, 4],                               //限制函数的最大参数个数
+        "no-magic-numbers": [2, {                           //特指我们代码中出现的含义不明确的数字，如代码中的199,0.8和0.79
+            "ignoreArrayIndexes": true,                         //排除数组下标
+            "ignore": [-1, 0, 1],                                   // 0 1 排除
+            "enforceConst": true
+        }],
+        "linebreak-style": 0,
+
+        // Code style
+        "indent": [1, 4, {"SwitchCase": 0}],
+        "quotes": [1, "single"],
+        "prefer-arrow-callback": 1,                        //箭头回调函数优先
+        "prefer-rest-params": 0,
+        "consistent-return": 0,
+        "object-curly-spacing": 0,
+        "arrow-parens": 0,
+        "arrow-body-style": [2, "as-needed"],
+        "no-unused-vars": [2, { "args": "none" }],
+        "no-trailing-spaces": [2, { "skipBlankLines": true }],
+        "space-before-function-paren": [2, {
+            "anonymous": "never",
+            "named": "never",
+            "asyncArrow": "always"
+        }],
+        "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+        "spaced-comment": 0,
+        "jsx-quotes": [1, "prefer-double"],
+        "id-length": 0,
+        "comma-spacing": [2, {"before": false, "after": true}],
+        "padded-blocks": [1, "never"],
+        "space-before-blocks": [1, "always"],
+        "jsx-a11y/img-has-alt": 0,
+        "react/forbid-prop-types": [2, {"forbid": ["any"]}],
+        "react/jsx-boolean-value": 0,
+        "react/jsx-closing-bracket-location": 0,
+        "react/jsx-first-prop-new-line": 0,
+        "react/jsx-filename-extension": 0,
+        "react/jsx-indent-props": [0, 4],
+        "react/jsx-indent": [0, 4],
+        "react/jsx-space-before-closing": 0,
+        "react/jsx-tag-spacing": [2, {"beforeSelfClosing": "never"}],
+        "react/prefer-stateless-function": 0,
+        "react/require-default-props": 0,
+        "react/sort-comp": 0,
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}], //可以引入devDependencies里的包
+        "import/prefer-default-export": 0
+    },
+    "plugins": [
+        "babel",
+        "react",
+        "import"
+    ],
+    //加这个配置是因为esline 检测代码里import wepack定义的别名时会出错
+    "settings": {
+        "import/resolver": {
+            "webpack": {
+                "config": "webpack/webpack.config.dev.js"
+            }
+        }
+    }
+}

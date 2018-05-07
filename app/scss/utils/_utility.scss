@@ -1,0 +1,26 @@
+/* this is heavy-handed approach and global reusability, don't try to bind onto these in future selectors*/
+:global{
+    .u-text-left{
+        text-align: left !important;
+    }
+
+    .u-text-center{
+        text-align: center !important;
+    }
+
+    .u-text-right{
+        text-align: right !important;
+    }
+
+    .u-position-absolute {
+        position: absolute;
+    }
+
+    .u-position-relative {
+        position: relative;
+    }
+
+    .u-full-height {
+        height: inherit;
+    }
+}

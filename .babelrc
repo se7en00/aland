@@ -1,0 +1,22 @@
+{
+    "presets": [
+        ["@babel/env",{ "modules": false }],
+        "@babel/react"],
+    "env": {
+        "development": {
+            "plugins": [
+                "react-hot-loader/babel",
+                "@babel/plugin-transform-runtime",
+                "@babel/plugin-proposal-class-properties",
+                "@babel/plugin-proposal-export-namespace-from"
+            ]
+        },
+        "production": {
+            "plugins": [
+                "@babel/plugin-transform-runtime",
+                "@babel/plugin-proposal-class-properties",
+                "@babel/plugin-proposal-export-namespace-from"
+            ]
+        }
+    }
+}

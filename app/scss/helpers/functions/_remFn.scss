@@ -1,0 +1,25 @@
+$rem-baseline: $base-font-size;
+
+@mixin rem-baseline($zoom: 100%) {
+    font-size: $zoom / 16px * $rem-baseline;
+}
+// CONVERT TO REM
+@function convert-to-rem($value)  {
+    $value: strip-unit($value) / strip-unit($rem-baseline) * 1rem;
+    @if ($value == 0rem) { $value: 0; } // Turn 0rem into 0
+    @return $value;
+}
+
+// REM CALC
+// Optionally call with a different base (eg: 8px) to calculate rem: rem-calc(16px 32px 48px, 8px);
+@function rem($values) {
+    $max: length($values);
+
+    @if $max == 1 { @return convert-to-rem(nth($values, 1)); }
+
+    $remValues: ();
+    @for $i from 1 through $max {
+        $remValues: append($remValues, convert-to-rem(nth($values, $i)));
+    }
+    @return $remValues;
+}

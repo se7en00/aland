@@ -1,0 +1,113 @@
+@import "~SCSS_PATH/modules";
+
+.c-sidebar {
+    background-color: $sideBar-bg;
+    box-shadow: 6px 0 5px -5px rgba(0,0,0,0.4);
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.accordion {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    margin: rem(30px) auto rem(20px);
+    list-style-type: none;
+    border-radius: rem(4px);
+
+
+    @include e(item) {
+        margin-top: rem(10px);
+        @include m(active) {
+            border-right: 4px solid $sideBar-active-border-color;
+            background-color: $sideBar-active-bg;
+        }
+    }
+
+    @include e(title) {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: baseline ;
+        cursor: pointer;
+        font-family: 'PingFang SC Bold';
+        font-size: rem(14px);
+        padding: rem(10px 15px);
+        > i:not([class*='fa-chevron-down']) {
+            color: $accentColor;
+        }
+        @include m(default) {
+            > i[class*='fa-chevron-down'] {
+                transition: all 0.4s ease 0.1s;
+            }
+        }
+        @include m(active) {
+            @extend .accordion__title--default;
+            > i[class*='fa-chevron-down'] {
+                transform:rotate(180deg);
+            }
+        }
+    }
+
+    .title {
+        @include e(link) {
+            flex:1 auto;
+            font-size: rem(16px);
+            margin-left: rem(15px);
+            a {
+                color: $font-color;
+                display: block;
+                text-decoration: none;
+            }
+        }
+        @include e(icon) {
+            font-size: rem(18px);
+        }
+    }
+
+    @include e(content) {
+        font-size: rem(14px);
+        list-style-type: none;
+        position: relative;
+        @include m(hide) {
+            display: none;
+        }
+    }
+
+    @include e(subItem) {
+        padding: rem(3px 0 3px 15px);
+    }
+
+    .subItem {
+        @include e(link) {
+            display: inline-flex;
+            width: 100%;
+            text-decoration: none;
+            color: $font-color;
+            padding: rem(10px) 0;
+        }
+
+        @include e(title) {
+            display: flex;
+            flex-flow: row nowrap;
+            padding-left: rem(25px);
+            &:before {
+                content: '';
+                display: inline-flex;
+                align-self: center;
+                width: rem(5px);
+                height: rem(5px);
+                margin-right: rem(15px);
+                border-radius: 50%;
+                background-color: $sideBar-bg;
+            }
+            &:hover {
+                background-color: $sideBar-active-bg;
+            }
+        }
+
+        @include m(active) {
+            border-right: 4px solid $sideBar-active-border-color;
+            background-color: $sideBar-active-bg;
+        }
+    }
+}

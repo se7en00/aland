@@ -1,0 +1,102 @@
+@import "~SCSS_PATH/modules";
+
+.accordion {
+    display: flex;
+    flex-flow: column;
+    border-radius: 2px;
+    //border: 1px solid rgba(0, 0, 0, .1);
+    @include e(item) {
+        & + & {
+            border-top: 1px solid rgba(0, 0, 0, .1);
+        }
+    }
+
+    @include e(title) {
+        position: relative;
+        background-color: #f4f4f4;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        text-align: left;
+        border: none;
+        @include m(default) {
+            &:before {
+                content: '';
+                border: transparent;
+                width: 9px;
+                height: 9px;
+                display: block;
+                border-left: 3px solid #444;
+                border-bottom: 3px solid #444;
+                transform:rotate(-45deg);
+                position: absolute;
+                right: 30px;
+                top: 20px;
+                transition: all 0.4s ease 0.1s;
+            }
+            /*
+              &:hover:before {
+                    animation-name: move-down;
+                    animation-duration: 1.5s;
+              }
+            */
+        }
+        @include m(active) {
+            @extend .accordion__title--default;
+            &:before {
+                transform:rotate(135deg);
+                top: 26px;
+            }
+            /*
+            &:hover:before {
+                animation-name: move-up;
+                animation-duration: 1.5s;
+            }
+            */
+        }
+    }
+
+    @include e(content) {
+        list-style-type: none;
+        @include m(hide) {
+            display: none;
+        }
+    }
+}
+
+@keyframes move-down {
+    0% {
+        transform: translateY(0) rotate(-45deg) ;
+    }
+    10% {
+        transform: translateY(0) rotate(-45deg);
+    }
+    20% {
+        transform: translateY(5px)  rotate(-45deg);
+    }
+    30% {
+        transform: translateY(0) rotate(-45deg);
+    }
+    100% {
+        transform: translateY(0) rotate(-45deg);
+    }
+}
+
+@keyframes move-up {
+    0% {
+        transform: translateY(0) rotate(135deg) ;
+    }
+    10% {
+        transform: translateY(0) rotate(135deg);
+    }
+    20% {
+        transform: translateY(-5px)  rotate(135deg);
+    }
+    30% {
+        transform: translateY(0) rotate(135deg);
+    }
+    100% {
+        transform: translateY(0) rotate(135deg);
+    }
+}

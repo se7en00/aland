@@ -1,0 +1,31 @@
+@function convert-to-em($pixels, $context: 16px) {
+    @return strip-unit($pixels) / strip-unit($context) * 1em;
+}
+
+// REM CALC
+// Optionally call with a different base (eg: 8px) to calculate em : em(8px);
+// call with font-size: em(8px (fontSize: 16px)) or (em(8 (f: 16)))
+// deal with multiple params in  padding or margin: em(8 6 10 2 (f: 14))
+@function em($values) {
+    $context: 16;
+    $filterList: ();
+    $max: length($values);
+
+    @if $max == 1 { @return convert-to-em(nth($values, 1)); }
+
+    //filter map form list
+    @for $i from 1 through $max {
+        @if (type_of(nth($values, $i)) == map) {
+            $context: nth(map-values(nth($values, $i)), 1);
+        }
+        @else {
+            $filterList: append($filterList, nth($values, $i));
+        }
+    }
+
+    $remValues: ();
+    @for $i from 1 through length($filterList) {
+        $remValues: append($remValues, convert-to-em(nth($filterList, $i), $context));
+    }
+    @return $remValues;
+}

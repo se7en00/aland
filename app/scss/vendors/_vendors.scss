@@ -1,0 +1,11 @@
+//font awesome
+$fa-font-path: "../../node_modules/@fortawesome/fontawesome-free-webfonts/webfonts" !default;
+//$fa-font-path: "./fonts" !default;
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss';
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands.scss"; //fab
+//@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss'; //far
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss"; //fas or fa
+
+//bootstrap4
+@import "~bootstrap/scss/bootstrap-grid";
+

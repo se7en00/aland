@@ -1,0 +1,16 @@
+@import "~SCSS_PATH/modules";
+
+.c-user{
+    display: flex;
+    align-items: center;
+    height: rem(150px);
+    padding: rem(25px 15px);
+    border-bottom: 1px solid $border-color;
+    h4 {
+        margin-left: rem(20px);
+    }
+}
+
+.avatar {
+    border-radius: 50%;
+}

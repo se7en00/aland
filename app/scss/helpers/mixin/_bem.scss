@@ -1,0 +1,36 @@
+//elements get appended with "__" and the $name
+@mixin e($name) {
+    @at-root #{&}__#{$name} {
+        @content;
+    }
+}
+//modifiers get appended with "--" and the $name
+@mixin m($name) {
+    @at-root #{&}--#{$name} {
+        @content;
+    }
+}
+
+@function selectorToString($selector) {
+    $selector: inspect($selector); //cast to string
+    $selector: str-slice($selector, 2, -2); //remove bracket
+    @return $selector;
+}
+
+@function containsSeparator($selector, $separator) {
+    $selector: selectorToString($selector);
+    @if str-index($selector, $separator) {
+        @return true;
+    } @else {
+        @return false;
+    }
+}
+
+@function getBlock($selector, $separator) {
+    $selector: selectorToString($selector);
+    $modifierStart: str-index($selector, $separator) - 1;
+    @return str-slice($selector, 0, $modifierStart);
+}
+
+
+

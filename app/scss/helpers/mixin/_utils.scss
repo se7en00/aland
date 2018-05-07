@@ -1,0 +1,23 @@
+@mixin context($old-context, $new-context) {
+    @at-root #{selector-replace(&, $old-context, $new-context)} {
+        @content; }
+}
+
+//usage
+//.tabs {
+//    .tab {
+//        background: red;
+//        &:hover {
+//            background: white;
+//        }
+//        .tab-link {
+//            color: white;
+//            @include context('.tab', '.tab:hover') { color: red; }
+//        }
+//    }
+//}
+// Output
+// .tabs .tab { background: red; }
+// .tabs .tab:hover { background: white; }
+// .tabs .tab .tab-link { color: white; }
+// .tabs .tab:hover .tab-link { color: red; }
