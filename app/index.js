@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from 'components/layout/App';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from 'redux/reducers';
+import App from 'layout/App';
 import 'scss/global.scss';
 
 const mountNode = document.getElementById('root');
+const store = createStore(rootReducer);
 const render = Component => {
-    ReactDOM.render(<Component/>, mountNode);
+    ReactDOM.render(
+        <Provider store={store}>
+            <Component/>
+        </Provider>,
+        mountNode);
 };
-
 render(App);
 // // Webpack Hot Module Replacement API
 // if (module.hot) {
