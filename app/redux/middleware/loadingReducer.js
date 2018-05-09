@@ -1,6 +1,6 @@
 export default (state = {loading: false}, action) => {
     switch (action.type) {
-    case 'LOADING': {
+    case 'LOAD_LOADING': {
         return Object.assign({}, state, {
             loading: action.loading
         });

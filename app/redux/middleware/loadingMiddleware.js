@@ -14,15 +14,17 @@ const loadingDone = (code, callback) => {
 export default store => next => (action) => {
     const nextAction = next(action);
     const isPromise = nextAction && !!nextAction.then;
+    const {meta} = action;
+    const omitLoading = meta ? meta.omitLoading : false;
 
-    if (isPromise) {
+    if (isPromise && !omitLoading) {
         const code = Symbol(action.name);
         loadingChain.set(code, action.name);
 
         const toggleLoading = (state) => {
             if (store.dispatch) {
                 store.dispatch({
-                    type: 'LOADING',
+                    type: 'LOAD_LOADING',
                     loading: state
                 });
             } else {
