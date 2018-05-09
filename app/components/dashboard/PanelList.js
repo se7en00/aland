@@ -6,27 +6,27 @@ class PanelList extends Component {
     static propTypes = {
         loading: PropTypes.bool,
         error: PropTypes.bool,
-        loadPanels: PropTypes.func,
-        panelList: PropTypes.oneOfType([
+        loadDashboard: PropTypes.func,
+        list: PropTypes.oneOfType([
             PropTypes.array,
             PropTypes.object
         ])
     };
 
     componentDidMount() {
-        this.props.loadPanels();
+        this.props.loadDashboard();
     }
 
     render() {
-        const {loading, error, panelList} = this.props.panelList;
-        if (loading) {
-            return <p>loading</p>;
-        }
-        if (error) {
-            return <p>Oops, someThing Wrong</p>;
-        }
+        const {list} = this.props.list;
+        // if (loading) {
+        //     return <p>loading</p>;
+        // }
+        // if (error) {
+        //     return <p>Oops, someThing Wrong</p>;
+        // }
 
-        return panelList.map(item => (
+        return list.map(item => (
             <Panel {...item} key={item.id}/>
         ));
     }

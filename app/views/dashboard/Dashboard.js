@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import List from 'components/dashboard/PanelList';
-import { actions } from 'components/dashboard/PanelListRedux';
+import { loadDashboard } from './dashboardAction';
 
 @connect(state => {
     console.log('state', state);
     return {
-        panelList: state.dashboard
+        list: state.dashboard
     };
 }, {
-    ...actions
+    loadDashboard
 })
 class Dashboard extends React.Component {
     render() {
