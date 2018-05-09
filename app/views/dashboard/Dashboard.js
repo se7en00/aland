@@ -4,7 +4,7 @@ import List from 'components/dashboard/PanelList';
 import { actions } from 'components/dashboard/PanelListRedux';
 
 @connect(state => {
-    console.log(state);
+    console.log('state', state);
     return {
         panelList: state.dashboard
     };
