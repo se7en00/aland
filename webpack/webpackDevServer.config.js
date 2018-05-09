@@ -1,5 +1,6 @@
 // const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 // const ignoredFiles = require('react-dev-utils/ignoredFiles');
+const apiMocker = require('webpack-api-mocker');
 const config = require('./webpack.config.dev');
 const paths = require('./config/paths');
 
@@ -23,7 +24,7 @@ module.exports = () => ({
     // So we will disable the host check normally, but enable it if you have
     // specified the `proxy` setting. Finally, we let you override it if you
     // really know what you're doing with a special environment variable.
-        // disableHostCheck: !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
+    // disableHostCheck: !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
     // Enable gzip compression of generated files.
     compress: true,
     // Silence WebpackDevServer's own logs since they're generally not useful.
@@ -77,11 +78,14 @@ module.exports = () => ({
         // Paths with dots should still use the history fallback.
         // See https://github.com/facebookincubator/create-react-app/issues/387.
         disableDotRule: true
-    }
+    },
     // public: allowedHost,
     // proxy
     // before(app) {
     //     // This lets us open files from the runtime error overlay.
     //     app.use(errorOverlayMiddleware());
     // }
+    before(app) {
+        apiMocker(app, paths.mockerJS);
+    }
 });

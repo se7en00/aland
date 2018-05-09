@@ -32,7 +32,7 @@ module.exports = {
     mode: 'development',
     // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
     // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-source-map',
     entry: entry(paths),
     output: output(paths),
     resolve: resolve(paths, {SCSS_PATH: paths.appScss}),

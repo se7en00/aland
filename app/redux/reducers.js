@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import sideBarReducer from 'layout/sideBar/SideBarRedux';
+import { routerReducer } from 'react-router-redux';
+import panelList from 'components/dashboard/PanelListRedux';
 
-const allReducers = {
-    sideBar: sideBarReducer
-};
-
-const rootReducer = combineReducers(allReducers);
-
-export default rootReducer;
+export default combineReducers({
+    routing: routerReducer,
+    dashboard: panelList
+});

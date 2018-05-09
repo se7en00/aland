@@ -53,5 +53,6 @@ module.exports = {
     yarnLockFile: resolveApp('yarn.lock'),
     appNodeModules: resolveApp('node_modules'),
     publicUrl: getPublicUrl(),
-    servedPath: getServedPath()
+    servedPath: getServedPath(),
+    mockerJS: resolveApp('app/mock/mocker.js')
 };
