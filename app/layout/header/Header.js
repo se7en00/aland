@@ -1,7 +1,9 @@
 import React from 'react';
 import cn from 'classnames';
+import { LogoutView } from 'components/login';
 import Breadcrumb from './HeaderBreadcrumb';
 import headerStyle from './Header.scss';
+
 
 const Header = () => {
     const headerClass = cn('row', headerStyle.headerContainer);
@@ -15,6 +17,7 @@ const Header = () => {
             </div>
             <div className={navClass}>
                 <Breadcrumb/>
+                <LogoutView/>
             </div>
         </div>
     );

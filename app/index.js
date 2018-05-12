@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from 'layout/App';
 import 'scss/global.scss';
+import 'scss/customAntd.less';
+import App from './App';
 import configureStore from './redux/configureStore';
 
 const mountNode = document.getElementById('root');

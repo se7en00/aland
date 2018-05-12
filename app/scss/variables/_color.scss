@@ -2,7 +2,8 @@
 $font-color: #000;
 $body-bg: #eee;
 $border-color: #ccc;
-$accentColor: #95de64;
+$accentColor: #52c41a;
+$errorColor: #a94442;
 $lighten-accent-color: lighten($accentColor, 20%);
 $darken-accent-color: darken($accentColor, 10%);
 $shade-accentColor: darken($accentColor,20%);
@@ -13,3 +14,6 @@ $sideBar-bg: #fff;
 $sideBar-active-bg: lighten($accentColor, 20%);
 $sideBar-active-border-color: darken($accentColor, 10%);
 $sideBar-border: lighten($sideBar-bg, 10%);
+
+//login
+$login-bg: #dae5d4;

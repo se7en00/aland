@@ -1,0 +1,38 @@
+@import "~SCSS_PATH/modules";
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100% !important;
+    height: 100%;
+    background-image: url("./login-bg.png");
+    background-size: 100% 100%;
+}
+.login {
+    width: rem(400px);
+    height: rem(450px);
+    border-radius: 15px;
+    background-color: $login-bg;
+    padding: rem(5px 50px);
+    @include e(logo) {
+        height: 150px;
+        background-image: url('./mark.png');
+        background-size: 40% 40%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    @include e(input) {
+        & + & {
+            margin-top: rem(20px);
+        }
+        @include m(hasError) {
+            border: 1px solid $errorColor;
+        }
+    }
+
+    @include e(button) {
+        margin-top: rem(40px);
+    }
+}

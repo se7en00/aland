@@ -7,15 +7,18 @@ $rem-baseline: 16px !default;
     font-size: $zoom / 16px * $rem-baseline;
 }
 
+html, body, #root {
+    min-height: 100vh !important;
+    height: 100vh;
+}
+
 html{
-    height: 100%;
     @include rem-baseline(100%);
     //font-size: 62.5%;
 }
 
 body {
     margin: 0;
-    height: 100%;
     font-family:  "PingFang SC Regular", "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Helvetica, Arial, Verdana, sans-serif;
     background-color: $body-bg;
     color: $font-color;

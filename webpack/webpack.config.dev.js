@@ -3,12 +3,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const {
     getClientEnvironment,
-    lib,
     paths,
     entry,
     output,
     resolve,
     extractSassRules,
+    extractCustomAntdLess,
     eslintRules,
     babelLoader,
     imagesUrlLoader,
@@ -25,6 +25,7 @@ const publicUrl = '';
 const env = getClientEnvironment(publicUrl);
 //global style
 const extractGlobalCSS = new ExtractTextPlugin({filename: 'css/global-[name].css'});
+const extractCutomeAntdCSS = new ExtractTextPlugin({filename: 'css/global-antd-[name].css'});
 //style for css moudules
 const extractModulesCSS = new ExtractTextPlugin({filename: 'css/[name].css'});
 
@@ -50,6 +51,7 @@ module.exports = {
                     babelLoader(paths),
                     extractSassRules(paths, extractGlobalCSS), //match global style
                     extractSassRules(paths, extractModulesCSS, true), //match moudules style
+                    extractCustomAntdLess(extractCutomeAntdCSS),
                     imagesUrlLoader(),
                     ...fontsLoader(),
                     noMatchLoader()
@@ -81,6 +83,7 @@ module.exports = {
         new webpack.NoEmitOnErrorsPlugin(),
         // new webpack.HashedModuleIdsPlugin(),
 
+        extractCutomeAntdCSS,
         extractGlobalCSS,
         extractModulesCSS,
 

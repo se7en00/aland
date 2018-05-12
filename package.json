@@ -17,6 +17,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free-webfonts": "^1.0.6",
     "antd": "^3.5.0",
+    "axios": "^0.18.0",
     "bootstrap": "4.1.1",
     "chalk": "^2.4.1",
     "classnames": "^2.2.5",
@@ -75,6 +76,8 @@
     "file-loader": "^1.1.11",
     "fs-extra": "^6.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
     "node-sass": "^4.8.3",
     "open-browser-webpack-plugin": "^0.0.5",
     "postcss": "^6.0.8",

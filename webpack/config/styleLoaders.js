@@ -41,6 +41,13 @@ const sassLoader = {
     }
 };
 
+const lessLoader = {
+    loader: require.resolve('less-loader'),
+    options: {
+        javascriptEnabled: true
+    }
+};
+
 const resolveUrlLoader = {
     loader: require.resolve('resolve-url-loader')
 };
@@ -115,4 +122,24 @@ const extractSassRules = (paths, extractTextPlugin, isModule) => {
     };
 };
 
-module.exports = extractSassRules;
+const extractCustomAntdLess = (extractTextPlugin) => {
+    const loader = extractTextPlugin.extract(
+        Object.assign({
+            fallback: styleLoader,
+            use: [
+                cssLoader(),
+                lessLoader
+            ]}
+        )
+    );
+
+    return {
+        test: /\.less$/,
+        loader
+    };
+};
+
+module.exports = {
+    extractSassRules,
+    extractCustomAntdLess
+};

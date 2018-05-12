@@ -5,7 +5,7 @@ const initialState = {
     list: []
 };
 //reducer
-const dashboardPanelList = typeToReducer({
+const getPanelList = typeToReducer({
     [LOAD_DASHBOARD]: {
         PENDING: () => ({
             ...initialState
@@ -23,4 +23,4 @@ const dashboardPanelList = typeToReducer({
     }
 }, initialState);
 
-export default dashboardPanelList;
+export default getPanelList;
