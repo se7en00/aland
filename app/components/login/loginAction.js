@@ -14,7 +14,7 @@ export const login = (username, password) => ({
                 return Promise.reject(response.statusText);
             }
 
-            localStorage.setItem('token', JSON.stringify({token: data.token}));
+            localStorage.setItem('token', data.token);
             return data.data;
         })
         .catch((error) => error)
