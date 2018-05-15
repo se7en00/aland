@@ -1,0 +1,10 @@
+@import "~SCSS_PATH/modules";
+
+.error{
+    color: $errorColor
+}
+
+.error-border{
+    border-radius: 4px;
+    border: 1px solid $errorColor;
+}

@@ -1,69 +1,81 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { Input, Button } from 'antd';
+import { Field, SubmissionError } from 'redux-form';
+import { Base64 } from 'js-base64';
+import { Button, Icon } from 'antd';
 import style from './Login.scss';
+import {renderField} from '../form';
 
 class Login extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
     static propTypes = {
         login: PropTypes.func,
-        push: PropTypes.func
+        push: PropTypes.func,
+        handleSubmit: PropTypes.func,
+        submitting: PropTypes.bool,
+        error: PropTypes.string
     };
 
-    state = {
-        username: '',
-        password: '',
-        submitted: false
-    };
+    submit = ({username, password}) => this.props.login(Base64.encode(`${username}:${password}`))
+        .then(() => {this.props.push('/');})
+        .catch((error) => {
+            const { response: { data }} = error;
+            if (data.errorCode === 'username_not_found') {
+                throw new SubmissionError({
+                    username: data.errorMessage
+                });
+            } else if (data.errorCode === 'password_incorrect') {
+                throw new SubmissionError({
+                    password: data.errorMessage
+                });
+            } else {
+                throw new SubmissionError({
+                    _error: data.errorMessage
+                });
+            }
+        });
 
-    handleChange(e) {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-
-        this.setState({ submitted: true });
-        const { username, password } = this.state;
-        if (username && password) {
-            this.props.login(username, password)
-                .then(() => {this.props.push('/');});
-        }
-    }
 
     render() {
-        const { username, password, submitted } = this.state;
+        const { submitting, handleSubmit, error } = this.props;
         const cx = classNames.bind(style);
         const loginContainerClass = cx('container-fluid', 'login-container');
         const logoClass = cx('row', 'login__logo');
+
         return (
             <div className={loginContainerClass}>
                 <div className={style.login}>
-                    <form name="form" onSubmit={this.handleSubmit}>
+                    <form name="form" onSubmit={handleSubmit(this.submit)}>
                         <div className={logoClass}/>
+                        {error && <div className={style['login--hasError']}><strong >{error}</strong></div>}
                         <div className={style.login__input}>
-                            <Input size="large" placeholder="登录名" name="username" value={username} onChange={this.handleChange}/>
-                            {submitted && !username &&
-                            <div className={style['login--hasError']}>登录名不能为空</div>
-                            }
+                            <Field
+                                name="username"
+                                component={renderField}
+                                type="text"
+                                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                                placeholder="登录名"
+                            />
                         </div>
 
                         <div className={style.login__input}>
-                            <Input size="large" placeholder="密码" name="password" value={password} onChange={this.handleChange}/>
-                            {submitted && !password &&
-                            <div className="help-block">密码不能为空</div>
-                            }
+                            <Field
+                                name="password"
+                                component={renderField}
+                                type="text"
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                                placeholder="密码"
+                            />
                         </div>
 
                         <div className={style.login__button}>
-                            <Button htmlType="submit" className="u-full-width" type="primary">登录</Button>
+                            <Button
+                                htmlType="submit"
+                                disabled={submitting}
+                                className="u-full-width"
+                                type="primary">
+                                登录
+                            </Button>
                         </div>
                     </form>
                 </div>

@@ -26,3 +26,10 @@ export const PATHNAME = {
     TRAINING: '培训管理',
     LEARN_TASK: '学习任务管理'
 };
+
+export const BASE_URL = 'http://139.224.113.208:8181/aland-training';
+export const URL = {
+    LOGIN: {
+        INFO: '/api/users/login'
+    }
+};

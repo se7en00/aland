@@ -9,12 +9,14 @@
     background-image: url("./login-bg.png");
     background-size: 100% 100%;
 }
+
 .login {
     width: rem(400px);
     height: rem(450px);
     border-radius: 15px;
     background-color: $login-bg;
     padding: rem(5px 50px);
+    opacity: 0.9;
     @include e(logo) {
         height: 150px;
         background-image: url('./mark.png');
@@ -27,12 +29,15 @@
         & + & {
             margin-top: rem(20px);
         }
-        @include m(hasError) {
-            border: 1px solid $errorColor;
-        }
     }
 
     @include e(button) {
         margin-top: rem(40px);
+    }
+
+    @include m(hasError) {
+        text-align: center;
+        padding: rem(5px 0px);
+        color: $errorColor;
     }
 }
