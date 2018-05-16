@@ -14,7 +14,7 @@
     margin: rem(30px) auto rem(20px);
     list-style-type: none;
     border-radius: rem(4px);
-
+    min-height: rem(700px);
 
     @include e(item) {
         margin-top: rem(10px);

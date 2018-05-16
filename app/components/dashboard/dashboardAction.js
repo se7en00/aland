@@ -1,9 +1,10 @@
-import { Axios } from 'utils';
+// import { Axios } from 'utils';
+import axios from 'axios';
 
 export const LOAD_DASHBOARD = 'LOAD_DASHBOARD';
 
 //actions creater
 export const loadDashboard = () => ({
     type: LOAD_DASHBOARD,
-    payload: () => Axios.get('/api/user/list').then(response => response.data)
+    payload: () => axios.get('/api/user/list').then(response => response.data)
 });

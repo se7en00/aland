@@ -16,6 +16,7 @@ export const login = (user) => ({
     }).then(response => {
         const {data} = response;
         localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.userInfo));
         return data.userInfo;
     })
 });
@@ -23,6 +24,7 @@ export const login = (user) => ({
 //sync
 export const logout = () => dispatch => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     dispatch({type: LOGOUT_REQUEST});
     dispatch(push('/login'));
 };

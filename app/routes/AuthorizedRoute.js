@@ -5,7 +5,10 @@ import PropTypes from 'prop-types';
 
 class AuthorizedRoute extends React.Component {
     static propTypes = {
-        component: PropTypes.node.isRequired
+        component: PropTypes.oneOfType([
+            PropTypes.func,
+            PropTypes.element
+        ]).isRequired
     };
 
     render() {

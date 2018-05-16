@@ -71,7 +71,7 @@ class Login extends React.Component {
                         <div className={style.login__button}>
                             <Button
                                 htmlType="submit"
-                                disabled={submitting}
+                                loading={submitting}
                                 className="u-full-width"
                                 type="primary">
                                 登录

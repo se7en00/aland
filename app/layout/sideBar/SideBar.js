@@ -5,8 +5,9 @@ import classNames from 'classnames/bind';
 import { withRouter } from 'react-router';
 import {Accordion, AccordionItem, AccordionTitle, AccordionContent} from 'components/accordion';
 import style from './sideBar.scss';
-import User from './User';
+import User from './user/User';
 
+@withRouter
 class SideBar extends PureComponent {
     constructor(props) {
         super(props);
@@ -122,4 +123,4 @@ class SideBar extends PureComponent {
     }
 }
 
-export default withRouter(SideBar);
+export default SideBar;
