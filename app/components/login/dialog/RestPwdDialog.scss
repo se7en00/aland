@@ -1,0 +1,13 @@
+@import "~SCSS_PATH/modules";
+
+.resetPwdContainer {
+    padding: rem(10px 20px);
+
+    @include e(inputRow) {
+        & + & {
+            margin-top: rem(20px);
+        }
+        align-items: baseline;
+        justify-content: center;
+    }
+}

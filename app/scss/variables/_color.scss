@@ -3,11 +3,14 @@ $font-color: #000;
 $body-bg: #eee;
 $border-color: #ccc;
 $border-active-color: #73d13d;
-$accentColor: #52c41a;
+$primary-color: #52c41a;
+$accentColor: #73d13d;
 $errorColor: #f5222d;
-$lighten-accent-color: lighten($accentColor, 20%);
-$darken-accent-color: darken($accentColor, 10%);
-$shade-accentColor: darken($accentColor,20%);
+$lighten-accent-color: lighten($primary-color, 20%);
+$darken-accent-color: darken($primary-color, 10%);
+$shade-accentColor: darken($primary-color,20%);
+$placeholder-color: rgba(0,0,0,.25);
+$input-prefix-icon-color: rgba(0,0,0,.25);
 
 $white: #fff;
 //sidebar

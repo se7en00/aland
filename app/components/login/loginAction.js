@@ -10,11 +10,15 @@ export const login = (user) => ({
     type: LOGIN_REQUEST,
     payload: () => axios({
         method: 'POST',
-        url: BASE_URL + URL.LOGIN.INFO,
+        url: BASE_URL + URL,
+        // url: '/api/login/account',
         headers: { Authorization: `Basic ${user}` },
         data: {}
     }).then(response => {
         const {data} = response;
+        if (!data) {
+            Promise.reject('222');
+        }
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.userInfo));
         return data.userInfo;

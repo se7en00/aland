@@ -35,6 +35,13 @@
         margin-top: rem(40px);
     }
 
+    @include e(resetPwd) {
+        margin-top: rem(15px);
+        a {
+            color: $darken-accent-color;
+        }
+    }
+
     @include m(hasError) {
         text-align: center;
         padding: rem(5px 0px);
