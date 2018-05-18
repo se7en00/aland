@@ -23,18 +23,18 @@ class Login extends React.Component {
     submit = ({username, password}) => this.props.login(Base64.encode(`${username}:${password}`))
         .then(() => {this.props.push('/');})
         .catch((error) => {
-            const { response: { data = null }} = error;
-            if (data.errorCode === 'username_not_found') {
+            const data = error?.response?.data;
+            if (data?.errorCode === 'username_not_found') {
                 throw new SubmissionError({
-                    username: data.errorMessage
+                    username: data?.errorMessage
                 });
-            } else if (data.errorCode === 'password_incorrect') {
+            } else if (data?.errorCode === 'password_incorrect') {
                 throw new SubmissionError({
-                    password: data.errorMessage
+                    password: data?.errorMessage
                 });
             } else {
                 throw new SubmissionError({
-                    _error: data.errorMessage || '服务器错误，请联系管理员！'
+                    _error: data?.errorMessage || '服务器错误，请联系管理员！'
                 });
             }
         });

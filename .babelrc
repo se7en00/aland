@@ -11,7 +11,8 @@
                 "@babel/plugin-transform-runtime",
                 "@babel/plugin-proposal-class-properties",
                 "@babel/plugin-proposal-export-namespace-from",
-                "@babel/plugin-proposal-object-rest-spread"
+                "@babel/plugin-proposal-object-rest-spread",
+                "@babel/plugin-proposal-optional-chaining"
             ]
         },
         "production": {
@@ -19,7 +20,8 @@
                 "@babel/plugin-transform-runtime",
                 "@babel/plugin-proposal-class-properties",
                 "@babel/plugin-proposal-export-namespace-from",
-                "@babel/plugin-proposal-object-rest-spread"
+                "@babel/plugin-proposal-object-rest-spread",
+                "@babel/plugin-proposal-optional-chaining"
             ]
         }
     }

@@ -16,9 +16,6 @@ export const login = (user) => ({
         data: {}
     }).then(response => {
         const {data} = response;
-        if (!data) {
-            Promise.reject('222');
-        }
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.userInfo));
         return data.userInfo;
