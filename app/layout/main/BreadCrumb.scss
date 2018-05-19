@@ -1,0 +1,9 @@
+@import "~SCSS_PATH/modules";
+
+.breadcrumb {
+    margin-top: rem(10px);
+    color: $font-color;
+    align-items: center;
+    font-size: rem(15px);
+    font-family: PingFang SC Bold;
+}

@@ -8,9 +8,7 @@ const LogoutView = (props) => {
         props.logout();
     };
     return (
-        <div>
-            <button onClick={handleClick}>logout</button>
-        </div>
+        <div role="button" tabIndex="0" onClick={handleClick}>退出</div>
     );
 };
 

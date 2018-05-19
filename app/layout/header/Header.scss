@@ -5,33 +5,34 @@
     height: rem(50px);
     border-bottom: 1px solid $border-color;
     @include e(logo) {
-        border-right: 1px solid #ccc
+        background-image: url('../../logo.png');
+        background-size: 40% 40%;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-bottom: 2px solid $primary-color;
     }
 }
 
-.nav-header {
+.user-item {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
     padding-left: 0;
-    box-shadow: 0 5px 5px -3px rgba(0,0,0,0.4);
-    @include e(breadcrumb) {
-        color: $font-color;
-        align-items: center;
-        font-size: rem(18px);
-        font-family: PingFang SC Bold;
-
-        &>span:last-child {
-            :global(.ant-breadcrumb-separator) {
-                display: none;
-            }
-            .breadcrumb__link a{
-                color: $accentColor !important;
-            }
-        }
-    }
-    .breadcrumb {
-        @include e(link) {
-            padding: rem(0px 20px);
+    border-bottom: 2px solid $primary-color;
+    //box-shadow: 0 5px 5px -3px rgba(0,0,0,0.4);
+    @at-root .userMenu {
+        border: none !important;
+        & :global(.ant-menu-item),
+        :global(.ant-menu-item-active),
+        :global(.ant-menu-item-open),
+        :global(.ant-menu-item-selected),
+        :global(.ant-menu-item:hover),
+        :global(.ant-menu-submenu),
+        :global(.ant-menu-submenu-active),
+        :global(.ant-menu-submenu-open),
+        :global(.ant-menu-submenu-selected),
+        :global(.ant-menu-submenu:hover) {
+            border-bottom: none;
         }
     }
 }

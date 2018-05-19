@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
-import { BASE_URL, URL } from 'constants';
+// import { BASE_URL, URL } from 'constants';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
@@ -10,8 +10,8 @@ export const login = (user) => ({
     type: LOGIN_REQUEST,
     payload: () => axios({
         method: 'POST',
-        url: BASE_URL + URL,
-        // url: '/api/login/account',
+        // url: BASE_URL + URL,
+        url: '/api/login/account',
         headers: { Authorization: `Basic ${user}` },
         data: {}
     }).then(response => {

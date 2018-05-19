@@ -5,7 +5,6 @@ import classNames from 'classnames/bind';
 import { withRouter } from 'react-router';
 import {Accordion, AccordionItem, AccordionTitle, AccordionContent} from 'components/accordion';
 import style from './sideBar.scss';
-import User from './user/User';
 
 @withRouter
 class SideBar extends PureComponent {
@@ -109,7 +108,6 @@ class SideBar extends PureComponent {
         const navClass = classNames('col-md-3 col-lg-2', style['c-sidebar']);
         return (
             <nav className={navClass}>
-                <User/>
                 <Accordion
                     component="ul"
                     theme={style}

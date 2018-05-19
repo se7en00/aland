@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import className from 'classnames/bind';
 import { withRouter} from 'react-router';
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import {breadcrumbNameMap} from 'constants';
-import headerStyle from './Header.scss';
+import style from './BreadCrumb.scss';
 
-const HeaderBreadcrumb = (props) => {
+const BreadCrumb = (props) => {
     const { location } = props;
-    const cx = classnames.bind(headerStyle);
-    const breadcrumbClass = cx('nav-header__breadcrumb');
-    const breadcrumbLinkClass = cx('breadcrumb__link');
+    const cx = className.bind(style);
 
     const separator = <i className="fas fa-angle-right"/>;
     const pathSnippets = location.pathname.split('/').filter(i => i);
@@ -19,7 +17,7 @@ const HeaderBreadcrumb = (props) => {
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
         return (
-            <Breadcrumb.Item key={url} className={breadcrumbLinkClass}>
+            <Breadcrumb.Item key={url}>
                 <Link to={url}>
                     {breadcrumbNameMap[url]}
                 </Link>
@@ -28,19 +26,20 @@ const HeaderBreadcrumb = (props) => {
     });
 
     const breadcrumbItems = [(
-        <Breadcrumb.Item key="home" className={breadcrumbLinkClass}>
+        <Breadcrumb.Item key="home">
             <Link to="/"><i className="fas fa-home"/></Link>
         </Breadcrumb.Item>
     )].concat(extraBreadcrumbItems);
+
     return (
-        <Breadcrumb className={breadcrumbClass} separator={separator}>
+        <Breadcrumb className={cx('breadcrumb')} separator={separator}>
             {breadcrumbItems}
         </Breadcrumb>
     );
 };
 
-HeaderBreadcrumb.propTypes = {
+BreadCrumb.propTypes = {
     location: PropTypes.object
 };
 
-export default withRouter(HeaderBreadcrumb);
+export default withRouter(BreadCrumb);

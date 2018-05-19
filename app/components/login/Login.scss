@@ -19,7 +19,7 @@
     opacity: 0.9;
     @include e(logo) {
         height: 150px;
-        background-image: url('./mark.png');
+        background-image: url('../../logo.png');
         background-size: 40% 40%;
         background-position: center;
         background-repeat: no-repeat;

@@ -1,0 +1,21 @@
+@import "~SCSS_PATH/modules";
+
+.c-user{
+    display: flex;
+    align-items: center;
+    > span {
+        max-width: rem(60px);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: inline-block;
+        font-size: rem(18px);
+        font-weight: 700;
+        font-family: PingFang SC Bold;
+    }
+}
+
+.avatar {
+    border-radius: 50%;
+    margin-right: rem(8px);
+}

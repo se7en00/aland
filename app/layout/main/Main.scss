@@ -8,4 +8,20 @@
         height: inherit;
         box-shadow: 5px 5px 5px -3px rgba(0, 0, 0, 0.4)
     }
+
+    @include e(breadcrumb) {
+        color: $font-color;
+        align-items: center;
+        font-size: rem(18px);
+        font-family: PingFang SC Bold;
+
+        &>span:last-child {
+            :global(.ant-breadcrumb-separator) {
+                display: none;
+            }
+            .breadcrumb__link a{
+                color: $accentColor !important;
+            }
+        }
+    }
 }
