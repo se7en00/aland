@@ -25,6 +25,7 @@ body {
 }
 
 h1,h2,h3,h4 {
+    font-color: $font-color;
     font-weight: 700;
     font-family: 'PingFang SC Bold';
 }
@@ -34,5 +35,21 @@ a {
     text-decoration: none;
     &:hover {
         color: $accentColor
+    }
+}
+
+table {
+    th {
+        background-color: $primary-color !important;
+        color: $white !important;
+    }
+    > tbody > tr:nth-child(even) {
+        background-color: #EDF3E9 !important;
+    }
+}
+
+button {
+    & + & {
+        margin-left: 8px !important;
     }
 }

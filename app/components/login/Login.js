@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
@@ -8,8 +8,10 @@ import style from './Login.scss';
 import { renderField } from '../form';
 import validate from './validate';
 
+const cx = classNames.bind(style);
+
 @reduxForm({form: 'login', validate})
-class Login extends React.Component {
+class Login extends Component {
     static propTypes = {
         login: PropTypes.func,
         push: PropTypes.func,
@@ -42,15 +44,11 @@ class Login extends React.Component {
 
     render() {
         const { submitting, handleSubmit, error, showDialog } = this.props;
-        const cx = classNames.bind(style);
-        const loginContainerClass = cx('container-fluid', 'login-container');
-        const logoClass = cx('row', 'login__logo');
-
         return (
-            <div className={loginContainerClass}>
+            <div className={cx('container-fluid', 'login-container')}>
                 <div className={style.login}>
                     <form name="form" onSubmit={handleSubmit(this.submit)}>
-                        <div className={logoClass}/>
+                        <div className={cx('row', 'login__logo')}/>
 
                         {error && <div className={style['login--hasError']}><strong >{error}</strong></div>}
 

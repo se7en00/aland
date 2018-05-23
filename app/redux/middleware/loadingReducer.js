@@ -1,12 +1,10 @@
-export default (state = {loading: false}, action) => {
+export default (state, action) => {
     switch (action.type) {
     case 'LOAD_LOADING': {
-        return Object.assign({}, state, {
-            loading: action.loading
-        });
+        return action.loading;
     }
     default: {
-        return state;
+        return false;
     }
     }
 };

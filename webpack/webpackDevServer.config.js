@@ -69,9 +69,20 @@ module.exports = () => ({
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === 'https',
     host,
-    headers: {
-        'Access-Control-Allow-Origin': '*'
-    },
+    // headers: {
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    //     'Access-Control-Allow-Headers': 'token'
+    // },
+    // proxy: {
+    //     '/api/*': {
+    //         target: 'http://139.224.113.208:8181/aland-trainings',
+    //         // target: 'http://localhost:8080/aland-training',
+    //         // pathRewrite: {'^/api/': ''},
+    //         secure: false
+    //         // changeOrigin: true
+    //     }
+    // },
     overlay: false,
     historyApiFallback: {
         historyApiFallback: true,

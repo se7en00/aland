@@ -1,22 +1,25 @@
 import React from 'react';
 import createFragment from 'react-addons-create-fragment';
 
-const Dialog = (SpecifiedDialog) => (WrappedComponent) =>
+const Dialog = (...dialogs) => (WrappedComponent) =>
     class HOCDialog extends WrappedComponent {
-        state = { visible: false }
+        //初始各个dialog的状态
+        preLoadState = () => dialogs?.reduce((result, dialogModal) => {
+            const dialogName = dialogModal?.type?.dialogName || 'dialog';
+            result[dialogName] = false;
+            return result;
+        }, {})
+
+        state = {...this.preLoadState()};
 
         //open dialog
-        showModal = () => {
-            this.setState({visible: true});
+        showModal = (dialogName) => () => {
+            this.setState({[dialogName]: true});
         }
 
         //close dialog
-        hideModal = () => {
-            this.setState({visible: false});
-        }
-
-        handleSubmit = () => {
-            this.setState({visible: false});
+        hideModal = (dialogName) => () => {
+            this.setState({[dialogName]: false});
         }
 
         //劫持定义@dialog组件渲染，为其加上弹出框
@@ -25,20 +28,29 @@ const Dialog = (SpecifiedDialog) => (WrappedComponent) =>
                 ...this.props,
                 showDialog: this.showModal
             };
-            const dialogProps = {
-                visible: this.state.visible,
+
+            let dialogProps = {
                 hideDialog: this.hideModal,
                 width: '650px'
             };
+
             const superElement = super.render();
             const NewSuperElement = React.cloneElement(superElement, props, superElement.props.children);
 
-            if (React.isValidElement(SpecifiedDialog)) {
-                const dialogElement = React.cloneElement(SpecifiedDialog, dialogProps, SpecifiedDialog.props.children);
-                return createFragment({NewSuperElement, dialogElement});
-            }
+            //更新dialog所需的属性
+            const DialogElements = dialogs.reduce((result, dialog, index) => {
+                if (React.isValidElement(dialog)) {
+                    dialogProps = {
+                        ...dialogProps,
+                        visible: this.state[dialog?.type?.dialogName || 'dialog']
+                    };
+                    result[`dialog_${index}`] = React.cloneElement(dialog, dialogProps, dialog.props.children);
+                }
+                return result;
+            }, {});
 
-            return NewSuperElement;
+            //注入dialog
+            return createFragment({NewSuperElement, ...DialogElements});
         }
     };
 

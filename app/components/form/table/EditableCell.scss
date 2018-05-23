@@ -1,0 +1,35 @@
+@import "~SCSS_PATH/modules";
+
+.editable-cell {
+    position: relative;
+    &:hover {
+        .editable-cell__icon {
+            display: inline-block;
+        }
+    }
+
+    @include e(inputWrapper) {
+        padding-right: rem(24px);
+    }
+
+    @include e(textWrapper) {
+        padding: rem(5px 24px 5px 5px);
+    }
+
+    @include e(icon) {
+        position: absolute;
+        right: 0;
+        width: rem(20px);
+        cursor: pointer;
+        line-height: rem(18px);
+        display: none;
+
+        &:hover {
+            color: $primary-color;
+        }
+
+        @include m(check) {
+            line-height: rem(28px);
+        }
+    }
+}

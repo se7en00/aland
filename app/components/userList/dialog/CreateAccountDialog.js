@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Button, Modal } from 'antd';
 import { Field, reduxForm } from 'redux-form';
 import { renderField } from '../../form';
-import validate from '../validate';
-import style from './RestPwdDialog.scss';
+import style from '../../login/dialog/RestPwdDialog.scss';
 
-@reduxForm({form: 'restPwd', validate})
-class ResetPwdDialog extends PureComponent {
+@reduxForm({form: 'restPwd'})
+class CreateAccountDialog extends PureComponent {
+    static dialogName = 'createAccount';
     static propTypes = {
         hideDialog: PropTypes.func,
         handleSubmit: PropTypes.func,
@@ -19,6 +19,7 @@ class ResetPwdDialog extends PureComponent {
     };
 
     submit = () => {
+        console.log('2222');
         this.props.hideDialog();
     }
 
@@ -30,10 +31,10 @@ class ResetPwdDialog extends PureComponent {
                     visible={visible}
                     width={width}
                     title="找回密码"
-                    onCancel={hideDialog}
+                    onCancel={hideDialog('createAccount')}
                     footer={[
                         <Button key="submit" disabled={pristine} loading={submitting} type="primary">发送邮件</Button>,
-                        <Button key="back" onClick={hideDialog}>取消</Button>
+                        <Button key="back" onClick={hideDialog('createAccount')}>取消</Button>
                     ]}
                 >
                     <div className={style.resetPwdContainer}>
@@ -65,4 +66,4 @@ class ResetPwdDialog extends PureComponent {
     }
 }
 
-export default ResetPwdDialog;
+export default CreateAccountDialog;

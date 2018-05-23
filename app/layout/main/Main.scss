@@ -2,19 +2,40 @@
 
 .mainContent {
     padding-left: rem(20px);
-    height: 98%;
+    //height: 98%;
     .panel {
+        position: relative;
+        padding: rem(15px);
         background-color: $white;
-        height: inherit;
-        box-shadow: 5px 5px 5px -3px rgba(0, 0, 0, 0.4)
+        min-height: calc(100vh - 120px);
+        box-shadow: 5px 5px 5px -3px rgba(0, 0, 0, 0.4);
+
+        @include e(header) {
+            padding: rem(10px 0 5px 25px);
+            font-size: rem(20px);
+            border-bottom: 1px solid $border-color;
+        }
+
+        @include e(body) {
+            padding: rem(10px 25px);
+        }
+
+        @include e(mask) {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            text-align: center;
+            background: rgba(#fff,.5);
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
     }
 
     @include e(breadcrumb) {
-        color: $font-color;
-        align-items: center;
-        font-size: rem(18px);
-        font-family: PingFang SC Bold;
-
         &>span:last-child {
             :global(.ant-breadcrumb-separator) {
                 display: none;
