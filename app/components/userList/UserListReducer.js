@@ -1,8 +1,8 @@
 import typeToReducer from 'type-to-reducer';
-import { LOAD_ACCOUNT_LIST } from './UserListAction';
+import { LOAD_ACCOUNT_LIST, SEARCH_USER } from './UserListAction';
 
 //reducer
-const getUserList = typeToReducer({
+const userReducer = typeToReducer({
     [LOAD_ACCOUNT_LIST]: {
         REJECTED: (state, action) => ({
             isRejected: true,
@@ -11,7 +11,18 @@ const getUserList = typeToReducer({
         FULFILLED: (state, action) => ({
             list: action.payload
         })
+    },
+
+    [SEARCH_USER]: {
+        REJECTED: (state, action) => ({
+            isRejected: true,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            users: action.payload
+        })
     }
 }, {});
 
-export default getUserList;
+
+export default userReducer;

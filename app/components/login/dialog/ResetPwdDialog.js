@@ -1,41 +1,70 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'antd';
-import { Field, reduxForm } from 'redux-form';
+import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { renderField } from '../../form';
-import validate from '../validate';
+import validate from './validate';
 import style from './RestPwdDialog.scss';
+// import { searchUserByName } from '../../userList/UserListAction';
 
-@reduxForm({form: 'restPwd', validate})
-class ResetPwdDialog extends PureComponent {
+// const asyncValidate = ({usernameForReset}, dispatch) => dispatch(searchUserByName(usernameForReset))
+//     .then(response => {
+//         const {value: {data}} = response;
+//         if (!data.elements || !data.elements.length) {
+//             throw { usernameForReset: '登录名不存在' }; //eslint-disable-line
+//         }
+//         return response;
+//     });
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+@reduxForm({
+    form: 'restPwd',
+    validate
+    // asyncValidate,
+    // asyncBlurFields: ['usernameForReset']
+})
+class ResetPwdDialog extends Component {
     static propTypes = {
         hideDialog: PropTypes.func,
         handleSubmit: PropTypes.func,
+        dispatch: PropTypes.func,
         visible: PropTypes.bool,
         submitting: PropTypes.bool,
-        pristine: PropTypes.bool,
         width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-        // error: PropTypes.string
     };
 
-    submit = () => {
-        this.props.hideDialog();
+    handleSubmit(values) {
+        return sleep(1000).then(() => { //eslint-disable-line
+            if (!['john', 'paul', 'george', 'ringo'].includes(values.usernameForReset)) {
+                throw new SubmissionError({
+                    usernameForReset: 'User does not exist',
+                    _error: 'Login failed!'
+                });
+            } else if (values.email !== 'seven0_0@126.com') {
+                throw new SubmissionError({
+                    email: 'Wrong password',
+                    _error: 'Loginsss failed!'
+                });
+            } else {
+                this.props.hideDialog();
+            }
+        });
     }
 
     render() {
-        const {submitting, handleSubmit, visible, hideDialog, pristine, width} = this.props;
+        const {submitting, handleSubmit, visible, hideDialog, width, dispatch } = this.props;
         return (
-            <form name="form" onSubmit={handleSubmit(this.submit)}>
-                <Modal
-                    visible={visible}
-                    width={width}
-                    title="找回密码"
-                    onCancel={hideDialog}
-                    footer={[
-                        <Button key="submit" disabled={pristine} loading={submitting} type="primary">发送邮件</Button>,
-                        <Button key="back" onClick={hideDialog}>取消</Button>
-                    ]}
-                >
+            <Modal
+                visible={visible}
+                width={width}
+                title="找回密码"
+                onCancel={hideDialog()}
+                footer={[
+                    <Button key="submit" onClick={() => dispatch(submit('restPwd'))} loading={submitting} type="primary">发送邮件</Button>,
+                    <Button key="back" onClick={hideDialog()}>取消</Button>
+                ]}
+            >
+                <Form name="resetform" onSubmit={handleSubmit(this.handleSubmit)}>
                     <div className={style.resetPwdContainer}>
                         <Field
                             labelClassName="col-md-2"
@@ -59,8 +88,8 @@ class ResetPwdDialog extends PureComponent {
                             label="邮箱"
                         />
                     </div>
-                </Modal>
-            </form>
+                </Form>
+            </Modal>
         );
     }
 }

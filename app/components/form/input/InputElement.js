@@ -29,15 +29,17 @@ class InputElement extends PureComponent {
         const {
             input,
             placeholder,
-            meta: { touched, error, warning },
+            meta: { touched, error, warning, asyncValidating },
             type,
             className,
             prefix = null
         } = this.props;
 
+        let errorSuffix;
         const cx = classNames.bind(style);
         const inputClass = cx(className, 'input-wrapper', {'error-border': touched && (error || warning)});
-        const errorSuffix = touched && error ? <Icon type="close-circle" className={style.error}/> : null;
+        errorSuffix = touched && error ? <Icon type="close-circle" className={style.error}/> : null;
+        errorSuffix = asyncValidating ? <Icon type="loading" className={style.loadingColor}/> : errorSuffix;
         return (
             <div className={inputClass}>
                 <Input

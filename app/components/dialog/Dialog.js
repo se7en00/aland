@@ -13,12 +13,12 @@ const Dialog = (...dialogs) => (WrappedComponent) =>
         state = {...this.preLoadState()};
 
         //open dialog
-        showModal = (dialogName) => () => {
+        showModal = (dialogName = 'dialog') => () => {
             this.setState({[dialogName]: true});
         }
 
         //close dialog
-        hideModal = (dialogName) => () => {
+        hideModal = (dialogName = 'dialog') => () => {
             this.setState({[dialogName]: false});
         }
 

@@ -34,7 +34,8 @@ export const PANEL_TITLE = {
 export const BASE_URL = 'http://139.224.113.208:8181/aland-training';
 export const URL = {
     LOGIN: {
-        INFO: '/api/users/login'
+        INFO: '/api/users/login',
+        FIND_PASSWORD: '/api/users/findPassword'
     },
     USER: {
         LIST: '/api/users'

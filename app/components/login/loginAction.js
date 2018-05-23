@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { Axios } from 'utils';
 import { push } from 'react-router-redux';
 import { BASE_URL, URL } from 'constants';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const FIND_PWD_REQUEST = 'FIND_PWD_REQUEST';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 
 //async
@@ -28,4 +30,9 @@ export const logout = () => dispatch => {
     dispatch({type: LOGOUT_REQUEST});
     dispatch(push('/login'));
 };
+
+export const findPwd = (userName, email) => ({
+    type: FIND_PWD_REQUEST,
+    payload: () => Axios.post('/api/users/findPassword/', {userName, email})
+});
 

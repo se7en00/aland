@@ -36,7 +36,7 @@ class Login extends Component {
                 });
             } else {
                 throw new SubmissionError({
-                    _error: data?.errorMessage || '服务器错误，请联系管理员！'
+                    _error: data?.errorMessage || '服务器出错，请联系管理员！'
                 });
             }
         });
@@ -83,7 +83,7 @@ class Login extends Component {
                         </div>
 
                         <div className={style.login__resetPwd}>
-                            <a role="button" tabIndex="0" onClick={showDialog}>忘记密码？</a>
+                            <a role="button" tabIndex="0" onClick={showDialog()}>忘记密码？</a>
                         </div>
                     </form>
                 </div>
