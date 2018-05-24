@@ -10,4 +10,11 @@
         align-items: baseline;
         justify-content: center;
     }
+
+}
+
+.hasError {
+    text-align: center;
+    padding: rem(5px 0px);
+    color: $errorColor;
 }

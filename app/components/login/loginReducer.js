@@ -19,10 +19,10 @@ const login = typeToReducer({
     //找回密码
     [FIND_PWD_REQUEST]: {
         REJECTED: (state, action) => ({
-            error: action.payload
+            ...action?.payload
         }),
         FULFILLED: (state, action) => ({
-            ...action.payload
+            ...action?.payload
         })
     }
 }, {});

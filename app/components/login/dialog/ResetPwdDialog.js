@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal } from 'antd';
+import { Button, Modal, message } from 'antd';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { renderField } from '../../form';
 import validate from './validate';
@@ -15,7 +15,6 @@ import style from './RestPwdDialog.scss';
 //         }
 //         return response;
 //     });
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 @reduxForm({
     form: 'restPwd',
@@ -24,35 +23,38 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     // asyncBlurFields: ['usernameForReset']
 })
 class ResetPwdDialog extends Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
     static propTypes = {
         hideDialog: PropTypes.func,
         handleSubmit: PropTypes.func,
+        findPwd: PropTypes.func,
         dispatch: PropTypes.func,
         visible: PropTypes.bool,
+        error: PropTypes.bool,
         submitting: PropTypes.bool,
         width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     };
 
-    handleSubmit(values) {
-        return sleep(1000).then(() => { //eslint-disable-line
-            if (!['john', 'paul', 'george', 'ringo'].includes(values.usernameForReset)) {
+    handleSubmit({usernameForReset, email}) {
+        const {dispatch, findPwd} = this.props;
+        return dispatch(findPwd(usernameForReset, email))
+            .then(() => {
+                message.success('邮件发送成功！');
+                this.props.hideDialog()();
+            })
+            .catch(() => {
                 throw new SubmissionError({
-                    usernameForReset: 'User does not exist',
-                    _error: 'Login failed!'
+                    _error: '邮件发送失败！'
                 });
-            } else if (values.email !== 'seven0_0@126.com') {
-                throw new SubmissionError({
-                    email: 'Wrong password',
-                    _error: 'Loginsss failed!'
-                });
-            } else {
-                this.props.hideDialog();
-            }
-        });
+            });
     }
 
     render() {
-        const {submitting, handleSubmit, visible, hideDialog, width, dispatch } = this.props;
+        const {submitting, handleSubmit, visible, hideDialog, width, dispatch, error } = this.props;
         return (
             <Modal
                 visible={visible}
@@ -65,6 +67,9 @@ class ResetPwdDialog extends Component {
                 ]}
             >
                 <Form name="resetform" onSubmit={handleSubmit(this.handleSubmit)}>
+
+                    {error && <div className={style.hasError}><strong >{error}</strong></div>}
+
                     <div className={style.resetPwdContainer}>
                         <Field
                             labelClassName="col-md-2"

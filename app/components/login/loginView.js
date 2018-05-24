@@ -7,8 +7,8 @@ import ResetPWD from './dialog/ResetPwdDialog';
 import Dialog from '../dialog';
 
 
-@connect(null, {login, findPwd, push})
-@Dialog(<ResetPWD/>)
+@connect(null, {login, push})
+@Dialog(<ResetPWD findPwd={findPwd}/>)
 class LoginView extends Component {
     render() {
         return (

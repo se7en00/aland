@@ -23,6 +23,5 @@ const finalCreateStore = compose(
 
 
 export default function configureStore(initialState) {
-    console.log('initialState', initialState);
     return finalCreateStore(rootReducer, initialState);
 }
