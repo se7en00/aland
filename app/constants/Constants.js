@@ -27,6 +27,10 @@ export const PATHNAME = {
     LEARN_TASK: '学习任务管理'
 };
 
+export const DIALOG = {
+    CREATE_USER: 'createUser'
+};
+
 export const PANEL_TITLE = {
     ACCOUNT: '账户列表'
 };
@@ -41,3 +45,4 @@ export const URL = {
         LIST: '/api/users'
     }
 };
+

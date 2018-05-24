@@ -1,9 +1,10 @@
 import typeToReducer from 'type-to-reducer';
-import { LOAD_ACCOUNT_LIST, SEARCH_USER } from './UserListAction';
+import { LOAD_USER_LIST, SEARCH_USER, CREATE_USER } from './UserListAction';
 
 //reducer
 const userReducer = typeToReducer({
-    [LOAD_ACCOUNT_LIST]: {
+    //用户列表
+    [LOAD_USER_LIST]: {
         REJECTED: (state, action) => ({
             isRejected: true,
             error: action.payload
@@ -11,6 +12,22 @@ const userReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             list: action.payload
         })
+    },
+    //新增用户
+    [CREATE_USER]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action?.payload?.response?.data
+        }),
+        FULFILLED: (state, action) => {
+            const createUser = action.payload;
+            const list = state?.list;
+            list?.elements.push(createUser);
+            return {
+                isFulfilled: true,
+                list
+            };
+        }
     },
 
     [SEARCH_USER]: {

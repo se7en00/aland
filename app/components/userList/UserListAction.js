@@ -2,8 +2,8 @@ import { Axios } from 'utils';
 import { URL } from 'constants';
 
 export const SEARCH_USER = 'SEARCH_USER';
-export const LOAD_ACCOUNT_LIST = 'LOAD_ACCOUNT_LIST';
-export const CREATE_ACCOUNT = 'CREATE_ACCOUNT';
+export const LOAD_USER_LIST = 'LOAD_USER_LIST';
+export const CREATE_USER = 'CREATE_USER';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 export const searchUserByName = (userName) => ({
@@ -13,11 +13,13 @@ export const searchUserByName = (userName) => ({
 
 //actions creater
 export const getUserList = () => ({
-    type: LOAD_ACCOUNT_LIST,
+    type: LOAD_USER_LIST,
     payload: () => Axios.get(URL.USER.LIST).then(response => response.data)
 });
 
-// export const createUser = () => ({
-//     type: CREATE_ACCOUNT,
-//     payload: () => Axios.get('/api/account/list').then(response => response.data)
-// });
+export const createUser = (loginName, name) => ({
+    type: CREATE_USER,
+    payload: () => Axios.post('/api/users', {loginName, name})
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});

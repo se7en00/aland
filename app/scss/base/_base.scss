@@ -1,6 +1,3 @@
-@import "../variables/color";
-@import "../fonts/fonts";
-
 $rem-baseline: 16px !default;
 
 @mixin rem-baseline($zoom: 100%) {
@@ -50,6 +47,28 @@ table {
 
 button {
     & + & {
-        margin-left: 8px !important;
+        margin-left: rem(8px) !important;
     }
+}
+
+.dialogContainer {
+    padding: rem(10px 20px);
+
+    @include e(inputRow) {
+        & + & {
+            margin-top: rem(20px);
+        }
+        align-items: baseline;
+        justify-content: center;
+    }
+
+    @include m(error) {
+        text-align: center;
+        padding: rem(5px 0px);
+        color: $errorColor;
+    }
+}
+
+.highlightColor {
+    color: $highlightColor !important;
 }

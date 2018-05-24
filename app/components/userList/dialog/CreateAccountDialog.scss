@@ -1,0 +1,16 @@
+@import "~SCSS_PATH/modules";
+
+.defaultPWD_tag {
+    color: $highlightColor !important;
+    position: absolute;
+    top: -35px;
+    right: rem(60px);
+
+    @media (max-width: 34em) {
+        right: rem(10px);
+    }
+
+    @media (max-width: 48em) {
+        right: rem(10px);
+    }
+}

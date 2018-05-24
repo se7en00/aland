@@ -4,7 +4,6 @@ import { Button, Modal, message } from 'antd';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { renderField } from '../../form';
 import validate from './validate';
-import style from './RestPwdDialog.scss';
 // import { searchUserByName } from '../../userList/UserListAction';
 
 // const asyncValidate = ({usernameForReset}, dispatch) => dispatch(searchUserByName(usernameForReset))
@@ -34,7 +33,8 @@ class ResetPwdDialog extends Component {
         findPwd: PropTypes.func,
         dispatch: PropTypes.func,
         visible: PropTypes.bool,
-        error: PropTypes.bool,
+        error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+        invalid: PropTypes.bool,
         submitting: PropTypes.bool,
         width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     };
@@ -54,7 +54,7 @@ class ResetPwdDialog extends Component {
     }
 
     render() {
-        const {submitting, handleSubmit, visible, hideDialog, width, dispatch, error } = this.props;
+        const {submitting, handleSubmit, visible, hideDialog, width, dispatch, error, invalid } = this.props;
         return (
             <Modal
                 visible={visible}
@@ -62,19 +62,19 @@ class ResetPwdDialog extends Component {
                 title="找回密码"
                 onCancel={hideDialog()}
                 footer={[
-                    <Button key="submit" onClick={() => dispatch(submit('restPwd'))} loading={submitting} type="primary">发送邮件</Button>,
+                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit('restPwd'))} loading={submitting} type="primary">发送邮件</Button>,
                     <Button key="back" onClick={hideDialog()}>取消</Button>
                 ]}
             >
                 <Form name="resetform" onSubmit={handleSubmit(this.handleSubmit)}>
 
-                    {error && <div className={style.hasError}><strong >{error}</strong></div>}
+                    {error && <div className="dialogContainer--error"><strong >{error}</strong></div>}
 
-                    <div className={style.resetPwdContainer}>
+                    <div className="dialogContainer">
                         <Field
                             labelClassName="col-md-2"
                             className="col-md-8"
-                            rowClassName={style.resetPwdContainer__inputRow}
+                            rowClassName="dialogContainer__inputRow"
                             name="usernameForReset"
                             component={renderField}
                             type="text"
@@ -85,7 +85,7 @@ class ResetPwdDialog extends Component {
                         <Field
                             labelClassName="col-md-2"
                             className="col-md-8"
-                            rowClassName={style.resetPwdContainer__inputRow}
+                            rowClassName="dialogContainer__inputRow"
                             name="email"
                             component={renderField}
                             type="email"

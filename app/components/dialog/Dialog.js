@@ -41,6 +41,7 @@ const Dialog = (...dialogs) => (WrappedComponent) =>
             const DialogElements = dialogs.reduce((result, dialog, index) => {
                 if (React.isValidElement(dialog)) {
                     dialogProps = {
+                        ...this.props,
                         ...dialogProps,
                         visible: this.state[dialog?.type?.dialogName || 'dialog']
                     };
