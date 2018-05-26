@@ -9,7 +9,7 @@ import validate from './userValidate';
 
 
 @connect(state => ({initialValues: state.userList?.editUser}))
-@reduxForm({form: DIALOG.EDIT_USER, validate})
+@reduxForm({form: DIALOG.EDIT_USER, enableReinitialize: true, validate})
 class EditUserDialog extends Component {
     static dialogName = DIALOG.EDIT_USER;
     constructor(props) {
@@ -35,12 +35,15 @@ class EditUserDialog extends Component {
         //表单是否提交
         submitting: PropTypes.bool,
         //弹出框的宽度
-        width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+        width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        //redux-form 初始表单值
+        initialValues: PropTypes.object
     };
 
     handleSubmit({loginName, name}) {
+        const {id} = this.props.initialValues;
         const {updateUser} = this.props.actions;
-        return updateUser(loginName, name)
+        return updateUser(id, loginName, name)
             .then(() => {
                 message.success('修改用户成功！');
                 this.props.actions.getUserList();
