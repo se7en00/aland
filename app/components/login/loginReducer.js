@@ -1,5 +1,5 @@
 import typeToReducer from 'type-to-reducer';
-import { LOGIN_REQUEST, LOGOUT_REQUEST, FIND_PWD_REQUEST } from './loginAction';
+import { LOGIN_REQUEST, SYNC_LOGOUT_REQUEST, FIND_PWD_REQUEST } from './loginAction';
 
 //reducer
 const login = typeToReducer({
@@ -13,7 +13,7 @@ const login = typeToReducer({
         })
     },
     //退出
-    [LOGOUT_REQUEST]: (state, action) => ({
+    [SYNC_LOGOUT_REQUEST]: (state, action) => ({
         ...action.payload
     }),
     //找回密码

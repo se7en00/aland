@@ -29,7 +29,8 @@ export const PATHNAME = {
 
 export const DIALOG = {
     FIND_PASSWORD: 'findPassword',
-    CREATE_USER: 'createUser'
+    CREATE_USER: 'createUser',
+    EDIT_USER: 'editUser'
 };
 
 export const PANEL_TITLE = {
@@ -43,7 +44,9 @@ export const URL = {
         FIND_PASSWORD: '/api/users/findPassword'
     },
     USER: {
-        LIST: '/api/users'
+        LIST: '/api/users',
+        CREATE_USER: '/api/users',
+        UPDATE_UER: id => `/api/users/${id}`
     }
 };
 

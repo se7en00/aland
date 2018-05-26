@@ -5,7 +5,7 @@ import { BASE_URL, URL } from 'constants';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const FIND_PWD_REQUEST = 'FIND_PWD_REQUEST';
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const SYNC_LOGOUT_REQUEST = 'SYNC_LOGOUT_REQUEST';
 
 //async
 export const login = (user) => ({
@@ -27,7 +27,7 @@ export const login = (user) => ({
 export const logout = () => dispatch => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    dispatch({type: LOGOUT_REQUEST});
+    dispatch({type: SYNC_LOGOUT_REQUEST});
     dispatch(push('/login'));
 };
 

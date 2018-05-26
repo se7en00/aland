@@ -34,6 +34,11 @@ const Dialog = (...dialogs) => (WrappedComponent) =>
                 width: '650px'
             };
 
+            // //mapPropsToDialog的用处：当我们打开dilaog时， mapPropsToDialog里的数据可以让我们在dialog里初始化一些相关联的数据
+            // if (this.props?.mapPropsToDialog) {
+            //     Object.assign(dialogProps, this.props.mapPropsToDialog);
+            // }
+
             const superElement = super.render();
             const NewSuperElement = React.cloneElement(superElement, props, superElement.props.children);
 

@@ -1,4 +1,4 @@
 //reducer
-export {default} from './UserListReducer';
+export {default} from './userListreducer';
 //view
 export { default as UserListView } from './UserListView';

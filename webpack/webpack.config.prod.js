@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const {
     getClientEnvironment,
     paths,

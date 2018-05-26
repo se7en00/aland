@@ -18,19 +18,15 @@ class UserList extends Component {
         this.props.actions.getUserList(paginationSetting.pageSize);
     }
 
-    handelPageChange = (page, pageSize) => {
-        const { getUserList } = this.props.actions;
-        getUserList(pageSize, page);
-    }
 
     render() {
-        const {userList: {list}} = this.props;
+        const {userList: {list}, actions} = this.props;
         return (
             <div>
                 <Header title={PANEL_TITLE.ACCOUNT}/>
                 <div className={panelStyle.panel__body}>
                     <Button type="primary" className="editable-add-btn" onClick={this.props.showDialog(DIALOG.CREATE_USER)} ghost>新增账户</Button>
-                    <UserTable dataSource={list} onPageChange={this.handelPageChange} showDialog={this.props.showDialog}/>
+                    <UserTable dataSource={list} actions={actions} showDialog={this.props.showDialog}/>
                 </div>
             </div>
         );
