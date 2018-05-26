@@ -47,10 +47,24 @@ const userReducer = typeToReducer({
     },
 
     //获取当前编辑用户信息
-    [TYPES.SYNC_EDIT_USER]: (state, action) => ({
-        ...state,
-        editUser: action.payload
-    }),
+    [TYPES.SYNC_EDIT_USER]: (state, action) => {
+        const {id, loginName, name} = action.payload;
+        return {
+            ...state,
+            editUser: {id, loginName, name}
+        };
+    },
+
+    //重置密码
+    [TYPES.RESET_USER_PASSWORD]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action?.payload?.response?.data
+        }),
+        FULFILLED: (state) => ({
+            ...state
+        })
+    },
 
     [TYPES.SEARCH_USER]: {
         REJECTED: (state, action) => ({

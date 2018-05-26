@@ -20,22 +20,29 @@ export const createUser = (loginName, name) => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const updateUser = (id, loginName, name) => ({
+export const updateUser = (userId, loginName, name) => ({
     type: TYPES.UPDATE_USER,
-    payload: () => Axios.put(`/api/users/${id}`, {loginName, name})
+    payload: () => Axios.put(`/api/users/${userId}`, {loginName, name})
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const deleteUser = (id) => ({
+export const deleteUser = (userId) => ({
     type: TYPES.DELETE_USER,
-    payload: () => Axios.delete(`/api/users/${id}`)
+    payload: () => Axios.delete(`/api/users/${userId}`)
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-//async
-export const syncGetCurrentEditUser = (user) => ({
+export const resetPassword = (userId, params) => ({
+    type: TYPES.RESET_USER_PASSWORD,
+    payload: () => Axios.put(`/api/users/${userId}/password`, params)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+//sync
+export const syncGetAssociatedUser = (user) => ({
     type: TYPES.SYNC_EDIT_USER,
     payload: user
 });

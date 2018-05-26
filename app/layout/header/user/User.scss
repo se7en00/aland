@@ -19,3 +19,19 @@
     border-radius: 50%;
     margin-right: rem(8px);
 }
+
+.userMenu {
+    border: none !important;
+    & :global(.ant-menu-item),
+    :global(.ant-menu-item-active),
+    :global(.ant-menu-item-open),
+    :global(.ant-menu-item-selected),
+    :global(.ant-menu-item:hover),
+    :global(.ant-menu-submenu),
+    :global(.ant-menu-submenu-active),
+    :global(.ant-menu-submenu-open),
+    :global(.ant-menu-submenu-selected),
+    :global(.ant-menu-submenu:hover) {
+        border-bottom: none;
+    }
+}

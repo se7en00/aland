@@ -68,7 +68,7 @@ class ResetPwdDialog extends Component {
                     <Button key="back" onClick={hideDialog()}>取消</Button>
                 ]}
             >
-                <Form name="resetform" onSubmit={handleSubmit(this.handleSubmit)}>
+                <Form name="resetPWDForm" onSubmit={handleSubmit(this.handleSubmit)}>
 
                     {error && <div className="dialogContainer--error"><strong >{error}</strong></div>}
 

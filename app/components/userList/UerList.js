@@ -18,7 +18,6 @@ class UserList extends Component {
         this.props.actions.getUserList(paginationSetting.pageSize);
     }
 
-
     render() {
         const {userList: {list}, actions} = this.props;
         return (

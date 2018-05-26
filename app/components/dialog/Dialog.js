@@ -4,11 +4,18 @@ import createFragment from 'react-addons-create-fragment';
 const Dialog = (...dialogs) => (WrappedComponent) =>
     class HOCDialog extends WrappedComponent {
         //初始各个dialog的状态
-        preLoadState = () => dialogs?.reduce((result, dialogModal) => {
-            const dialogName = dialogModal?.type?.dialogName || 'dialog';
-            result[dialogName] = false;
-            return result;
-        }, {})
+        preLoadState = () => {
+            dialogs?.reduce((result, dialogModal, index, array) => {
+                let dialogName = dialogModal?.type?.dialogName || 'dialog';
+
+                if (array.length === 1) {
+                    dialogName = 'dialog';
+                }
+
+                result[dialogName] = false;
+                return result;
+            }, {});
+        }
 
         state = {...this.preLoadState()};
 

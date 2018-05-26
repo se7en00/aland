@@ -6,6 +6,7 @@
   "scripts": {
     "dll": "webpack -p --env.production --config webpack/webpack.dll.conf.js --progress",
     "build": "node scripts/build.js",
+    "build:debug": "node %NODE_DEBUG_OPTION% scripts/build.js",
     "start:debug": "node %NODE_DEBUG_OPTION% scripts/start.js",
     "start": "node scripts/start.js",
     "lint": "eslint --cache --ignore-path .gitignore --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",

@@ -39,10 +39,10 @@ class UserListTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.onEdit(record)} ghost>编辑</Button>
-                    <Button size="small" type="primary" ghost>重置密码</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.EDIT_USER)} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.RESET_USER_PASSWORD)} ghost>重置密码</Button>
                     <Button size="small" type="primary" onClick={showDialog('permission')} ghost>分配菜单</Button>
-                    <Popconfirm title="确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
+                    <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
                 </div>
@@ -66,10 +66,10 @@ class UserListTable extends Component {
         getUserList(pageSize, page);
     }
 
-    onEdit = (user) => {
-        const {showDialog, actions: { syncGetCurrentEditUser }} = this.props;
-        syncGetCurrentEditUser(user);
-        showDialog(DIALOG.EDIT_USER)();
+    openDialog = (user, dialog) => {
+        const {showDialog, actions: { syncGetAssociatedUser }} = this.props;
+        syncGetAssociatedUser(user);
+        showDialog(dialog)();
     }
 
     onDelete = (record) => {
@@ -84,7 +84,6 @@ class UserListTable extends Component {
         }).catch(error => {
             message.success(`删除账户名：${record.name}失败！`);
         });
-        // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
     }
 
     render() {

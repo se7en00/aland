@@ -2,7 +2,7 @@ import React from 'react';
 import style from './User.scss';
 import ZoeJpg from './zoe.jpg';
 
-const User = () => {
+const UserAvatar = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     return (
         <div className={style['c-user']}>
@@ -12,4 +12,4 @@ const User = () => {
     );
 };
 
-export default User;
+export default UserAvatar;

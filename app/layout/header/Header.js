@@ -1,11 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
-import { Menu } from 'antd';
-import { LogoutView } from 'components/login';
 import headerStyle from './Header.scss';
-import User from './user/User';
-
-const SubMenu = Menu.SubMenu;
+import UserMenu from './user/UserMenu';
 
 const Header = () => {
     const headerClass = cn('row', headerStyle.headerContainer);
@@ -16,12 +12,7 @@ const Header = () => {
         <div className={headerClass}>
             <div className={logClass}/>
             <div className={userClass}>
-                <Menu mode="horizontal" className={headerStyle.userMenu}>
-                    <SubMenu title={<User/>}>
-                        <Menu.Item key="setting:1"><LogoutView/></Menu.Item>
-                        <Menu.Item key="setting:2">修改密码</Menu.Item>
-                    </SubMenu>
-                </Menu>
+                <UserMenu/>
             </div>
         </div>
     );

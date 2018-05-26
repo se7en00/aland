@@ -142,6 +142,8 @@ module.exports = {
         new webpack.optimize.RuntimeChunkPlugin({
             name: 'manifest'
         })
-
-    ]
+    ],
+    node: {
+        constants: false
+    }
 };

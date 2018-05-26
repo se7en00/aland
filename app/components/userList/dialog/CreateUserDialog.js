@@ -73,7 +73,7 @@ class CreateUserDialog extends Component {
                     <Button key="back" onClick={hideDialog(DIALOG.CREATE_USER)}>取消</Button>
                 ]}
             >
-                <Form name="resetform" onSubmit={handleSubmit(this.handleSubmit)}>
+                <Form name="createform" onSubmit={handleSubmit(this.handleSubmit)}>
                     {error && <div className="dialogContainer--error"><strong >{error}</strong></div>}
 
                     <div className="dialogContainer u-position-relative">

@@ -30,7 +30,8 @@ export const PATHNAME = {
 export const DIALOG = {
     FIND_PASSWORD: 'findPassword',
     CREATE_USER: 'createUser',
-    EDIT_USER: 'editUser'
+    EDIT_USER: 'editUser',
+    RESET_USER_PASSWORD: 'resetUserPWD'
 };
 
 export const PANEL_TITLE = {

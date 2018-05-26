@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { DIALOG } from 'constants';
 import { renderField } from '../../form';
-import validate from './userValidate';
+import validate from './passwordValidate';
 
 
 @connect(state => ({initialValues: state.userList?.editUser}))
-@reduxForm({form: DIALOG.EDIT_USER, enableReinitialize: true, validate})
-class EditUserDialog extends Component {
-    static dialogName = DIALOG.EDIT_USER;
+@reduxForm({form: DIALOG.RESET_USER_PASSWORD, enableReinitialize: true, validate})
+class ResetUserPassword extends Component {
+    static dialogName = DIALOG.RESET_USER_PASSWORD;
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,23 +40,18 @@ class EditUserDialog extends Component {
         initialValues: PropTypes.object
     };
 
-    handleSubmit({loginName, name}) {
-        const {id} = this.props.initialValues;
-        const {updateUser} = this.props.actions;
-        return updateUser(id, loginName, name)
+    handleSubmit({oldPsd, newPsd}) {
+        const { id, loginName } = this.props.initialValues;
+        const { resetPassword } = this.props.actions;
+        return resetPassword(id, {oldPsd, newPsd})
             .then(() => {
-                message.success('修改用户成功！');
-                this.props.actions.getUserList();
-                this.props.hideDialog(DIALOG.EDIT_USER)();
+                message.success(`修改${loginName}的密码成功！`);
+                this.props.hideDialog(DIALOG.RESET_USER_PASSWORD)();
             })
             .catch(error => {
-                if (error?.errorCode === 'login_user_already_exist') {
+                if (error?.errorCode === 'password_invalid') {
                     throw new SubmissionError({
-                        loginName: error?.errorMessage
-                    });
-                } else if (error?.errorCode === 'need_login_name') {
-                    throw new SubmissionError({
-                        name: error?.errorMessage
+                        oldPsd: error?.errorMessage
                     });
                 } else {
                     throw new SubmissionError({
@@ -73,14 +68,14 @@ class EditUserDialog extends Component {
                 visible={visible}
                 width={width}
                 className="test"
-                title="编辑账户名"
-                onCancel={hideDialog(DIALOG.EDIT_USER)}
+                title="重置密码"
+                onCancel={hideDialog(DIALOG.RESET_USER_PASSWORD)}
                 footer={[
-                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit(DIALOG.EDIT_USER))} loading={submitting} type="primary">保存</Button>,
-                    <Button key="back" onClick={hideDialog(DIALOG.EDIT_USER)}>取消</Button>
+                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit(DIALOG.RESET_USER_PASSWORD))} loading={submitting} type="primary">保存</Button>,
+                    <Button key="back" onClick={hideDialog(DIALOG.RESET_USER_PASSWORD)}>取消</Button>
                 ]}
             >
-                <Form name="editform" onSubmit={handleSubmit(this.handleSubmit)}>
+                <Form name="resetUserPWDForm" onSubmit={handleSubmit(this.handleSubmit)}>
                     {error && <div className="dialogContainer--error"><strong >{error}</strong></div>}
 
                     <div className="dialogContainer">
@@ -89,22 +84,32 @@ class EditUserDialog extends Component {
                             labelClassName="col-md-2"
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
-                            name="loginName"
+                            name="oldPsd"
                             component={renderField}
-                            type="text"
-                            placeholder="登录名"
-                            label="登录名"
+                            type="password"
+                            placeholder="当前密码"
+                            label="当前密码"
                         />
 
                         <Field
                             labelClassName="col-md-2"
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
-                            name="name"
+                            name="newPsd"
                             component={renderField}
-                            type="text"
-                            placeholder="请填写真实姓名"
-                            label="账户名"
+                            type="password"
+                            placeholder="新密码"
+                            label="新密码"
+                        />
+
+                        <Field
+                            labelClassName="col-md-2"
+                            className="col-md-8 offset-md-2"
+                            rowClassName="dialogContainer__inputRow"
+                            name="newPsd1"
+                            component={renderField}
+                            type="password"
+                            placeholder="重复上面的新密码"
                         />
 
                     </div>
@@ -114,4 +119,4 @@ class EditUserDialog extends Component {
     }
 }
 
-export default EditUserDialog;
+export default ResetUserPassword;
