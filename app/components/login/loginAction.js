@@ -20,7 +20,7 @@ export const login = (user) => ({
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.userInfo));
         return data.userInfo;
-    })
+    }).catch(error => Promise.reject(error?.response?.data))
 });
 
 //sync

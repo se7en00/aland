@@ -17,21 +17,31 @@ class CreateUserDialog extends Component {
     }
 
     static propTypes = {
+        //隐藏弹出框
         hideDialog: PropTypes.func,
+        //提交表单，由redux-form传入
         handleSubmit: PropTypes.func,
-        createUser: PropTypes.func,
+        //异步方法，在父层注入dialog时，由Dialog高阶组件取的，并传入每个dialog
+        actions: PropTypes.objectOf(PropTypes.func),
+        //由于button不在form表单中， 我们采用redux-frorm的remote button，通过redux dispatch方法来来提交表单
         dispatch: PropTypes.func,
+        //弹出框显示 ，隐藏flag
         visible: PropTypes.bool,
+        //错误信息，可以是同步和异步验证的错误信息，也是submit返回的错误信息
         error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+        //redux-form 表单有验证错误为true, 相反为false
         invalid: PropTypes.bool,
+        //表单是否提交
         submitting: PropTypes.bool,
+        //弹出框的宽度
         width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     };
 
     handleSubmit({loginName, name}) {
-        return this.props.createUser(loginName, name)
+        return this.props.actions.createUser(loginName, name)
             .then(() => {
                 message.success('创建用户成功！');
+                this.props.actions.getUserList();
                 this.props.hideDialog(DIALOG.CREATE_USER)();
             })
             .catch(error => {
@@ -73,22 +83,22 @@ class CreateUserDialog extends Component {
                             labelClassName="col-md-2"
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
-                            name="loginName"
+                            name="name"
                             component={renderField}
                             type="text"
-                            placeholder="请填写真实姓名"
-                            label="账户名"
+                            placeholder="登录名"
+                            label="登录名"
                         />
 
                         <Field
                             labelClassName="col-md-2"
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
-                            name="name"
+                            name="loginName"
                             component={renderField}
                             type="text"
-                            placeholder="登录名"
-                            label="登录名"
+                            placeholder="请填写真实姓名"
+                            label="账户名"
                         />
 
                     </div>

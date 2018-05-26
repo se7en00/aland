@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { DIALOG } from 'constants';
 import { Button, Modal, message } from 'antd';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { renderField } from '../../form';
@@ -16,7 +17,7 @@ import validate from './validate';
 //     });
 
 @reduxForm({
-    form: 'restPwd',
+    form: DIALOG.FIND_PASSWORD,
     validate
     // asyncValidate,
     // asyncBlurFields: ['usernameForReset']
@@ -30,8 +31,9 @@ class ResetPwdDialog extends Component {
     static propTypes = {
         hideDialog: PropTypes.func,
         handleSubmit: PropTypes.func,
+        actions: PropTypes.objectOf(PropTypes.func),
+        dispatch: PropTypes.func, //来自redux form 注入的
         findPwd: PropTypes.func,
-        dispatch: PropTypes.func,
         visible: PropTypes.bool,
         error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
         invalid: PropTypes.bool,
@@ -40,8 +42,8 @@ class ResetPwdDialog extends Component {
     };
 
     handleSubmit({usernameForReset, email}) {
-        const {dispatch, findPwd} = this.props;
-        return dispatch(findPwd(usernameForReset, email))
+        const {findPwd} = this.props.actions;
+        return findPwd(usernameForReset, email)
             .then(() => {
                 message.success('邮件发送成功！');
                 this.props.hideDialog()();
@@ -62,7 +64,7 @@ class ResetPwdDialog extends Component {
                 title="找回密码"
                 onCancel={hideDialog()}
                 footer={[
-                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit('restPwd'))} loading={submitting} type="primary">发送邮件</Button>,
+                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit(DIALOG.FIND_PASSWORD))} loading={submitting} type="primary">发送邮件</Button>,
                     <Button key="back" onClick={hideDialog()}>取消</Button>
                 ]}
             >

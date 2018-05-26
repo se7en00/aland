@@ -60,6 +60,7 @@
         "arrow-body-style": [2, "as-needed"],
         "no-unused-vars": [2, { "args": "none" }],
         "no-trailing-spaces": [2, { "skipBlankLines": true }],
+        "no-use-before-define": ["error", { "functions": false}], //function声明的函数具有”变量提升“的特性
         "space-before-function-paren": [2, {
             "anonymous": "never",
             "named": "never",

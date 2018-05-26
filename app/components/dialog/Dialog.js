@@ -41,8 +41,8 @@ const Dialog = (...dialogs) => (WrappedComponent) =>
             const DialogElements = dialogs.reduce((result, dialog, index) => {
                 if (React.isValidElement(dialog)) {
                     dialogProps = {
-                        ...this.props,
                         ...dialogProps,
+                        actions: this.props.actions, //注入父组件的action creator
                         visible: this.state[dialog?.type?.dialogName || 'dialog']
                     };
                     result[`dialog_${index}`] = React.cloneElement(dialog, dialogProps, dialog.props.children);

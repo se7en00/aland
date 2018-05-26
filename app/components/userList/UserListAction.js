@@ -1,4 +1,4 @@
-import { Axios } from 'utils';
+import { Axios, paginationSetting } from 'utils';
 import { URL } from 'constants';
 
 export const SEARCH_USER = 'SEARCH_USER';
@@ -12,9 +12,9 @@ export const searchUserByName = (userName) => ({
 });
 
 //actions creater
-export const getUserList = () => ({
+export const getUserList = (pageSize = paginationSetting.pageSize, page) => ({
     type: LOAD_USER_LIST,
-    payload: () => Axios.get(URL.USER.LIST).then(response => response.data)
+    payload: () => Axios.get(URL.USER.LIST, {params: {size: pageSize, page}}).then(response => response.data)
 });
 
 export const createUser = (loginName, name) => ({

@@ -28,6 +28,7 @@ export const PATHNAME = {
 };
 
 export const DIALOG = {
+    FIND_PASSWORD: 'findPassword',
     CREATE_USER: 'createUser'
 };
 
