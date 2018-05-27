@@ -4,18 +4,12 @@ import createFragment from 'react-addons-create-fragment';
 const Dialog = (...dialogs) => (WrappedComponent) =>
     class HOCDialog extends WrappedComponent {
         //初始各个dialog的状态
-        preLoadState = () => {
-            dialogs?.reduce((result, dialogModal, index, array) => {
-                let dialogName = dialogModal?.type?.dialogName || 'dialog';
+        preLoadState = () => dialogs?.reduce((result, dialogModal) => {
+            const dialogName = dialogModal?.type?.dialogName || 'dialog';
 
-                if (array.length === 1) {
-                    dialogName = 'dialog';
-                }
-
-                result[dialogName] = false;
-                return result;
-            }, {});
-        }
+            result[dialogName] = false;
+            return result;
+        }, {})
 
         state = {...this.preLoadState()};
 
@@ -32,7 +26,7 @@ const Dialog = (...dialogs) => (WrappedComponent) =>
         //劫持定义@dialog组件渲染，为其加上弹出框
         render() {
             const props = {
-                ...this.props,
+                // ...this.props,
                 showDialog: this.showModal
             };
 

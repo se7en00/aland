@@ -57,7 +57,7 @@ class UserListTable extends Component {
     componentWillUpdate(nextProps) {
         const { dataSource: {elements, paging} } = nextProps;
         this.elements = rebuildDataWithKey(elements);
-        const { count: pageSize, total} = paging;
+        const { size: pageSize, total} = paging;
         this.pagination = {...this.pagination, pageSize, total};
     }
 
@@ -74,13 +74,12 @@ class UserListTable extends Component {
 
     onDelete = (record) => {
         const {
-            dataSource: {paging: {start, count}},
+            dataSource: {paging: {size, page}},
             actions: {deleteUser, getUserList}
         } = this.props;
-        const currentPage = start / count + 1;//eslint-disable-line
         deleteUser(record.id).then(() => {
             message.success(`成功删除账户名：${record.name}！`);
-            getUserList(count, currentPage);
+            getUserList(size, page);
         }).catch(error => {
             message.success(`删除账户名：${record.name}失败！`);
         });

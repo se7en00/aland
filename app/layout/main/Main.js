@@ -11,13 +11,13 @@ import mainContentStyle from './Main.scss';
 import Breadcrumb from './BreadCrumb';
 
 const Main = (props) => {
-    const {match, loading} = props;
+    const {match, loading: {isLoading}} = props;
     const mainClass = className('col-md-9 col-lg-10', mainContentStyle.mainContent);
     return (
         <main className={mainClass}>
             <Breadcrumb/>
             <div className={mainContentStyle.panel}>
-                {loading && <div className={mainContentStyle.panel__mask}><Spin size="large" tip="加载中..."/></div>}
+                {isLoading && <div className={mainContentStyle.panel__mask}><Spin size="large" tip="加载中..."/></div>}
                 <ConnectedSwitch>
                     <Route exact path={`${match.path}`} component={Dashboard}/>
                     <Route exact path={`${match.path}accountManagement`} component={UserListView}/>
@@ -29,7 +29,7 @@ const Main = (props) => {
 
 Main.propTypes = {
     match: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.object
 };
 
 
