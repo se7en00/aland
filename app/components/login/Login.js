@@ -69,7 +69,7 @@ class Login extends Component {
                             component={renderField}
                             type="text"
                             prefix={<Icon type="lock"/>}
-                            placeholder="密  码"
+                            placeholder="密码"
                         />
 
                         <div className={style.login__button}>
