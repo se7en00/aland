@@ -74,7 +74,7 @@ const renderSideBarWithPermissions = () => {
             return result;
         }, {});
 
-        const resultss = SIDE_BAR_MENU.filter(item => {
+        return SIDE_BAR_MENU.filter(item => {
             //先过滤一级菜单
             if (Object.keys(formatPermissions).includes(item.name)) {
                 const menu = item;
@@ -87,8 +87,6 @@ const renderSideBarWithPermissions = () => {
             }
             return false;
         });
-
-        return resultss;
     }
 };
 
