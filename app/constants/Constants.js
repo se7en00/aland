@@ -21,17 +21,28 @@ export const PATHNAME = {
     MATERIALS: '素材管理',
     QUEST_BANK: '题库管理',
     QUESTIONNAIRE_BANK: '问卷库管理',
-    MASTER: '内训师管理',
+    MASTER: '培训师管理',
     VENDOR: '供应商管理',
     TRAINING: '培训管理',
-    LEARN_TASK: '学习任务管理'
+    PUBLISHED_TRAINING: '已发布培训',
+    TRAINING_DRAFt: '培训草稿',
+    LEARN_TASK: '学习任务管理',
+    LEARN_PROJECT: '学习项目管理',
+    SETTING: '设置',
+    TAG_SETTING: '标签设置',
+    SECURITY_PERMISSION_CATEGORY: '保密权限种类设置',
+    LESSONS_DIRECTION_SETTING: '课程方向设置',
+    TRAINING_AND_COST: '培训种类/成本类型设置',
+    CAROUSEL_SETTING: '学习端转播图设置'
+
 };
 
 export const DIALOG = {
     FIND_PASSWORD: 'findPassword',
     CREATE_USER: 'createUser',
     EDIT_USER: 'editUser',
-    RESET_USER_PASSWORD: 'resetUserPWD'
+    RESET_USER_PASSWORD: 'resetUserPWD',
+    PERMISSION: 'permission'
 };
 
 export const PANEL_TITLE = {
@@ -39,15 +50,4 @@ export const PANEL_TITLE = {
 };
 
 export const BASE_URL = 'http://139.224.113.208:8181/aland-training';
-export const URL = {
-    LOGIN: {
-        INFO: '/api/users/login',
-        FIND_PASSWORD: '/api/users/findPassword'
-    },
-    USER: {
-        LIST: '/api/users',
-        CREATE_USER: '/api/users',
-        UPDATE_UER: id => `/api/users/${id}`
-    }
-};
 

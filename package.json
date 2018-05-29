@@ -16,7 +16,7 @@
   "author": "seven",
   "license": "MIT",
   "dependencies": {
-    "@fortawesome/fontawesome-free-webfonts": "^1.0.6",
+    "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
     "antd": "^3.5.0",
     "axios": "^0.18.0",
     "bootstrap": "4.1.1",
@@ -89,7 +89,7 @@
     "postcss-flexbugs-fixes": "^3.3.0",
     "postcss-loader": "^2.0.6",
     "react-dev-utils": "^5.0.1",
-    "react-hot-loader": "^4.1.0",
+    "react-hot-loader": "^4.2.0",
     "redux-devtools-extension": "^2.13.2",
     "resolve-url-loader": "^2.3.0",
     "sass-loader": "^6.0.7",

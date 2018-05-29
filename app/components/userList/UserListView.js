@@ -7,11 +7,10 @@ import UserList from './UerList';
 import CreateAccountDialog from './dialog/CreateUserDialog';
 import PermissionDialog from './dialog/PermissionDialog';
 import EditUserDialog from './dialog/EditUserDialog';
-import ResetUserPassword from './dialog/ResetUserPassword';
 
 
 @connect(state => ({userList: state.userList}), mapDispatchToProps)
-@Dialog(<CreateAccountDialog/>, <EditUserDialog/>, <ResetUserPassword/>, <PermissionDialog/>)
+@Dialog(<CreateAccountDialog/>, <EditUserDialog/>, <PermissionDialog/>)
 class UserListView extends Component {
     render() {
         return <UserList {...this.props}/>;

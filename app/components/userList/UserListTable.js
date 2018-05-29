@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
-import * as R from 'ramda';
+// import * as R from 'ramda';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 import { DIALOG } from 'constants';
 
@@ -14,12 +14,11 @@ class UserListTable extends Component {
 
     constructor(props) {
         super(props);
-        this.elements = null;
+        this.elements = [];
         this.pagination = {
             ...paginationSetting,
             onChange: this.handelPageChange
         };
-        const {showDialog} = this.props;
         this.columns = [{
             title: '序号',
             align: 'center',
@@ -40,8 +39,10 @@ class UserListTable extends Component {
             render: (text, record) => (
                 <div>
                     <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.EDIT_USER)} ghost>编辑</Button>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.RESET_USER_PASSWORD)} ghost>重置密码</Button>
-                    <Button size="small" type="primary" onClick={showDialog('permission')} ghost>分配菜单</Button>
+                    <Popconfirm title="你确认要把密码重置成:123456 吗？" okText="确认" cancelText="取消" onConfirm={() => this.onResetPWD(record)}>
+                        <Button size="small" type="primary" ghost>重置密码</Button>
+                    </Popconfirm>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.PERMISSION)} ghost>分配菜单</Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
@@ -50,15 +51,18 @@ class UserListTable extends Component {
         }];
     }
 
-    shouldComponentUpdate(nextProps) {
-        return !R.eqProps('dataSource', nextProps, this.props);
-    }
+    //先不优化了，现在每次打开dialog多会渲染table
+    // shouldComponentUpdate(nextProps) {
+    //     return !R.eqProps('dataSource', nextProps, this.props);
+    // }
 
     componentWillUpdate(nextProps) {
-        const { dataSource: {elements, paging} } = nextProps;
-        this.elements = rebuildDataWithKey(elements);
-        const { size: pageSize, total} = paging;
-        this.pagination = {...this.pagination, pageSize, total};
+        if (nextProps.dataSource) {
+            const { dataSource: {elements = [], paging = {}} } = nextProps;
+            this.elements = rebuildDataWithKey(elements);
+            const { size: pageSize = 0, total = 0} = paging;
+            this.pagination = {...this.pagination, pageSize, total};
+        }
     }
 
     handelPageChange = (page, pageSize) => {
@@ -67,21 +71,40 @@ class UserListTable extends Component {
     }
 
     openDialog = (user, dialog) => {
-        const {showDialog, actions: { syncGetAssociatedUser }} = this.props;
+        const {showDialog, actions: { syncGetAssociatedUser, getPermissions }} = this.props;
         syncGetAssociatedUser(user);
-        showDialog(dialog)();
+        if (dialog === DIALOG.PERMISSION) {
+            getPermissions(user.id).then(() => {
+                console.log('test');
+                showDialog(dialog)();
+            });
+        } else {
+            showDialog(dialog)();
+        }
     }
 
-    onDelete = (record) => {
+    onResetPWD = (user) => {
+        const {
+            actions: {resetPassword}
+        } = this.props;
+        resetPassword(user.id, {oldPsd: 'test', newPsd: '123456'}).then(() => {
+            message.success(`成功重置账户名：${user.name}的密码！`);
+        }).catch(error => {
+            message.error(`重置账户名：${user.name}的密码失败！`);
+        });
+    }
+
+
+    onDelete = (user) => {
         const {
             dataSource: {paging: {size, page}},
             actions: {deleteUser, getUserList}
         } = this.props;
-        deleteUser(record.id).then(() => {
-            message.success(`成功删除账户名：${record.name}！`);
+        deleteUser(user.id).then(() => {
+            message.success(`成功删除账户名：${user.name}！`);
             getUserList(size, page);
         }).catch(error => {
-            message.success(`删除账户名：${record.name}失败！`);
+            message.error(`删除账户名：${user.name}失败！`);
         });
     }
 

@@ -34,6 +34,20 @@ export const deleteUser = (userId) => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
+export const getPermissions = (userId) => ({
+    type: TYPES.LOAD_USER_PERMISSIONS,
+    payload: () => Axios.get(`/api/users/${userId}/permissions`)
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const updatePermissions = (userId, permissionsRequest) => ({
+    type: TYPES.UPDATE_USER_PERMISSIONS,
+    payload: () => Axios.post(`api/users/${userId}/permissions`, permissionsRequest)
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
 export const resetPassword = (userId, params) => ({
     type: TYPES.RESET_USER_PASSWORD,
     payload: () => Axios.put(`/api/users/${userId}/password`, params)

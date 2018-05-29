@@ -1,5 +1,5 @@
 // import {PATHNAME} from './Constants';
-import sidebarList from './SidebarTree';
+import sidebarList from './sidebarTree';
 
 const getAllLinksMap = list => list.reduce((result, item) => {
     if (!item.subItems) {

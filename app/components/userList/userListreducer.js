@@ -66,6 +66,27 @@ const userReducer = typeToReducer({
         })
     },
 
+    //读取权限
+    [TYPES.LOAD_USER_PERMISSIONS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action?.payload?.response?.data
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            permissions: action.payload
+        })
+    },
+
+    //更新权限
+    [TYPES.UPDATE_USER_PERMISSIONS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action?.payload?.response?.data
+        }),
+        FULFILLED: (state, action) => ({...state})
+    },
+
     [TYPES.SEARCH_USER]: {
         REJECTED: (state, action) => ({
             isRejected: true,

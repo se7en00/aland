@@ -11,8 +11,8 @@ import mainContentStyle from './Main.scss';
 import Breadcrumb from './BreadCrumb';
 
 const Main = (props) => {
-    const {match, loading: {isLoading}} = props;
-    const mainClass = className('col-md-9 col-lg-10', mainContentStyle.mainContent);
+    const {match, loading: {isLoading}, fluidWidth} = props;
+    const mainClass = className({'col-md-9 col-lg-10': !fluidWidth}, {'col-md-12 col-lg-12': fluidWidth}, mainContentStyle.mainContent);
     return (
         <main className={mainClass}>
             <Breadcrumb/>
@@ -29,7 +29,8 @@ const Main = (props) => {
 
 Main.propTypes = {
     match: PropTypes.object,
-    loading: PropTypes.object
+    loading: PropTypes.object,
+    fluidWidth: PropTypes.bool
 };
 
 

@@ -67,7 +67,7 @@ class Login extends Component {
                             rowClassName={style.login__input}
                             name="password"
                             component={renderField}
-                            type="text"
+                            type="password"
                             prefix={<Icon type="lock"/>}
                             placeholder="密码"
                         />
