@@ -1,9 +1,9 @@
 import typeToReducer from 'type-to-reducer';
-import { LOGIN_REQUEST, SYNC_LOGOUT_REQUEST, FIND_PWD_REQUEST } from './loginAction';
+import * as TYPES from './loginActionTypes';
 
 //reducer
 const login = typeToReducer({
-    [LOGIN_REQUEST]: {
+    [TYPES.LOGIN_REQUEST]: {
         REJECTED: (state, action) => ({
             isRejected: true,
             error: action.payload
@@ -13,11 +13,11 @@ const login = typeToReducer({
         })
     },
     //退出
-    [SYNC_LOGOUT_REQUEST]: (state, action) => ({
+    [TYPES.SYNC_LOGOUT_REQUEST]: (state, action) => ({
         ...action.payload
     }),
     //找回密码
-    [FIND_PWD_REQUEST]: {
+    [TYPES.FIND_PWD_REQUEST]: {
         REJECTED: (state, action) => ({
             ...action?.payload
         }),

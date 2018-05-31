@@ -1,58 +1,59 @@
 import {PATHNAME} from './Constants';
 
+const ROOT_PATH = '/aland';
 const SIDE_BAR_MENU = [
     //系统管理
     {
         name: PATHNAME.SYSTEM_MANAGEMENT,
         iconName: 'fas fa-cog',
         subItems: [
-            {name: PATHNAME.ACCOUNT_MANAGEMENT, link: '/accountManagement'},
-            {name: PATHNAME.ORG, link: '/orgManagement'},
-            {name: PATHNAME.USER_MANAGEMENT, link: '/userManagement'},
-            {name: PATHNAME.STUDENT_MANAGEMENT, link: '/studentManagement'}
+            {name: PATHNAME.ACCOUNT_MANAGEMENT, link: `${ROOT_PATH}/accountManagement`},
+            {name: PATHNAME.ORG, link: `${ROOT_PATH}/orgManagement`},
+            {name: PATHNAME.USER_MANAGEMENT, link: `${ROOT_PATH}/userManagement`},
+            {name: PATHNAME.STUDENT_MANAGEMENT, link: `${ROOT_PATH}/studentManagement`}
         ]
     },
     {
-        name: PATHNAME.NEWS_MANAGEMENT,
+        name: PATHNAME.INFORMATION_MANAGEMENT,
         iconName: 'far fa-newspaper',
         subItems: [
-            {name: PATHNAME.NEWS_MANAGEMENT, link: '/newsManagement'},
-            {name: PATHNAME.NOTES_MANAGEMENT, link: '/notesManagement'}
+            {name: PATHNAME.NEWS_MANAGEMENT, link: `${ROOT_PATH}/newsManagement`},
+            {name: PATHNAME.NOTES_MANAGEMENT, link: `${ROOT_PATH}/notesManagement`}
         ]
     },
     {
         name: PATHNAME.RESOURCE_MANAGEMENT,
         iconName: 'far fa-list-alt',
         subItems: [
-            {name: PATHNAME.ONLINE_LESSONS, link: '/onlineLessons'},
-            {name: PATHNAME.SINGLE_LESSONS, link: '/singleLessons'},
-            {name: PATHNAME.KNOWLEDGE, link: '/knowledge'},
-            {name: PATHNAME.MATERIALS, link: '/materials'},
-            {name: PATHNAME.QUEST_BANK, link: '/questBank'},
-            {name: PATHNAME.QUESTIONNAIRE_BANK, link: '/questionnaire'},
-            {name: PATHNAME.MASTER, link: '/master'},
-            {name: PATHNAME.VENDOR, link: '/vendor'}
+            {name: PATHNAME.ONLINE_LESSONS, link: `${ROOT_PATH}/onlineLessons`},
+            {name: PATHNAME.SINGLE_LESSONS, link: `${ROOT_PATH}/singleLessons`},
+            {name: PATHNAME.KNOWLEDGE, link: `${ROOT_PATH}/knowledge`},
+            {name: PATHNAME.MATERIALS, link: `${ROOT_PATH}/materials`},
+            {name: PATHNAME.QUEST_BANK, link: `${ROOT_PATH}/questBank`},
+            {name: PATHNAME.QUESTIONNAIRE_BANK, link: `${ROOT_PATH}/questionnaire`},
+            {name: PATHNAME.MASTER, link: `${ROOT_PATH}/master`},
+            {name: PATHNAME.VENDOR, link: `${ROOT_PATH}/vendor`}
         ]
     },
     {
         name: PATHNAME.TRAINING,
         iconName: 'fas fa-chalkboard-teacher',
         subItems: [
-            {name: PATHNAME.PUBLISHED_TRAINING, link: '/publishedTraining'},
-            {name: PATHNAME.TRAINING_DRAFt, link: '/draftedTraining'}
+            {name: PATHNAME.PUBLISHED_TRAINING, link: `${ROOT_PATH}/publishedTraining`},
+            {name: PATHNAME.TRAINING_DRAFt, link: `${ROOT_PATH}/draftedTraining`}
         ]
     },
-    {name: PATHNAME.LEARN_TASK, link: '/taskManagement', iconName: 'far fa-clone'},
-    {name: PATHNAME.LEARN_PROJECT, link: '/projectManagement', iconName: 'fas fa-clipboard-list'},
+    {name: PATHNAME.LEARN_TASK, link: `${ROOT_PATH}/taskManagement`, iconName: 'far fa-clone'},
+    {name: PATHNAME.LEARN_PROJECT, link: `${ROOT_PATH}/projectManagement`, iconName: 'fas fa-clipboard-list'},
     {
         name: PATHNAME.SETTING,
         iconName: 'fas fa-wrench',
         subItems: [
-            {name: PATHNAME.TAG_SETTING, link: '/tagSetting'},
-            {name: PATHNAME.SECURITY_PERMISSION_CATEGORY, link: '/securityPermissionSetting'},
-            {name: PATHNAME.LESSONS_DIRECTION_SETTING, link: '/lessonsDirectionSetting'},
-            {name: PATHNAME.TRAINING_AND_COST, link: '/trainingCostSetting'},
-            {name: PATHNAME.CAROUSEL_SETTING, link: '/carouselSetting'}
+            {name: PATHNAME.TAG_SETTING, link: `${ROOT_PATH}/tagSetting`},
+            {name: PATHNAME.SECURITY_PERMISSION_CATEGORY, link: `${ROOT_PATH}/securityPermissionSetting`},
+            {name: PATHNAME.LESSONS_DIRECTION_SETTING, link: `${ROOT_PATH}/lessonsDirectionSetting`},
+            {name: PATHNAME.TRAINING_AND_COST, link: `${ROOT_PATH}/trainingCostSetting`},
+            {name: PATHNAME.CAROUSEL_SETTING, link: `${ROOT_PATH}/carouselSetting`}
         ]
     }
 ];
@@ -91,6 +92,7 @@ const renderSideBarWithPermissions = () => {
 };
 
 export {
-    SIDE_BAR_MENU as default,
+    ROOT_PATH,
+    SIDE_BAR_MENU as sidebar,
     renderSideBarWithPermissions
 };

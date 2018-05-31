@@ -1,5 +1,5 @@
-import { Axios, paginationSetting } from 'utils';
-import * as TYPES from './userListActionType';
+import { Axios, paginationSetting } from 'utils/index';
+import * as TYPES from './accountListActionType';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 export const searchUserByName = (userName) => ({

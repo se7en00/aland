@@ -1,16 +1,13 @@
 import axios from 'axios';
-import { Axios } from 'utils';
+import { Axios } from 'utils/index';
 import { push } from 'react-router-redux';
-import { BASE_URL } from 'constants';
-import { getPermissions } from 'components/userList';
-
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const FIND_PWD_REQUEST = 'FIND_PWD_REQUEST';
-export const SYNC_LOGOUT_REQUEST = 'SYNC_LOGOUT_REQUEST';
+import { BASE_URL } from 'constants/index';
+import { actionCreators } from 'components/accountList';
+import * as TYPES from './loginActionTypes';
 
 //async
 export const login = (user) => (dispatch) => dispatch({
-    type: LOGIN_REQUEST,
+    type: TYPES.LOGIN_REQUEST,
     payload: () => axios({
         method: 'POST',
         url: `${BASE_URL}/api/users/login`,
@@ -26,7 +23,7 @@ export const login = (user) => (dispatch) => dispatch({
     })
     .then((userInfo) =>
     //get permission
-        dispatch(getPermissions(userInfo.id))
+        dispatch(actionCreators.getPermissions(userInfo.id))
             .then(({value}) => {
                 if (!value) return Promise.reject(null);
                 userInfo.permissions = value;
@@ -39,12 +36,12 @@ export const login = (user) => (dispatch) => dispatch({
 export const logout = () => dispatch => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    dispatch({type: SYNC_LOGOUT_REQUEST});
+    dispatch({type: TYPES.SYNC_LOGOUT_REQUEST});
     dispatch(push('/login'));
 };
 
 export const findPwd = (userName, email) => ({
-    type: FIND_PWD_REQUEST,
+    type: TYPES.FIND_PWD_REQUEST,
     payload: () => Axios.post('/api/users/findPassword/', {userName, email})
 });
 

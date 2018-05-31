@@ -1,5 +1,4 @@
-// import {PATHNAME} from './Constants';
-import sidebarList from './sidebarTree';
+import {renderSideBarWithPermissions} from './sidebarTree';
 
 const getAllLinksMap = list => list.reduce((result, item) => {
     if (!item.subItems) {
@@ -17,7 +16,7 @@ let breadcrumbNameMap = {
     '/apps/2/detail': 'Detail'
 };
 
-breadcrumbNameMap = Object.assign(breadcrumbNameMap, getAllLinksMap(sidebarList));
+breadcrumbNameMap = Object.assign(breadcrumbNameMap, getAllLinksMap(renderSideBarWithPermissions()));
 
 export {breadcrumbNameMap};
 

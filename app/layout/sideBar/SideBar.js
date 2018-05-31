@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { withRouter } from 'react-router';
-import {Accordion, AccordionItem, AccordionTitle, AccordionContent} from 'components/accordion';
+import {Accordion, AccordionItem, AccordionTitle, AccordionContent} from 'components/shared/accordion';
 import style from './sideBar.scss';
 
 @withRouter
@@ -24,13 +24,13 @@ class SideBar extends PureComponent {
         this.activeIndex = [];
         const {menuData: data, location} = this.props;
         //get domain path
-        const domainPath = location.pathname.lastIndexOf('/') === 0 ?
-            location.pathname :
-            location.pathname.substr(0, location.pathname.lastIndexOf('/') + 1);
+        // const domainPath = location.pathname.lastIndexOf(match.path) === 0 ?
+        //     location.pathname :
+        //     location.pathname.substr(0, location.pathname.lastIndexOf(match.path) + 1);
         return data.map((item, index) => {
             item.isSelected = false;
             //only single item
-            if (item.link && domainPath.match(item.link)) {
+            if (item.link && location.pathname.match(item.link)) {
                 this.activeIndex.push(index);
                 item.isSelected = true;
             }
@@ -38,7 +38,7 @@ class SideBar extends PureComponent {
             if (item.subItems) {
                 item.subItems.forEach(subItem => {
                     subItem.isSelected = false;
-                    if (subItem.link && domainPath.match(subItem.link)) {
+                    if (subItem.link && location.pathname.match(subItem.link)) {
                         this.activeIndex.push(index);
                         subItem.isSelected = true;
                     }

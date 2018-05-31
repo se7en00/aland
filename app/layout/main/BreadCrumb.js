@@ -8,14 +8,18 @@ import {breadcrumbNameMap} from 'constants';
 import style from './BreadCrumb.scss';
 
 const BreadCrumb = (props) => {
-    const { location } = props;
+    const { location, match } = props;
     const cx = className.bind(style);
 
     const separator = <i className="fas fa-angle-right"/>;
-    const pathSnippets = location.pathname.split('/').filter(i => i);
+    //分离root path(/aland)，保留目标路径
+    const pathSnippets = location.pathname.match(new RegExp(`(?<=${match.path}).*`, 'g'))
+        ?.filter(Boolean)[0]
+        ?.split('/')
+        ?.filter(i => i);
 
-    const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+    const extraBreadcrumbItems = pathSnippets?.map((_, index) => {
+        const url = `${match.path}/${pathSnippets.slice(0, index + 1).join('/')}`;
         return (
             <Breadcrumb.Item key={url}>
                 <Link to={url}>
@@ -27,7 +31,7 @@ const BreadCrumb = (props) => {
 
     const breadcrumbItems = [(
         <Breadcrumb.Item key="home">
-            <Link to="/"><i className="fas fa-home"/></Link>
+            <Link to="/aland"><i className="fas fa-home"/></Link>
         </Breadcrumb.Item>
     )].concat(extraBreadcrumbItems);
 
@@ -39,7 +43,8 @@ const BreadCrumb = (props) => {
 };
 
 BreadCrumb.propTypes = {
-    location: PropTypes.object
+    location: PropTypes.object,
+    match: PropTypes.object
 };
 
 export default withRouter(BreadCrumb);

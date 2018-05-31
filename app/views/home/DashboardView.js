@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadDashboard } from './dashboardAction';
-import List from './PanelList';
+import { loadDashboard, DashboardList } from 'components/dashboard';
 
 @connect(state => ({list: state.dashboard}), {loadDashboard})
 class DashboardView extends React.Component {
@@ -9,7 +8,7 @@ class DashboardView extends React.Component {
         return (
             <div>
                 <h1>Home</h1>
-                <List {...this.props}/>
+                <DashboardList {...this.props}/>
             </div>
         );
     }

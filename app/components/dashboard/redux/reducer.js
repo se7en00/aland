@@ -1,11 +1,11 @@
 import typeToReducer from 'type-to-reducer';
-import { LOAD_DASHBOARD } from './dashboardAction';
+import { LOAD_DASHBOARD } from './action';
 
 const initialState = {
     list: []
 };
 //reducer
-const getPanelList = typeToReducer({
+export default typeToReducer({
     [LOAD_DASHBOARD]: {
         PENDING: () => ({
             ...initialState
@@ -22,5 +22,3 @@ const getPanelList = typeToReducer({
         })
     }
 }, initialState);
-
-export default getPanelList;

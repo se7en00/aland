@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import FadeDown from 'components/animation/FadeDown';
+import FadeDown from 'components/shared/animation/FadeDown';
 
 const AccordionItemContent = (props, context) => {
     const {

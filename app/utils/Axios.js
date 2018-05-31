@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { BASE_URL } from 'constants';
+import { logout } from 'components/login/redux/loginAction';
+import configureStore from '../redux/configureStore';
 
 const instance = axios.create({
     baseURL: BASE_URL,
@@ -22,5 +24,15 @@ instance.interceptors.request.use(config => {
     }
     return config;
 }, error => Promise.reject(error));
+
+instance.interceptors.response.use(response => response, error => {
+    const {data} = error?.response;
+
+    if (data?.errorCode === 'authorization_error') {
+        const store = configureStore();
+        logout()(store.dispatch);
+    }
+    return Promise.reject(error);
+});
 
 export default instance;

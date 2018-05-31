@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Panel from './Panel';
+import Panel from './DashboardItem';
 
-class PanelList extends Component {
+class DashboardList extends Component {
     static propTypes = {
         loading: PropTypes.bool,
         error: PropTypes.bool,
@@ -32,4 +32,4 @@ class PanelList extends Component {
     }
 }
 
-export default PanelList;
+export default DashboardList;

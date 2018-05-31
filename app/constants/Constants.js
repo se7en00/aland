@@ -12,6 +12,7 @@ export const PATHNAME = {
     ORG: '组织架构',
     USER_MANAGEMENT: '人员管理',
     STUDENT_MANAGEMENT: '学员群组管理',
+    INFORMATION_MANAGEMENT: '资讯管理',
     NEWS_MANAGEMENT: '新闻管理',
     NOTES_MANAGEMENT: '通知管理',
     RESOURCE_MANAGEMENT: '资源管理',

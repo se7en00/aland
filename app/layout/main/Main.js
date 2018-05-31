@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { Spin } from 'antd';
 import PropTypes from 'prop-types';
 import className from 'classnames';
-import { Dashboard } from 'components/dashboard/';
-import { UserListView } from 'components/userList';
+import DashboardView from 'views/home/DashboardView';
+import AccountListView from 'views/accountManagement/AccountListView';
 import mainContentStyle from './Main.scss';
 import Breadcrumb from './BreadCrumb';
 
@@ -19,8 +19,8 @@ const Main = (props) => {
             <div className={mainContentStyle.panel}>
                 {isLoading && <div className={mainContentStyle.panel__mask}><Spin size="large" tip="加载中..."/></div>}
                 <ConnectedSwitch>
-                    <Route exact path={`${match.path}`} component={Dashboard}/>
-                    <Route exact path={`${match.path}accountManagement`} component={UserListView}/>
+                    <Route exact path={`${match.path}`} component={DashboardView}/>
+                    <Route exact path={`${match.path}/accountManagement`} component={AccountListView}/>
                 </ConnectedSwitch>
             </div>
         </main>

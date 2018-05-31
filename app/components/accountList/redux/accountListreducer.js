@@ -1,5 +1,5 @@
 import typeToReducer from 'type-to-reducer';
-import * as TYPES from './userListActionType';
+import * as TYPES from './accountListActionType';
 
 //reducer
 const userReducer = typeToReducer({

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 import { DIALOG } from 'constants';
 
-class UserListTable extends Component {
+class AccountListTable extends Component {
     static propTypes = {
         showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
@@ -75,7 +75,6 @@ class UserListTable extends Component {
         syncGetAssociatedUser(user);
         if (dialog === DIALOG.PERMISSION) {
             getPermissions(user.id).then(() => {
-                console.log('test');
                 showDialog(dialog)();
             });
         } else {
@@ -121,4 +120,4 @@ class UserListTable extends Component {
     }
 }
 
-export default UserListTable;
+export default AccountListTable;

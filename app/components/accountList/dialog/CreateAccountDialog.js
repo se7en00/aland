@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, message } from 'antd';
-import { connect } from 'react-redux';
+import { Button, Modal, Tag, message } from 'antd';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { DIALOG } from 'constants';
-import { renderField } from '../../form';
-import validate from './userValidate';
+import { renderField } from '../../shared/form/index';
+import validate from './accountValidate';
+import style from './CreateAccountDialog.scss';
 
 
-@connect(state => ({initialValues: state.userList?.editUser}))
-@reduxForm({form: DIALOG.EDIT_USER, enableReinitialize: true, validate})
-class EditUserDialog extends Component {
-    static dialogName = DIALOG.EDIT_USER;
+@reduxForm({form: DIALOG.CREATE_USER, validate})
+class CreateUserDialog extends Component {
+    static dialogName = DIALOG.CREATE_USER;
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,32 +34,26 @@ class EditUserDialog extends Component {
         //表单是否提交
         submitting: PropTypes.bool,
         //弹出框的宽度
-        width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-        //redux-form 初始表单值
-        initialValues: PropTypes.object
+        width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     };
 
     handleSubmit({loginName, name}) {
-        const {id} = this.props.initialValues;
-        const {updateUser} = this.props.actions;
-        return updateUser(id, loginName, name)
+        return this.props.actions.createUser(loginName, name)
             .then(() => {
-                message.success('修改用户成功！');
+                message.success('创建用户成功！');
                 this.props.actions.getUserList();
-                this.props.hideDialog(DIALOG.EDIT_USER)();
+                this.props.hideDialog(DIALOG.CREATE_USER)();
             })
             .catch(error => {
                 if (error?.errorCode === 'login_user_already_exist') {
                     throw new SubmissionError({
                         loginName: error?.errorMessage
                     });
-                } else if (error?.errorCode === 'need_login_name') {
+                }
+
+                if (error?.errorCode === 'need_login_name') {
                     throw new SubmissionError({
                         name: error?.errorMessage
-                    });
-                } else {
-                    throw new SubmissionError({
-                        _error: error?.errorMessage
                     });
                 }
             });
@@ -73,17 +66,18 @@ class EditUserDialog extends Component {
                 visible={visible}
                 width={width}
                 className="test"
-                title="编辑账户名"
-                onCancel={hideDialog(DIALOG.EDIT_USER)}
+                title="新增账户名"
+                onCancel={hideDialog(DIALOG.CREATE_USER)}
                 footer={[
-                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit(DIALOG.EDIT_USER))} loading={submitting} type="primary">保存</Button>,
-                    <Button key="back" onClick={hideDialog(DIALOG.EDIT_USER)}>取消</Button>
+                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit(DIALOG.CREATE_USER))} loading={submitting} type="primary">保存</Button>,
+                    <Button key="back" onClick={hideDialog(DIALOG.CREATE_USER)}>取消</Button>
                 ]}
             >
-                <Form name="editform" onSubmit={handleSubmit(this.handleSubmit)}>
+                <Form name="createform" onSubmit={handleSubmit(this.handleSubmit)}>
                     {error && <div className="dialogContainer--error"><strong >{error}</strong></div>}
 
-                    <div className="dialogContainer">
+                    <div className="dialogContainer u-position-relative">
+                        <Tag className={style.defaultPWD_tag}>初始密码为123456</Tag>
 
                         <Field
                             labelClassName="col-md-2"
@@ -114,4 +108,4 @@ class EditUserDialog extends Component {
     }
 }
 
-export default EditUserDialog;
+export default CreateUserDialog;

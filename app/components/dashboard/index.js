@@ -1,4 +1,6 @@
 //reducer
-export {default} from './dashboardReducer';
-//view
-export { default as Dashboard } from './dashboardView';
+export { default as dashboardReducer } from './redux/reducer';
+//component
+export { default as DashboardList } from './DashboardList';
+//action
+export * from './redux/action';

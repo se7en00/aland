@@ -1,5 +1,5 @@
 import { themr } from 'react-css-themr';
-import {IDENTIFIERS} from 'constants';
+import {IDENTIFIERS} from 'constants/index';
 import AccordionContainer from './Accordion';
 import AccordionItem from './AccordionItem';
 import AccordionItemContent from './AccordionItemContent';

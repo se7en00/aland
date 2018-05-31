@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
-import {login, findPwd} from './loginAction';
-import Login from './Login';
-import ResetPWD from './dialog/ResetPwdDialog';
-import Dialog from '../dialog';
+import {login, findPwd, LoginComponent, ResetPwdDialog as ResetPWD} from 'components/login';
+import Dialog from 'components/shared/dialog';
 
 @connect(null, mapDispatchToProps)
 @Dialog(<ResetPWD/>)
 class LoginView extends Component {
     render() {
         return (
-            <Login {...this.props}/>
+            <LoginComponent {...this.props}/>
         );
     }
 }

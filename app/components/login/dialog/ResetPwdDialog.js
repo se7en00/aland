@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { DIALOG } from 'constants';
+import { DIALOG } from 'constants/index';
 import { Button, Modal, message } from 'antd';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
-import { renderField } from '../../form';
+import { renderField } from '../../shared/form/index';
 import validate from './validate';
 // import { searchUserByName } from '../../userList/UserListAction';
 

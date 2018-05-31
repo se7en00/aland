@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Panel extends Component {
+class DashboardItem extends Component {
     static propTypes = {
         id: PropTypes.number,
         username: PropTypes.string,
@@ -19,4 +19,4 @@ class Panel extends Component {
     }
 }
 
-export default Panel;
+export default DashboardItem;

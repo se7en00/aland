@@ -2,17 +2,18 @@ import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Menu, Modal, Button, message} from 'antd';
-import { syncGetAssociatedUser, resetPassword } from 'components/userList/userListAction';
-import { renderField } from 'components/form';
-import { logout } from 'components/login/loginAction';
+import { actionCreators } from 'components/accountList';
+import { renderField } from 'components/shared/form/index';
+import { logout } from 'components/login/redux/loginAction';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import UserAvatar from './UserAvatar';
 import style from './User.scss';
 import validate from './passwordValidate';
 
 const SubMenu = Menu.SubMenu;
+const {syncGetAssociatedUser, resetPassword} = actionCreators;
 
-@connect(state => ({initialValues: state.userList?.editUser}), {syncGetAssociatedUser, logout, resetPassword})
+@connect(state => ({initialValues: state.accountList?.editUser}), {syncGetAssociatedUser, logout, resetPassword})
 @reduxForm({form: 'resetSelfPWD', enableReinitialize: true, validate})
 class UserMenu extends Component {
     static propTypes = {
