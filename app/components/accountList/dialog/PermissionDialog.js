@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tree, Button, Modal, message } from 'antd';
 import { Form, reduxForm, SubmissionError, submit } from 'redux-form';
-import { sidebar, DIALOG} from 'constants';
+import { sidebarTree, DIALOG} from 'constants';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state) {
@@ -51,7 +51,7 @@ class PermissionDialog extends Component {
     }
 
     //渲染树
-    renderAllTreeNodes = (data) => data.map((item, index) => {
+    renderAllTreeNodes = (data) => data.map((item) => {
         let subNodes;
         const key = item.subItems ? `${item.name}` : `${item.name}-${item.name}_0`;
         //2级菜单
@@ -120,7 +120,7 @@ class PermissionDialog extends Component {
                         onCheck={this.onCheck}
                     >
                         <TreeNode title="所有" key="0-0">
-                            {this.renderAllTreeNodes(sidebar)}
+                            {this.renderAllTreeNodes(sidebarTree)}
                         </TreeNode>
                     </Tree>
                 </Form>

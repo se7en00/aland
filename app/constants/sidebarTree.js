@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import {PATHNAME} from './Constants';
 
 const ROOT_PATH = '/aland';
@@ -78,7 +79,7 @@ const renderSideBarWithPermissions = () => {
         return SIDE_BAR_MENU.filter(item => {
             //先过滤一级菜单
             if (Object.keys(formatPermissions).includes(item.name)) {
-                const menu = item;
+                const menu = R.clone(item);
                 const allSubMenusUnderFirstMenu = formatPermissions[item.name];
                 //过滤二级菜单
                 if (menu.subItems) {
@@ -89,10 +90,11 @@ const renderSideBarWithPermissions = () => {
             return false;
         });
     }
+    return [];
 };
 
 export {
     ROOT_PATH,
-    SIDE_BAR_MENU as sidebar,
+    SIDE_BAR_MENU as sidebarTree,
     renderSideBarWithPermissions
 };

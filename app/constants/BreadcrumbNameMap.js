@@ -16,7 +16,8 @@ let breadcrumbNameMap = {
     '/apps/2/detail': 'Detail'
 };
 
-breadcrumbNameMap = Object.assign(breadcrumbNameMap, getAllLinksMap(renderSideBarWithPermissions()));
+const allData = renderSideBarWithPermissions();
+breadcrumbNameMap = Object.assign(breadcrumbNameMap, getAllLinksMap(allData));
 
 export {breadcrumbNameMap};
 
