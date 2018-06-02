@@ -1,0 +1,23 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
+import DashboardView from 'views/home/DashboardView';
+import OnlineLessonsAddView from 'views/resourceManagement/onlineLessons/OnlineLessonsAddView';
+import OnlineLessonsView from 'views/resourceManagement/onlineLessons/OnlineLessonsView';
+import AccountListView from 'views/accountSetting/AccountListView';
+import {ConnectedSwitch} from './ConnectedSwitch';
+
+const Routes = ({match}) => (
+    <ConnectedSwitch>
+        <Route exact path={`${match.path}`} component={DashboardView}/>
+        <Route exact path={`${match.path}/accountManagement`} component={AccountListView}/>
+        <Route exact path={`${match.path}/onlineLessons`} component={OnlineLessonsView}/>
+        <Route exact path={`${match.path}/onlineLessons/add`} component={OnlineLessonsAddView}/>
+    </ConnectedSwitch>
+);
+
+Routes.propTypes = {
+    match: PropTypes.object
+};
+
+export default Routes;

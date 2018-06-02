@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { PANEL_TITLE } from 'constants';
+import { PANEL_TITLE, PATHNAME, getLinkByName } from 'constants';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import { paginationSetting } from 'utils';
@@ -19,6 +19,10 @@ class OnlineLessonList extends Component {
         this.props.actions.getOnlineLessonsList(paginationSetting.pageSize);
     }
 
+    redirect = () => {
+        this.props.actions.push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/add`);
+    }
+
     render() {
         const {onlineLessons: {list}, actions} = this.props;
         return (
@@ -26,7 +30,7 @@ class OnlineLessonList extends Component {
                 <Header title={PANEL_TITLE.ONLINE_LESSONS}/>
                 <div className={panelStyle.panel__body}>
                     <OnlineLessonsSearch/>
-                    <Button type="primary" className="editable-add-btn u-pull-down-md" ghost>新增线上课程</Button>
+                    <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增线上课程</Button>
                     <OnlineLessonsTable dataSource={list} actions={actions}/>
                 </div>
             </Fragment>

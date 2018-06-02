@@ -10,10 +10,11 @@ const getAllLinksMap = list => list.reduce((result, item) => {
 }, {});
 
 let breadcrumbNameMap = {
-    '/apps/1': 'Application1',
-    '/apps/2': 'Application2',
-    '/apps/1/detail': 'Detail',
-    '/apps/2/detail': 'Detail'
+    '/aland/onlineLessons/add': '新建线上课程'
+    // '/apps/1': 'Application1',
+    // '/apps/2': 'Application2',
+    // '/apps/1/detail': 'Detail',
+    // '/apps/2/detail': 'Detail'
 };
 
 const allData = renderSideBarWithPermissions();

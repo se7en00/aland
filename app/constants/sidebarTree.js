@@ -93,8 +93,27 @@ const renderSideBarWithPermissions = () => {
     return [];
 };
 
+const getLinkByName = (name) => {
+    let link;
+    const result = SIDE_BAR_MENU.map(item => {
+        if (item.link && item.name === name) {
+            return item;
+        }
+        if (item.subItems) {
+            return item.subItems.filter(subItem => subItem.name === name)[0] || null;
+        }
+        return null;
+    }).filter(Boolean);
+
+    if (result && result.length) {
+        link = result[0].link;
+    }
+    return link;
+};
+
 export {
     ROOT_PATH,
     SIDE_BAR_MENU as sidebarTree,
+    getLinkByName,
     renderSideBarWithPermissions
 };
