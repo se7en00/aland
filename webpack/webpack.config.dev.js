@@ -62,6 +62,7 @@ module.exports = {
     plugins: [
         // Generates an `index.html` file with the <script> injected.
         new HtmlWebpackPlugin({
+            title: 'aland',
             inject: true,
             showErrors: true,
             template: paths.appHtml
@@ -94,7 +95,7 @@ module.exports = {
                     priority: -20,
                     reuseExistingChunk: true
                 },
-                //打包重复出现的代码
+                //common code to vendor bundle
                 vendor: {
                     chunks: 'initial',
                     minChunks: 2,
@@ -102,7 +103,7 @@ module.exports = {
                     minSize: 0, // This is example is too small to create commons chunks
                     name: 'vendor'
                 },
-                //打包第三方类库
+
                 commons: {
                     name: 'commons',
                     chunks: 'initial',

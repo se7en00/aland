@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Menu, Modal, Button, message} from 'antd';
 import { actionCreators } from 'components/accountList';
-import { renderField } from 'components/shared/form/index';
+import { renderTextField } from 'components/shared/form/index';
 import { logout } from 'components/login/redux/loginAction';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import UserAvatar from './UserAvatar';
@@ -106,7 +106,7 @@ class UserMenu extends Component {
                                 className="col-md-8"
                                 rowClassName="dialogContainer__inputRow"
                                 name="oldPsd"
-                                component={renderField}
+                                component={renderTextField}
                                 type="password"
                                 placeholder="当前密码"
                                 label="当前密码"
@@ -117,7 +117,7 @@ class UserMenu extends Component {
                                 className="col-md-8"
                                 rowClassName="dialogContainer__inputRow"
                                 name="newPsd"
-                                component={renderField}
+                                component={renderTextField}
                                 type="password"
                                 placeholder="新密码"
                                 label="新密码"
@@ -128,7 +128,7 @@ class UserMenu extends Component {
                                 className="col-md-8 offset-md-2"
                                 rowClassName="dialogContainer__inputRow"
                                 name="newPsd1"
-                                component={renderField}
+                                component={renderTextField}
                                 type="password"
                                 placeholder="重复上面的新密码"
                             />

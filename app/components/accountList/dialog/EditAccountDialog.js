@@ -4,7 +4,7 @@ import { Button, Modal, message } from 'antd';
 import { connect } from 'react-redux';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { DIALOG } from 'constants';
-import { renderField } from 'components/shared/form';
+import { renderTextField } from '../../shared/form';
 import validate from './accountValidate';
 
 
@@ -90,7 +90,7 @@ class EditUserDialog extends Component {
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
                             name="loginName"
-                            component={renderField}
+                            component={renderTextField}
                             type="text"
                             placeholder="登录名"
                             label="登录名"
@@ -101,7 +101,7 @@ class EditUserDialog extends Component {
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
                             name="name"
-                            component={renderField}
+                            component={renderTextField}
                             type="text"
                             placeholder="请填写真实姓名"
                             label="账户名"

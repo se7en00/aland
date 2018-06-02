@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
-// import * as R from 'ramda';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 import { DIALOG } from 'constants';
 

@@ -5,7 +5,7 @@ import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { Base64 } from 'js-base64';
 import { Button, Icon } from 'antd';
 import style from './Login.scss';
-import { renderField } from '../shared/form/index';
+import { renderTextField } from '../shared/form/index';
 import validate from './validate';
 
 @reduxForm({form: 'login', validate})
@@ -56,7 +56,7 @@ class Login extends Component {
                             layout="elementOnly"
                             rowClassName={style.login__input}
                             name="username"
-                            component={renderField}
+                            component={renderTextField}
                             type="text"
                             prefix={<Icon type="user"/>}
                             placeholder="登录名"
@@ -66,7 +66,7 @@ class Login extends Component {
                             layout="elementOnly"
                             rowClassName={style.login__input}
                             name="password"
-                            component={renderField}
+                            component={renderTextField}
                             type="password"
                             prefix={<Icon type="lock"/>}
                             placeholder="密码"

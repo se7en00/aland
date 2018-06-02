@@ -47,7 +47,8 @@ export const DIALOG = {
 };
 
 export const PANEL_TITLE = {
-    ACCOUNT: '账户列表'
+    ACCOUNT: '账户列表',
+    ONLINE_LESSONS: '线上课程库管理'
 };
 
 export const BASE_URL = 'http://139.224.113.208:8181/aland-training';

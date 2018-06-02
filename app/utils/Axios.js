@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { BASE_URL } from 'constants';
 import { logout } from 'components/login/redux/loginAction';
+import { message } from 'antd';
 import configureStore from '../redux/configureStore';
 
 const instance = axios.create({
@@ -31,6 +32,7 @@ instance.interceptors.response.use(response => response, error => {
     if (data?.errorCode === 'authorization_error') {
         const store = configureStore();
         logout()(store.dispatch);
+        message.error(data?.errorCode);
     }
     return Promise.reject(error);
 });

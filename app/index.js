@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 import 'scss/global.scss';
 import 'scss/customAntd.less';
 import App from './containers/App';
@@ -11,10 +13,13 @@ const store = configureStore();
 const render = Component => {
     ReactDOM.render(
         <Provider store={store}>
-            <Component/>
+            <LocaleProvider locale={zhCN}>
+                <Component/>
+            </LocaleProvider>
         </Provider>,
         mountNode);
 };
+
 render(App);
 // // Webpack Hot Module Replacement API
 // if (module.hot) {

@@ -6,7 +6,8 @@ import { Spin } from 'antd';
 import PropTypes from 'prop-types';
 import className from 'classnames';
 import DashboardView from 'views/home/DashboardView';
-import AccountListView from 'views/accountManagement/AccountListView';
+import AccountListView from 'views/accountSetting/AccountListView';
+import OnlineLessonsView from 'views/resourceManagement/OnlineLessonsView';
 import mainContentStyle from './Main.scss';
 import Breadcrumb from './BreadCrumb';
 
@@ -21,6 +22,7 @@ const Main = (props) => {
                 <ConnectedSwitch>
                     <Route exact path={`${match.path}`} component={DashboardView}/>
                     <Route exact path={`${match.path}/accountManagement`} component={AccountListView}/>
+                    <Route exact path={`${match.path}/onlineLessons`} component={OnlineLessonsView}/>
                 </ConnectedSwitch>
             </div>
         </main>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { DIALOG } from 'constants/index';
 import { Button, Modal, message } from 'antd';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
-import { renderField } from '../../shared/form/index';
+import { renderTextField } from '../../shared/form/index';
 import validate from './validate';
 // import { searchUserByName } from '../../userList/UserListAction';
 
@@ -78,7 +78,7 @@ class ResetPwdDialog extends Component {
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
                             name="usernameForReset"
-                            component={renderField}
+                            component={renderTextField}
                             type="text"
                             placeholder="请输入您的登录名"
                             label="登录名"
@@ -89,7 +89,7 @@ class ResetPwdDialog extends Component {
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
                             name="email"
-                            component={renderField}
+                            component={renderTextField}
                             type="email"
                             placeholder="请输入您的邮箱"
                             label="邮箱"

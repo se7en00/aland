@@ -4,7 +4,7 @@ import { Button, Modal, message } from 'antd';
 import { connect } from 'react-redux';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { DIALOG } from 'constants';
-import { renderField } from '../../shared/form/index';
+import { renderTextField } from '../../shared/form';
 import validate from './passwordValidate';
 
 
@@ -85,7 +85,7 @@ class ResetUserPassword extends Component {
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
                             name="oldPsd"
-                            component={renderField}
+                            component={renderTextField}
                             type="password"
                             placeholder="当前密码"
                             label="当前密码"
@@ -96,7 +96,7 @@ class ResetUserPassword extends Component {
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
                             name="newPsd"
-                            component={renderField}
+                            component={renderTextField}
                             type="password"
                             placeholder="新密码"
                             label="新密码"
@@ -107,7 +107,7 @@ class ResetUserPassword extends Component {
                             className="col-md-8 offset-md-2"
                             rowClassName="dialogContainer__inputRow"
                             name="newPsd1"
-                            component={renderField}
+                            component={renderTextField}
                             type="password"
                             placeholder="重复上面的新密码"
                         />

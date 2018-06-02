@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Modal, Tag, message } from 'antd';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { DIALOG } from 'constants';
-import { renderField } from '../../shared/form/index';
+import { renderTextField } from '../../shared/form';
 import validate from './accountValidate';
 import style from './CreateAccountDialog.scss';
 
@@ -84,7 +84,7 @@ class CreateUserDialog extends Component {
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
                             name="loginName"
-                            component={renderField}
+                            component={renderTextField}
                             type="text"
                             placeholder="登录名"
                             label="登录名"
@@ -95,7 +95,7 @@ class CreateUserDialog extends Component {
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
                             name="name"
-                            component={renderField}
+                            component={renderTextField}
                             type="text"
                             placeholder="请填写真实姓名"
                             label="账户名"

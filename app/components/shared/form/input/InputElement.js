@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { Input, Icon } from 'antd';
 import classNames from 'classnames/bind';
 import style from './InputElement.scss';
+import remapReduxFormProps from '../RemapReduxFormProps';
 
+@remapReduxFormProps
 class InputElement extends PureComponent {
     static propTypes = {
         input: PropTypes.object,
@@ -11,21 +13,13 @@ class InputElement extends PureComponent {
         meta: PropTypes.object,
         prefix: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
         type: PropTypes.string,
-        label: PropTypes.string,
-        className: PropTypes.string,
-        rowClassName: PropTypes.string,
-        labelClassName: PropTypes.string,
-        layout: PropTypes.oneOf(['horizontal', 'vertical', 'elementOnly'])
+        className: PropTypes.string
     }
 
-    static defaultProps = {
-        rowClassName: '',
-        labelClassName: '',
-        layout: 'horizontal'
-    }
+    //渲染error msg
+    errorMsg = (errorMsg) => <span className="error">{errorMsg}</span>
 
-    //渲染antd input
-    inputElement = () => {
+    render() {
         const {
             input,
             placeholder,
@@ -38,8 +32,9 @@ class InputElement extends PureComponent {
         let errorSuffix;
         const cx = classNames.bind(style);
         const inputClass = cx(className, 'input-wrapper', {'error-border': touched && (error || warning)});
-        errorSuffix = touched && error ? <Icon type="close-circle" className={style.error}/> : null;
+        errorSuffix = touched && error ? <Icon type="close-circle" className="error"/> : null;
         errorSuffix = asyncValidating ? <Icon type="loading" className={style.loadingColor}/> : errorSuffix;
+
         return (
             <div className={inputClass}>
                 <Input
@@ -51,39 +46,6 @@ class InputElement extends PureComponent {
                 {touched && error && this.errorMsg(error)}
             </div>
         );
-    }
-
-    //渲染error msg
-    errorMsg = (errorMsg) => <span className={style.error}>{errorMsg}</span>
-
-    //渲染label
-    label = (label, inputName, labelClass) => <label htmlFor={inputName} className={labelClass}>{label}</label>
-
-    renderInputElement = () => {
-        const {
-            layout,
-            input: {name},
-            label,
-            rowClassName,
-            labelClassName} = this.props;
-        const cssClasses = {row: []}; //init row css
-
-        //水平方向, 父层div class默认为row
-        if (layout === 'horizontal') {
-            cssClasses.row.push('row');
-        }
-
-        //自定义父层div class
-        cssClasses.row.push(rowClassName);
-        return (
-            <div className={classNames(cssClasses.row)}>
-                {label && layout !== 'elementOnly' && this.label(label, name, labelClassName)}
-                {this.inputElement()}
-            </div>);
-    };
-
-    render() {
-        return this.renderInputElement();
     }
 }
 
