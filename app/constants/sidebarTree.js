@@ -1,4 +1,3 @@
-import * as R from 'ramda';
 import {PATHNAME} from './Constants';
 
 const ROOT_PATH = '/aland';

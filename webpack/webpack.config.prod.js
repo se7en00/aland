@@ -97,6 +97,11 @@ module.exports = {
         // Otherwise React will be compiled in the very slow development mode.
         new webpack.DefinePlugin(env.stringified),
 
+        new webpack.ProvidePlugin({
+            moment: 'moment',
+            R: 'ramda'
+        }),
+
         new WebpackParallelUglifyPlugin({
             uglifyJS: {
                 output: {

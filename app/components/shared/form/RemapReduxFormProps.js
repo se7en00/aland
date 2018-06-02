@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as R from 'ramda';
 import classNames from 'classnames/bind';
 
 const remapReduxFormProps = (WrappedComponent) => class WithRemappedCustomProps extends React.Component {

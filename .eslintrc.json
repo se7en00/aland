@@ -20,7 +20,9 @@
         "document": false,
         "window": false,
         "console": false,
-        "module": false
+        "module": false,
+        "R": true,
+        "moment": true
     },
     "rules": {
         "no-param-reassign": [2, { "props": false }],

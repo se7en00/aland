@@ -2,7 +2,6 @@
 const lib = [
     'classnames',
     'core-decorators',
-    'moment',
     'react',
     'react-dom',
     'react-router',
@@ -10,10 +9,19 @@ const lib = [
     'react-router-dom',
     'react-transition-group',
     'prop-types',
-    'ramda',
     'uuid',
     'chalk',
-    'antd'
+    'antd',
+    'type-to-reducer',
+    'redux-thunk',
+    'redux-promise-middleware',
+    'redux-promise',
+    'redux-logger',
+    'redux-form',
+    'redux',
+    'js-base64',
+    'history',
+    'axios'
 ];
 
 module.exports = lib;
