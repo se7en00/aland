@@ -5,6 +5,7 @@ import DashboardView from 'views/home/DashboardView';
 import OnlineLessonsAddView from 'views/resourceManagement/onlineLessons/OnlineLessonsAddView';
 import OnlineLessonsView from 'views/resourceManagement/onlineLessons/OnlineLessonsView';
 import AccountListView from 'views/accountSetting/AccountListView';
+import UserList from 'views/userManagement/UserList';
 import {ConnectedSwitch} from './ConnectedSwitch';
 
 const Routes = ({match}) => (
@@ -13,6 +14,7 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/accountManagement`} component={AccountListView}/>
         <Route exact path={`${match.path}/onlineLessons`} component={OnlineLessonsView}/>
         <Route exact path={`${match.path}/onlineLessons/add`} component={OnlineLessonsAddView}/>
+        <Route exact path={`${match.path}/userManagement`} component={UserList}/>
     </ConnectedSwitch>
 );
 
