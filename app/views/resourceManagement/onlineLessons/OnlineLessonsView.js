@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 // import Dialog from 'components/shared/dialog';
-import { OnlineLessonList, actionCreators } from 'components/onlineLessons/index';
+import { OnlineLessonList, actionCreators } from 'components/onlineLessons';
 
 @connect(state => ({onlineLessons: state.onlineLessons}), mapDispatchToProps)
 class OnlineLessonsView extends Component {

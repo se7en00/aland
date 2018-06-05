@@ -42,7 +42,7 @@ AccordionItemTitle.propTypes = {
 AccordionItemTitle.defaultProps = {
     id: '',
     rootTag: 'div',
-    onClick: () => {console.log('2222');},
+    onClick: () => {},
     className: '',
     hideDownIcon: false,
     expanded: false,

@@ -43,12 +43,16 @@ export const DIALOG = {
     CREATE_USER: 'createUser',
     EDIT_USER: 'editUser',
     RESET_USER_PASSWORD: 'resetUserPWD',
-    PERMISSION: 'permission'
+    PERMISSION: 'permission',
+    CHAPTER: 'chapter',
+    SECTION: 'section',
+    POINT: 'point'
 };
 
 export const PANEL_TITLE = {
     ACCOUNT: '账户列表',
-    ONLINE_LESSONS: '线上课程库管理'
+    ONLINE_LESSONS: '线上课程库管理',
+    ONLINE_LESSONS_ADD: '新建线上课程'
 };
 
 export const BASE_URL = 'http://139.224.113.208:8181/aland-training';

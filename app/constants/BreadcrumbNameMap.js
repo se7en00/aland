@@ -1,6 +1,6 @@
 import {renderSideBarWithPermissions} from './sidebarTree';
 
-const getAllLinksMap = list => list.reduce((result, item) => {
+const getAllLinksMap = list => list?.reduce((result, item) => {
     if (!item.subItems) {
         result[item.link] = item.name;
         return result;

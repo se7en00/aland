@@ -20,4 +20,8 @@
     & :global(.ant-input-prefix) {
         color: $input-prefix-icon-color;
     }
+
+    & :global(.ant-input-wrapper) {
+        display: table !important;
+    }
 }

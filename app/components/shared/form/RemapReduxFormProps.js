@@ -13,7 +13,8 @@ const remapReduxFormProps = (WrappedComponent) => class WithRemappedCustomProps 
             className: PropTypes.string,
             rowClassName: PropTypes.string,
             labelClassName: PropTypes.string,
-            layout: PropTypes.oneOf(['horizontal', 'vertical', 'elementOnly'])
+            layout: PropTypes.oneOf(['horizontal', 'vertical', 'elementOnly']),
+            style: PropTypes.object
         };
 
         static defaultProps = {
@@ -30,10 +31,11 @@ const remapReduxFormProps = (WrappedComponent) => class WithRemappedCustomProps 
                 layout,
                 input: {name},
                 label,
+                style,
                 rowClassName,
                 labelClassName} = this.props;
             //过滤一些不用的属性
-            const omitProps = ['layout', 'label', 'rowClassName', 'labelClassName'];
+            const omitProps = ['layout', 'label', 'rowClassName', 'labelClassName', 'style'];
             const props = R.omit(omitProps, this.props);
 
             const cssClasses = {row: []}; //init row css
@@ -47,7 +49,7 @@ const remapReduxFormProps = (WrappedComponent) => class WithRemappedCustomProps 
             cssClasses.row.push(rowClassName);
 
             return (
-                <div className={classNames(cssClasses.row)}>
+                <div className={classNames(cssClasses.row)} style={style}>
                     {label && layout !== 'elementOnly' && this.label(label, name, labelClassName)}
                     <WrappedComponent {...props}/>
                 </div>

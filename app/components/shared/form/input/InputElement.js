@@ -13,6 +13,8 @@ class InputElement extends PureComponent {
         meta: PropTypes.object,
         prefix: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
         type: PropTypes.string,
+        rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        addonBefore: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
         className: PropTypes.string
     }
 
@@ -26,7 +28,9 @@ class InputElement extends PureComponent {
             meta: { touched, error, warning, asyncValidating },
             type,
             className,
-            prefix = null
+            prefix = null,
+            addonBefore,
+            rows
         } = this.props;
 
         let errorSuffix;
@@ -37,12 +41,23 @@ class InputElement extends PureComponent {
 
         return (
             <div className={inputClass}>
-                <Input
-                    {...input}
-                    type={type}
-                    suffix={errorSuffix}
-                    prefix={prefix}
-                    placeholder={placeholder}/>
+                {type === 'textarea' &&
+                    <Input.TextArea
+                        {...input}
+                        rows={rows}
+                        type={type}
+                        placeholder={placeholder}/>
+                }
+                {type !== 'textarea' &&
+                    <Input
+                        {...input}
+                        addonBefore={addonBefore}
+                        rows={rows}
+                        type={type}
+                        suffix={errorSuffix}
+                        prefix={prefix}
+                        placeholder={placeholder}/>
+                }
                 {touched && error && this.errorMsg(error)}
             </div>
         );

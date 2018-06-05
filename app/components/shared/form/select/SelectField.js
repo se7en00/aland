@@ -10,7 +10,7 @@ class SelectField extends PureComponent {
         children: PropTypes.node,
         placeholder: PropTypes.string,
         // meta: PropTypes.object,
-        // className: PropTypes.string,
+        className: PropTypes.string,
         defaultValue: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.number,
@@ -22,10 +22,11 @@ class SelectField extends PureComponent {
     errorMsg = (errorMsg) => <span className="error">{errorMsg}</span>
 
     render() {
-        const {input, children, placeholder, defaultValue } = this.props;
+        const {input, children, placeholder, defaultValue, className } = this.props;
         const {value = defaultValue, onChange} = input;
         return (
             <Select
+                className={className}
                 value={value || undefined} //加个undefined是用来修复value是空字符串时，placeholder不显示的问题 https://github.com/ant-design/ant-design/issues/2367
                 onChange={onChange}
                 placeholder={placeholder}

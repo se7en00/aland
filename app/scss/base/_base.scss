@@ -69,6 +69,11 @@ button {
     }
 }
 
+.inputRow {
+    @extend .dialogContainer__inputRow;
+        justify-content: flex-start;
+}
+
 .highlightColor {
     color: $highlightColor !important;
 }
