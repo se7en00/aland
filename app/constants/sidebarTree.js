@@ -26,8 +26,7 @@ const SIDE_BAR_MENU = [
         iconName: 'far fa-list-alt',
         subItems: [
             {name: PATHNAME.ONLINE_LESSONS, link: `${ROOT_PATH}/onlineLessons`},
-            {name: PATHNAME.SINGLE_LESSONS, link: `${ROOT_PATH}/singleLessons`},
-            {name: PATHNAME.KNOWLEDGE, link: `${ROOT_PATH}/knowledge`},
+            {name: PATHNAME.ONE_CLICK, link: `${ROOT_PATH}/oneClick`},
             {name: PATHNAME.MATERIALS, link: `${ROOT_PATH}/materials`},
             {name: PATHNAME.QUEST_BANK, link: `${ROOT_PATH}/questBank`},
             {name: PATHNAME.QUESTIONNAIRE_BANK, link: `${ROOT_PATH}/questionnaire`},

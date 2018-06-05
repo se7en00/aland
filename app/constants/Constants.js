@@ -17,8 +17,7 @@ export const PATHNAME = {
     NOTES_MANAGEMENT: '通知管理',
     RESOURCE_MANAGEMENT: '资源管理',
     ONLINE_LESSONS: '线上课程库管理',
-    KNOWLEDGE: '知识点库管理',
-    SINGLE_LESSONS: '一点课库管理',
+    ONE_CLICK: '一点通管理',
     MATERIALS: '素材管理',
     QUEST_BANK: '题库管理',
     QUESTIONNAIRE_BANK: '问卷库管理',
@@ -52,7 +51,8 @@ export const DIALOG = {
 export const PANEL_TITLE = {
     ACCOUNT: '账户列表',
     ONLINE_LESSONS: '线上课程库管理',
-    ONLINE_LESSONS_ADD: '新建线上课程'
+    ONLINE_LESSONS_ADD: '新建线上课程',
+    ONE_CLICK: '一点通管理'
 };
 
 export const BASE_URL = 'http://139.224.113.208:8181/aland-training';

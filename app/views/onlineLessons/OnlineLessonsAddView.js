@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
-import {OnlineLessonsCreate, CreateChapterDialog, CreateSectionDialog, CreatePointDialog, actionCreators} from 'components/onlineLessons';
-import Dialog from 'components/shared/dialog';
+import {OnlineLessonsCreate, CreateChapterDialog, CreateSectionDialog, CreatePointDialog, actionCreators} from 'components/onlineLessons/index';
+import Dialog from 'components/shared/dialog/index';
 import { connect } from 'react-redux';
 import { resetForm } from 'redux/globalAction';
 import { bindActionCreators } from 'redux';

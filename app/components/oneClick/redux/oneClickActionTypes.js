@@ -1,0 +1,1 @@
+export const LOAD_ONE_CLICK_LIST = 'LOAD_ONE_CLICK_LIST';
