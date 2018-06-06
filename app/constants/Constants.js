@@ -52,7 +52,8 @@ export const PANEL_TITLE = {
     ACCOUNT: '账户列表',
     ONLINE_LESSONS: '线上课程库管理',
     ONLINE_LESSONS_ADD: '新建线上课程',
-    ONE_CLICK: '一点通管理'
+    ONE_CLICK: '一点通管理',
+    ONE_CLICK_ADD: '新建一点通'
 };
 
 export const BASE_URL = 'http://139.224.113.208:8181/aland-training';
