@@ -8,7 +8,7 @@ import { renderTextField } from '../../shared/form';
 import validate from './accountValidate';
 
 
-@connect(state => ({initialValues: state.userList?.editUser}))
+@connect(state => ({initialValues: state.accountList?.editUser}))
 @reduxForm({form: DIALOG.EDIT_USER, enableReinitialize: true, validate})
 class EditUserDialog extends Component {
     static dialogName = DIALOG.EDIT_USER;

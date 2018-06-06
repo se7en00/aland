@@ -8,7 +8,7 @@ import { renderTextField } from '../../shared/form';
 import validate from './passwordValidate';
 
 
-@connect(state => ({initialValues: state.userList?.editUser}))
+@connect(state => ({initialValues: state.accountList?.editUser}))
 @reduxForm({form: DIALOG.RESET_USER_PASSWORD, enableReinitialize: true, validate})
 class ResetUserPassword extends Component {
     static dialogName = DIALOG.RESET_USER_PASSWORD;
