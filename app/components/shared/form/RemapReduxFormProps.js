@@ -19,7 +19,7 @@ const remapReduxFormProps = (WrappedComponent) => class WithRemappedCustomProps 
 
         static defaultProps = {
             rowClassName: '',
-            labelClassName: '',
+            labelClassName: 'col-md-2 col-lg-1',
             layout: 'horizontal'
         }
 

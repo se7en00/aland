@@ -1,8 +1,9 @@
-import axios from 'axios';
-import { paginationSetting } from 'utils/index';
+import { Axios, paginationSetting } from 'utils/index';
 import * as TYPES from './actionTypes';
 
-export const getOnlineLessonsList = (pageSize = paginationSetting.pageSize, page) => ({
+export const getOnlineLessonsList = ({pageSize = paginationSetting.pageSize, ...rest}) => ({
     type: TYPES.LOAD_ONLINE_LESSONS_LIST,
-    payload: () => axios.get('/api/onlineLessons', {params: {size: pageSize, page}}).then(response => response.data)
+    payload: () => Axios.get('/api/courses', {params: {size: pageSize, ...rest}})
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
 });

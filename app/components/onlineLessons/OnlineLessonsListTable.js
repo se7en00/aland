@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-// import { DIALOG } from 'constants';
 
 class OnlineLessonsListTable extends Component {
     static propTypes = {
@@ -26,27 +25,27 @@ class OnlineLessonsListTable extends Component {
         }, {
             title: '课程名称',
             align: 'center',
-            dataIndex: 'lessonName'
+            dataIndex: 'name'
         }, {
             title: '状态',
             align: 'center',
-            dataIndex: 'status'
+            dataIndex: 'courseStatus'
         }, {
             title: '课程讲师',
             align: 'center',
-            dataIndex: 'master'
+            dataIndex: 'lecturer'
         }, {
             title: '保密权限',
             align: 'center',
-            dataIndex: 'securityPermission'
+            dataIndex: 'secretLevel'
         }, {
             title: '创建人',
             align: 'center',
-            dataIndex: 'creator'
+            dataIndex: 'createUserName'
         }, {
             title: '发布时间',
             align: 'center',
-            dataIndex: 'creationDate'
+            dataIndex: 'createdAt'
         }, {
             title: '操作',
             align: 'center',

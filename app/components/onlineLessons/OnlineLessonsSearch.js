@@ -29,7 +29,7 @@ class OnlineLessonsSearch extends Component {
 
                         <Field
                             layout="elementOnly"
-                            name="username"
+                            name="name"
                             rowClassName="col-md-2"
                             component={renderTextField}
                             type="text"
@@ -39,7 +39,7 @@ class OnlineLessonsSearch extends Component {
 
                         <Field
                             layout="elementOnly"
-                            name="test"
+                            name="courseStatus"
                             rowClassName="col-md-2"
                             component={renderSelectField}
                             placeholder="状态">
@@ -51,7 +51,7 @@ class OnlineLessonsSearch extends Component {
 
                         <Field
                             layout="elementOnly"
-                            name="master"
+                            name="lecturer"
                             rowClassName="col-md-2"
                             component={renderSelectField}
                             placeholder="课程讲师">
@@ -60,7 +60,7 @@ class OnlineLessonsSearch extends Component {
 
                         <Field
                             layout="elementOnly"
-                            name="tags"
+                            name="category"
                             rowClassName="col-md-2"
                             component={renderSelectField}
                             placeholder="标签">

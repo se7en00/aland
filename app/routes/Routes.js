@@ -7,6 +7,7 @@ import OnlineLessonsView from 'views/onlineLessons/OnlineLessonsView';
 import oneClickView from 'views/oneClick/OneClickView';
 import OneClickAddView from 'views/oneClick/OneClickAddView';
 import AccountListView from 'views/accountSetting/AccountListView';
+import TagsView from 'views/tags/TagsView';
 import UserList from 'views/userManagement/UserList';
 import {ConnectedSwitch} from './ConnectedSwitch';
 
@@ -19,6 +20,7 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/oneClick`} component={oneClickView}/>
         <Route exact path={`${match.path}/oneClick/add`} component={OneClickAddView}/>
         <Route exact path={`${match.path}/userManagement`} component={UserList}/>
+        <Route exact path={`${match.path}/tagSetting`} component={TagsView}/>
     </ConnectedSwitch>
 );
 

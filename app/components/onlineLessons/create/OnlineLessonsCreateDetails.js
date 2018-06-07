@@ -76,8 +76,7 @@ class OnlineLessonsCreateDetails extends Component {
             <div>
                 <form name="form" onSubmit={handleSubmit}>
                     <Field
-                        className="col-md-8"
-                        labelClassName="col-md-2"
+                        className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="lessonName"
                         component={renderTextField}
@@ -87,8 +86,7 @@ class OnlineLessonsCreateDetails extends Component {
                     />
 
                     <Field
-                        className="col-md-4"
-                        labelClassName="col-md-2"
+                        className="col-md-4 col-lg-3"
                         rowClassName="inputRow"
                         accept="image/*"
                         style={{alignItems: 'flex-start'}}
@@ -99,15 +97,14 @@ class OnlineLessonsCreateDetails extends Component {
                     />
 
                     <div className="row inputRow">
-                        <label htmlFor="sectionButton" className="col-md-2">标签</label>
-                        <div className="col-md-8">
+                        <label htmlFor="sectionButton" className="col-md-2 col-lg-1">标签</label>
+                        <div className="col-md-8 col-lg-6">
                             <Button name="sectionButton" type="primary">添加标签</Button>
                         </div>
                     </div>
 
                     <Field
-                        className="col-md-8"
-                        labelClassName="col-md-2"
+                        className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="lessonName"
                         style={{alignItems: 'flex-start'}}
@@ -119,8 +116,7 @@ class OnlineLessonsCreateDetails extends Component {
                     />
 
                     <Field
-                        className="col-md-8"
-                        labelClassName="col-md-2"
+                        className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="lessonName"
                         style={{alignItems: 'flex-start'}}
@@ -132,8 +128,7 @@ class OnlineLessonsCreateDetails extends Component {
                     />
 
                     <Field
-                        className="col-md-8"
-                        labelClassName="col-md-2"
+                        className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="lessonName"
                         component={renderSelectField}
@@ -145,8 +140,8 @@ class OnlineLessonsCreateDetails extends Component {
                     </Field>
 
                     <div className="row inputRow">
-                        <label htmlFor="sectionButton" className="col-md-2">课程内容</label>
-                        <div className="col-md-8">
+                        <label htmlFor="sectionButton" className="col-md-2 col-lg-1">课程内容</label>
+                        <div className="col-md-8 col-lg-6">
                             <Button htmlType="button" onClick={showDialog(DIALOG.CHAPTER)} name="sectionButton" type="primary">添加章</Button>
                             <Button htmlType="button" onClick={showDialog(DIALOG.SECTION)} name="sectionButton" type="primary">添加节</Button>
                             <Button htmlType="button" onClick={showDialog(DIALOG.POINT)} name="sectionButton" type="primary">添加点</Button>
@@ -154,8 +149,8 @@ class OnlineLessonsCreateDetails extends Component {
                     </div>
 
                     <div className="row inputRow">
-                        <label htmlFor="sectionButton" className="col-md-2">课后测试</label>
-                        <div className="col-md-8">
+                        <label htmlFor="sectionButton" className="col-md-2 col-lg-1">课后测试</label>
+                        <div className="col-md-8 col-lg-6">
                             <Divider/>
                             <List
                                 itemLayout="vertical"
@@ -173,11 +168,14 @@ class OnlineLessonsCreateDetails extends Component {
                         </div>
                     </div>
 
+                    <Divider className="col-md-10 col-lg-7"/>
+
                     <Dropdown overlay={this.buttonMenu()}>
                         <Button type="primary" icon="eye-o">预览 <Icon type="down"/></Button>
                     </Dropdown>
                     <Button loading={submitting} type="primary" className="editable-add-btn">保存</Button>
                     <Button type="primary" className="editable-add-btn" ghost>取消</Button>
+
                 </form>
             </div>
         );

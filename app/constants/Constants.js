@@ -53,7 +53,21 @@ export const PANEL_TITLE = {
     ONLINE_LESSONS: '线上课程库管理',
     ONLINE_LESSONS_ADD: '新建线上课程',
     ONE_CLICK: '一点通管理',
-    ONE_CLICK_ADD: '新建一点通'
+    ONE_CLICK_ADD: '新建一点通',
+    TAGS: '标签设置'
+};
+
+export const TAG_CATEGORY = {
+    PRODUCT: '与什么产品有关',
+    PROCESS: '有什么工序',
+    TASK: '与什么任务有关',
+    DEPARTMENTS: '与什么部门有关',
+    JOB: '与什么工种有关',
+    EQUIPMENT: '相关设备',
+    MATERIALS: '相关材料',
+    BASE_OPERATION: '相关基本工作操作',
+    SECURITY_RISK: '安全风险'
+
 };
 
 export const BASE_URL = 'http://139.224.113.208:8181/aland-training';

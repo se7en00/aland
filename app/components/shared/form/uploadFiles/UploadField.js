@@ -62,7 +62,7 @@ class UploadField extends Component {
        const uploadButton = (
            <div>
                <Icon type="plus"/>
-               <div className="ant-upload-text">上传</div>
+               <div className="ant-upload-text">上传图片</div>
            </div>
        );
        const { previewVisible, previewImage, fileList } = this.state;
