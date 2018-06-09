@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
+import { DATE_FORMAT } from 'constants';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 
 class OnlineLessonsListTable extends Component {
     static propTypes = {
         // showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
-        dataSource: PropTypes.object
+        dataSource: PropTypes.object,
+        searchParams: PropTypes.object
     };
 
     constructor(props) {
@@ -45,7 +47,8 @@ class OnlineLessonsListTable extends Component {
         }, {
             title: '发布时间',
             align: 'center',
-            dataIndex: 'createdAt'
+            dataIndex: 'createdAt',
+            render: (text, record) => moment(record.createdAt).format(DATE_FORMAT)
         }, {
             title: '操作',
             align: 'center',
@@ -64,15 +67,16 @@ class OnlineLessonsListTable extends Component {
     }
 
     handelPageChange = (page, pageSize) => {
-        const { getUserList } = this.props.actions;
-        getUserList(pageSize, page);
+        const { getOnlineLessonsList } = this.props.actions;
+        const { searchParams } = this.props;
+        getOnlineLessonsList(Object.assign({pageSize, page}, searchParams));
     }
 
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
             const { dataSource: {elements = [], paging = {}} } = nextProps;
             this.elements = rebuildDataWithKey(elements);
-            const { size: pageSize = 0, total = 0} = paging;
+            const { size: pageSize = 0, total = 0 } = paging;
             this.pagination = {...this.pagination, pageSize, total};
         }
     }

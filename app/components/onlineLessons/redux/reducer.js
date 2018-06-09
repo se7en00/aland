@@ -10,5 +10,10 @@ export default typeToReducer({
         FULFILLED: (state, action) => ({
             list: action.payload
         })
-    }
+    },
+
+    [TYPES.SYNC_ONLINE_LESSONS_SEARCH_PARAMS]: (state, action) => ({
+        ...state,
+        searchParams: action.payload
+    })
 }, {});

@@ -39,7 +39,7 @@ a {
     }
 }
 
-table {
+table:not(.ant-calendar-table){
     th {
         background-color: $primary-color !important;
         color: $white !important;

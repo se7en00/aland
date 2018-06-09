@@ -1,30 +1,25 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { courseStatusOptions } from 'constants';
 import PropTypes from 'prop-types';
 import { Button, Icon, Select } from 'antd';
 import { renderTextField, renderSelectField, renderDateRangeField } from '../shared/form';
 
 
-@reduxForm({form: 'lessonsSearch'})
+@reduxForm({form: 'coursesSearch'})
 class OnlineLessonsSearch extends Component {
     static propTypes = {
-        // actions: PropTypes.objectOf(PropTypes.func),
         handleSubmit: PropTypes.func,
-        // showDialog: PropTypes.func,
         submitting: PropTypes.bool
         // error: PropTypes.string
     };
-
-    submit = (values) => {
-        console.log(values);
-    }
 
     render() {
         const Option = Select.Option;
         const { submitting, handleSubmit } = this.props;
         return (
             <div>
-                <form name="form" onSubmit={handleSubmit(this.submit)}>
+                <form name="form" onSubmit={handleSubmit}>
                     <div className="row">
 
                         <Field
@@ -43,10 +38,7 @@ class OnlineLessonsSearch extends Component {
                             rowClassName="col-md-2"
                             component={renderSelectField}
                             placeholder="状态">
-                            <Option value="jack">Jack</Option>
-                            <Option value="lucy">Lucy</Option>
-                            <Option value="disabled" disabled>Disabled</Option>
-                            <Option value="Yiminghe">yiminghe</Option>
+                            {courseStatusOptions}
                         </Field>
 
                         <Field

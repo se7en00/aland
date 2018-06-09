@@ -5,6 +5,10 @@ export const IDENTIFIERS = {
     ACCORDION_CONTENT: 'accordion_content'
 };
 
+export const BASE_URL = 'http://139.224.113.208:8181/aland-training';
+
+export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
+
 export const PATHNAME = {
     INDEX: '首页',
     SYSTEM_MANAGEMENT: '系统管理',
@@ -67,8 +71,4 @@ export const TAG_CATEGORY = {
     MATERIALS: '相关材料',
     BASE_OPERATION: '相关基本工作操作',
     SECURITY_RISK: '安全风险'
-
 };
-
-export const BASE_URL = 'http://139.224.113.208:8181/aland-training';
-

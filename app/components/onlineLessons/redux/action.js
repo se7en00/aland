@@ -7,3 +7,8 @@ export const getOnlineLessonsList = ({pageSize = paginationSetting.pageSize, ...
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
+
+export const setSearchParamsToRedux = (params) => ({
+    type: TYPES.SYNC_ONLINE_LESSONS_SEARCH_PARAMS,
+    payload: params
+});

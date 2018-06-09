@@ -15,7 +15,7 @@ class DateRangeField extends PureComponent {
         return (
             <RangePicker
                 onChange={onChange}
-                format={'YYYY/MM/DD'}
+                format={'YYYY-MM-DD'}
             />
         );
     }
