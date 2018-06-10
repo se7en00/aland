@@ -11,11 +11,11 @@
 - [x] 路由：react-router(4.x)、react-router-redux
 - [x] JS：ES6、ES7
 - [x] 样式：scss
-- [x] 状态管理：redux
+- [x] 状态管理：redux, redux-form
 - [x] Ajax：axios
 - [x] 代码校验: Eslint
+- [x] 跨域: 基于 CORS 实现
 - [ ] 测试用例：jest
-- [ ] 跨域: 基于 CORS 实现
 - [ ] immutable
 
 ### 使用方法：

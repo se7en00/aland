@@ -1,2 +1,12 @@
 @import "~SCSS_PATH/modules";
 
+.select-error {
+    :global(.ant-select-selection) {
+        border-color: $errorColor !important;
+    }
+
+    :global(.ant-select-arrow) {
+        color: $errorColor;
+    }
+}
+

@@ -5,6 +5,7 @@ import uuidv4 from 'uuid/v4';
 import { DIALOG } from 'constants';
 import { Button, Menu, Dropdown, Icon, Select, Switch, List, Divider } from 'antd';
 import { renderTextField, renderUploadField, renderSelectField } from '../../shared/form';
+import OnlineLessonsPointsTable from './OnlineLessonsPointsTable';
 
 
 @reduxForm({form: 'onlineLessonsCreate'})
@@ -13,7 +14,8 @@ class OnlineLessonsCreateDetails extends Component {
         // actions: PropTypes.objectOf(PropTypes.func),
         handleSubmit: PropTypes.func,
         showDialog: PropTypes.func,
-        submitting: PropTypes.bool
+        submitting: PropTypes.bool,
+        draftOnlineLesson: PropTypes.object
         // error: PropTypes.string
     };
 
@@ -70,15 +72,17 @@ class OnlineLessonsCreateDetails extends Component {
 
     render() {
         const Option = Select.Option;
-        const { submitting, handleSubmit, showDialog} = this.props;
-
+        const { submitting, handleSubmit, showDialog, draftOnlineLesson} = this.props;
+        const hasPointsElement = !!draftOnlineLesson?.pointElements;
+        const hasChapters = !!draftOnlineLesson?.chapters;
+        const hasSections = !!draftOnlineLesson?.sections;
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
-                        name="lessonName"
+                        name="name"
                         component={renderTextField}
                         type="text"
                         placeholder="课程名称"
@@ -90,7 +94,7 @@ class OnlineLessonsCreateDetails extends Component {
                         rowClassName="inputRow"
                         accept="image/*"
                         style={{alignItems: 'flex-start'}}
-                        name="file"
+                        name="cover"
                         uploadFileCount="1"
                         component={renderUploadField}
                         label="课程封面"
@@ -106,7 +110,7 @@ class OnlineLessonsCreateDetails extends Component {
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
-                        name="lessonName"
+                        name="introduce"
                         style={{alignItems: 'flex-start'}}
                         component={renderTextField}
                         rows={4}
@@ -118,7 +122,7 @@ class OnlineLessonsCreateDetails extends Component {
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
-                        name="lessonName"
+                        name="benefit"
                         style={{alignItems: 'flex-start'}}
                         component={renderTextField}
                         rows={4}
@@ -130,7 +134,7 @@ class OnlineLessonsCreateDetails extends Component {
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
-                        name="lessonName"
+                        name="lecturerName"
                         component={renderSelectField}
                         placeholder="讲师"
                         label="讲师"
@@ -143,10 +147,14 @@ class OnlineLessonsCreateDetails extends Component {
                         <label htmlFor="sectionButton" className="col-md-2 col-lg-1">课程内容</label>
                         <div className="col-md-8 col-lg-6">
                             <Button htmlType="button" onClick={showDialog(DIALOG.CHAPTER)} name="sectionButton" type="primary">添加章</Button>
-                            <Button htmlType="button" onClick={showDialog(DIALOG.SECTION)} name="sectionButton" type="primary">添加节</Button>
-                            <Button htmlType="button" onClick={showDialog(DIALOG.POINT)} name="sectionButton" type="primary">添加点</Button>
+                            <Button htmlType="button" disabled={!hasChapters} onClick={showDialog(DIALOG.SECTION)} name="sectionButton" type="primary">添加节</Button>
+                            <Button htmlType="button" disabled={!hasSections} onClick={showDialog(DIALOG.POINT)} name="sectionButton" type="primary">添加点</Button>
                         </div>
                     </div>
+
+                    {
+                        hasPointsElement && <OnlineLessonsPointsTable showDialog={showDialog} dataSource={draftOnlineLesson?.pointElements}/>
+                    }
 
                     <div className="row inputRow">
                         <label htmlFor="sectionButton" className="col-md-2 col-lg-1">课后测试</label>

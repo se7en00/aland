@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
-import {OnlineLessonsCreate, CreateChapterDialog, CreateSectionDialog, CreatePointDialog, actionCreators} from 'components/onlineLessons/index';
+import {OnlineLessonsCreate, CreateChapterDialog, CreateSectionDialog, CreatePointDialog, draftLessonActionCreators} from 'components/onlineLessons';
 import Dialog from 'components/shared/dialog/index';
 import { connect } from 'react-redux';
-import { resetForm } from 'redux/globalAction';
 import { bindActionCreators } from 'redux';
 
-@connect(state => ({onlineLessons: state.onlineLessons}), mapDispatchToProps)
+@connect(state => ({draftOnlineLesson: state.draftOnlineLesson}), mapDispatchToProps)
 @Dialog(<CreateChapterDialog/>, <CreateSectionDialog/>, <CreatePointDialog/>)
 class OnlineLessonsAddView extends Component {
     render() {
@@ -17,7 +16,7 @@ class OnlineLessonsAddView extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({...actionCreators, resetForm}, dispatch) };
+    return { actions: bindActionCreators({...draftLessonActionCreators}, dispatch) };
 }
 
 export default OnlineLessonsAddView;

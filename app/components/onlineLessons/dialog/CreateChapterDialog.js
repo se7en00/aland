@@ -1,36 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm, submit, Form, Field } from 'redux-form';
+import { reduxForm, reset, submit, Form, Field, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { DIALOG } from 'constants';
-import { Modal, Button} from 'antd';
+import { Modal, Button, message} from 'antd';
 import { renderTextField } from '../../shared/form';
 
 @reduxForm({form: DIALOG.CHAPTER})
 class CreateChapterDialog extends Component {
     static dialogName = DIALOG.CHAPTER;
 
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.visible) {
-    //         this.props.actions.resetForm(DIALOG.CHAPTER);
-    //         this.setState({ current: 0 });
-    //     }
-    // }
+    createChapter = (values) => {
+        if (R.isEmpty(values)) {
+            throw new SubmissionError({_error: '请至少输入一个章名称！'});
+        }
+        //创建章
+        this.props.actions.createChapters(values);
+        this.props.dispatch(reset(DIALOG.CHAPTER));
+        message.success('创建章成功！');
+        this.props.hideDialog(DIALOG.CHAPTER)();
+    }
 
+    closeDialog = () => {
+        this.props.dispatch(clearSubmitErrors(DIALOG.CHAPTER));
+        this.props.hideDialog(DIALOG.CHAPTER)();
+    }
 
     render() {
-        const {submitting, handleSubmit, visible, hideDialog, width, dispatch, error, invalid } = this.props;
+        const {submitting, handleSubmit, visible, width, dispatch, error} = this.props;
         return (
             <Modal
                 visible={visible}
                 width={width}
                 title="添加章"
-                onCancel={hideDialog(DIALOG.CHAPTER)}
+                onCancel={this.closeDialog}
                 footer={[
-                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit(DIALOG.CHAPTER))} loading={submitting} type="primary">保存</Button>,
-                    <Button key="back" onClick={hideDialog(DIALOG.CHAPTER)}>取消</Button>
+                    <Button key="submit" onClick={() => dispatch(submit(DIALOG.CHAPTER))} loading={submitting} type="primary">保存</Button>,
+                    <Button key="back" onClick={this.closeDialog}>取消</Button>
                 ]}
             >
-                <Form name="editform" onSubmit={handleSubmit}>
+                <Form name="editform" onSubmit={handleSubmit(this.createChapter)}>
                     {error && <div className="dialogContainer--error"><strong >{error}</strong></div>}
 
                     <div className="dialogContainer">
@@ -91,13 +99,12 @@ CreateChapterDialog.propTypes = {
     handleSubmit: PropTypes.func,
     visible: PropTypes.bool,
     submitting: PropTypes.bool,
-    // actions: PropTypes.objectOf(PropTypes.func)
+    actions: PropTypes.objectOf(PropTypes.func),
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     //由于button不在form表单中， 我们采用redux-frorm的remote button，通过redux dispatch方法来来提交表单
     dispatch: PropTypes.func,
-    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
     //redux-form 表单有验证错误为true, 相反为false
-    invalid: PropTypes.bool
 };
 
 export default CreateChapterDialog;
