@@ -8,6 +8,20 @@ export const getOnlineLessonsList = ({pageSize = paginationSetting.pageSize, ...
         .catch(error => Promise.reject(error?.response?.data))
 });
 
+export const removeLesson = (lessonId) => ({
+    type: TYPES.ASYNC_REMOVE_COURSE,
+    payload: () => Axios.delete(`/api/courses/${lessonId}`)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const setLessonPassed = (lessonId) => ({
+    type: TYPES.ASYNC_SET_COURSE_PASSED,
+    payload: () => Axios.put(`/api/courses/${lessonId}/passed`)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
 export const setSearchParamsToRedux = (params) => ({
     type: TYPES.SYNC_ONLINE_LESSONS_SEARCH_PARAMS,
     payload: params

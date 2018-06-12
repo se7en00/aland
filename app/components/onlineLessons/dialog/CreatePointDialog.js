@@ -39,7 +39,7 @@ class CreatePointDialog extends Component {
             throw new SubmissionError({_error: '请至少输入一个点名称！'});
         }
         const {draftLesson, dispatch, hideDialog, actions: {createPoint}} = this.props;
-        createPoint(draftLesson.id, values.chapterForPoint, values.sectionForPoint, points)
+        createPoint(draftLesson?.id, values.chapterForPoint, values.sectionForPoint, points)
             .then(() => {
                 dispatch(reset(DIALOG.POINT));
                 message.success('创建点成功！');
@@ -56,7 +56,7 @@ class CreatePointDialog extends Component {
     render() {
         const Option = Select.Option;
         const {sectionsOptions} = this.state;
-        const {submitting, handleSubmit, visible, width, dispatch, error, invalid, chapters } = this.props;
+        const {submitting, handleSubmit, visible, width, dispatch, error, chapters } = this.props;
         return (
             <Modal
                 visible={visible}
@@ -64,7 +64,7 @@ class CreatePointDialog extends Component {
                 title="添加点"
                 onCancel={this.closeDialog}
                 footer={[
-                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit(DIALOG.POINT))} loading={submitting} type="primary">保存</Button>,
+                    <Button key="submit" onClick={() => dispatch(submit(DIALOG.POINT))} loading={submitting} type="primary">保存</Button>,
                     <Button key="back" onClick={this.closeDialog}>取消</Button>
                 ]}
             >
@@ -148,8 +148,6 @@ CreatePointDialog.propTypes = {
     //由于button不在form表单中， 我们采用redux-frorm的remote button，通过redux dispatch方法来来提交表单
     dispatch: PropTypes.func,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    //redux-form 表单有验证错误为true, 相反为false
-    invalid: PropTypes.bool,
     chapters: PropTypes.array,
     sections: PropTypes.object,
     draftLesson: PropTypes.object

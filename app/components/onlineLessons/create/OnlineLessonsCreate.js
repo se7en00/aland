@@ -3,20 +3,21 @@ import PropTypes from 'prop-types';
 import panelStyle from 'layout/main/Main.scss';
 import { PANEL_TITLE } from 'constants';
 import Header from '../../shared/panel/PanelHeader';
-import CreateDetails from './OnlineLessonsCreateDetails';
+import OnlineLessonTab from './OnlineLessonTab';
 
 class OnlineLessonsCreate extends Component {
     componentDidMount() {
-        this.props.actions.createInitialOnlineLesson();
+        this.props.actions.getCategories()
+            .catch(error => console.log(error));
     }
 
     render() {
-        const {draftOnlineLesson, actions} = this.props;
+        const {draftOnlineLesson, actions, showDialog} = this.props;
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.ONLINE_LESSONS_ADD}/>
                 <div className={panelStyle.panel__body}>
-                    <CreateDetails draftOnlineLesson={draftOnlineLesson} actions={actions} showDialog={this.props.showDialog}/>
+                    <OnlineLessonTab draftOnlineLesson={draftOnlineLesson} actions={actions} showDialog={showDialog}/>
                 </div>
             </Fragment>
         );

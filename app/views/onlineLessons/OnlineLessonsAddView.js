@@ -4,6 +4,7 @@ import {OnlineLessonsCreate, CreateChapterDialog, CreateSectionDialog, CreatePoi
 import Dialog from 'components/shared/dialog/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { push } from 'react-router-redux';
 
 @connect(state => ({draftOnlineLesson: state.draftOnlineLesson}), mapDispatchToProps)
 @Dialog(<CreateChapterDialog/>, <CreateSectionDialog/>, <CreatePointDialog/>)
@@ -16,7 +17,7 @@ class OnlineLessonsAddView extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({...draftLessonActionCreators}, dispatch) };
+    return { actions: bindActionCreators({...draftLessonActionCreators, push}, dispatch) };
 }
 
 export default OnlineLessonsAddView;

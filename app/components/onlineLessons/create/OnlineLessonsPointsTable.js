@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Button, Popconfirm } from 'antd';
+import { Table, Popconfirm, Button, message } from 'antd';
 import uuid from 'uuid/v4';
+import { getLinkByName, PATHNAME } from 'constants';
 
 class OnlineLessonsPointsTable extends Component {
     constructor(props) {
@@ -26,39 +27,36 @@ class OnlineLessonsPointsTable extends Component {
             align: 'center',
             dataIndex: 'point'
         }, {
-            title: '内容编辑',
+            title: '操作',
             align: 'center',
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" ghost>详情/编辑</Button>
-                    <Button size="small" type="primary" ghost>审核</Button>
+                    <Button title="更改章节点" type="primary" ghost><i className="fas fa-retweet"/></Button>
+                    <Button title="内容编辑" onClick={() => this.onEditPoint(record)} type="primary" ghost><i className="far fa-edit"/></Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
-                        <Button size="small" type="primary" ghost>删除</Button>
+                        <Button type="primary" ghost><i className="far fa-trash-alt"/></Button>
                     </Popconfirm>
                 </div>
-            )
-        }, {
-            title: '内容编辑',
-            align: 'center',
-            dataIndex: 'operation',
-            render: (text, record) => (
-                <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
-                    <Button size="small" type="primary" ghost>删除</Button>
-                </Popconfirm>
             )
         }];
     }
 
     buildTableElements = (dataSource) => {
+        if (!dataSource) return;
         const { chapter, section, points, lessonId } = dataSource;
+        const {id: chapterId, subject: chapterName } = chapter;
+        const {id: sectionId, subject: sectionName } = section;
         return points.map((item, index) => ({
             index: index + 1,
             key: uuid(),
             lessonId,
-            chapter,
-            section,
-            point: item
+            pointId: item.id,
+            chapterId,
+            sectionId,
+            chapter: chapterName,
+            section: sectionName,
+            point: item.subject
         }));
     }
 
@@ -66,6 +64,20 @@ class OnlineLessonsPointsTable extends Component {
         if (nextProps.dataSource) {
             this.elements = this.buildTableElements(nextProps.dataSource);
         }
+    }
+
+    onEditPoint = (point) => {
+        this.props.actions.push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/addition/point/${point.lessonId}`);
+    };
+
+    onDelete = (record) => {
+        this.props.actions.removePoint(record)
+            .then(() => {
+                console.log('222');
+            })
+            .catch(error => {
+                message.error(`删除点：${record.point}失败！`);
+            });
     }
 
     render() {
@@ -84,7 +96,7 @@ class OnlineLessonsPointsTable extends Component {
 
 OnlineLessonsPointsTable.propTypes = {
     // showDialog: PropTypes.func,
-    // actions: PropTypes.objectOf(PropTypes.func),
+    actions: PropTypes.objectOf(PropTypes.func),
     dataSource: PropTypes.object
 };
 OnlineLessonsPointsTable.defaultProps = {};

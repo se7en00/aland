@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import DashboardView from 'views/home/DashboardView';
 import OnlineLessonsAddView from 'views/onlineLessons/OnlineLessonsAddView';
 import OnlineLessonsView from 'views/onlineLessons/OnlineLessonsView';
+import OnlineLessonsPointView from 'views/onlineLessons/OnlineLessonsPointView';
 import oneClickView from 'views/oneClick/OneClickView';
 import OneClickAddView from 'views/oneClick/OneClickAddView';
 import AccountListView from 'views/accountSetting/AccountListView';
@@ -18,7 +19,8 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}`} component={DashboardView}/>
         <Route exact path={`${match.path}/accountManagement`} component={AccountListView}/>
         <Route exact path={`${match.path}/onlineLessons`} component={OnlineLessonsView}/>
-        <Route exact path={`${match.path}/onlineLessons/add`} component={OnlineLessonsAddView}/>
+        <Route exact path={`${match.path}/onlineLessons/addition`} component={OnlineLessonsAddView}/>
+        <Route exact path={`${match.path}/onlineLessons/addition/point/:id`} component={OnlineLessonsPointView}/>
         <Route exact path={`${match.path}/oneClick`} component={oneClickView}/>
         <Route exact path={`${match.path}/oneClick/add`} component={OneClickAddView}/>
         <Route exact path={`${match.path}/orgManagement`} component={OrgManagementView}/>

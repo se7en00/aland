@@ -35,7 +35,9 @@ class OnlineLessonList extends Component {
     };
 
     redirect = () => {
-        this.props.actions.push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/add`);
+        const {resetDraftLessons, push} = this.props.actions;
+        resetDraftLessons();
+        push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/addition`);
     }
 
     render() {
