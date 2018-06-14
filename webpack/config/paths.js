@@ -23,9 +23,9 @@ const ensureSlash = (pathStr, needsSlash) => {
     return pathStr;
 };
 
-const getPublicUrl = () => {
+const getPublicUrl = appPackageJson => {
     const envPublicUrl = process.env.PUBLIC_URL;
-    return envPublicUrl || '/';
+    return envPublicUrl || require(appPackageJson).homepage; //eslint-disable-line
 };
 
 // We use `PUBLIC_URL` environment variable to infer
@@ -34,8 +34,8 @@ const getPublicUrl = () => {
 // single-page apps that may serve index.html for nested URLs like /todos/42.
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
-const getServedPath = () => {
-    const envPublicUrl = getPublicUrl();
+const getServedPath = appPackageJson => {
+    const envPublicUrl = getPublicUrl(appPackageJson);
     return ensureSlash(envPublicUrl, true);
 };
 
@@ -52,7 +52,7 @@ module.exports = {
     appScss: resolveApp('app/scss'),
     yarnLockFile: resolveApp('yarn.lock'),
     appNodeModules: resolveApp('node_modules'),
-    publicUrl: getPublicUrl(),
-    servedPath: getServedPath(),
+    publicUrl: getPublicUrl(resolveApp('package.json')),
+    servedPath: getServedPath(resolveApp('package.json')),
     mockerJS: resolveApp('app/mock/mocker.js')
 };

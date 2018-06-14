@@ -37,7 +37,7 @@ export const logout = () => dispatch => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     dispatch({type: TYPES.SYNC_LOGOUT_REQUEST});
-    dispatch(push('/login'));
+    dispatch(push('/aland/login'));
 };
 
 export const findPwd = (userName, email) => ({

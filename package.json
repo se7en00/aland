@@ -2,6 +2,7 @@
   "name": "aland",
   "version": "0.0.1",
   "description": " react project",
+  "homepage": "./",
   "main": "app/index.js",
   "scripts": {
     "dll": "webpack -p --env.production --config webpack/webpack.dll.conf.js --progress",
