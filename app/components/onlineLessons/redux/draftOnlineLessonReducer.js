@@ -51,6 +51,7 @@ export default typeToReducer({
 
     [TYPES.LOAD_ONLINE_LESSONS_CATEGORIES]: {
         REJECTED: (state, action) => ({
+            ...state,
             error: action.payload
         }),
         FULFILLED: (state, action) => ({

@@ -16,3 +16,7 @@ export const courseStatusOptions = [
     <Option key={uuid()} value={item.value}>{item.label}</Option>
 ));
 
+export const renderOptions = (list) => list.map(item =>
+    (<Option key={uuid()} value={item.id}>{item.name}</Option>)
+);
+

@@ -15,9 +15,16 @@ export const removeLesson = (lessonId) => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const setLessonPassed = (lessonId) => ({
-    type: TYPES.ASYNC_SET_COURSE_PASSED,
-    payload: () => Axios.put(`/api/courses/${lessonId}/passed`)
+export const shelveCourse = (lessonId) => ({
+    type: TYPES.ASYNC_SHELVE_COURSE,
+    payload: () => Axios.put(`/api/courses/${lessonId}/issue`)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const unShelveCourse = (lessonId) => ({
+    type: TYPES.ASYNC_UNSHELVE_COURSE,
+    payload: () => Axios.put(`/api/courses/${lessonId}/off`)
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });

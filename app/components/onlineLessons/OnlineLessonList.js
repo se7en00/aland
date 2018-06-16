@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { PANEL_TITLE, PATHNAME, getLinkByName } from 'constants';
+import { PANEL_TITLE, PATHNAME, getLinkByName, DATE_FORMAT } from 'constants';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import { paginationSetting } from 'utils';
@@ -23,8 +23,10 @@ class OnlineLessonList extends Component {
         //search 条件
         const params = Object.keys(values).reduce((map, k) => {
             if (k === 'dateTime') {
-                map.startDate = moment(values[k][0]).valueOf();
-                map.endDate = moment(values[k][1]).valueOf();
+                map.startDate = moment(values[k][0]).format(DATE_FORMAT);
+                map.endDate = moment(values[k][1]).format(DATE_FORMAT);
+            } else if (k === 'lecturerId') {
+                map[k] = values[k].key;
             } else {
                 map[k] = values[k];
             }

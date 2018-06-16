@@ -56,7 +56,8 @@ class OnlineLessonsListTable extends Component {
             render: (text, record) => (
                 <div>
                     <Button size="small" type="primary" ghost>详情/编辑</Button>
-                    <Button size="small" onClick={() => this.passed(record)} type="primary" ghost>审核</Button>
+                    {record.status === 'ISSUED' && <Button size="small" onClick={() => this.unShelveCourse(record)} type="primary" ghost>下架</Button>}
+                    {record.status !== 'ISSUED' && <Button size="small" onClick={() => this.shelveCourse(record)} type="primary" ghost>上架</Button>}
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
@@ -81,6 +82,44 @@ class OnlineLessonsListTable extends Component {
                     message.error(error?.errorMessage);
                 } else {
                     message.error(`删除课程：${lesson.name}失败！`);
+                }
+            });
+    }
+
+    shelveCourse = (lesson) => {
+        const {
+            dataSource: {paging: {size, page}},
+            actions: {shelveCourse, getOnlineLessonsList}
+        } = this.props;
+        shelveCourse(lesson.id)
+            .then(() => {
+                message.success(`成功上架课程：${lesson.name}！`);
+                getOnlineLessonsList(size, page);
+            })
+            .catch(error => {
+                if (error?.errorCode === 'course_not_found') {
+                    message.error(error?.errorMessage);
+                } else {
+                    message.error(`上架课程：${lesson.name}失败！`);
+                }
+            });
+    };
+
+    unShelveCourse = (lesson) => {
+        const {
+            dataSource: {paging: {size, page}},
+            actions: {unShelveCourse, getOnlineLessonsList}
+        } = this.props;
+        unShelveCourse(lesson.id)
+            .then(() => {
+                message.success(`成功下架课程：${lesson.name}！`);
+                getOnlineLessonsList(size, page);
+            })
+            .catch(error => {
+                if (error?.errorCode === 'course_not_found') {
+                    message.error(error?.errorMessage);
+                } else {
+                    message.error(`下架课程：${lesson.name}失败！`);
                 }
             });
     }

@@ -24,6 +24,29 @@ export default typeToReducer({
         })
     },
 
+    //上架
+    [TYPES.ASYNC_SHELVE_COURSE]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+
+    //下架
+    [TYPES.ASYNC_UNSHELVE_COURSE]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+
+    //搜索
     [TYPES.SYNC_ONLINE_LESSONS_SEARCH_PARAMS]: (state, action) => ({
         ...state,
         searchParams: action.payload

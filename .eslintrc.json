@@ -43,13 +43,14 @@
         "no-restricted-syntax": 0,
         "newline-per-chained-call": 0,
         "import/no-mutable-exports": 0,
-        "max-params": [2, 4],                               //限制函数的最大参数个数
-        "no-magic-numbers": [2, {                           //特指我们代码中出现的含义不明确的数字，如代码中的199,0.8和0.79
-            "ignoreArrayIndexes": true,                         //排除数组下标
-            "ignore": [-1, 0, 1, 200, 204, 404, 400, 403, 500, 503 ],                                   // 0 1 排除
-            "enforceConst": true
-        }],
         "linebreak-style": 0,
+        "max-params": [2, 4],                               //限制函数的最大参数个数
+//        "no-magic-numbers": [2, {                           //特指我们代码中出现的含义不明确的数字，如代码中的199,0.8和0.79
+//            "ignoreArrayIndexes": true,                         //排除数组下标
+//            "ignore": [-1, 0, 1, 200, 204, 404, 400, 403, 500, 503 ],                                   // 0 1 排除
+//            "enforceConst": true
+//        }],
+
 
         // Code style
         "indent": [1, 4, {"SwitchCase": 0}],

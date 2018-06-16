@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { courseStatusOptions } from 'constants';
+import { courseStatusOptions, renderOptions } from 'constants';
 import PropTypes from 'prop-types';
+import { resetSpecificField } from 'utils';
 import { Button, Icon, Select } from 'antd';
 import { renderTextField, renderSelectField, renderDateRangeField } from '../shared/form';
+import AutoSelectSearch from '../shared/autoSearch/AutoSelectSearch';
 
 
 @reduxForm({form: 'coursesSearch'})
 class OnlineLessonsSearch extends Component {
     static propTypes = {
         handleSubmit: PropTypes.func,
+        dispatch: PropTypes.func,
         submitting: PropTypes.bool
         // error: PropTypes.string
     };
 
     render() {
         const Option = Select.Option;
-        const { submitting, handleSubmit } = this.props;
+        const { submitting, handleSubmit, dispatch } = this.props;
+        const restLecturerValue = () => resetSpecificField(dispatch, 'coursesSearch', 'lecturerId', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
@@ -41,14 +45,16 @@ class OnlineLessonsSearch extends Component {
                             {courseStatusOptions}
                         </Field>
 
-                        <Field
-                            layout="elementOnly"
-                            name="lecturer"
+                        <AutoSelectSearch
+                            api="/api/lecturers"
+                            query="name"
+                            resetSelectValue={restLecturerValue}
                             rowClassName="col-md-2"
-                            component={renderSelectField}
-                            placeholder="课程讲师">
-                            <Option value="jack">Jack</Option>
-                        </Field>
+                            name="lecturerId"
+                            layout="elementOnly"
+                            placeholder="讲师"
+                            renderOptions={renderOptions}
+                        />
 
                         <Field
                             layout="elementOnly"
