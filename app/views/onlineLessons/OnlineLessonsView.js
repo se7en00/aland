@@ -13,8 +13,8 @@ class OnlineLessonsView extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    const {resetDraftLessons} = draftLessonActionCreators;
-    return { actions: bindActionCreators({...actionCreators, push, resetDraftLessons}, dispatch) };
+    const {resetDraftLessons, getCourseDetails} = draftLessonActionCreators;
+    return { actions: bindActionCreators({...actionCreators, push, resetDraftLessons, getCourseDetails}, dispatch) };
 }
 
 export default OnlineLessonsView;

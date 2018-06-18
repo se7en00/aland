@@ -37,3 +37,9 @@ export const debounce = (fn, delay) => {
         }, timeDelay);
     };
 };
+
+export const format = (str, ...rest) =>
+    str.replace(/{(\d+)}/g, (match, number) =>
+        (typeof rest[number] !== 'undefined'
+            ? rest[number]
+            : match));

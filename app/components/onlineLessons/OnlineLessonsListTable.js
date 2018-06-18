@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
-import { DATE_FORMAT } from 'constants';
+import { DATE_FORMAT, getLinkByName, PATHNAME } from 'constants';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 
 class OnlineLessonsListTable extends Component {
@@ -31,11 +31,11 @@ class OnlineLessonsListTable extends Component {
         }, {
             title: '状态',
             align: 'center',
-            dataIndex: 'courseStatus'
+            dataIndex: 'status'
         }, {
             title: '课程讲师',
             align: 'center',
-            dataIndex: 'lecturer'
+            dataIndex: 'lecturerName'
         }, {
             title: '保密权限',
             align: 'center',
@@ -55,17 +55,24 @@ class OnlineLessonsListTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" ghost>详情/编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.onEdit(record)} ghost>详情/编辑</Button>
                     {record.status === 'ISSUED' && <Button size="small" onClick={() => this.unShelveCourse(record)} type="primary" ghost>下架</Button>}
                     {record.status !== 'ISSUED' && <Button size="small" onClick={() => this.shelveCourse(record)} type="primary" ghost>上架</Button>}
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
-                    <Button size="small" type="primary" ghost>保密设置</Button>
                 </div>
             )
         }];
     }
+    onEdit = (lesson) => {
+        const {getCourseDetails, push} = this.props.actions;
+        getCourseDetails(lesson.id)
+            .then(() => {
+                push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/${lesson.id}/details`);
+            })
+            .catch(error => console.log(error));
+    };
 
     onDelete = (lesson) => {
         const {

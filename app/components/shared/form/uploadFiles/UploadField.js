@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Axios } from 'utils';
+import { BASE_URL } from 'constants';
 import { Upload, Icon, Modal } from 'antd';
+import uuid from 'uuid/v4';
 import remapReduxFormProps from '../RemapReduxFormProps';
 
 @remapReduxFormProps
@@ -22,6 +24,24 @@ class UploadField extends Component {
         previewImage: '',
         fileList: []
     };
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.input.value && Array.isArray(nextProps.input.value)) {
+            const files = nextProps.input.value.map(fileUrl => {
+                if (!fileUrl) return null;
+                if (fileUrl.status) return fileUrl;
+                const splitArray = fileUrl.split('/');
+                const domain = new URL(BASE_URL).origin;
+                return {
+                    uid: uuid(),
+                    name: splitArray[splitArray.length - 1] || '',
+                    status: 'done',
+                    url: `${domain}/uploads${fileUrl}`
+                };
+            }).filter(Boolean);
+            this.setState({fileList: files});
+        }
+    }
 
     handleCancel = () => this.setState({ previewVisible: false });
 

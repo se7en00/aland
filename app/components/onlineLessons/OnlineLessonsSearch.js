@@ -53,7 +53,7 @@ class OnlineLessonsSearch extends Component {
                             name="lecturerId"
                             layout="elementOnly"
                             placeholder="讲师"
-                            renderOptions={renderOptions}
+                            renderOptions={renderOptions('id', 'name')}
                         />
 
                         <Field

@@ -12,6 +12,7 @@ const getAllLinksMap = list => list?.reduce((result, item) => {
 let breadcrumbNameMap = {
     '/aland/onlineLessons/addition': '新建线上课程',
     '/aland/onlineLessons/addition/point/:lessonId': '新建点内容',
+    '/aland/onlineLessons/:lessonId/details': '课程详情',
     '/aland/oneClick/add': '新建一点通'
     // '/apps/1': 'Application1',
     // '/apps/2': 'Application2',

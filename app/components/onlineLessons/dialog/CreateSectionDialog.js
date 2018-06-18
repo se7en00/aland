@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, submit, Form, Field, clearSubmitErrors, SubmissionError, reset } from 'redux-form';
-import { DIALOG } from 'constants';
+import { DIALOG, renderOptions } from 'constants';
 import { connect } from 'react-redux';
-import uuid from 'uuid/v4';
-import { Modal, Button, Select, message} from 'antd';
+import { Modal, Button, message} from 'antd';
 import { renderTextField, renderSelectField } from '../../shared/form';
+
 
 @connect(state => ({chapters: state.draftOnlineLesson?.chapters}))
 @reduxForm({form: DIALOG.SECTION, enableReinitialize: true})
@@ -26,14 +26,22 @@ class CreateSectionDialog extends Component {
         if (R.isEmpty(sections)) {
             throw new SubmissionError({_error: '请至少输入一个节名称！'});
         }
-        this.props.actions.createSections(values.chapterForSection, sections);
-        this.props.dispatch(reset(DIALOG.SECTION));
-        message.success('创建节成功！');
-        this.props.hideDialog(DIALOG.SECTION)();
+        const {dispatch, hideDialog, actions: {createSections}} = this.props;
+
+        createSections(values.chapterForSection, sections)
+            .then(() => {
+                dispatch(reset(DIALOG.SECTION));
+                message.success('创建节成功！');
+                hideDialog(DIALOG.SECTION)();
+            })
+            .catch(error => {
+                throw new SubmissionError({
+                    _error: error?.errorMessage || '创建节失败'
+                });
+            });
     }
 
     render() {
-        const Option = Select.Option;
         const {submitting, handleSubmit, visible, width, dispatch, error, invalid, chapters } = this.props;
         return (
             <Modal
@@ -60,7 +68,7 @@ class CreateSectionDialog extends Component {
                             placeholder="属于章"
                             label="属于章"
                         >
-                            {chapters?.map(item => (<Option key={uuid()} value={item}>{item}</Option>))}
+                            {renderOptions('id', 'subject')(chapters)}
                         </Field>
 
                         <Field

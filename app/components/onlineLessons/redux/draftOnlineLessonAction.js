@@ -14,38 +14,82 @@ export const createDraftOnlineLesson = (courseID, courseUpdate) => ({
     }
 });
 
-export const createPoint = (lessonId, chapter, section, points) => ({
+export const createPoint = (lessonId, sectionId, points) => ({
     type: TYPES.ASYNC_CREATE_POINTS,
     async payload() {
-        const course = lessonId ? {id: lessonId} : Axios.post('/api/courses', {}).then(response => response.data);
-        const initCourse = await course;
-        const chapterElement = await Axios.post(`/api/courseNodes/courses/${initCourse.id}/chapters`, {subjects: [chapter]})
-            .then(response => response?.data[0]);
-        const sectionElement = await Axios.post(`/api/courseNodes/chapters/${chapterElement.id}/sections`, {subjects: [section]})
-            .then(response => response?.data[0]);
-        const pointElement = await Axios.post(`/api/courseNodes/sections/${sectionElement.id}/points`, {subjects: Object.values(points)})
-            .then(response => response?.data);
-        const hasNameAttr = Object.prototype.hasOwnProperty.call(initCourse, 'name');
-        const pointElements = {chapter: chapterElement, section: sectionElement, points: pointElement, lessonId: initCourse.id };
-        return Object.assign({pointElements}, hasNameAttr ? {draftLesson: initCourse} : {});
+        try {
+            await Axios.post(`/api/courseNodes/sections/${sectionId}/points`, {subjects: Object.values(points)})
+                .then(response => response?.data);
+            const getALLNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`)
+                .then(response => response?.data);
+            return getALLNodes;
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 });
 
-export const removePoint = (point) => ({
+export const getCourseDetails = (lessonId) => ({
+    type: TYPES.ASYNC_LOAD_ONLINE_LESSON_DETAILS,
+    async payload() {
+        let sections;
+        const course = await Axios.get(`/api/courses/${lessonId}`).then(response => response.data);
+        const result = {draftLesson: course, isEditable: true};
+        const chapters = await Axios.get(`/api/courseNodes/courses/${lessonId}/chapters`).then(response => response.data);
+        if (chapters.length > 0) {
+            Object.assign(result, {chapters});
+            const sectionsPromise = chapters.map(chapter => Axios.get(`/api/courseNodes/chapters/${chapter.id}/sections`)
+                .then(response => ({[chapter.id]: response?.data}))
+                .catch(() => ({[chapter.id]: []}))
+            );
+            sections = await Promise.all(sectionsPromise).then(response => (Object.assign({}, ...response)));
+            if (!R.isEmpty(sections)) {
+                Object.assign(result, {sections});
+            }
+        }
+        const allNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`)
+            .then(response => response?.data);
+        if (allNodes.length > 0) {
+            Object.assign(result, {allNodes});
+        }
+        return result;
+    }
+});
+
+export const removePoint = (lessonId, point) => ({
     type: TYPES.ASYNC_REMOVE_POINTS,
-    payload: () => Axios.delete(`/api/courseNodes/sections/${point.sectionId}/points/${point.pointId}`)
-        .then(() => point)
+    async payload() {
+        try {
+            await Axios.delete(`/api/courseNodes/sections/${point.sectionId}/points/${point.pointId}`);
+            const allNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`).then(response => response?.data);
+            return allNodes;
+        } catch (error) {
+            return Promise.reject(error?.response?.data);
+        }
+    }
+});
+
+export const createChapters = (lessonId, chapters) => ({
+    type: TYPES.ASYNC_CREATE_CHAPTERS,
+    async payload() {
+        try {
+            const course = lessonId ? {id: lessonId} : Axios.post('/api/courses', {}).then(response => response.data);
+            const initCourse = await course;
+            const chaptersElements = await Axios.post(`/api/courseNodes/courses/${initCourse.id}/chapters`, {subjects: Object.values(chapters)})
+                .then(response => response?.data);
+            const hasCreateNewCourse = Object.prototype.hasOwnProperty.call(initCourse, 'name');
+            return Object.assign({chaptersElements}, hasCreateNewCourse ? {draftLesson: initCourse} : {});
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+});
+
+export const createSections = (chapterId, sections) => ({
+    type: TYPES.ASYNC_CREATE_SECTIONS,
+    payload: () => Axios.post(`/api/courseNodes/chapters/${chapterId}/sections`, {subjects: Object.values(sections)})
+        .then(response => ({[chapterId]: response?.data}))
         .catch(error => Promise.reject(error?.response?.data))
-});
-
-export const createChapters = (subjects) => ({
-    type: TYPES.SYNC_CREATE_CHAPTERS,
-    payload: Object.values(subjects)
-});
-
-export const createSections = (chapter, sections) => ({
-    type: TYPES.SYNC_CREATE_SECTIONS,
-    payload: {[chapter]: Object.values(sections)}
 });
 
 export const getCategories = () => ({

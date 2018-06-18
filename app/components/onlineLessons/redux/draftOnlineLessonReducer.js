@@ -13,17 +13,32 @@ export default typeToReducer({
             draftLesson: action.payload
         })
     },
+
+    //详情
+    [TYPES.ASYNC_LOAD_ONLINE_LESSON_DETAILS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            draftLesson: action.payload.draftLesson,
+            isEditable: action.payload.isEditable,
+            chapters: action.payload.chapters,
+            sections: action.payload.sections,
+            allNodes: action.payload.allNodes
+        })
+    },
     //新建点
     [TYPES.ASYNC_CREATE_POINTS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action.payload
         }),
-        FULFILLED: (state, action) => {
-            const result = action.payload;
-            const hasDraftLessonAttr = Object.prototype.hasOwnProperty.call(result, 'draftLesson');
-            return Object.assign(state, {pointElements: result.pointElements}, hasDraftLessonAttr ? { draftLesson: result.draftLesson} : {});
-        }
+        FULFILLED: (state, action) => ({
+            ...state,
+            allNodes: action.payload
+        })
     },
 
     [TYPES.ASYNC_REMOVE_POINTS]: {
@@ -31,13 +46,10 @@ export default typeToReducer({
             ...state,
             error: action.payload
         }),
-        FULFILLED: (state, action) => {
-            const removePoint = action.payload;
-            state.pointElements.points = state.pointElements.points.filter(item => item.id !== removePoint.pointId);
-            return {
-                ...state
-            };
-        }
+        FULFILLED: (state, action) => ({
+            ...state,
+            allNodes: action.payload
+        })
     },
 
     //重置
@@ -46,7 +58,8 @@ export default typeToReducer({
         draftLesson: action.payload,
         chapters: action.payload,
         sections: action.payload,
-        pointElements: action.payload
+        isEditable: action.payload,
+        allNodes: action.payload
     }),
 
     [TYPES.LOAD_ONLINE_LESSONS_CATEGORIES]: {
@@ -60,29 +73,40 @@ export default typeToReducer({
         })
     },
 
-    [TYPES.SYNC_CREATE_CHAPTERS]: (state, action) => {
-        let chapters;
-        if (state?.chapters) {
-            chapters = [...state.chapters, ...action.payload];
-        } else {
-            chapters = action.payload;
-        }
-        return {
+    [TYPES.ASYNC_CREATE_CHAPTERS]: {
+        REJECTED: (state, action) => ({
             ...state,
-            chapters
-        };
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => {
+            const result = action.payload;
+            let chapters;
+            if (state?.chapters) {
+                chapters = [...state.chapters, ...action.payload.chaptersElements];
+            } else {
+                chapters = action.payload.chaptersElements;
+            }
+            const hasDraftLessonAttr = Object.prototype.hasOwnProperty.call(result, 'draftLesson');
+            return Object.assign(state, {chapters}, hasDraftLessonAttr ? { draftLesson: result.draftLesson} : {});
+        }
     },
 
-    [TYPES.SYNC_CREATE_SECTIONS]: (state, action) => {
-        let sections;
-        if (state?.sections) {
-            sections = {...state.sections, ...action.payload};
-        } else {
-            sections = action.payload;
-        }
-        return {
+    [TYPES.ASYNC_CREATE_SECTIONS]: {
+        REJECTED: (state, action) => ({
             ...state,
-            sections
-        };
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => {
+            let sections;
+            if (state?.sections) {
+                sections = R.mergeWith(R.concat, state.sections, action.payload);
+            } else {
+                sections = action.payload;
+            }
+            return {
+                ...state,
+                sections
+            };
+        }
     }
 }, {});

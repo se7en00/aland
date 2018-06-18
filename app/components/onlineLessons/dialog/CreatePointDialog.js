@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, submit, Form, Field, clearSubmitErrors, reset, SubmissionError } from 'redux-form';
-import { DIALOG } from 'constants';
-import { Modal, Button, Select, message } from 'antd';
-import uuid from 'uuid/v4';
+import { DIALOG, renderOptions } from 'constants';
+import { Modal, Button, message } from 'antd';
 import { connect } from 'react-redux';
 import { renderTextField, renderSelectField } from '../../shared/form';
-
 
 const mapStateToProps = (state) => ({
     draftLesson: state.draftOnlineLesson?.draftLesson,
@@ -23,7 +21,7 @@ class CreatePointDialog extends Component {
 
     closeDialog = () => {
         this.props.dispatch(clearSubmitErrors(DIALOG.POINT));
-        this.props.dispatch(reset(DIALOG.CHAPTER));
+        this.props.dispatch(reset(DIALOG.POINT));
         this.props.hideDialog(DIALOG.POINT)();
     }
 
@@ -39,13 +37,17 @@ class CreatePointDialog extends Component {
             throw new SubmissionError({_error: '请至少输入一个点名称！'});
         }
         const {draftLesson, dispatch, hideDialog, actions: {createPoint}} = this.props;
-        createPoint(draftLesson?.id, values.chapterForPoint, values.sectionForPoint, points)
+        createPoint(draftLesson?.id, values.sectionForPoint, points)
             .then(() => {
                 dispatch(reset(DIALOG.POINT));
                 message.success('创建点成功！');
                 hideDialog(DIALOG.POINT)();
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                throw new SubmissionError({
+                    _error: error?.errorMessage || '创建点失败'
+                });
+            });
     }
 
     onSelect = (value) => {
@@ -54,9 +56,8 @@ class CreatePointDialog extends Component {
     }
 
     render() {
-        const Option = Select.Option;
         const {sectionsOptions} = this.state;
-        const {submitting, handleSubmit, visible, width, dispatch, error, chapters } = this.props;
+        const {submitting, handleSubmit, visible, width, dispatch, error, chapters} = this.props;
         return (
             <Modal
                 visible={visible}
@@ -83,7 +84,7 @@ class CreatePointDialog extends Component {
                             placeholder="属于章"
                             label="属于章"
                         >
-                            {chapters?.map(item => (<Option key={uuid()} value={item}>{item}</Option>))}
+                            {renderOptions('id', 'subject')(chapters)}
                         </Field>
 
                         <Field
@@ -95,7 +96,7 @@ class CreatePointDialog extends Component {
                             placeholder="属于节"
                             label="属于节"
                         >
-                            {sectionsOptions && sectionsOptions?.map(item => (<Option key={uuid()} value={item}>{item}</Option>))}
+                            {renderOptions('id', 'subject')(sectionsOptions)}
                         </Field>
 
                         <Field

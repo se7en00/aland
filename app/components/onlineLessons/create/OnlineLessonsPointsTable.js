@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table, Popconfirm, Button, message } from 'antd';
-import uuid from 'uuid/v4';
+import { rebuildDataWithKey } from 'utils';
 import { getLinkByName, PATHNAME } from 'constants';
 
 class OnlineLessonsPointsTable extends Component {
     constructor(props) {
         super(props);
-        this.elements = this.buildTableElements(props.dataSource);
+        this.elements = rebuildDataWithKey(props.dataSource);
 
         this.columns = [{
             title: '序号',
@@ -42,40 +42,23 @@ class OnlineLessonsPointsTable extends Component {
         }];
     }
 
-    buildTableElements = (dataSource) => {
-        if (!dataSource) return;
-        const { chapter, section, points, lessonId } = dataSource;
-        const {id: chapterId, subject: chapterName } = chapter;
-        const {id: sectionId, subject: sectionName } = section;
-        return points.map((item, index) => ({
-            index: index + 1,
-            key: uuid(),
-            lessonId,
-            pointId: item.id,
-            chapterId,
-            sectionId,
-            chapter: chapterName,
-            section: sectionName,
-            point: item.subject
-        }));
-    }
-
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
-            this.elements = this.buildTableElements(nextProps.dataSource);
+            this.elements = rebuildDataWithKey(nextProps.dataSource);
         }
     }
 
     onEditPoint = (point) => {
-        this.props.actions.push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/addition/point/${point.lessonId}`);
+        this.props.actions.push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/addition/point/${point.pointId}`);
     };
 
     onDelete = (record) => {
-        this.props.actions.removePoint(record)
+        const {lessonId, actions: {removePoint}} = this.props;
+        removePoint(lessonId, record)
             .then(() => {
-                console.log('222');
+                message.success(`删除点：${record.point}成功！`);
             })
-            .catch(error => {
+            .catch(() => {
                 message.error(`删除点：${record.point}失败！`);
             });
     }
@@ -96,8 +79,9 @@ class OnlineLessonsPointsTable extends Component {
 
 OnlineLessonsPointsTable.propTypes = {
     // showDialog: PropTypes.func,
+    lessonId: PropTypes.string,
     actions: PropTypes.objectOf(PropTypes.func),
-    dataSource: PropTypes.object
+    dataSource: PropTypes.array
 };
 OnlineLessonsPointsTable.defaultProps = {};
 

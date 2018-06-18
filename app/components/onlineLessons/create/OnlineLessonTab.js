@@ -25,16 +25,37 @@ class OnlineLessonTab extends Component {
         </Dropdown>
     );
 
+    initDetailsValues = (values) => {
+        if (!values) return null;
+        const {name, categoryCode, introduce, benefit, cover} = values;
+        const result = {name, categoryCode, introduce, benefit, cover: [cover]};
+        if (values.lecturerId || values.lecturerName) {
+            Object.assign(result, {lecturerId: {key: values.lecturerId, label: values.lecturerName}});
+        }
+        if (values.provideId || values.provide) {
+            Object.assign(result, {provideId: {key: values.provideId, label: values.provide}});
+        }
+        return result;
+    }
+
     render() {
         const TabPane = Tabs.TabPane;
         const {draftOnlineLesson, showDialog, actions} = this.props;
         return (
             <Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>
                 <TabPane tab={<span><Icon type="profile"/>课程详情</span>}key="1">
-                    <OnlineLessonDetails actions={actions} draftOnlineLesson={draftOnlineLesson}/>
+                    <OnlineLessonDetails
+                        actions={actions}
+                        draftOnlineLesson={draftOnlineLesson}
+                        initialValues={this.initDetailsValues(draftOnlineLesson?.draftLesson)}
+                    />
                 </TabPane>
                 <TabPane tab={<span><i style={{marginRight: '8px'}} className="fas fa-project-diagram"/>课程内容</span>} key="2">
-                    <OnlineLessonNode draftOnlineLesson={draftOnlineLesson} actions={actions} showDialog={showDialog}/>
+                    <OnlineLessonNode
+                        actions={actions}
+                        draftOnlineLesson={draftOnlineLesson}
+                        showDialog={showDialog}
+                    />
                 </TabPane>
                 <TabPane tab={<span><Icon type="book"/>课后测试</span>} key="3">
                     <OnlineLessonQuizzes/>

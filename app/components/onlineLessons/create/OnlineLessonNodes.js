@@ -7,7 +7,8 @@ import OnlineLessonsPointsTable from './OnlineLessonsPointsTable';
 class OnlineLessonNodes extends Component {
     render() {
         const {showDialog, draftOnlineLesson, actions} = this.props;
-        const hasPointsElement = !!draftOnlineLesson?.pointElements;
+        const lessonId = draftOnlineLesson?.draftLesson?.id;
+        const hasPointsElement = !!draftOnlineLesson?.allNodes;
         const hasChapters = !!draftOnlineLesson?.chapters;
         const hasSections = !!draftOnlineLesson?.sections;
         return (
@@ -20,7 +21,7 @@ class OnlineLessonNodes extends Component {
                     </div>
                 </div>
                 {
-                    hasPointsElement && <OnlineLessonsPointsTable showDialog={showDialog} actions={actions} dataSource={draftOnlineLesson?.pointElements}/>
+                    hasPointsElement && <OnlineLessonsPointsTable showDialog={showDialog} actions={actions} lessonId={lessonId} dataSource={draftOnlineLesson?.allNodes}/>
                 }
             </form>
         );

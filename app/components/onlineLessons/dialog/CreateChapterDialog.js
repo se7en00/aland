@@ -13,11 +13,19 @@ class CreateChapterDialog extends Component {
         if (R.isEmpty(values)) {
             throw new SubmissionError({_error: '请至少输入一个章名称！'});
         }
+        const {draftLesson, dispatch, hideDialog, actions: {createChapters}} = this.props;
         //创建章
-        this.props.actions.createChapters(values);
-        this.props.dispatch(reset(DIALOG.CHAPTER));
-        message.success('创建章成功！');
-        this.props.hideDialog(DIALOG.CHAPTER)();
+        createChapters(draftLesson?.id, values)
+            .then(() => {
+                dispatch(reset(DIALOG.CHAPTER));
+                message.success('创建章成功！');
+                hideDialog(DIALOG.CHAPTER)();
+            })
+            .catch(error => {
+                throw new SubmissionError({
+                    _error: error?.errorMessage || '创建章失败'
+                });
+            });
     }
 
     closeDialog = () => {
@@ -101,7 +109,7 @@ CreateChapterDialog.propTypes = {
     submitting: PropTypes.bool,
     actions: PropTypes.objectOf(PropTypes.func),
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    //由于button不在form表单中， 我们采用redux-frorm的remote button，通过redux dispatch方法来来提交表单
+    draftLesson: PropTypes.object,
     dispatch: PropTypes.func,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
     //redux-form 表单有验证错误为true, 相反为false

@@ -8,6 +8,7 @@ const lib = [
     'react-css-themr',
     'react-router-dom',
     'react-transition-group',
+    'react-quill',
     'prop-types',
     'uuid',
     'chalk',

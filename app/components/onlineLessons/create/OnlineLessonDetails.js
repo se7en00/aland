@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field, Form, SubmissionError } from 'redux-form';
-import { Button, Select } from 'antd';
+import { Button, message } from 'antd';
 import { resetSpecificField } from 'utils';
 import { renderOptions } from 'constants';
-import uuid from 'uuid/v4';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
 import { renderSelectField, renderTextField, renderUploadField } from '../../shared/form';
 
-const Option = Select.Option;
 const required = value => (value ? undefined : '不能为空！');
 
 @reduxForm({form: 'onlineLessonsDetails'})
@@ -25,20 +23,23 @@ class OnlineLessonDetails extends Component {
             throw new SubmissionError({cover: '上传图片失败！'});
         }
 
-        createDraftOnlineLesson(courseID, values)
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        const params = Object.keys(values).reduce((map, k) => {
+            if (k === 'lecturerId' || k === 'provideId') {
+                map[k] = values[k].key;
+            } else {
+                map[k] = !R.isEmpty(values[k]) ? values[k] : '';
+            }
+            return map;
+        }, {});
+
+        createDraftOnlineLesson(courseID, params)
+            .then(() => {message.success(`保存课程${values.name}成功！`);})
+            .catch(() => {message.success(`保存课程${values.name}失败！`);});
     }
 
     renderCategoryOptions = () => {
         const {draftOnlineLesson: {categoryList = [] }} = this.props;
-        return categoryList.map(category =>
-            (<Option key={uuid()} value={category.code}>{category.name}</Option>)
-        );
+        return renderOptions('code', 'name')(categoryList);
     }
 
     render() {
@@ -73,7 +74,7 @@ class OnlineLessonDetails extends Component {
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
-                        name="category"
+                        name="categoryCode"
                         component={renderSelectField}
                         placeholder="种类"
                         label="种类"
@@ -115,7 +116,7 @@ class OnlineLessonDetails extends Component {
                         name="lecturerId"
                         placeholder="讲师"
                         label="讲师"
-                        renderOptions={renderOptions}
+                        renderOptions={renderOptions('id', 'name')}
                     />
 
                     <AutoSelectSearch
@@ -127,7 +128,7 @@ class OnlineLessonDetails extends Component {
                         name="provideId"
                         placeholder="供应商"
                         label="供应商"
-                        renderOptions={renderOptions}
+                        renderOptions={renderOptions('id', 'name')}
                     />
 
                     <div className="row inputRow">
