@@ -7,15 +7,18 @@ import { renderSelectField } from '../form';
 class AutoSelectSearch extends Component {
     static propTypes = {
         resetSelectValue: PropTypes.func,
+        style: PropTypes.object,
         className: PropTypes.string,
         name: PropTypes.string,
         rowClassName: PropTypes.string,
+        labelClassName: PropTypes.string,
         api: PropTypes.string.isRequired,
         query: PropTypes.string,
         renderOptions: PropTypes.func.isRequired,
         label: PropTypes.string,
         layout: PropTypes.string,
-        placeholder: PropTypes.string
+        placeholder: PropTypes.string,
+        mode: PropTypes.string
     }
 
     static defaultProps = {
@@ -48,12 +51,27 @@ class AutoSelectSearch extends Component {
 
     render() {
         const {fetching, dataSource} = this.state;
-        const {className, rowClassName, name, resetSelectValue, renderOptions, placeholder, label, layout} = this.props;
+        const {
+            labelClassName,
+            className,
+            rowClassName,
+            style,
+            name,
+            resetSelectValue,
+            renderOptions,
+            placeholder,
+            label,
+            mode,
+            layout
+        } = this.props;
         return (
             <Field
                 showSearch={true}
                 allowClear={true}
+                mode={mode}
+                style={style}
                 className={className}
+                labelClassName={labelClassName}
                 rowClassName={rowClassName}
                 name={name}
                 layout={layout}

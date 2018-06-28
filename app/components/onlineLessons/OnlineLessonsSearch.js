@@ -20,7 +20,7 @@ class OnlineLessonsSearch extends Component {
     render() {
         const Option = Select.Option;
         const { submitting, handleSubmit, dispatch } = this.props;
-        const restLecturerValue = () => resetSpecificField(dispatch, 'coursesSearch', 'lecturerId', '');
+        const restLecturerValue = () => resetSpecificField(dispatch, 'coursesSearch', 'lecturer', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
@@ -50,7 +50,7 @@ class OnlineLessonsSearch extends Component {
                             query="name"
                             resetSelectValue={restLecturerValue}
                             rowClassName="col-md-2"
-                            name="lecturerId"
+                            name="lecturer"
                             layout="elementOnly"
                             placeholder="讲师"
                             renderOptions={renderOptions('id', 'name')}

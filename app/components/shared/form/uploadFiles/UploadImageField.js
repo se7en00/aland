@@ -15,7 +15,7 @@ class UploadField extends Component {
         // placeholder: PropTypes.string,
         // meta: PropTypes.object,
         // prefix: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-        // type: PropTypes.string,
+        uploadTitle: PropTypes.string,
         className: PropTypes.string
     }
 
@@ -79,14 +79,14 @@ class UploadField extends Component {
    }
 
    render() {
+       const { previewVisible, previewImage, fileList } = this.state;
+       const {accept, uploadFileCount, className, uploadTitle} = this.props;
        const uploadButton = (
            <div>
                <Icon type="plus"/>
-               <div className="ant-upload-text">上传图片</div>
+               <div className="ant-upload-text">{uploadTitle}</div>
            </div>
        );
-       const { previewVisible, previewImage, fileList } = this.state;
-       const {accept, uploadFileCount, className} = this.props;
        return (
            <div className={className}>
                <Upload

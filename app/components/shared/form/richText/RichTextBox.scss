@@ -1,0 +1,12 @@
+@import "~SCSS_PATH/modules";
+
+.richText-wrapper {
+    //fix quill rich edit video layout issue
+    :global(.ql-tooltip.ql-editing) {
+        left: 0!important;
+    }
+
+    :global(.ql-container) {
+        min-height: 300px;
+    }
+}

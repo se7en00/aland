@@ -11,11 +11,11 @@ const Dialog = (...dialogs) => (WrappedComponent) =>
             return result;
         }, {})
 
-        state = {...this.preLoadState()};
+        state = {...this.preLoadState(), title: ''};
 
         //open dialog
-        showModal = (dialogName = 'dialog') => () => {
-            this.setState({[dialogName]: true});
+        showModal = (dialogName = 'dialog', title) => () => {
+            this.setState({[dialogName]: true, title});
         }
 
         //close dialog
@@ -32,7 +32,8 @@ const Dialog = (...dialogs) => (WrappedComponent) =>
 
             let dialogProps = {
                 hideDialog: this.hideModal,
-                width: '650px'
+                width: '650px',
+                title: this.state.title
             };
 
             // //mapPropsToDialog的用处：当我们打开dilaog时， mapPropsToDialog里的数据可以让我们在dialog里初始化一些相关联的数据

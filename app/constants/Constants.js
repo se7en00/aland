@@ -5,7 +5,7 @@ export const IDENTIFIERS = {
     ACCORDION_CONTENT: 'accordion_content'
 };
 
-export const BASE_URL = 'http://139.224.113.208:8181/aland-training';
+export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
 
 export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -49,7 +49,10 @@ export const DIALOG = {
     PERMISSION: 'permission',
     CHAPTER: 'chapter',
     SECTION: 'section',
-    POINT: 'point'
+    POINT: 'point',
+    MATERIAL: 'material',
+    HOME_WORK: 'homeWork',
+    INTERACTION_WORK: 'interaction'
 };
 
 export const PANEL_TITLE = {
@@ -57,6 +60,7 @@ export const PANEL_TITLE = {
     ONLINE_LESSONS: '线上课程库管理',
     ONLINE_LESSONS_ADD: '新建线上课程',
     ONLINE_LESSONS_DETAILS: '{0}详情',
+    ONLINE_LESSONS_POINT: '点内容',
     ONE_CLICK: '一点通管理',
     ONE_CLICK_ADD: '新建一点通',
     TAGS: '标签设置'
@@ -72,4 +76,10 @@ export const TAG_CATEGORY = {
     MATERIALS: '相关材料',
     BASE_OPERATION: '相关基本工作操作',
     SECURITY_RISK: '安全风险'
+};
+
+export const TYPE_MAPPING = {
+    WRITE: '文字写作',
+    PRACTICE: '动手写作',
+    INTERACTION: '人际互动'
 };

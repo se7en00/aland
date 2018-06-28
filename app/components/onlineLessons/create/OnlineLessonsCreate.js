@@ -17,14 +17,13 @@ class OnlineLessonsCreate extends Component {
                 getCourseDetails(courseId).catch(error => console.log(error));
             }
         }
-        //
         getCategories().catch(error => console.log(error));
     }
 
     renderHeaderTitle = () => {
         const {draftOnlineLesson} = this.props;
         if (draftOnlineLesson?.isEditable) {
-            return format(PANEL_TITLE.ONLINE_LESSONS_DETAILS, draftOnlineLesson?.draftLesson?.name || '课程');
+            return format(PANEL_TITLE.ONLINE_LESSONS_DETAILS, draftOnlineLesson?.draftLesson?.name);
         }
         return PANEL_TITLE.ONLINE_LESSONS_ADD;
     }

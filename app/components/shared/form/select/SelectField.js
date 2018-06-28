@@ -20,13 +20,15 @@ class SelectField extends PureComponent {
         ]),
         resetSelectValue: PropTypes.func,
         onSelect: PropTypes.func,
+        onDeselect: PropTypes.func,
         onSearch: PropTypes.func,
         onBlur: PropTypes.func,
         fetching: PropTypes.bool,
         allowClear: PropTypes.bool,
         labelInValue: PropTypes.bool,
         showSearch: PropTypes.bool,
-        filterOption: PropTypes.func
+        filterOption: PropTypes.func,
+        mode: PropTypes.string
     }
 
     //渲染error msg
@@ -52,12 +54,14 @@ class SelectField extends PureComponent {
             className,
             filterOption,
             onSelect,
+            onDeselect,
             showSearch,
             allowClear,
             onSearch,
             onBlur,
             fetching,
-            labelInValue
+            labelInValue,
+            mode
         } = this.props;
 
         const {value = defaultValue} = input;
@@ -67,6 +71,7 @@ class SelectField extends PureComponent {
         return (
             <div className={className}>
                 <Select
+                    mode={mode}
                     allowClear={allowClear}
                     labelInValue={labelInValue}
                     showSearch={showSearch}
@@ -75,6 +80,7 @@ class SelectField extends PureComponent {
                     value={value || undefined} //加个undefined是用来修复value是空字符串时，placeholder不显示的问题 https://github.com/ant-design/ant-design/issues/2367
                     onChange={this.handleChange}
                     onSelect={onSelect}
+                    onDeselect={onDeselect}
                     onSearch={onSearch}
                     onBlur={onBlur}
                     filterOption={filterOption}

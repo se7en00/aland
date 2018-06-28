@@ -16,6 +16,16 @@ export const courseStatusOptions = [
     <Option key={uuid()} value={item.value}>{item.label}</Option>
 ));
 
+export const studyContentsOptions = [
+    {label: '图文信息', value: 'ARTICLE'},
+    {label: '素材库选择', value: 'MEDIA'},
+    {label: '链接', value: 'LINK'},
+    {label: '一点通', value: 'PEDIA'},
+    {label: '本地上传', value: 'UPLOAD'}
+].map(item => (
+    <Option key={uuid()} value={item.value}>{item.label}</Option>
+));
+
 /**
  * @param list 下拉数据
  * @param keyAsValue

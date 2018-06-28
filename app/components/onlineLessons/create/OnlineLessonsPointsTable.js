@@ -49,7 +49,8 @@ class OnlineLessonsPointsTable extends Component {
     }
 
     onEditPoint = (point) => {
-        this.props.actions.push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/addition/point/${point.pointId}`);
+        const {lessonId, actions: {push}} = this.props;
+        push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/${lessonId}/point/${point.pointId}`);
     };
 
     onDelete = (record) => {

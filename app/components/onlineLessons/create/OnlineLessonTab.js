@@ -41,26 +41,36 @@ class OnlineLessonTab extends Component {
     render() {
         const TabPane = Tabs.TabPane;
         const {draftOnlineLesson, showDialog, actions} = this.props;
+        const isDisabledLesson = !draftOnlineLesson?.draftLesson;
         return (
             <Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>
-                <TabPane tab={<span><Icon type="profile"/>课程详情</span>}key="1">
+                <TabPane tab={<span><Icon type="profile"/>课程详情</span>} key="1">
                     <OnlineLessonDetails
                         actions={actions}
                         draftOnlineLesson={draftOnlineLesson}
                         initialValues={this.initDetailsValues(draftOnlineLesson?.draftLesson)}
                     />
                 </TabPane>
-                <TabPane tab={<span><i style={{marginRight: '8px'}} className="fas fa-project-diagram"/>课程内容</span>} key="2">
+                <TabPane
+                    disabled={isDisabledLesson}
+                    tab={<span><i style={{marginRight: '8px'}} className="fas fa-project-diagram"/>课程内容</span>}
+                    key="2">
                     <OnlineLessonNode
                         actions={actions}
                         draftOnlineLesson={draftOnlineLesson}
                         showDialog={showDialog}
                     />
                 </TabPane>
-                <TabPane tab={<span><Icon type="book"/>课后测试</span>} key="3">
+                <TabPane
+                    disabled={isDisabledLesson}
+                    tab={<span><Icon type="book"/>课后测试</span>}
+                    key="3">
                     <OnlineLessonQuizzes/>
                 </TabPane>
-                <TabPane tab={<span><Icon type="tags-o"/>标签</span>} key="4">
+                <TabPane
+                    disabled={isDisabledLesson}
+                    tab={<span><Icon type="tags-o"/>标签</span>}
+                    key="4">
                     <OnlineLessonTags/>
                 </TabPane>
             </Tabs>

@@ -1,0 +1,12 @@
+@import "~SCSS_PATH/modules";
+
+.materialsContainer {
+    .material {
+        display: flex;
+        padding: 5px 15px;
+        align-items: center;
+        border: 1px solid #5DA424;
+        justify-content: space-around;
+        list-style-type: none;
+    }
+}

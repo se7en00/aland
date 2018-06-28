@@ -5,7 +5,7 @@ export const rebuildDataWithKey = (data) => {
     if (data) {
         return data.map((item, index) => ({
             index: index + 1,
-            key: uuid(),
+            key: item.id || uuid(),
             ...item
         }));
     }

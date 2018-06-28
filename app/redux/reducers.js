@@ -4,7 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 import { loginReducer } from 'components/login';
 import { accountListReducer } from 'components/accountList';
 import { dashboardReducer } from 'components/dashboard';
-import { onlineLessonsReducer, draftOnlineLessonsReducer} from 'components/onlineLessons';
+import { onlineLessonsReducer, draftOnlineLessonsReducer, pointReducer} from 'components/onlineLessons';
 import { oneClickReducer } from 'components/oneClick';
 import loadingReducer from './middleware/loadingReducer';
 
@@ -16,6 +16,7 @@ export default combineReducers({
     user: loginReducer,
     onlineLessons: onlineLessonsReducer,
     draftOnlineLesson: draftOnlineLessonsReducer,
+    point: pointReducer,
     oneClick: oneClickReducer,
     form: formReducer
 });

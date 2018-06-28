@@ -5,7 +5,7 @@ import { Button, message } from 'antd';
 import { resetSpecificField } from 'utils';
 import { renderOptions } from 'constants';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
-import { renderSelectField, renderTextField, renderUploadField } from '../../shared/form';
+import { renderSelectField, renderTextField, UploadImageField } from '../../shared/form';
 
 const required = value => (value ? undefined : '不能为空！');
 
@@ -27,7 +27,7 @@ class OnlineLessonDetails extends Component {
             if (k === 'lecturerId' || k === 'provideId') {
                 map[k] = values[k].key;
             } else {
-                map[k] = !R.isEmpty(values[k]) ? values[k] : '';
+                map[k] = values[k];
             }
             return map;
         }, {});
@@ -67,7 +67,8 @@ class OnlineLessonDetails extends Component {
                         style={{alignItems: 'flex-start'}}
                         name="cover"
                         uploadFileCount="1"
-                        component={renderUploadField}
+                        component={UploadImageField}
+                        uploadTitle="上传图片"
                         label="课程封面"
                     />
 
