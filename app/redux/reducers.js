@@ -9,8 +9,11 @@ import { orgListreducer } from 'components/orgManagement';
 import { dashboardReducer } from 'components/dashboard';
 import { onlineLessonsReducer, draftOnlineLessonsReducer, pointReducer} from 'components/onlineLessons';
 import { oneClickReducer } from 'components/oneClick';
-import { materialsReducer} from 'components/materials';
-import { examsReducer} from 'components/exams';
+import { materialsReducer } from 'components/materials';
+import { examsReducer } from 'components/exams';
+import { inquiriesReducer } from 'components/inquiries';
+import { lecturersReducer } from 'components/lecturers';
+import { providesReducer } from 'components/provides';
 import loadingReducer from './middleware/loadingReducer';
 
 export default combineReducers({
@@ -28,5 +31,8 @@ export default combineReducers({
     oneClick: oneClickReducer,
     materials: materialsReducer,
     exams: examsReducer,
+    inquiries: inquiriesReducer,
+    lecturers: lecturersReducer,
+    provides: providesReducer,
     form: formReducer
 });

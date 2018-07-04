@@ -15,6 +15,9 @@ import UserListCreationView from 'views/userManagement/UserListCreationView';
 import UserGroupView from 'views/userGroup/UserGroupView';
 import MaterialsView from 'views/materials/MaterialsView';
 import ExamsView from 'views/exams/ExamsView';
+import InquiriesView from 'views/inquiry/InquiriesView';
+import LecturersView from 'views/lectures/LecturersView';
+import ProvidesView from 'views/provides/ProvidesView';
 import {ConnectedSwitch} from './ConnectedSwitch';
 
 const Routes = ({match}) => (
@@ -33,6 +36,9 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/studentManagement`} component={UserGroupView}/>
         <Route exact path={`${match.path}/materials`} component={MaterialsView}/>
         <Route exact path={`${match.path}/questBank`} component={ExamsView}/>
+        <Route exact path={`${match.path}/questionnaire`} component={InquiriesView}/>
+        <Route exact path={`${match.path}/master`} component={LecturersView}/>
+        <Route exact path={`${match.path}/vendor`} component={ProvidesView}/>
         <Route exact path={`${match.path}/tagSetting`} component={TagsView}/>
     </ConnectedSwitch>
 );
