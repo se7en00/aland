@@ -9,6 +9,8 @@ import { orgListreducer } from 'components/orgManagement';
 import { dashboardReducer } from 'components/dashboard';
 import { onlineLessonsReducer, draftOnlineLessonsReducer, pointReducer} from 'components/onlineLessons';
 import { oneClickReducer } from 'components/oneClick';
+import { materialsReducer} from 'components/materials';
+import { examsReducer} from 'components/exams';
 import loadingReducer from './middleware/loadingReducer';
 
 export default combineReducers({
@@ -24,5 +26,7 @@ export default combineReducers({
     draftOnlineLesson: draftOnlineLessonsReducer,
     point: pointReducer,
     oneClick: oneClickReducer,
+    materials: materialsReducer,
+    exams: examsReducer,
     form: formReducer
 });

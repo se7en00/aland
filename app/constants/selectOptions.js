@@ -26,6 +26,24 @@ export const studyContentsOptions = [
     <Option key={uuid()} value={item.value}>{item.label}</Option>
 ));
 
+export const fileTypeOptions = [
+    {label: '视频', value: 'VIDEO'},
+    {label: '图片', value: 'IMAGE'},
+    {label: '音频', value: 'AUDIO'},
+    {label: '文档', value: 'DOC'}
+].map(item => (
+    <Option key={uuid()} value={item.value}>{item.label}</Option>
+));
+
+export const examTypeOptions = [
+    {label: '单选题', value: 'SINGLE'},
+    {label: '多选题', value: 'MULTIPLE'},
+    {label: '填空题', value: 'FILL'},
+    {label: '判断题', value: 'TOF'}
+].map(item => (
+    <Option key={uuid()} value={item.value}>{item.label}</Option>
+));
+
 /**
  * @param list 下拉数据
  * @param keyAsValue

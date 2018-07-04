@@ -67,6 +67,7 @@ export const PANEL_TITLE = {
     ONLINE_LESSONS_POINT: '点内容',
     ONE_CLICK: '一点通管理',
     ONE_CLICK_ADD: '新建一点通',
+    MATERIALS: '素材管理',
     TAGS: '标签设置'
 };
 
