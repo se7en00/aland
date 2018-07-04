@@ -14,7 +14,7 @@ const validate = values => {
         errors.term = '天数不能为空';
     }
 
-    if (values.term && !validator.isInt(values.term, {gt: 0})) {
+    if (values.term && !validator.isInt(`${values.term}`, {gt: 0})) {
         errors.term = '请输入正确的天数！';
     }
 

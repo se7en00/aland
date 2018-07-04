@@ -1,6 +1,7 @@
 //reducer
-export {default as userListreducer} from './redux/userListreducer';
+export {default as userListReducer} from './redux/userListreducer';
 //action
 export * as actionCreators from './redux/userListAction';
 // component
 export { default as UserList } from './UserList';
+export { default as UserCreation } from './create/UserCreation';

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 import { DIALOG } from 'constants';
 
-class StudentGroupListTable extends Component {
+class UserGroupListTable extends Component {
     static propTypes = {
         showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
@@ -47,11 +47,6 @@ class StudentGroupListTable extends Component {
         }];
     }
 
-    //先不优化了，现在每次打开dialog多会渲染table
-    // shouldComponentUpdate(nextProps) {
-    //     return !R.eqProps('dataSource', nextProps, this.props);
-    // }
-
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
             const { dataSource: {elements = [], paging = {}} } = nextProps;
@@ -77,18 +72,6 @@ class StudentGroupListTable extends Component {
             showDialog(dialog)();
         }
     }
-
-    onResetPWD = (user) => {
-        const {
-            actions: {resetPassword}
-        } = this.props;
-        resetPassword(user.id, {oldPsd: 'test', newPsd: '123456'}).then(() => {
-            message.success(`成功重置账户名：${user.name}的密码！`);
-        }).catch(error => {
-            message.error(`重置账户名：${user.name}的密码失败！`);
-        });
-    }
-
 
     onDelete = (user) => {
         const {
@@ -116,4 +99,4 @@ class StudentGroupListTable extends Component {
     }
 }
 
-export default StudentGroupListTable;
+export default UserGroupListTable;

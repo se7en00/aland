@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators, OrgList} from 'components/orgManagement';
 
-@connect(state => ({accountList: state.accountList}), mapDispatchToProps)
+@connect(state => ({org: state.org}), mapDispatchToProps)
 class OrgManagementView extends Component {
     render() {
         return <OrgList {...this.props}/>;

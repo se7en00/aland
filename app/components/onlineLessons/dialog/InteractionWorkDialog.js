@@ -61,7 +61,7 @@ class InteractionWorkDialog extends Component {
     }
 
     render() {
-        const {submitting, handleSubmit, visible, width, dispatch, error } = this.props;
+        const {submitting, handleSubmit, visible, width, dispatch, error, invalid } = this.props;
         const resetPersonValue = () => resetSpecificField(dispatch, DIALOG.INTERACTION_WORK, 'users', '');
         const marginLeft = {marginLeft: '1px'};
         return (
@@ -71,7 +71,7 @@ class InteractionWorkDialog extends Component {
                 title="人际交互"
                 onCancel={this.closeDialog}
                 footer={[
-                    <Button key="submit" onClick={() => dispatch(submit(DIALOG.INTERACTION_WORK))} loading={submitting} type="primary">保存</Button>,
+                    <Button key="submit" disabled={invalid} onClick={() => dispatch(submit(DIALOG.INTERACTION_WORK))} loading={submitting} type="primary">保存</Button>,
                     <Button key="back" onClick={this.closeDialog}>取消</Button>
                 ]}
             >
@@ -150,6 +150,7 @@ InteractionWorkDialog.propTypes = {
     //错误信息，可以是同步和异步验证的错误信息，也是submit返回的错误信息
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     //redux-form 表单有验证错误为true, 相反为false
+    invalid: PropTypes.bool,
     //表单是否提交
     submitting: PropTypes.bool,
     //弹出框的宽度

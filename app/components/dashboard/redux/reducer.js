@@ -1,24 +1,16 @@
 import typeToReducer from 'type-to-reducer';
-import { LOAD_DASHBOARD } from './action';
+import { ASYNC_LOAD_DASHBOARD } from './action';
 
-const initialState = {
-    list: []
-};
 //reducer
 export default typeToReducer({
-    [LOAD_DASHBOARD]: {
-        PENDING: () => ({
-            ...initialState
-        }),
+    [ASYNC_LOAD_DASHBOARD]: {
         REJECTED: (state, action) => ({
-            ...initialState,
-            isRejected: true,
+            ...state,
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
-            ...initialState,
-            isFulfilled: true,
-            list: action.payload
+            ...state,
+            ...action.payload
         })
     }
-}, initialState);
+}, {});

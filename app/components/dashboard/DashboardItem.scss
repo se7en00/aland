@@ -1,0 +1,24 @@
+@import "~SCSS_PATH/modules";
+
+.dashboardContainer {
+    padding: rem(20px 40px);
+    .item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        border-radius: 5px;
+        border: 1px solid $primary-color;
+        height: 100px;
+        margin: 10px;
+        padding-left: 40px;
+        .count {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 15px;
+            font-weight: bold;
+        }
+    }
+}

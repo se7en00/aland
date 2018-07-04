@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-import { DIALOG } from 'constants';
+import { DATE_FORMAT, DIALOG } from 'constants';
 
 class UserListTable extends Component {
     static propTypes = {
         showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
-        dataSource: PropTypes.object
+        dataSource: PropTypes.object,
+        searchParams: PropTypes.object
     };
 
     constructor(props) {
@@ -26,35 +27,36 @@ class UserListTable extends Component {
         }, {
             title: '姓名',
             align: 'center',
-            dataIndex: 'loginName'
+            dataIndex: 'name'
         }, {
             title: '性别',
             align: 'center',
-            dataIndex: 'loginName'
+            dataIndex: 'gender'
         }, {
             title: '手机号',
             align: 'center',
-            dataIndex: 'loginName'
+            dataIndex: 'phoneNumber'
         }, {
             title: '部门',
             align: 'center',
-            dataIndex: 'loginName'
+            dataIndex: 'deptName'
         }, {
             title: '岗位',
             align: 'center',
-            dataIndex: 'loginName'
+            dataIndex: 'post'
         }, {
             title: '工号',
             align: 'center',
-            dataIndex: 'loginName'
+            dataIndex: 'workNum'
         }, {
             title: '员工级别',
             align: 'center',
-            dataIndex: 'loginName'
+            dataIndex: 'userLevel'
         }, {
             title: '从岗时间',
             align: 'center',
-            dataIndex: 'name'
+            dataIndex: 'workDate',
+            render: (text, record) => moment(record.workDate).format(DATE_FORMAT)
         }, {
             title: '操作',
             align: 'center',
@@ -71,11 +73,6 @@ class UserListTable extends Component {
         }];
     }
 
-    //先不优化了，现在每次打开dialog多会渲染table
-    // shouldComponentUpdate(nextProps) {
-    //     return !R.eqProps('dataSource', nextProps, this.props);
-    // }
-
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
             const { dataSource: {elements = [], paging = {}} } = nextProps;
@@ -87,7 +84,8 @@ class UserListTable extends Component {
 
     handelPageChange = (page, pageSize) => {
         const { getUserList } = this.props.actions;
-        getUserList(pageSize, page);
+        const { searchParams } = this.props;
+        getUserList(Object.assign({pageSize, page}, searchParams));
     }
 
     openDialog = (user, dialog) => {
@@ -102,28 +100,16 @@ class UserListTable extends Component {
         }
     }
 
-    onResetPWD = (user) => {
-        const {
-            actions: {resetPassword}
-        } = this.props;
-        resetPassword(user.id, {oldPsd: 'test', newPsd: '123456'}).then(() => {
-            message.success(`成功重置账户名：${user.name}的密码！`);
-        }).catch(error => {
-            message.error(`重置账户名：${user.name}的密码失败！`);
-        });
-    }
-
-
     onDelete = (user) => {
         const {
             dataSource: {paging: {size, page}},
             actions: {deleteUser, getUserList}
         } = this.props;
         deleteUser(user.id).then(() => {
-            message.success(`成功删除账户名：${user.name}！`);
+            message.success(`成功删除用户：${user.name}！`);
             getUserList(size, page);
         }).catch(error => {
-            message.error(`删除账户名：${user.name}失败！`);
+            message.error(`删除用户：${user.name}失败！`);
         });
     }
 

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators, UserList} from 'components/userList';
+import { actionCreators, UserCreation} from 'components/userList';
 
 @connect(state => ({userList: state.userList}), mapDispatchToProps)
-class UserListView extends Component {
+class UserListCreationView extends Component {
     render() {
-        return <UserList {...this.props}/>;
+        return <UserCreation {...this.props}/>;
     }
 }
 
@@ -14,4 +14,4 @@ function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators(actionCreators, dispatch) };
 }
 
-export default UserListView;
+export default UserListCreationView;

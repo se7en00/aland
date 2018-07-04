@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Tabs } from 'antd';
 import Panel from './DashboardItem';
 
 class DashboardList extends Component {
     static propTypes = {
-        loading: PropTypes.bool,
-        error: PropTypes.bool,
         loadDashboard: PropTypes.func,
-        list: PropTypes.oneOfType([
-            PropTypes.array,
-            PropTypes.object
-        ])
+        dashboard: PropTypes.object
     };
 
     componentDidMount() {
@@ -18,17 +14,21 @@ class DashboardList extends Component {
     }
 
     render() {
-        const {list} = this.props.list;
-        // if (loading) {
-        //     return <p>loading</p>;
-        // }
-        // if (error) {
-        //     return <p>Oops, someThing Wrong</p>;
-        // }
-
-        return list.map(item => (
-            <Panel {...item} key={item.id}/>
-        ));
+        const TabPane = Tabs.TabPane;
+        const {today, yesterday, all} = this.props?.dashboard;
+        return (
+            <Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>
+                <TabPane tab="今天" key="1">
+                    <Panel details={today}/>
+                </TabPane>
+                <TabPane tab="昨天" key="2">
+                    <Panel details={yesterday}/>
+                </TabPane>
+                <TabPane tab="总计" key="3">
+                    <Panel details={all}/>
+                </TabPane>
+            </Tabs>
+        );
     }
 }
 

@@ -14,7 +14,7 @@ class OnlineLessonsCreate extends Component {
         if (/details$/g.test(location.pathname) && !draftOnlineLesson?.isEditable) {
             const courseId = location.pathname.match(/(\w)+(?=\/details$)/g)[0];
             if (courseId) {
-                getCourseDetails(courseId).catch(error => console.log(error));
+                getCourseDetails(courseId);
             }
         }
         getCategories().catch(error => console.log(error));

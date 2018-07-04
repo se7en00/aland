@@ -11,7 +11,8 @@ import AccountListView from 'views/accountSetting/AccountListView';
 import TagsView from 'views/tags/TagsView';
 import OrgManagementView from 'views/orgManagement/OrgManagementView';
 import UserListView from 'views/userManagement/UserListView';
-import StudentGroupView from 'views/studentManagement/StudentGroupView';
+import UserListCreationView from 'views/userManagement/UserListCreationView';
+import UserGroupView from 'views/userGroup/UserGroupView';
 import {ConnectedSwitch} from './ConnectedSwitch';
 
 const Routes = ({match}) => (
@@ -26,7 +27,8 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/oneClick/add`} component={OneClickAddView}/>
         <Route exact path={`${match.path}/orgManagement`} component={OrgManagementView}/>
         <Route exact path={`${match.path}/userManagement`} component={UserListView}/>
-        <Route exact path={`${match.path}/studentManagement`} component={StudentGroupView}/>
+        <Route exact path={`${match.path}/userManagement/creation`} component={UserListCreationView}/>
+        <Route exact path={`${match.path}/studentManagement`} component={UserGroupView}/>
         <Route exact path={`${match.path}/tagSetting`} component={TagsView}/>
     </ConnectedSwitch>
 );

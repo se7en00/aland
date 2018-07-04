@@ -147,7 +147,6 @@ OnlineLessonDetails.propTypes = {
     actions: PropTypes.objectOf(PropTypes.func),
     handleSubmit: PropTypes.func,
     dispatch: PropTypes.func,
-    // showDialog: PropTypes.func,
     submitting: PropTypes.bool,
     draftOnlineLesson: PropTypes.object
     // error: PropTypes.string,

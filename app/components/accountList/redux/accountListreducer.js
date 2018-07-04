@@ -4,7 +4,7 @@ import * as TYPES from './accountListActionType';
 //reducer
 const userReducer = typeToReducer({
     //用户列表
-    [TYPES.LOAD_USER_LIST]: {
+    [TYPES.LOAD_ACCOUNT_LIST]: {
         REJECTED: (state, action) => ({
             isRejected: true,
             error: action.payload
@@ -14,7 +14,7 @@ const userReducer = typeToReducer({
         })
     },
     //新增用户
-    [TYPES.CREATE_USER]: {
+    [TYPES.CREATE_ACCOUNT]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -30,7 +30,7 @@ const userReducer = typeToReducer({
         }
     },
 
-    [TYPES.UPDATE_USER]: {
+    [TYPES.UPDATE_ACCOUNT]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -38,7 +38,7 @@ const userReducer = typeToReducer({
         FULFILLED: (state, action) => ({...state})
     },
 
-    [TYPES.DELETE_USER]: {
+    [TYPES.DELETE_ACCOUNT]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -47,7 +47,7 @@ const userReducer = typeToReducer({
     },
 
     //获取当前编辑用户信息
-    [TYPES.SYNC_EDIT_USER]: (state, action) => {
+    [TYPES.SYNC_EDIT_ACCOUNT]: (state, action) => {
         const {id, loginName, name} = action.payload;
         return {
             ...state,
@@ -56,7 +56,7 @@ const userReducer = typeToReducer({
     },
 
     //重置密码
-    [TYPES.RESET_USER_PASSWORD]: {
+    [TYPES.RESET_ACCOUNT_PASSWORD]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -67,7 +67,7 @@ const userReducer = typeToReducer({
     },
 
     //读取权限
-    [TYPES.LOAD_USER_PERMISSIONS]: {
+    [TYPES.LOAD_ACCOUNT_PERMISSIONS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -79,7 +79,7 @@ const userReducer = typeToReducer({
     },
 
     //更新权限
-    [TYPES.UPDATE_USER_PERMISSIONS]: {
+    [TYPES.UPDATE_ACCOUNT_PERMISSIONS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -87,7 +87,7 @@ const userReducer = typeToReducer({
         FULFILLED: (state, action) => ({...state})
     },
 
-    [TYPES.SEARCH_USER]: {
+    [TYPES.SEARCH_ACCOUNT]: {
         REJECTED: (state, action) => ({
             isRejected: true,
             error: action.payload

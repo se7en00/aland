@@ -57,6 +57,10 @@ export const DIALOG = {
 
 export const PANEL_TITLE = {
     ACCOUNT: '账户列表',
+    USER_NEW: '新增人员',
+    USER_LIST: '人员管理',
+    ORG_LIST: '组织架构',
+    USER_GROUP_LIST: '学员群组管理',
     ONLINE_LESSONS: '线上课程库管理',
     ONLINE_LESSONS_ADD: '新建线上课程',
     ONLINE_LESSONS_DETAILS: '{0}详情',

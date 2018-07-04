@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators, StudentGroupList} from 'components/studentGruop';
+import { actionCreators, UserGroupList} from 'components/userGruop';
 
-@connect(state => ({accountList: state.accountList}), mapDispatchToProps)
+@connect(state => ({userGroup: state.userGroup}), mapDispatchToProps)
 class StudentGroupView extends Component {
     render() {
-        return <StudentGroupList {...this.props}/>;
+        return <UserGroupList {...this.props}/>;
     }
 }
 
