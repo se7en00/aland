@@ -5,31 +5,32 @@ import { Button } from 'antd';
 import { paginationSetting } from 'utils';
 import panelStyle from 'layout/main/Main.scss';
 import Header from '../shared/panel/PanelHeader';
-import AccountTable from './AccountListTable';
+import AdminTable from './AdminTable';
 
-class AccountList extends Component {
+class AdminList extends Component {
     static propTypes = {
         showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
-        accountList: PropTypes.object
+        adminList: PropTypes.object
     };
 
     componentDidMount() {
-        this.props.actions.getUserList(paginationSetting.pageSize);
+        this.props.actions.getAdminList({pageSize: paginationSetting.pageSize});
     }
 
     render() {
-        const {accountList: {list}, actions} = this.props;
+        const {adminList, actions} = this.props;
+        const list = adminList?.list;
         return (
             <div>
                 <Header title={PANEL_TITLE.ACCOUNT}/>
                 <div className={panelStyle.panel__body}>
                     <Button type="primary" className="editable-add-btn" onClick={this.props.showDialog(DIALOG.CREATE_USER)} ghost>新增账户</Button>
-                    <AccountTable dataSource={list} actions={actions} showDialog={this.props.showDialog}/>
+                    <AdminTable dataSource={list} actions={actions} showDialog={this.props.showDialog}/>
                 </div>
             </div>
         );
     }
 }
 
-export default AccountList;
+export default AdminList;

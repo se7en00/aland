@@ -7,7 +7,7 @@ import OnlineLessonsView from 'views/onlineLessons/OnlineLessonsView';
 import OnlineLessonsPointView from 'views/onlineLessons/OnlineLessonsPointView';
 import oneClickView from 'views/oneClick/OneClickView';
 import OneClickAddView from 'views/oneClick/OneClickAddView';
-import AccountListView from 'views/accountSetting/AccountListView';
+import AdminListView from 'views/admins/AdminListView';
 import TagsView from 'views/tags/TagsView';
 import OrgManagementView from 'views/orgManagement/OrgManagementView';
 import UserListView from 'views/userManagement/UserListView';
@@ -23,7 +23,7 @@ import {ConnectedSwitch} from './ConnectedSwitch';
 const Routes = ({match}) => (
     <ConnectedSwitch>
         <Route exact path={`${match.path}`} component={DashboardView}/>
-        <Route exact path={`${match.path}/accountManagement`} component={AccountListView}/>
+        <Route exact path={`${match.path}/adminList`} component={AdminListView}/>
         <Route exact path={`${match.path}/onlineLessons`} component={OnlineLessonsView}/>
         <Route exact path={`${match.path}/onlineLessons/:lessonId/details`} component={OnlineLessonsAddView}/>
         <Route exact path={`${match.path}/onlineLessons/additionLesson`} component={OnlineLessonsAddView}/>

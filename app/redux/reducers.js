@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import { loginReducer } from 'components/login';
-import { accountListReducer } from 'components/accountList';
+import adminsReducer from 'components/admins/redux/adminListReducer'; //fix issue
 import { userListReducer } from 'components/userList';
 import { userGroupReducer } from 'components/userGruop';
 import { orgListreducer } from 'components/orgManagement';
@@ -20,7 +20,6 @@ export default combineReducers({
     loading: loadingReducer,
     routing: routerReducer,
     dashboard: dashboardReducer,
-    accountList: accountListReducer,
     user: loginReducer,
     userList: userListReducer,
     userGroup: userGroupReducer,
@@ -34,5 +33,6 @@ export default combineReducers({
     inquiries: inquiriesReducer,
     lecturers: lecturersReducer,
     provides: providesReducer,
-    form: formReducer
+    form: formReducer,
+    adminList: adminsReducer
 });

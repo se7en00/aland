@@ -15,7 +15,8 @@ class InputElement extends PureComponent {
         type: PropTypes.string,
         rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         addonBefore: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-        className: PropTypes.string
+        className: PropTypes.string,
+        disabled: PropTypes.bool
     }
 
     //渲染error msg
@@ -30,7 +31,8 @@ class InputElement extends PureComponent {
             className,
             prefix = null,
             addonBefore,
-            rows
+            rows,
+            disabled
         } = this.props;
 
         let errorSuffix;
@@ -44,6 +46,7 @@ class InputElement extends PureComponent {
                 {type === 'textarea' &&
                     <Input.TextArea
                         {...input}
+                        disabled={disabled}
                         rows={rows}
                         type={type}
                         placeholder={placeholder}/>
@@ -52,6 +55,7 @@ class InputElement extends PureComponent {
                     <Input
                         {...input}
                         addonBefore={addonBefore}
+                        disabled={disabled}
                         rows={rows}
                         type={type}
                         suffix={errorSuffix}

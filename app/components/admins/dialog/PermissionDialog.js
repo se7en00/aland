@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 function mapStateToProps(state) {
     return {
         initialValues: {
-            ...state.accountList?.editUser,
-            permissions: state.accountList?.permissions
+            ...state.adminList?.editUser,
+            permissions: state.adminList?.permissions
         }
     };
 }

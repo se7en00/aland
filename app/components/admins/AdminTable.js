@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 import { DIALOG } from 'constants';
 
-class AccountListTable extends Component {
+class AdminTable extends Component {
     static propTypes = {
         showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
@@ -54,7 +54,6 @@ class AccountListTable extends Component {
     // shouldComponentUpdate(nextProps) {
     //     return !R.eqProps('dataSource', nextProps, this.props);
     // }
-
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
             const { dataSource: {elements = [], paging = {}} } = nextProps;
@@ -65,8 +64,8 @@ class AccountListTable extends Component {
     }
 
     handelPageChange = (page, pageSize) => {
-        const { getUserList } = this.props.actions;
-        getUserList(pageSize, page);
+        const { getAdminList } = this.props.actions;
+        getAdminList({pageSize, page});
     }
 
     openDialog = (user, dialog) => {
@@ -85,7 +84,7 @@ class AccountListTable extends Component {
         const {
             actions: {resetPassword}
         } = this.props;
-        resetPassword(user.id, {oldPsd: 'test', newPsd: '123456'}).then(() => {
+        resetPassword(user.id).then(() => {
             message.success(`成功重置账户名：${user.name}的密码！`);
         }).catch(error => {
             message.error(`重置账户名：${user.name}的密码失败！`);
@@ -96,11 +95,11 @@ class AccountListTable extends Component {
     onDelete = (user) => {
         const {
             dataSource: {paging: {size, page}},
-            actions: {deleteUser, getUserList}
+            actions: {deleteUser, getAdminList}
         } = this.props;
         deleteUser(user.id).then(() => {
             message.success(`成功删除账户名：${user.name}！`);
-            getUserList(size, page);
+            getAdminList({size, page});
         }).catch(error => {
             message.error(`删除账户名：${user.name}失败！`);
         });
@@ -119,4 +118,4 @@ class AccountListTable extends Component {
     }
 }
 
-export default AccountListTable;
+export default AdminTable;

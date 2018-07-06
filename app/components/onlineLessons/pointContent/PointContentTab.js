@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tabs, Icon } from 'antd';
 import StudyContents from './StudyContents';
 import HomeWork from './HomeWork';
+import Exam from './Exam';
 
 class PointContentTab extends Component {
     static propTypes = {
@@ -59,7 +60,11 @@ class PointContentTab extends Component {
                     />
                 </TabPane>
                 <TabPane tab={<span><Icon type="book"/>测试题</span>} key="3">
-                    3
+                    <Exam
+                        point={point}
+                        actions={actions}
+                        showDialog={showDialog}
+                    />
                 </TabPane>
                 <TabPane tab={<span><Icon type="tags-o"/>学习资料</span>} key="4">
                     4

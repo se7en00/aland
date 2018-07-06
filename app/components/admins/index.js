@@ -1,9 +1,9 @@
 //reducer
-export {default as accountListReducer} from './redux/accountListreducer';
+export {default as adminsReducer} from './redux/adminListReducer';
 //action
-export * as actionCreators from './redux/accountListAction';
+export * as actionCreators from './redux/adminListActions';
 //component
-export { default as AccountList } from './AccountList';
+export { default as AdminList } from './AdminList';
 //dialog
 export { default as CreateAccountDialog } from './dialog/CreateAccountDialog';
 export { default as EditAccountDialog } from './dialog/EditAccountDialog';

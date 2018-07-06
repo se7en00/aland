@@ -1,20 +1,24 @@
 import typeToReducer from 'type-to-reducer';
-import * as TYPES from './accountListActionType';
+import * as TYPES from './adminListActionType';
 
 //reducer
-const userReducer = typeToReducer({
+const adminsReducer = typeToReducer({
     //用户列表
-    [TYPES.LOAD_ACCOUNT_LIST]: {
+    [TYPES.ASYNC_LOAD_ADMIN_LIST]: {
         REJECTED: (state, action) => ({
-            isRejected: true,
+            ...state,
             error: action.payload
         }),
-        FULFILLED: (state, action) => ({
-            list: action.payload
-        })
+        FULFILLED: (state, action) => {
+            console.log(action.payload);
+            return {
+                ...state,
+                list: action.payload
+            };
+        }
     },
     //新增用户
-    [TYPES.CREATE_ACCOUNT]: {
+    [TYPES.ASYNC_CREATE_ADMIN]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -30,7 +34,7 @@ const userReducer = typeToReducer({
         }
     },
 
-    [TYPES.UPDATE_ACCOUNT]: {
+    [TYPES.ASYNC_UPDATE_ADMIN]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -38,7 +42,7 @@ const userReducer = typeToReducer({
         FULFILLED: (state, action) => ({...state})
     },
 
-    [TYPES.DELETE_ACCOUNT]: {
+    [TYPES.ASYNC_DELETE_ADMIN]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -47,7 +51,7 @@ const userReducer = typeToReducer({
     },
 
     //获取当前编辑用户信息
-    [TYPES.SYNC_EDIT_ACCOUNT]: (state, action) => {
+    [TYPES.SYNC_EDIT_ADMIN]: (state, action) => {
         const {id, loginName, name} = action.payload;
         return {
             ...state,
@@ -56,7 +60,7 @@ const userReducer = typeToReducer({
     },
 
     //重置密码
-    [TYPES.RESET_ACCOUNT_PASSWORD]: {
+    [TYPES.ASYNC_RESET_ADMIN_PASSWORD]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -67,7 +71,7 @@ const userReducer = typeToReducer({
     },
 
     //读取权限
-    [TYPES.LOAD_ACCOUNT_PERMISSIONS]: {
+    [TYPES.ASYNC_LOAD_ADMIN_PERMISSIONS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
@@ -79,24 +83,14 @@ const userReducer = typeToReducer({
     },
 
     //更新权限
-    [TYPES.UPDATE_ACCOUNT_PERMISSIONS]: {
+    [TYPES.ASYNC_UPDATE_ADMIN_PERMISSIONS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action?.payload?.response?.data
         }),
         FULFILLED: (state, action) => ({...state})
-    },
-
-    [TYPES.SEARCH_ACCOUNT]: {
-        REJECTED: (state, action) => ({
-            isRejected: true,
-            error: action.payload
-        }),
-        FULFILLED: (state, action) => ({
-            users: action.payload
-        })
     }
 }, {});
 
 
-export default userReducer;
+export default adminsReducer;

@@ -6,7 +6,7 @@ const userReducer = typeToReducer({
     //用户列表
     [TYPES.ASYNC_LOAD_USER_LIST]: {
         REJECTED: (state, action) => ({
-            isRejected: true,
+            ...state,
             error: action.payload
         }),
         FULFILLED: (state, action) => ({

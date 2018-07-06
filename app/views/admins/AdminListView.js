@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dialog from 'components/shared/dialog';
-import { actionCreators, AccountList, CreateAccountDialog, PermissionDialog, EditAccountDialog } from 'components/accountList';
+import { actionCreators, AdminList, CreateAccountDialog, PermissionDialog, EditAccountDialog } from 'components/admins';
 
-@connect(state => ({accountList: state.accountList}), mapDispatchToProps)
+@connect(state => ({adminList: state.adminList}), mapDispatchToProps)
 @Dialog(<CreateAccountDialog/>, <EditAccountDialog/>, <PermissionDialog/>)
-class UserListView extends Component {
+class AdminListView extends Component {
     render() {
-        return <AccountList {...this.props}/>;
+        return <AdminList {...this.props}/>;
     }
 }
 
@@ -16,4 +16,4 @@ function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators(actionCreators, dispatch) };
 }
 
-export default UserListView;
+export default AdminListView;

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Axios } from 'utils/index';
 import { push } from 'react-router-redux';
 import { BASE_URL } from 'constants/index';
-import { actionCreators } from 'components/accountList';
+import { actionCreators } from 'components/admins';
 import * as TYPES from './loginActionTypes';
 
 //async

@@ -7,7 +7,7 @@ const SIDE_BAR_MENU = [
         name: PATHNAME.SYSTEM_MANAGEMENT,
         iconName: 'fas fa-cog',
         subItems: [
-            {name: PATHNAME.ACCOUNT_MANAGEMENT, link: `${ROOT_PATH}/accountManagement`},
+            {name: PATHNAME.ACCOUNT_MANAGEMENT, link: `${ROOT_PATH}/adminList`},
             {name: PATHNAME.ORG, link: `${ROOT_PATH}/orgManagement`},
             {name: PATHNAME.USER_MANAGEMENT, link: `${ROOT_PATH}/userManagement`},
             {name: PATHNAME.STUDENT_MANAGEMENT, link: `${ROOT_PATH}/studentManagement`}

@@ -1,0 +1,20 @@
+@import "~SCSS_PATH/modules";
+
+.examTest {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: rem(10px 0px);
+    label {
+        min-width: rem(100px);
+        font-size: rem(16px);
+    }
+}
+
+.switchContainer{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    .title{
+        margin-left: rem(5px);
+    }
+}
