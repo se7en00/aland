@@ -16,7 +16,7 @@ class OneClickList extends Component {
 
     redirect = () => {
         this.props.actions.push(`${getLinkByName(PATHNAME.ONE_CLICK)}/add`);
-    }
+    };
 
     render() {
         const {oneClick: {list}, actions} = this.props;

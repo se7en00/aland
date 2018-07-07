@@ -65,7 +65,6 @@ const materialsReducer = typeToReducer({
             categoryList: action.payload
         })
     }
-
 }, {});
 
 export default materialsReducer;

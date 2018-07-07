@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
+import { DATE_FORMAT, getLinkByName, PATHNAME } from 'constants';
 // import { DIALOG } from 'constants';
 
 class OneClickTable extends Component {
@@ -24,36 +25,41 @@ class OneClickTable extends Component {
             dataIndex: 'index',
             width: 70
         }, {
-            title: '课程名称',
+            title: '主题',
             align: 'center',
-            dataIndex: 'lessonName'
+            dataIndex: 'subject'
+        }, {
+            title: '种类',
+            align: 'center',
+            dataIndex: 'category'
+        }, {
+            title: '标签',
+            align: 'center',
+            dataIndex: 'tag'
         }, {
             title: '状态',
             align: 'center',
             dataIndex: 'status'
         }, {
-            title: '课程讲师',
-            align: 'center',
-            dataIndex: 'master'
-        }, {
             title: '保密权限',
             align: 'center',
-            dataIndex: 'securityPermission'
+            dataIndex: 'secretLevel'
         }, {
             title: '创建人',
             align: 'center',
-            dataIndex: 'creator'
+            dataIndex: 'createUserName'
         }, {
-            title: '发布时间',
+            title: '创建时间',
             align: 'center',
-            dataIndex: 'creationDate'
+            dataIndex: 'createdAt',
+            render: (text, record) => moment(record.createdAt).format(DATE_FORMAT)
         }, {
             title: '操作',
             align: 'center',
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" ghost>详情/编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.redirect(record.id)} ghost>详情</Button>
                     <Button size="small" type="primary" ghost>审核</Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
@@ -64,10 +70,14 @@ class OneClickTable extends Component {
         }];
     }
 
+    redirect = (id) => {
+        this.props.actions.push(`${getLinkByName(PATHNAME.ONE_CLICK)}/${id}/detail`);
+    }
+
     handelPageChange = (page, pageSize) => {
         const { getUserList } = this.props.actions;
         getUserList(pageSize, page);
-    }
+    };
 
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {

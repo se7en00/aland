@@ -53,7 +53,8 @@ export const DIALOG = {
     MATERIAL: 'material',
     HOME_WORK: 'homeWork',
     INTERACTION_WORK: 'interaction',
-    ORG: 'org'
+    ORG: 'org',
+    ONE_CLICK_TAG: 'oneClickTag'
 };
 
 export const PANEL_TITLE = {
@@ -68,7 +69,9 @@ export const PANEL_TITLE = {
     ONLINE_LESSONS_POINT: '点内容',
     ONE_CLICK: '一点通管理',
     ONE_CLICK_ADD: '新建一点通',
+    ONE_CLICK_DETAIL: '一点通详情',
     MATERIALS: '素材管理',
+    MATERIALS_ADD: '新增素材',
     TAGS: '标签设置'
 };
 

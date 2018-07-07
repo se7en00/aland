@@ -7,6 +7,7 @@ import OnlineLessonsView from 'views/onlineLessons/OnlineLessonsView';
 import OnlineLessonsPointView from 'views/onlineLessons/OnlineLessonsPointView';
 import oneClickView from 'views/oneClick/OneClickView';
 import OneClickAddView from 'views/oneClick/OneClickAddView';
+import OneClickDetailView from 'views/oneClick/OneClickDetailView';
 import AdminListView from 'views/admins/AdminListView';
 import TagsView from 'views/tags/TagsView';
 import OrgManagementView from 'views/orgManagement/OrgManagementView';
@@ -31,6 +32,7 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/onlineLessons/:lessonId/point/:pointId`} component={OnlineLessonsPointView}/>
         <Route exact path={`${match.path}/oneClick`} component={oneClickView}/>
         <Route exact path={`${match.path}/oneClick/add`} component={OneClickAddView}/>
+        <Route exact path={`${match.path}/oneClick/:id/detail`} component={OneClickDetailView}/>
         <Route exact path={`${match.path}/orgManagement`} component={OrgManagementView}/>
         <Route exact path={`${match.path}/userManagement`} component={UserListView}/>
         <Route exact path={`${match.path}/userManagement/creation`} component={UserListCreationView}/>

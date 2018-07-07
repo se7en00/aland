@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {reduxForm, Field, Form, SubmissionError} from 'redux-form';
-import { renderOptions, PATHNAME, getLinkByName } from 'constants';
+import { renderOptions, PATHNAME, getLinkByName, PANEL_TITLE } from 'constants';
 import { Button, message } from 'antd';
+import panelStyle from 'layout/main/Main.scss';
 import { renderSelectField, renderTextField, UploadFilesField } from '../shared/form';
+import Header from '../shared/panel/PanelHeader';
 
 const required = value => (value ? undefined : '不能为空！');
 
@@ -62,164 +64,171 @@ class MaterialsDetail extends Component {
     renderCategoryOptions = () => {
         const { materials: { categoryList = [] } } = this.props;
         return renderOptions('code', 'name')(categoryList);
-    }
+    };
 
     render() {
-        const { submitting, handleSubmit } = this.props;
+        const { submitting, handleSubmit, materials: { material } } = this.props;
+        let title = PANEL_TITLE.MATERIALS_ADD;
+        if (material) {
+            title = `${material.name}详情`;
+        }
         return (
-            <div>
-                <Form name="form" onSubmit={handleSubmit(this.generateMaterial)}>
-                    <Field
-                        className="col-md-8 col-lg-6"
-                        rowClassName="inputRow"
-                        name="uri"
-                        component={UploadFilesField}
-                        type="text"
-                        placeholder="素材上传"
-                        label="素材上传"
-                        uploadTitle="本地上传"
-                        uploadFileCount="1"
-                        accept="video/*,audio/*,image/*,application/*"
-                        validate={required}
-                    />
-                    <Field
-                        className="col-md-8 col-lg-6"
-                        rowClassName="inputRow"
-                        name="name"
-                        component={renderTextField}
-                        type="text"
-                        placeholder="素材名称"
-                        label="素材名称"
-                        validate={required}
-                    />
+            <Fragment>
+                <Header title={title}/>
+                <div className={panelStyle.panel__body}>
+                    <Form name="form" onSubmit={handleSubmit(this.generateMaterial)}>
+                        <Field
+                            className="col-md-8 col-lg-6"
+                            rowClassName="inputRow"
+                            name="uri"
+                            component={UploadFilesField}
+                            type="text"
+                            placeholder="素材上传"
+                            label="素材上传"
+                            uploadTitle="本地上传"
+                            uploadFileCount="1"
+                            accept="video/*,audio/*,image/*,application/*"
+                            validate={required}
+                        />
+                        <Field
+                            className="col-md-8 col-lg-6"
+                            rowClassName="inputRow"
+                            name="name"
+                            component={renderTextField}
+                            type="text"
+                            placeholder="素材名称"
+                            label="素材名称"
+                            validate={required}
+                        />
 
-                    <Field
-                        className="col-md-8 col-lg-6"
-                        rowClassName="inputRow"
-                        name="categoryCode"
-                        component={renderSelectField}
-                        placeholder="种类"
-                        label="种类"
-                        validate={required}
-                    >
-                        { this.renderCategoryOptions() }
-                    </Field>
-                    {/*<Field*/}
-                    {/*className="col-md-8 col-lg-6"*/}
-                    {/*rowClassName="inputRow"*/}
-                    {/*name="product"*/}
-                    {/*component={renderSelectField}*/}
-                    {/*placeholder="与什么产品有关"*/}
-                    {/*label="与什么产品有关"*/}
-                    {/*validate={required}*/}
-                    {/*>*/}
-                    {/*{this.renderListOptions('productTags')}*/}
-                    {/*</Field>*/}
+                        <Field
+                            className="col-md-8 col-lg-6"
+                            rowClassName="inputRow"
+                            name="categoryCode"
+                            component={renderSelectField}
+                            placeholder="种类"
+                            label="种类"
+                            validate={required}
+                        >
+                            { this.renderCategoryOptions() }
+                        </Field>
+                        {/*<Field*/}
+                        {/*className="col-md-8 col-lg-6"*/}
+                        {/*rowClassName="inputRow"*/}
+                        {/*name="product"*/}
+                        {/*component={renderSelectField}*/}
+                        {/*placeholder="与什么产品有关"*/}
+                        {/*label="与什么产品有关"*/}
+                        {/*validate={required}*/}
+                        {/*>*/}
+                        {/*{this.renderListOptions('productTags')}*/}
+                        {/*</Field>*/}
 
-                    {/*<Field*/}
-                    {/*className="col-md-8 col-lg-6"*/}
-                    {/*rowClassName="inputRow"*/}
-                    {/*name="process"*/}
-                    {/*component={renderSelectField}*/}
-                    {/*placeholder="有什么工序"*/}
-                    {/*label="有什么工序"*/}
-                    {/*validate={required}*/}
-                    {/*>*/}
-                    {/*{this.renderListOptions('processTags')}*/}
-                    {/*</Field>*/}
+                        {/*<Field*/}
+                        {/*className="col-md-8 col-lg-6"*/}
+                        {/*rowClassName="inputRow"*/}
+                        {/*name="process"*/}
+                        {/*component={renderSelectField}*/}
+                        {/*placeholder="有什么工序"*/}
+                        {/*label="有什么工序"*/}
+                        {/*validate={required}*/}
+                        {/*>*/}
+                        {/*{this.renderListOptions('processTags')}*/}
+                        {/*</Field>*/}
 
-                    {/*<Field*/}
-                    {/*className="col-md-8 col-lg-6"*/}
-                    {/*rowClassName="inputRow"*/}
-                    {/*name="task"*/}
-                    {/*component={renderSelectField}*/}
-                    {/*placeholder="与什么任务有关"*/}
-                    {/*label="与什么任务有关"*/}
-                    {/*validate={required}*/}
-                    {/*>*/}
-                    {/*{this.renderListOptions('taskTags')}*/}
-                    {/*</Field>*/}
+                        {/*<Field*/}
+                        {/*className="col-md-8 col-lg-6"*/}
+                        {/*rowClassName="inputRow"*/}
+                        {/*name="task"*/}
+                        {/*component={renderSelectField}*/}
+                        {/*placeholder="与什么任务有关"*/}
+                        {/*label="与什么任务有关"*/}
+                        {/*validate={required}*/}
+                        {/*>*/}
+                        {/*{this.renderListOptions('taskTags')}*/}
+                        {/*</Field>*/}
 
-                    {/*<Field*/}
-                    {/*className="col-md-8 col-lg-6"*/}
-                    {/*rowClassName="inputRow"*/}
-                    {/*name="department"*/}
-                    {/*component={renderSelectField}*/}
-                    {/*placeholder="与什么部门有关"*/}
-                    {/*label="与什么部门有关"*/}
-                    {/*validate={required}*/}
-                    {/*>*/}
-                    {/*{this.renderListOptions('departmentTags')}*/}
-                    {/*</Field>*/}
+                        {/*<Field*/}
+                        {/*className="col-md-8 col-lg-6"*/}
+                        {/*rowClassName="inputRow"*/}
+                        {/*name="department"*/}
+                        {/*component={renderSelectField}*/}
+                        {/*placeholder="与什么部门有关"*/}
+                        {/*label="与什么部门有关"*/}
+                        {/*validate={required}*/}
+                        {/*>*/}
+                        {/*{this.renderListOptions('departmentTags')}*/}
+                        {/*</Field>*/}
 
-                    {/*<Field*/}
-                    {/*className="col-md-8 col-lg-6"*/}
-                    {/*rowClassName="inputRow"*/}
-                    {/*name="work"*/}
-                    {/*component={renderSelectField}*/}
-                    {/*placeholder="与什么工种有关"*/}
-                    {/*label="与什么工种有关"*/}
-                    {/*validate={required}*/}
-                    {/*>*/}
-                    {/*{this.renderListOptions('workTags')}*/}
-                    {/*</Field>*/}
+                        {/*<Field*/}
+                        {/*className="col-md-8 col-lg-6"*/}
+                        {/*rowClassName="inputRow"*/}
+                        {/*name="work"*/}
+                        {/*component={renderSelectField}*/}
+                        {/*placeholder="与什么工种有关"*/}
+                        {/*label="与什么工种有关"*/}
+                        {/*validate={required}*/}
+                        {/*>*/}
+                        {/*{this.renderListOptions('workTags')}*/}
+                        {/*</Field>*/}
 
-                    {/*<Field*/}
-                    {/*className="col-md-8 col-lg-6"*/}
-                    {/*rowClassName="inputRow"*/}
-                    {/*name="device"*/}
-                    {/*component={renderSelectField}*/}
-                    {/*placeholder="相关设备"*/}
-                    {/*label="相关设备"*/}
-                    {/*validate={required}*/}
-                    {/*>*/}
-                    {/*{this.renderListOptions('deviceTags')}*/}
-                    {/*</Field>*/}
+                        {/*<Field*/}
+                        {/*className="col-md-8 col-lg-6"*/}
+                        {/*rowClassName="inputRow"*/}
+                        {/*name="device"*/}
+                        {/*component={renderSelectField}*/}
+                        {/*placeholder="相关设备"*/}
+                        {/*label="相关设备"*/}
+                        {/*validate={required}*/}
+                        {/*>*/}
+                        {/*{this.renderListOptions('deviceTags')}*/}
+                        {/*</Field>*/}
 
-                    {/*<Field*/}
-                    {/*className="col-md-8 col-lg-6"*/}
-                    {/*rowClassName="inputRow"*/}
-                    {/*name="material"*/}
-                    {/*component={renderSelectField}*/}
-                    {/*placeholder="相关材料"*/}
-                    {/*label="相关材料"*/}
-                    {/*validate={required}*/}
-                    {/*>*/}
-                    {/*{this.renderListOptions('materialTags')}*/}
-                    {/*</Field>*/}
+                        {/*<Field*/}
+                        {/*className="col-md-8 col-lg-6"*/}
+                        {/*rowClassName="inputRow"*/}
+                        {/*name="material"*/}
+                        {/*component={renderSelectField}*/}
+                        {/*placeholder="相关材料"*/}
+                        {/*label="相关材料"*/}
+                        {/*validate={required}*/}
+                        {/*>*/}
+                        {/*{this.renderListOptions('materialTags')}*/}
+                        {/*</Field>*/}
 
-                    {/*<Field*/}
-                    {/*className="col-md-8 col-lg-6"*/}
-                    {/*rowClassName="inputRow"*/}
-                    {/*name="operation"*/}
-                    {/*component={renderSelectField}*/}
-                    {/*placeholder="相关基本工作操作"*/}
-                    {/*label="相关基本工作操作"*/}
-                    {/*validate={required}*/}
-                    {/*>*/}
-                    {/*{this.renderListOptions('operationTags')}*/}
-                    {/*</Field>*/}
+                        {/*<Field*/}
+                        {/*className="col-md-8 col-lg-6"*/}
+                        {/*rowClassName="inputRow"*/}
+                        {/*name="operation"*/}
+                        {/*component={renderSelectField}*/}
+                        {/*placeholder="相关基本工作操作"*/}
+                        {/*label="相关基本工作操作"*/}
+                        {/*validate={required}*/}
+                        {/*>*/}
+                        {/*{this.renderListOptions('operationTags')}*/}
+                        {/*</Field>*/}
 
-                    {/*<Field*/}
-                    {/*className="col-md-8 col-lg-6"*/}
-                    {/*rowClassName="inputRow"*/}
-                    {/*name="risk"*/}
-                    {/*component={renderSelectField}*/}
-                    {/*placeholder="相关安全风险"*/}
-                    {/*label="相关安全风险"*/}
-                    {/*validate={required}*/}
-                    {/*>*/}
-                    {/*{this.renderListOptions('riskTag')}*/}
-                    {/*</Field>*/}
+                        {/*<Field*/}
+                        {/*className="col-md-8 col-lg-6"*/}
+                        {/*rowClassName="inputRow"*/}
+                        {/*name="risk"*/}
+                        {/*component={renderSelectField}*/}
+                        {/*placeholder="相关安全风险"*/}
+                        {/*label="相关安全风险"*/}
+                        {/*validate={required}*/}
+                        {/*>*/}
+                        {/*{this.renderListOptions('riskTag')}*/}
+                        {/*</Field>*/}
 
-                    <div className="row inputRow">
-                        <div className="col-md-8 col-lg-6 offset-md-2 offset-lg-1 u-text-right">
-                            <Button key="back" onClick={this.back} loading={submitting} type="secondary" className="editable-add-btn">取消</Button>
-                            <Button htmlType="submit" loading={submitting} type="primary" className="editable-add-btn">保存</Button>
+                        <div className="row inputRow">
+                            <div className="col-md-8 col-lg-6 offset-md-2 offset-lg-1 u-text-right">
+                                <Button key="back" onClick={this.back} loading={submitting} type="secondary" className="editable-add-btn">取消</Button>
+                                <Button htmlType="submit" loading={submitting} type="primary" className="editable-add-btn">保存</Button>
+                            </div>
                         </div>
-                    </div>
-                </Form>
-            </div>
+                    </Form>
+                </div>
+            </Fragment>
         );
     }
 }

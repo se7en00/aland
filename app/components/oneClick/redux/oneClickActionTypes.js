@@ -1,1 +1,7 @@
 export const LOAD_ONE_CLICK_LIST = 'LOAD_ONE_CLICK_LIST';
+export const ADD_ONE_CLICK = 'ADD_ONE_CLICK';
+export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const SET_CURRENT_TAGS = 'SET_CURRENT_TAGS';
+export const GET_ONE_CLICK = 'GET_ONE_CLICK';
+export const EDIT_ONE_CLICK = 'EDIT_ONE_CLICK';
+
