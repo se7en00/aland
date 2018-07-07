@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators, OrgList} from 'components/orgManagement';
+import { actionCreators, OrgList, OrgDialog} from 'components/orgManagement';
+import Dialog from 'components/shared/dialog';
 
 @connect(state => ({org: state.org}), mapDispatchToProps)
+@Dialog(<OrgDialog/>)
 class OrgManagementView extends Component {
     render() {
         return <OrgList {...this.props}/>;

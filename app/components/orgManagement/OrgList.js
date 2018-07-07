@@ -8,7 +8,8 @@ import OrgListTable from './OrgListTable';
 class OrgList extends Component {
     static propTypes = {
         actions: PropTypes.objectOf(PropTypes.func),
-        org: PropTypes.object
+        org: PropTypes.object,
+        showDialog: PropTypes.func
     };
 
     componentDidMount() {
@@ -16,12 +17,12 @@ class OrgList extends Component {
     }
 
     render() {
-        const {org: {list}, actions} = this.props;
+        const {org: {list}, actions, showDialog} = this.props;
         return (
             <div>
                 <Header title={PANEL_TITLE.ORG_LIST}/>
                 <div className={panelStyle.panel__body}>
-                    <OrgListTable dataSource={list} actions={actions}/>
+                    <OrgListTable dataSource={list} actions={actions} showDialog={showDialog}/>
                 </div>
             </div>
         );

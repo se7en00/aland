@@ -1,0 +1,15 @@
+.org-panel {
+    height: 600px;
+    >:first-child, >:last-child {
+        height: 100%;
+        width: 40%;
+    }
+    >:nth-child(2) {
+        width: 14%;
+        margin: 0 3%;
+        button {
+            width: 100%;
+            margin-left: 0 !important;
+        }
+    }
+}

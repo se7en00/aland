@@ -4,3 +4,4 @@ export {default as orgListreducer} from './redux/orgListreducer';
 export * as actionCreators from './redux/orgListAction';
 // component
 export { default as OrgList } from './OrgList';
+export { default as OrgDialog } from './OrgDialog';

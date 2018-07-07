@@ -36,7 +36,7 @@ class OrgListTable extends Component {
             dataIndex: 'commonPost',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.EDIT_USER)} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'COMMON_POST')} ghost>编辑</Button>
                 </div>
             )
         }, {
@@ -45,7 +45,7 @@ class OrgListTable extends Component {
             dataIndex: 'equipPost',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.EDIT_USER)} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'EQUIP_POST')} ghost>编辑</Button>
                 </div>
             )
         }, {
@@ -54,7 +54,7 @@ class OrgListTable extends Component {
             dataIndex: 'qualityPost',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.EDIT_USER)} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'QUALITY_POST')} ghost>编辑</Button>
                 </div>
             )
         }, {
@@ -63,7 +63,7 @@ class OrgListTable extends Component {
             dataIndex: 'craftPost',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.EDIT_USER)} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'CRAFT_POST')} ghost>编辑</Button>
                 </div>
             )
         }];
@@ -77,16 +77,13 @@ class OrgListTable extends Component {
     }
 
 
-    openDialog = (user, dialog) => {
-        const {showDialog, actions: { syncGetAssociatedUser, getPermissions }} = this.props;
-        syncGetAssociatedUser(user);
-        if (dialog === DIALOG.PERMISSION) {
-            getPermissions(user.id).then(() => {
-                showDialog(dialog)();
-            });
-        } else {
-            showDialog(dialog)();
-        }
+    openDialog = (id, type) => {
+        const {showDialog, actions: { syncGetAssociatedUser }} = this.props;
+        const func = () => {
+            showDialog(DIALOG.ORG)();
+        };
+        func.bind(this);
+        syncGetAssociatedUser(id, type).then(func);
     }
 
     render() {

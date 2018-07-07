@@ -52,7 +52,8 @@ export const DIALOG = {
     POINT: 'point',
     MATERIAL: 'material',
     HOME_WORK: 'homeWork',
-    INTERACTION_WORK: 'interaction'
+    INTERACTION_WORK: 'interaction',
+    ORG: 'org'
 };
 
 export const PANEL_TITLE = {

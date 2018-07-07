@@ -12,6 +12,26 @@ const userReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             list: action.payload
         })
+    },
+    [TYPES.ASYNC_GET_ASSOCIATED_USER]: {
+        REJECTED: (state, action) => ({
+            isRejected: true,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            users: action.payload.users,
+            associatedUsers: action.payload.associatedUsers,
+            dept: action.payload.dept
+        })
+    },
+    [TYPES.ASYNC_SAVE_ASSOCIATED_USER]: {
+        REJECTED: (state, action) => ({
+            isRejected: true,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            state
+        })
     }
 }, {});
 
