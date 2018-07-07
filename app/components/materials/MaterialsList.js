@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { DATE_FORMAT, PANEL_TITLE } from 'constants';
+import { DATE_FORMAT, PANEL_TITLE, PATHNAME, getLinkByName } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
@@ -33,6 +33,11 @@ class MaterialsList extends Component {
         getMaterialsList({pageSize: paginationSetting.pageSize, ...params})
             .then(() => setSearchParamsToRedux(params));
     };
+
+    redirect = () => {
+        const { push } = this.props.actions;
+        push(`${getLinkByName(PATHNAME.MATERIALS)}/additionMaterial`);
+    }
 
     render() {
         const {materials: {list, searchParams}, actions} = this.props;

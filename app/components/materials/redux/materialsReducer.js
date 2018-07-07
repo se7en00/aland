@@ -26,7 +26,46 @@ const materialsReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             ...state
         })
+    },
+    [TYPES.ASYNC_GET_MATERIAL]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            material: action.payload
+        })
+    },
+    [TYPES.ASYNC_ADD_MATERIAL]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+    [TYPES.ASYNC_EDIT_MATERIAL]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+    [TYPES.AYSNC_LOAD_CATEGORIES]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            categoryList: action.payload
+        })
     }
+
 }, {});
 
 export default materialsReducer;

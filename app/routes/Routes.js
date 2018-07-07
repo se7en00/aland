@@ -14,6 +14,7 @@ import UserListView from 'views/userManagement/UserListView';
 import UserListCreationView from 'views/userManagement/UserListCreationView';
 import UserGroupView from 'views/userGroup/UserGroupView';
 import MaterialsView from 'views/materials/MaterialsView';
+import MaterialsEditView from 'views/materials/MaterialsEditView';
 import ExamsView from 'views/exams/ExamsView';
 import InquiriesView from 'views/inquiry/InquiriesView';
 import LecturersView from 'views/lectures/LecturersView';
@@ -35,6 +36,8 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/userManagement/creation`} component={UserListCreationView}/>
         <Route exact path={`${match.path}/studentManagement`} component={UserGroupView}/>
         <Route exact path={`${match.path}/materials`} component={MaterialsView}/>
+        <Route exact path={`${match.path}/materials/additionMaterial`} component={MaterialsEditView}/>
+        <Route exact path={`${match.path}/materials/:materialId/detail`} component={MaterialsEditView}/>
         <Route exact path={`${match.path}/questBank`} component={ExamsView}/>
         <Route exact path={`${match.path}/questionnaire`} component={InquiriesView}/>
         <Route exact path={`${match.path}/master`} component={LecturersView}/>
