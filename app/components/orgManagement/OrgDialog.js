@@ -14,7 +14,8 @@ class OrgDialog extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             selected: [],
-            data: []
+            data: [],
+            submitting: false
         };
     }
 
@@ -22,7 +23,6 @@ class OrgDialog extends Component {
         hideDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
         visible: PropTypes.bool,
-        submitting: PropTypes.bool,
         width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         org: PropTypes.object
     };
@@ -37,7 +37,8 @@ class OrgDialog extends Component {
                     data: users.map(user => ({
                         key: user.id,
                         title: user.name
-                    }))
+                    })),
+                    submitting: false
                 });
             }
         }
@@ -45,9 +46,14 @@ class OrgDialog extends Component {
 
     handleSubmit = () => {
         const { org: { dept }, actions: { saveAssociatedUsers }, hideDialog } = this.props;
-        const { selected } = this.state;
+        const { selected, submitting } = this.state;
+        if (submitting) {
+            return;
+        }
+        this.setState({ submitting: true });
         saveAssociatedUsers(dept.id, dept.type, selected).then(() => {
             message.success('保存成功！');
+            this.setState({ submitting: false });
             hideDialog(DIALOG.ORG)();
         }).catch(() => {message.success('保存失败！');});
     };
@@ -58,8 +64,8 @@ class OrgDialog extends Component {
 
 
     render() {
-        const {submitting, visible, hideDialog, width } = this.props;
-        const { selected, data } = this.state;
+        const { visible, hideDialog, width } = this.props;
+        const { selected, data, submitting } = this.state;
         return (
             <Modal
                 visible={visible}
