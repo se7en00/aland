@@ -39,6 +39,15 @@ class PointContentTab extends Component {
         }
     }
 
+    initExamValues = (point) => {
+        const {exams} = point;
+        return {
+            examOn: !!+exams?.examOn,
+            examAmount: exams?.examAmount,
+            examPassRate: exams?.examPassRate
+        };
+    }
+
     render() {
         const TabPane = Tabs.TabPane;
         const {point, actions, showDialog} = this.props;
@@ -62,8 +71,10 @@ class PointContentTab extends Component {
                 <TabPane tab={<span><Icon type="book"/>测试题</span>} key="3">
                     <Exam
                         point={point}
+                        examInfoList={point?.exams?.courseExamInfos}
                         actions={actions}
                         showDialog={showDialog}
+                        initialValues={this.initExamValues(point)}
                     />
                 </TabPane>
                 <TabPane tab={<span><Icon type="tags-o"/>学习资料</span>} key="4">

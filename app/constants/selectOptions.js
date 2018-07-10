@@ -35,14 +35,21 @@ export const fileTypeOptions = [
     <Option key={uuid()} value={item.value}>{item.label}</Option>
 ));
 
-export const examTypeOptions = [
+const examTypes = [
     {label: '单选题', value: 'SINGLE'},
     {label: '多选题', value: 'MULTIPLE'},
     {label: '填空题', value: 'FILL'},
     {label: '判断题', value: 'TOF'}
-].map(item => (
+];
+
+export const examTypeOptions = examTypes.map(item => (
     <Option key={uuid()} value={item.value}>{item.label}</Option>
 ));
+
+export const EXAM_TYPE_MAPPING = examTypes.reduce((map, type) => {
+    map[type.value] = type.label;
+    return map;
+}, {});
 
 /**
  * @param list 下拉数据

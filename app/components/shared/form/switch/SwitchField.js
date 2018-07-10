@@ -23,11 +23,16 @@ class SwitchField extends Component {
             checkedChildren,
             unCheckedChildren
         } = this.props;
+        let value = input.value;
+        if (typeof value !== 'boolean') {
+            value = !!+value;
+        }
         return (
             <div className={className}>
                 <Switch
                     {...input}
                     defaultChecked
+                    checked={value}
                     size={size}
                     checkedChildren={checkedChildren}
                     unCheckedChildren={unCheckedChildren}

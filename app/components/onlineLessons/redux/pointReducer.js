@@ -98,6 +98,73 @@ export default typeToReducer({
             error: action.payload
         }),
         FULFILLED: (state, action) => Object.assign(state, {homeWorks: action.payload})
+    },
+
+    [TYPES.ASYNC_LOAD_LIB_EXAMS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            libExams: action.payload
+        })
+    },
+
+    [TYPES.SYNC_GET_SELECTED_LIB_EXAMS]: (state, action) => ({
+        ...state,
+        selectedLibExams: action.payload
+    }),
+
+    [TYPES.ASYNC_DELETE_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => {
+            const examId = action.payload;
+            if (state?.exams?.courseExamInfos && state?.exams?.courseExamInfos.length) {
+                state.exams.courseExamInfos = state.exams.courseExamInfos.filter(exam => exam.examId !== examId);
+            }
+            return {...state};
+        }
+    },
+
+    [TYPES.ASYNC_SAVE_SELECTED_LIB_EXAMS]: {
+        FULFILLED: (state, action) => {
+            if (state?.exams) {
+                state.exams.courseExamInfos = action.payload;
+            }
+            return {...state};
+        }
+    },
+
+    [TYPES.ASYNC_LOAD_CATEGORIES]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            categoryList: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_UPDATE_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => {
+            console.log(action.payload);
+            if (state.exams) {
+                const {examOn, examAmount, examPassRate} = action.payload;
+                Object.assign(state.exams, {examOn, examAmount, examPassRate});
+            }
+            return {
+                ...state
+            };
+        }
     }
 
 }, {});

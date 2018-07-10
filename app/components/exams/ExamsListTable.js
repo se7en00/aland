@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-import { DATE_FORMAT } from 'constants';
+import { DATE_FORMAT, EXAM_TYPE_MAPPING } from 'constants';
 
 class ExamsListTable extends Component {
     static propTypes = {
@@ -39,7 +39,8 @@ class ExamsListTable extends Component {
         }, {
             title: '题型',
             align: 'center',
-            dataIndex: 'type'
+            dataIndex: 'type',
+            render: (text, record) => EXAM_TYPE_MAPPING[record.type]
         }, {
             title: '创建时间',
             align: 'center',
