@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table, Popconfirm, Button, message } from 'antd';
 import { rebuildDataWithKey } from 'utils';
-import { EXAM_TYPE_MAPPING } from 'constants';
+import { EXAM_TYPE_MAPPING, EXAM_SOURCE_MAPPING, EXAM_STATUS_MAPPING } from 'constants';
 
 class ExamTable extends Component {
     static propTypes = {
@@ -24,25 +24,43 @@ class ExamTable extends Component {
         }, {
             title: '来源',
             align: 'center',
-            dataIndex: 'source'
+            dataIndex: 'source',
+            render: (text, record) => EXAM_SOURCE_MAPPING[record.examData.source]
         }, {
             title: '类型',
             align: 'center',
             dataIndex: 'examData.type',
             render: (text, record) => EXAM_TYPE_MAPPING[record.examData.type]
         }, {
+            title: '状态',
+            align: 'center',
+            dataIndex: 'examData.status',
+            render: (text, record) => EXAM_STATUS_MAPPING[record.status]
+        }, {
             title: '操作',
             align: 'center',
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button title="编辑" onClick={() => this.onEdit(record)} type="primary" ghost><i className="far fa-edit"/></Button>
+                    {record.status === 'PAUSE' && <Button title="开启" onClick={() => this.onStart(record)} icon="play-circle" type="primary" ghost/>}
+                    {record.status === 'START' && <Button title="暂停" onClick={() => this.onPause(record)} icon="pause-circle-o" type="primary" ghost/>}
+                    <Button title="暂停" onClick={() => this.onPause(record)} icon="bars" type="primary" ghost/>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button type="primary" ghost><i className="far fa-trash-alt"/></Button>
                     </Popconfirm>
                 </div>
             )
         }];
+    }
+
+    onStart = (record) => {
+        const {actions: {startExam}, courseId, pointId} = this.props;
+        startExam(courseId, pointId, record.examId);
+    }
+
+    onPause = (record) => {
+        const {actions: {pauseExam}, courseId, pointId} = this.props;
+        pauseExam(courseId, pointId, record.examId);
     }
 
     onDelete = (record) => {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm, Field, Form, clearSubmitErrors } from 'redux-form';
+import { reduxForm, Field, Form, clearSubmitErrors, reset } from 'redux-form';
 import { DIALOG } from 'constants';
-import { Modal, Button, Icon, message } from 'antd';
+import { Modal, Button, Icon } from 'antd';
 import { connect } from 'react-redux';
 import LibExamDialogTable from './LibExamDialogTable';
 import { renderTextField } from '../../../shared/form/index';
@@ -43,10 +43,7 @@ class LibExamDialog extends Component {
         return saveSelectedLibExams(courseId, pointId, selectedLibExams)
             .then(() => {
                 dispatch(clearSubmitErrors(DIALOG.LIB_EXAM));
-                hideDialog(DIALOG.LIB_EXAM)();
-            })
-            .catch((error) => {
-                message.error(error?.errorMessage);
+                dispatch(reset(DIALOG.CUSTOMIZE_EXAM));
                 hideDialog(DIALOG.LIB_EXAM)();
             });
     }

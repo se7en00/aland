@@ -51,6 +51,16 @@ export const EXAM_TYPE_MAPPING = examTypes.reduce((map, type) => {
     return map;
 }, {});
 
+export const EXAM_SOURCE_MAPPING = [{label: '题库', value: 'LIB'}, {label: '自制', value: 'CUSTOMIZE'}].reduce((map, type) => {
+    map[type.value] = type.label;
+    return map;
+}, {});
+
+export const EXAM_STATUS_MAPPING = [{label: '启用', value: 'START'}, {label: '暂停', value: 'PAUSE'}].reduce((map, type) => {
+    map[type.value] = type.label;
+    return map;
+}, {});
+
 const categoryType = [
     {label: '通用', value: 'COMMON'},
     {label: '工艺', value: 'CRAFT'},

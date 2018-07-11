@@ -195,15 +195,10 @@ export const saveSelectedLibExams = (courseId, pointId, selectedLibExams) => dis
     return dispatch({
         type: TYPES.ASYNC_SAVE_SELECTED_LIB_EXAMS,
         async payload() {
-            try {
-                const all = await Promise.all(allPromis);
-                const errorExams = all.filter(item => Object.prototype.hasOwnProperty.call(item, 'errorCode')).map(item => item.errorMessage);
-                const exams = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/exams`, {params: {size: 2000}})
-                    .then(response => response.data);
-                return {courseExamInfos: exams.courseExamInfos, errorExams};
-            } catch (error) {
-                return Promise.reject(error?.response?.data);
-            }
+            await Promise.all(allPromis);
+            const exams = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/exams`, {params: {size: 2000}})
+                .then(response => response.data);
+            return exams.courseExamInfos;
         }
     });
 };
@@ -232,6 +227,28 @@ export const createCustomizeExam = (courseId, pointId, params) => ({
             .then(response => response.data);
         await Axios.put(`/api/courses/${courseId}/nodes/${pointId}/contents/exams/${newExam.id}`)
             .then(response => response.data);
+        const exams = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/exams`, {params: {size: 2000}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        return exams.courseExamInfos;
+    }
+});
+
+export const startExam = (courseId, pointId, examId) => ({
+    type: TYPES.ASYNC_START_EXAM,
+    async payload() {
+        await Axios.put(`/api/courses/${courseId}/nodes/${pointId}/contents/exams/${examId}/start`);
+        const exams = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/exams`, {params: {size: 2000}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        return exams.courseExamInfos;
+    }
+});
+
+export const pauseExam = (courseId, pointId, examId) => ({
+    type: TYPES.ASYNC_PAUSE_EXAM,
+    async payload() {
+        await Axios.put(`/api/courses/${courseId}/nodes/${pointId}/contents/exams/${examId}/pause`);
         const exams = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/exams`, {params: {size: 2000}})
             .then(response => response.data)
             .catch((error) => Promise.reject(error?.response?.data));

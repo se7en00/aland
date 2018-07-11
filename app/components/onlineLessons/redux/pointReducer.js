@@ -132,11 +132,10 @@ export default typeToReducer({
 
     [TYPES.ASYNC_SAVE_SELECTED_LIB_EXAMS]: {
         FULFILLED: (state, action) => {
-            const {courseExamInfos, errorExams} = action.payload;
             if (state?.exams) {
-                state.exams.courseExamInfos = courseExamInfos;
+                state.exams.courseExamInfos = action.payload;
             }
-            return {...state, errorExams};
+            return {...state};
         }
     },
 
@@ -172,6 +171,24 @@ export default typeToReducer({
             ...state,
             error: action.payload
         }),
+        FULFILLED: (state, action) => {
+            if (state?.exams) {
+                state.exams.courseExamInfos = action.payload;
+            }
+            return {...state};
+        }
+    },
+
+    [TYPES.ASYNC_START_EXAM]: {
+        FULFILLED: (state, action) => {
+            if (state?.exams) {
+                state.exams.courseExamInfos = action.payload;
+            }
+            return {...state};
+        }
+    },
+
+    [TYPES.ASYNC_PAUSE_EXAM]: {
         FULFILLED: (state, action) => {
             if (state?.exams) {
                 state.exams.courseExamInfos = action.payload;
