@@ -51,6 +51,17 @@ export const EXAM_TYPE_MAPPING = examTypes.reduce((map, type) => {
     return map;
 }, {});
 
+const categoryType = [
+    {label: '通用', value: 'COMMON'},
+    {label: '工艺', value: 'CRAFT'},
+    {label: '设备', value: 'EQUIP'},
+    {label: '质量', value: 'QUALITY'}
+];
+
+export const CATEGORY_TYPE_MAPPING = categoryType.reduce((map, type) => {
+    map[type.value] = type.label;
+    return map;
+}, {});
 /**
  * @param list 下拉数据
  * @param keyAsValue
