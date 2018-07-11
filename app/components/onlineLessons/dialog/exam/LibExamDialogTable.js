@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { rebuildDataWithKey } from 'utils';
 import PropTypes from 'prop-types';
 import { Table } from 'antd';
-import { EXAM_TYPE_MAPPING } from 'constants';
+import { EXAM_TYPE_MAPPING, CATEGORY_TYPE_MAPPING } from 'constants';
 
 class ExamDialogTable extends Component {
     static propTypes = {
@@ -29,9 +29,10 @@ class ExamDialogTable extends Component {
             dataIndex: 'type',
             render: (text, record) => EXAM_TYPE_MAPPING[record.type]
         }, {
-            title: '标签',
+            title: '种类',
             align: 'center',
-            dataIndex: 'tag'
+            dataIndex: 'categoryCode',
+            render: (text, record) => CATEGORY_TYPE_MAPPING[record.categoryCode]
         }];
     }
 

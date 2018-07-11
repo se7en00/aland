@@ -191,15 +191,19 @@ export const saveSelectedLibExams = (courseId, pointId, selectedLibExams) => dis
     const allPromis = selectedLibExams.map(libExam =>
         Axios.put(`/api/courses/${courseId}/nodes/${pointId}/contents/exams/${libExam.id}`)
             .then(response => response.data)
-            .catch(error => Promise.reject(error?.response?.data)));
+            .catch(error => error?.response?.data));
     return dispatch({
         type: TYPES.ASYNC_SAVE_SELECTED_LIB_EXAMS,
         async payload() {
-            await Promise.all(allPromis);
-            const exams = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/exams`, {params: {size: 2000}})
-                .then(response => response.data)
-                .catch((error) => Promise.reject(error?.response?.data));
-            return exams.courseExamInfos;
+            try {
+                const all = await Promise.all(allPromis);
+                const errorExams = all.filter(item => Object.prototype.hasOwnProperty.call(item, 'errorCode')).map(item => item.errorMessage);
+                const exams = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/exams`, {params: {size: 2000}})
+                    .then(response => response.data);
+                return {courseExamInfos: exams.courseExamInfos, errorExams};
+            } catch (error) {
+                return Promise.reject(error?.response?.data);
+            }
         }
     });
 };
@@ -221,9 +225,16 @@ export const updateExams = (courseId, pointId, params) => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const createCustomizeExam = (params) => ({
+export const createCustomizeExam = (courseId, pointId, params) => ({
     type: TYPES.ASYNC_CREATE_CUSTOMIZE_EXAM,
-    payload: () => Axios.post('/api/exams', params)
-        .then(response => response.data)
-        .catch(error => Promise.reject(error?.response?.data))
+    async payload() {
+        const newExam = await Axios.post('/api/exams', params)
+            .then(response => response.data);
+        await Axios.put(`/api/courses/${courseId}/nodes/${pointId}/contents/exams/${newExam.id}`)
+            .then(response => response.data);
+        const exams = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/exams`, {params: {size: 2000}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        return exams.courseExamInfos;
+    }
 });

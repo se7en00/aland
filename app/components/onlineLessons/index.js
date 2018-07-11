@@ -17,5 +17,5 @@ export { default as CreatePointDialog } from './dialog/CreatePointDialog';
 export { default as MaterialDialog } from './dialog/MaterialDialog';
 export { default as HomeWorkDialog} from './dialog/HomeWorkDialog';
 export { default as InteractionWorkDialog} from './dialog/InteractionWorkDialog';
-export { default as LibExamDialog} from './dialog/LibExamDialog';
-export { default as CustomizeExamDialog} from './dialog/customizeExam/CustomizeExamDialog';
+export { default as LibExamDialog} from './dialog/exam/LibExamDialog';
+export { default as CustomizeExamDialog} from './dialog/exam/CustomizeExamDialog';

@@ -132,10 +132,11 @@ export default typeToReducer({
 
     [TYPES.ASYNC_SAVE_SELECTED_LIB_EXAMS]: {
         FULFILLED: (state, action) => {
+            const {courseExamInfos, errorExams} = action.payload;
             if (state?.exams) {
-                state.exams.courseExamInfos = action.payload;
+                state.exams.courseExamInfos = courseExamInfos;
             }
-            return {...state};
+            return {...state, errorExams};
         }
     },
 
@@ -156,7 +157,6 @@ export default typeToReducer({
             error: action.payload
         }),
         FULFILLED: (state, action) => {
-            console.log(action.payload);
             if (state.exams) {
                 const {examOn, examAmount, examPassRate} = action.payload;
                 Object.assign(state.exams, {examOn, examAmount, examPassRate});
@@ -164,6 +164,19 @@ export default typeToReducer({
             return {
                 ...state
             };
+        }
+    },
+
+    [TYPES.ASYNC_CREATE_CUSTOMIZE_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => {
+            if (state?.exams) {
+                state.exams.courseExamInfos = action.payload;
+            }
+            return {...state};
         }
     }
 
