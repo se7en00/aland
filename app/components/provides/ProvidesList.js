@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { DATE_FORMAT, PATHNAME } from 'constants';
+import { DATE_FORMAT, PATHNAME, DIALOG } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
@@ -11,7 +11,8 @@ import ProvidesSearch from './ProvidesSearch';
 class ProvidesList extends Component {
     static propTypes = {
         actions: PropTypes.objectOf(PropTypes.func),
-        provides: PropTypes.object
+        provides: PropTypes.object,
+        showDialog: PropTypes.func
     };
 
     componentDidMount() {
@@ -34,16 +35,23 @@ class ProvidesList extends Component {
             .then(() => setSearchParamsToRedux(params));
     };
 
+    editProvide = (provide = {}, type = 'detail') => {
+        const { actions: { setCurrentProvide}, showDialog } = this.props;
+        setCurrentProvide(provide);
+        const dialog = type === 'detail' ? DIALOG.PROVIDE_DETAIL : DIALOG.PROVIDE_RATING;
+        showDialog(dialog)();
+    };
+
     render() {
-        const {provides: {list, searchParams}, actions} = this.props;
+        const {provides: {list, searchParams}, actions } = this.props;
         return (
             <div>
                 <Header title={PATHNAME.VENDOR}/>
                 <div className={panelStyle.panel__body}>
                     <ProvidesSearch onSubmit={this.onSearch}/>
-                    <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增供应商</Button>
+                    <Button onClick={() => this.editProvide()} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增供应商</Button>
                     <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
-                    <ProvidesListTable dataSource={list} actions={actions} searchParams={searchParams}/>
+                    <ProvidesListTable editProvide={this.editProvide} dataSource={list} actions={actions} searchParams={searchParams}/>
                 </div>
             </div>
         );

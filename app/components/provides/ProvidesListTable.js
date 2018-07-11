@@ -5,7 +5,7 @@ import { rebuildDataWithKey, paginationSetting } from 'utils';
 
 class ProvidesListTable extends Component {
     static propTypes = {
-        // showDialog: PropTypes.func,
+        editProvide: PropTypes.func,
         searchParams: PropTypes.object,
         actions: PropTypes.objectOf(PropTypes.func),
         dataSource: PropTypes.object
@@ -49,11 +49,11 @@ class ProvidesListTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" ghost>编辑</Button>
+                    <Button onClick={() => props.editProvide(record)} size="small" type="primary" ghost>编辑</Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
-                    <Button size="small" type="primary" ghost>打分</Button>
+                    <Button onClick={() => props.editProvide(record, 'rating')} size="small" type="primary" ghost>打分</Button>
                     <Button size="small" type="primary" ghost>学员打分详情</Button>
                 </div>
             )
@@ -87,7 +87,8 @@ class ProvidesListTable extends Component {
         }).catch(error => {
             message.error(`删除供应商：${provide.name}失败！`);
         });
-    }
+    };
+
 
     render() {
         return (

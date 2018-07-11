@@ -56,7 +56,9 @@ export const DIALOG = {
     ORG: 'org',
     ONE_CLICK_TAG: 'oneClickTag',
     LIB_EXAM: 'libExam',
-    CUSTOMIZE_EXAM: 'customizeExam'
+    CUSTOMIZE_EXAM: 'customizeExam',
+    PROVIDE_DETAIL: 'provideDetail',
+    PROVIDE_RATING: 'provideRating'
 };
 
 export const PANEL_TITLE = {
