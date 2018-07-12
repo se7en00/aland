@@ -33,3 +33,20 @@ export const setSearchParamsToRedux = (params) => ({
     type: TYPES.SYNC_ONLINE_LESSONS_SEARCH_PARAMS,
     payload: params
 });
+
+export const getSecretLevels = () => ({
+    type: TYPES.ASYNC_LOAD_ONLINE_LESSONS_SECRET_LEVELS,
+    payload: () => Axios.get('/api/dictionarys/dicType/LIMIT_TYPE')
+        .then(response => {
+            const { data = [] } = response;
+            return data.map(item => ({name: item.name, code: item.code}));
+        })
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const setSecretLevel = (courseId, secretLevel) => ({
+    type: TYPES.ASYNC_UPDATE_ONLINE_LESSONS_SECRET_LEVEL,
+    payload: () => Axios.put(`/api/courses/${courseId}/secret`, {secretLevel})
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});

@@ -46,9 +46,30 @@ export default typeToReducer({
         })
     },
 
+    [TYPES.ASYNC_LOAD_ONLINE_LESSONS_SECRET_LEVELS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+
     //搜索
     [TYPES.SYNC_ONLINE_LESSONS_SEARCH_PARAMS]: (state, action) => ({
         ...state,
         searchParams: action.payload
-    })
+    }),
+
+    [TYPES.ASYNC_LOAD_ONLINE_LESSONS_SECRET_LEVELS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            secretLevels: action.payload
+        })
+    }
 }, {});

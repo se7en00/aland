@@ -3,17 +3,20 @@ import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'antd';
 import { examTypeOptions } from 'constants';
+import { resetSpecificField } from 'utils';
 import { renderTextField, renderSelectField, renderDateRangeField} from '../shared/form';
 
 @reduxForm({form: 'examsSearch'})
 class ExamsSearch extends Component {
     static propTypes = {
         handleSubmit: PropTypes.func,
+        dispatch: PropTypes.func,
         submitting: PropTypes.bool
     };
 
     render() {
-        const { submitting, handleSubmit } = this.props;
+        const { submitting, handleSubmit, dispatch } = this.props;
+        const restRangeDateTime = () => resetSpecificField(dispatch, 'examsSearch', 'dateTime', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
@@ -59,6 +62,8 @@ class ExamsSearch extends Component {
                             layout="elementOnly"
                             name="dateTime"
                             rowClassName="col-md-3"
+                            allowClear={true}
+                            resetSelectValue={restRangeDateTime}
                             component={renderDateRangeField}
                         />
 

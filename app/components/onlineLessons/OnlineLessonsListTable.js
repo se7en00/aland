@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Table, Button, Popconfirm, message } from 'antd';
+import { Table, Button, Popconfirm, message, Menu, Dropdown, Icon } from 'antd';
 import PropTypes from 'prop-types';
-import { DATE_FORMAT, getLinkByName, PATHNAME } from 'constants';
+import { DATE_FORMAT, getLinkByName, PATHNAME, COURSE_STATUS_MAPPING } from 'constants';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 
 class OnlineLessonsListTable extends Component {
@@ -9,7 +9,8 @@ class OnlineLessonsListTable extends Component {
         // showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
         dataSource: PropTypes.object,
-        searchParams: PropTypes.object
+        searchParams: PropTypes.object,
+        secretLevels: PropTypes.array
     };
 
     constructor(props) {
@@ -31,7 +32,8 @@ class OnlineLessonsListTable extends Component {
         }, {
             title: '状态',
             align: 'center',
-            dataIndex: 'status'
+            dataIndex: 'status',
+            render: (text, record) => COURSE_STATUS_MAPPING[record.status]
         }, {
             title: '课程讲师',
             align: 'center',
@@ -61,10 +63,49 @@ class OnlineLessonsListTable extends Component {
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
+                    <Dropdown overlay={this.buttonMenu(record.id)}>
+                        <Button size="small" type="primary" ghost>保密设置<Icon type="down"/></Button>
+                    </Dropdown>
                 </div>
             )
         }];
     }
+
+    setSecretLevel = ({key}) => {
+        if (key) {
+            const {
+                actions: {setSecretLevel, getOnlineLessonsList},
+                dataSource: {paging: {size, page}},
+                searchParams
+            } = this.props;
+            const splitResults = key.split('-');
+            setSecretLevel(splitResults[0], splitResults[1])
+                .then(() => {
+                    message.success(`保密（${splitResults[1]}）设置成功！`);
+                    getOnlineLessonsList(Object.assign({size, page}, searchParams));
+                })
+                .catch(error => {
+                    if (error?.errorCode === 'course_not_found') {
+                        message.error(error?.errorMessage);
+                    } else {
+                        message.error(`保密（${splitResults[1]}）设置失败！`);
+                    }
+                });
+        }
+    }
+
+
+    buttonMenu = (courseId) => {
+        const {secretLevels} = this.props;
+        if (secretLevels && secretLevels.length > 0) {
+            return (
+                <Menu onClick={this.setSecretLevel}>
+                    {secretLevels.map(secret => <Menu.Item key={`${courseId}-${secret.code}`}>{secret.name}</Menu.Item>)}
+                </Menu>
+            );
+        }
+    }
+
     onEdit = (lesson) => {
         const {getCourseDetails, push} = this.props.actions;
         getCourseDetails(lesson.id)
@@ -77,12 +118,13 @@ class OnlineLessonsListTable extends Component {
     onDelete = (lesson) => {
         const {
             dataSource: {paging: {size, page}},
-            actions: {removeLesson, getOnlineLessonsList}
+            actions: {removeLesson, getOnlineLessonsList},
+            searchParams
         } = this.props;
         removeLesson(lesson.id)
             .then(() => {
                 message.success(`成功删除课程：${lesson.name}！`);
-                getOnlineLessonsList(size, page);
+                getOnlineLessonsList(Object.assign({size, page}, searchParams));
             })
             .catch(error => {
                 if (error?.errorCode === 'course_not_found') {
@@ -96,12 +138,13 @@ class OnlineLessonsListTable extends Component {
     shelveCourse = (lesson) => {
         const {
             dataSource: {paging: {size, page}},
-            actions: {shelveCourse, getOnlineLessonsList}
+            actions: {shelveCourse, getOnlineLessonsList},
+            searchParams
         } = this.props;
         shelveCourse(lesson.id)
             .then(() => {
                 message.success(`成功上架课程：${lesson.name}！`);
-                getOnlineLessonsList(size, page);
+                getOnlineLessonsList(Object.assign({size, page}, searchParams));
             })
             .catch(error => {
                 if (error?.errorCode === 'course_not_found') {
@@ -115,12 +158,13 @@ class OnlineLessonsListTable extends Component {
     unShelveCourse = (lesson) => {
         const {
             dataSource: {paging: {size, page}},
-            actions: {unShelveCourse, getOnlineLessonsList}
+            actions: {unShelveCourse, getOnlineLessonsList},
+            searchParams
         } = this.props;
         unShelveCourse(lesson.id)
             .then(() => {
                 message.success(`成功下架课程：${lesson.name}！`);
-                getOnlineLessonsList(size, page);
+                getOnlineLessonsList(Object.assign({size, page}, searchParams));
             })
             .catch(error => {
                 if (error?.errorCode === 'course_not_found') {

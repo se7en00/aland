@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import { Button, Icon, Select } from 'antd';
+import { resetSpecificField } from 'utils';
 import { renderTextField, renderSelectField, renderDateRangeField } from '../shared/form';
 
 
-@reduxForm({form: 'lessonsSearch'})
+@reduxForm({form: 'pediasSearch'})
 class OneClickSearch extends Component {
     static propTypes = {
         // actions: PropTypes.objectOf(PropTypes.func),
         handleSubmit: PropTypes.func,
+        dispatch: PropTypes.func,
         // showDialog: PropTypes.func,
         submitting: PropTypes.bool
         // error: PropTypes.string
@@ -21,7 +23,8 @@ class OneClickSearch extends Component {
 
     render() {
         const Option = Select.Option;
-        const { submitting, handleSubmit } = this.props;
+        const { submitting, handleSubmit, dispatch } = this.props;
+        const restRangeDateTime = () => resetSpecificField(dispatch, 'pediasSearch', 'dateTime', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit(this.submit)}>
@@ -60,17 +63,10 @@ class OneClickSearch extends Component {
 
                         <Field
                             layout="elementOnly"
-                            name="tags"
-                            rowClassName="col-md-2"
-                            component={renderSelectField}
-                            placeholder="标签">
-                            <Option value="jack">Jack</Option>
-                        </Field>
-
-                        <Field
-                            layout="elementOnly"
                             name="dateTime"
                             rowClassName="col-md-3"
+                            allowClear={true}
+                            resetSelectValue={restRangeDateTime}
                             component={renderDateRangeField}
                         />
 

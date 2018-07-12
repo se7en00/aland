@@ -6,15 +6,25 @@ const Option = Select.Option;
 
 export const courseStatusOptions = [
     {label: '所有', value: ''},
-    {label: '创建中', value: '0'},
-    {label: '创建', value: 1},
+    {label: '创建中', value: 'CREATING'},
+    {label: '已创建', value: 'CREATED'},
     // {label: '审核', value: 2},
     // {label: '通过未上架', value: 3},
-    {label: '上架', value: 4},
-    {label: '删除', value: 5}
+    {label: '已上架', value: 'ISSUED'},
+    {label: '已下架', value: 'PASSED'}
 ].map(item => (
     <Option key={uuid()} value={item.value}>{item.label}</Option>
 ));
+
+export const COURSE_STATUS_MAPPING = [
+    {label: '创建中', value: 'CREATING'},
+    {label: '创建', value: 'CREATED'},
+    {label: '已上架', value: 'ISSUED'},
+    {label: '已下架', value: 'PASSED'}
+].reduce((map, type) => {
+    map[type.value] = type.label;
+    return map;
+}, {});
 
 export const studyContentsOptions = [
     {label: '图文信息', value: 'ARTICLE'},

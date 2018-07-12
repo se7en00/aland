@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { PANEL_TITLE, PATHNAME, getLinkByName, DATE_FORMAT } from 'constants';
+import { PANEL_TITLE, PATHNAME, getLinkByName } from 'constants';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import { paginationSetting } from 'utils';
@@ -15,6 +15,7 @@ class OnlineLessonList extends Component {
     };
 
     componentDidMount() {
+        this.props.actions.getSecretLevels();
         this.props.actions.getOnlineLessonsList({pageSize: paginationSetting.pageSize});
     }
 
@@ -23,8 +24,8 @@ class OnlineLessonList extends Component {
         //search 条件
         const params = Object.keys(values).reduce((map, k) => {
             if (k === 'dateTime') {
-                map.startDate = moment(values[k][0]).format(DATE_FORMAT);
-                map.endDate = moment(values[k][1]).format(DATE_FORMAT);
+                map.startDate = moment(values[k][0]).valueOf();
+                map.endDate = moment(values[k][1]).valueOf();
             } else if (k === 'lecturer') {
                 map[k] = values[k].key;
             } else {
@@ -43,14 +44,19 @@ class OnlineLessonList extends Component {
     }
 
     render() {
-        const {onlineLessons: {list, searchParams}, actions} = this.props;
+        const {onlineLessons: {list, searchParams, secretLevels}, actions} = this.props;
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.ONLINE_LESSONS}/>
                 <div className={panelStyle.panel__body}>
                     <OnlineLessonsSearch onSubmit={this.onSearch}/>
                     <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增线上课程</Button>
-                    <OnlineLessonsTable dataSource={list} actions={actions} searchParams={searchParams}/>
+                    <OnlineLessonsTable
+                        secretLevels={secretLevels}
+                        dataSource={list}
+                        actions={actions}
+                        searchParams={searchParams}
+                    />
                 </div>
             </Fragment>
         );

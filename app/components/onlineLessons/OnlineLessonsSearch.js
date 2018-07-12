@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { courseStatusOptions, renderOptions } from 'constants';
 import PropTypes from 'prop-types';
 import { resetSpecificField } from 'utils';
-import { Button, Icon, Select } from 'antd';
+import { Button, Icon } from 'antd';
 import { renderTextField, renderSelectField, renderDateRangeField } from '../shared/form';
 import AutoSelectSearch from '../shared/autoSearch/AutoSelectSearch';
 
@@ -18,9 +18,9 @@ class OnlineLessonsSearch extends Component {
     };
 
     render() {
-        const Option = Select.Option;
         const { submitting, handleSubmit, dispatch } = this.props;
         const restLecturerValue = () => resetSpecificField(dispatch, 'coursesSearch', 'lecturer', '');
+        const restRangeDateTime = () => resetSpecificField(dispatch, 'coursesSearch', 'dateTime', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
@@ -58,17 +58,10 @@ class OnlineLessonsSearch extends Component {
 
                         <Field
                             layout="elementOnly"
-                            name="category"
-                            rowClassName="col-md-2"
-                            component={renderSelectField}
-                            placeholder="标签">
-                            <Option value="jack">Jack</Option>
-                        </Field>
-
-                        <Field
-                            layout="elementOnly"
                             name="dateTime"
                             rowClassName="col-md-3"
+                            allowClear={true}
+                            resetSelectValue={restRangeDateTime}
                             component={renderDateRangeField}
                         />
 

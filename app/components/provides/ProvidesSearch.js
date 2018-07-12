@@ -5,7 +5,7 @@ import { Button, Icon } from 'antd';
 import { renderTextField} from '../shared/form';
 
 @reduxForm({form: 'providesSearch'})
-class MaterialsSearch extends Component {
+class ProvidesSearch extends Component {
     static propTypes = {
         handleSubmit: PropTypes.func,
         submitting: PropTypes.bool
@@ -42,4 +42,4 @@ class MaterialsSearch extends Component {
     }
 }
 
-export default MaterialsSearch;
+export default ProvidesSearch;

@@ -6,15 +6,28 @@ import remapReduxFormProps from '../RemapReduxFormProps';
 @remapReduxFormProps
 class DateRangeField extends PureComponent {
     static propTypes = {
-        input: PropTypes.object
+        input: PropTypes.object,
+        allowClear: PropTypes.bool,
+        resetSelectValue: PropTypes.func
+    }
+
+    handleChange = (value) => {
+        const {input, allowClear, resetSelectValue} = this.props;
+        if ((!value || value.length === 0) && allowClear) {
+            //清空
+            resetSelectValue();
+        } else {
+            input.onChange(value);
+        }
     }
 
     render() {
         const { RangePicker } = DatePicker;
-        const {input: { onChange }} = this.props;
+        const {allowClear} = this.props;
         return (
             <RangePicker
-                onChange={onChange}
+                onChange={this.handleChange}
+                allowClear={allowClear}
                 format={'YYYY-MM-DD'}
             />
         );

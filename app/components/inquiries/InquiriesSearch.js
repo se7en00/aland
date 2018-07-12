@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'antd';
+import { resetSpecificField } from 'utils';
 import { renderOptions } from 'constants';
 import { renderTextField, renderSelectField, renderDateRangeField} from '../shared/form';
 
@@ -9,6 +10,7 @@ import { renderTextField, renderSelectField, renderDateRangeField} from '../shar
 class InquiriesSearch extends Component {
     static propTypes = {
         handleSubmit: PropTypes.func,
+        dispatch: PropTypes.func,
         submitting: PropTypes.bool,
         categoryList: PropTypes.array
     };
@@ -19,7 +21,8 @@ class InquiriesSearch extends Component {
     }
 
     render() {
-        const { submitting, handleSubmit } = this.props;
+        const { submitting, handleSubmit, dispatch } = this.props;
+        const restRangeDateTime = () => resetSpecificField(dispatch, 'inquiriesSearch', 'dateTime', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
@@ -57,6 +60,8 @@ class InquiriesSearch extends Component {
                             layout="elementOnly"
                             name="dateTime"
                             rowClassName="col-md-3"
+                            allowClear={true}
+                            resetSelectValue={restRangeDateTime}
                             component={renderDateRangeField}
                         />
 
