@@ -255,3 +255,17 @@ export const pauseExam = (courseId, pointId, examId) => ({
         return exams.courseExamInfos;
     }
 });
+
+export const getExamDetails = (examId) => ({
+    type: TYPES.ASYNC_LOAD_EXAM_DETAILS,
+    payload: () => Axios.get(`/api/exams/${examId}`)
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const getExamUserList = (pointId, examId) => ({
+    type: TYPES.ASYNC_LOAD_EXAM_USER_LIST,
+    payload: () => Axios.get('/api/users/all/exams', {params: {relativeId: pointId, examId}})
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});

@@ -195,6 +195,28 @@ export default typeToReducer({
             }
             return {...state};
         }
+    },
+
+    [TYPES.ASYNC_LOAD_EXAM_DETAILS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            questionDetails: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_EXAM_USER_LIST]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            userList: action.payload
+        })
     }
 
 }, {});

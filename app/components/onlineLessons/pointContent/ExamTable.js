@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table, Popconfirm, Button, message } from 'antd';
 import { rebuildDataWithKey } from 'utils';
-import { EXAM_TYPE_MAPPING, EXAM_SOURCE_MAPPING, EXAM_STATUS_MAPPING } from 'constants';
+import { EXAM_TYPE_MAPPING, EXAM_SOURCE_MAPPING, EXAM_STATUS_MAPPING, DIALOG } from 'constants';
 
 class ExamTable extends Component {
     static propTypes = {
-        // showDialog: PropTypes.func,
+        showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
         courseId: PropTypes.string,
         pointId: PropTypes.string,
@@ -44,7 +44,7 @@ class ExamTable extends Component {
                 <div>
                     {record.status === 'PAUSE' && <Button title="开启" onClick={() => this.onStart(record)} icon="play-circle" type="primary" ghost/>}
                     {record.status === 'START' && <Button title="暂停" onClick={() => this.onPause(record)} icon="pause-circle-o" type="primary" ghost/>}
-                    <Button title="暂停" onClick={() => this.onPause(record)} icon="bars" type="primary" ghost/>
+                    <Button title="详情" onClick={() => this.openExamDetails(record)} icon="bars" type="primary" ghost/>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button type="primary" ghost><i className="far fa-trash-alt"/></Button>
                     </Popconfirm>
@@ -52,6 +52,13 @@ class ExamTable extends Component {
             )
         }];
     }
+
+    openExamDetails = (record) => {
+        const {actions: {getExamDetails, getExamUserList}, showDialog, pointId} = this.props;
+        getExamDetails(record.examId)
+            .then(() => getExamUserList(pointId, record.examId))
+            .then(() => showDialog(DIALOG.EXAM_DETAILS)());
+    };
 
     onStart = (record) => {
         const {actions: {startExam}, courseId, pointId} = this.props;

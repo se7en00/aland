@@ -8,7 +8,7 @@ import LibExamDialogTable from './LibExamDialogTable';
 import { renderTextField } from '../../../shared/form/index';
 
 const mapStateToProp = (state) => {
-    if (R.isEmpty(state.point)) return null;
+    if (R.isEmpty(state.point) || !state?.point?.pointContent) return null;
     const { courseId, pointId } = state?.point?.pointContent;
     return {
         courseId,

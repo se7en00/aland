@@ -13,7 +13,7 @@ import style from './CustomizeExamDialog.scss';
 const required = value => (value ? undefined : '不能为空！');
 const RadioGroup = Radio.Group;
 const mapStateToProp = (state) => {
-    if (R.isEmpty(state.point)) return null;
+    if (R.isEmpty(state.point) || !state?.point?.pointContent) return null;
     const { courseId, pointId } = state?.point?.pointContent;
     return {
         courseId,

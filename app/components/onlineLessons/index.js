@@ -21,3 +21,4 @@ export { default as LibExamDialog} from './dialog/exam/LibExamDialog';
 export { default as CustomizeExamDialog} from './dialog/exam/CustomizeExamDialog';
 export { default as CustomizeExamDialogForCourse} from './dialog/exam/CustomizeExamDialogForCourse';
 export { default as LibExamDialogForCourse} from './dialog/exam/LibExamDialogForCourse';
+export { default as ExamDetailsDialog} from './dialog/exam/ExamDetailsDialog';

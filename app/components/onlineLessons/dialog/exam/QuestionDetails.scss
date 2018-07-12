@@ -1,0 +1,18 @@
+@import "~SCSS_PATH/modules";
+
+.questionContainer {
+    flex-flow: column;
+    padding-left: rem(15px);
+    @include e(questionName) {
+        padding: rem(5px 0);
+        display: flex;
+        align-items: baseline;
+
+        & :global(.ant-tag) {
+            height: rem(15px);
+            font-size: rem(12px) !important;
+            line-height: rem(12px);
+            margin-left: rem(5px);
+        }
+    }
+}
