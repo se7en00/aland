@@ -8,24 +8,23 @@ import LibExamDialogTable from './LibExamDialogTable';
 import { renderTextField } from '../../../shared/form/index';
 
 const mapStateToProp = (state) => {
-    if (R.isEmpty(state.point)) return null;
-    const { courseId, pointId } = state?.point?.pointContent;
+    if (R.isEmpty(state.draftOnlineLesson) || !state?.draftOnlineLesson?.draftLesson) return null;
+    const { id: courseId } = state?.draftOnlineLesson?.draftLesson;
     return {
         courseId,
-        pointId,
-        libExams: state.point?.libExams,
-        selectedLibExams: state.point?.selectedLibExams
+        libExams: state.draftOnlineLesson?.libExams,
+        selectedLibExams: state.draftOnlineLesson?.selectedLibExams
     };
 };
 
 @connect(mapStateToProp)
-@reduxForm({form: DIALOG.LIB_EXAM})
-class LibExamDialog extends Component {
-    static dialogName = DIALOG.LIB_EXAM;
+@reduxForm({form: DIALOG.COURSE_LIB_EXAM})
+class LibExamDialogForCourse extends Component {
+    static dialogName = DIALOG.COURSE_LIB_EXAM;
 
     closeDialog = () => {
-        this.props.dispatch(clearSubmitErrors(DIALOG.LIB_EXAM));
-        this.props.hideDialog(DIALOG.LIB_EXAM)();
+        this.props.dispatch(clearSubmitErrors(DIALOG.COURSE_LIB_EXAM));
+        this.props.hideDialog(DIALOG.COURSE_LIB_EXAM)();
     }
 
     searchLibExams = (values) => {
@@ -39,12 +38,12 @@ class LibExamDialog extends Component {
     }
 
     saveSelectedExams = () => {
-        const {courseId, pointId, selectedLibExams, actions: {saveSelectedLibExams}, dispatch, hideDialog} = this.props;
-        return saveSelectedLibExams(courseId, pointId, selectedLibExams)
+        const {courseId, selectedLibExams, actions: {saveSelectedLibExams}, dispatch, hideDialog} = this.props;
+        return saveSelectedLibExams(courseId, selectedLibExams)
             .then(() => {
-                dispatch(clearSubmitErrors(DIALOG.LIB_EXAM));
-                dispatch(reset(DIALOG.LIB_EXAM));
-                hideDialog(DIALOG.LIB_EXAM)();
+                dispatch(clearSubmitErrors(DIALOG.COURSE_LIB_EXAM));
+                dispatch(reset(DIALOG.COURSE_LIB_EXAM));
+                hideDialog(DIALOG.COURSE_LIB_EXAM)();
             });
     }
 
@@ -100,7 +99,7 @@ class LibExamDialog extends Component {
     }
 }
 
-LibExamDialog.propTypes = {
+LibExamDialogForCourse.propTypes = {
     hideDialog: PropTypes.func,
     handleSubmit: PropTypes.func,
     visible: PropTypes.bool,
@@ -111,8 +110,7 @@ LibExamDialog.propTypes = {
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     dispatch: PropTypes.func,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    courseId: PropTypes.string,
-    pointId: PropTypes.string
+    courseId: PropTypes.string
 };
 
-export default LibExamDialog;
+export default LibExamDialogForCourse;

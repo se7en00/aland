@@ -5,7 +5,6 @@ import uuid from 'uuid/v4';
 import OnlineLessonDetails from './OnlineLessonDetails';
 import OnlineLessonNode from './OnlineLessonNodes';
 import OnlineLessonQuizzes from './OnlineLessonQuizzes';
-import OnlineLessonTags from './OnlineLessonTags';
 
 class OnlineLessonTab extends Component {
     handleChange = () => {
@@ -38,12 +37,29 @@ class OnlineLessonTab extends Component {
         return result;
     }
 
+    initExamValues = (values) => {
+        if (!values) return null;
+        const {needInquiry = 'false', examAllowNode = 'false', examAllowCourse = 'false', examAmount = '', examPassRate = ''} = values;
+        const params = {
+            needInquiry: needInquiry === 'true',
+            examAllowNode: examAllowNode === 'true',
+            examAllowCourse: examAllowCourse === 'true',
+            examAmount,
+            examPassRate
+        };
+        if (Object.hasOwnProperty.call(this.props.draftOnlineLesson, 'enableCourseExam')) {
+            params.examAllowCourse = this.props.draftOnlineLesson.enableCourseExam;
+        }
+        return params;
+    }
+
     render() {
         const TabPane = Tabs.TabPane;
         const {draftOnlineLesson, showDialog, actions} = this.props;
         const isDisabledLesson = !draftOnlineLesson?.draftLesson;
         return (
-            <Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>
+            /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
+            <Tabs defaultActiveKey="1" onChange={this.handleChange}>
                 <TabPane tab={<span><Icon type="profile"/>课程详情</span>} key="1">
                     <OnlineLessonDetails
                         actions={actions}
@@ -65,13 +81,13 @@ class OnlineLessonTab extends Component {
                     disabled={isDisabledLesson}
                     tab={<span><Icon type="book"/>课后测试</span>}
                     key="3">
-                    <OnlineLessonQuizzes/>
-                </TabPane>
-                <TabPane
-                    disabled={isDisabledLesson}
-                    tab={<span><Icon type="tags-o"/>标签</span>}
-                    key="4">
-                    <OnlineLessonTags/>
+                    <OnlineLessonQuizzes
+                        actions={actions}
+                        showDialog={showDialog}
+                        draftOnlineLesson={draftOnlineLesson}
+                        examInfoList={draftOnlineLesson?.exams}
+                        initialValues={this.initExamValues(draftOnlineLesson?.draftLesson)}
+                    />
                 </TabPane>
             </Tabs>
         );

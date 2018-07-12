@@ -26,7 +26,8 @@ export default typeToReducer({
             isEditable: action.payload.isEditable,
             chapters: action.payload.chapters,
             sections: action.payload.sections,
-            allNodes: action.payload.allNodes
+            allNodes: action.payload.allNodes,
+            exams: action.payload.exams
         })
     },
     //新建点
@@ -59,7 +60,8 @@ export default typeToReducer({
         chapters: action.payload,
         sections: action.payload,
         isEditable: action.payload,
-        allNodes: action.payload
+        allNodes: action.payload,
+        exams: action.payload
     }),
 
     [TYPES.LOAD_ONLINE_LESSONS_CATEGORIES]: {
@@ -108,5 +110,56 @@ export default typeToReducer({
                 sections
             };
         }
+    },
+
+    [TYPES.SYNC_SWITCH_COURSE_EXAM]: (state, action) => ({
+        ...state,
+        enableCourseExam: action.payload
+    }),
+
+    [TYPES.ASYNC_LOAD_LIB_EXAMS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            libExams: action.payload
+        })
+    },
+
+    [TYPES.SYNC_GET_SELECTED_LIB_EXAMS]: (state, action) => ({
+        ...state,
+        selectedLibExams: action.payload
+    }),
+
+    [TYPES.ASYNC_SAVE_SELECTED_LIB_EXAMS]: {
+        FULFILLED: (state, action) => {
+            state.exams = action.payload;
+            return {...state};
+        }
+    },
+
+    [TYPES.ASYNC_DELETE_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => {
+            const examId = action.payload;
+            if (state?.exams && state?.exams.length) {
+                state.exams = state.exams.filter(exam => exam.examId !== examId);
+            }
+            return {...state};
+        }
+    },
+
+    [TYPES.ASYNC_CREATE_CUSTOMIZE_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({...state, exams: action.payload})
     }
+
 }, {});

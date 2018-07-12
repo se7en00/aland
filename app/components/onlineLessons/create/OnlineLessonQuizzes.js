@@ -1,24 +1,45 @@
 import React, { Component, Fragment } from 'react';
-// import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
-import { Button, Switch, List, Divider } from 'antd';
-import { renderTextField } from '../../shared/form';
+import PropTypes from 'prop-types';
+import { Field, reduxForm, Form } from 'redux-form';
+import { Button, List, message, Divider } from 'antd';
+import { DIALOG } from 'constants';
+import classNames from 'classnames';
+import { renderTextField, renderSwitch } from '../../shared/form';
+import style from './OnlineLessonQuizzes.scss';
+import OnlineLessonQuizzesTable from './OnlineLessonQuizzesTable';
 
-@reduxForm({form: 'onlineLessonsQuizzes'})
+@reduxForm({form: 'onlineLessonsQuizzes', enableReinitialize: true})
 class OnlineLessonQuizzes extends Component {
+    handleExamSwitchChange = (e, value) => {
+        const {actions: {examAllowCourse}} = this.props;
+        examAllowCourse(value);
+    }
+
     listData = [{
         title: '题目来源',
         content: (
             <Fragment>
-                <div>
-                    <Switch checkedChildren="开" unCheckedChildren="关" defaultChecked className="u-push-right-xs"/>
-                    <span>直接引用章节中的测试题作为课后测试</span>
-                </div>
-                <div>
-                    <Switch checkedChildren="开" unCheckedChildren="关" defaultChecked className="u-push-right-xs"/>
-                    <span className="u-push-right-xs">制作课后测试题</span>
-                    <Button name="sectionButton" type="primary">添加课后测试题</Button>
-                </div>
+                <Field
+                    layout="elementOnly"
+                    name="examAllowNode"
+                    className="u-push-right-xs"
+                    component={renderSwitch}
+                    checkedChildren="开启"
+                    unCheckedChildren="关闭"
+                    defaultChecked
+                    title="直接引用章节中的测试题作为课后测试"
+                />
+                <Field
+                    layout="elementOnly"
+                    name="examAllowCourse"
+                    className="u-push-right-xs u-pull-down-sm"
+                    component={renderSwitch}
+                    checkedChildren="开启"
+                    unCheckedChildren="关闭"
+                    title="制作课后测试题"
+                    onChange={this.handleExamSwitchChange}
+                    defaultChecked
+                />
             </Fragment>
 
         )
@@ -31,7 +52,7 @@ class OnlineLessonQuizzes extends Component {
                     rowClassName="col-md-6"
                     layout="elementOnly"
                     addonBefore="随机题数"
-                    name="lessonName"
+                    name="examAmount"
                     component={renderTextField}
                     type="text"
                     placeholder="随机题数"
@@ -39,7 +60,7 @@ class OnlineLessonQuizzes extends Component {
                 <Field
                     rowClassName="col-md-6"
                     layout="elementOnly"
-                    name="lessonName"
+                    name="examPassRate"
                     addonBefore="合格率（%）"
                     component={renderTextField}
                     type="text"
@@ -48,13 +69,69 @@ class OnlineLessonQuizzes extends Component {
             </div>
         )
     }]
+
+    openCustomizeExamDialog = () => {
+        const {showDialog} = this.props;
+        showDialog(DIALOG.COURSE_CUSTOMIZE_EXAM)();
+    }
+
+    openLibExamDialog = () => {
+        const {actions: {getLibExams}, showDialog} = this.props;
+        getLibExams().then(() => showDialog(DIALOG.COURSE_LIB_EXAM)());
+    };
+
+    componentWillUpdate(nextProps) {
+        if (nextProps.initialValues.examAllowCourse) {
+            const hasExams = this.listData.filter(item => item.title === '新建课后测试题');
+            if (!hasExams || hasExams.length === 0) {
+                this.listData.splice(1, 0, {
+                    title: '新建课后测试题',
+                    content: (
+                        <div>
+                            <Button onClick={this.openLibExamDialog} type="primary" className="editable-add-btn" ghost>题库选择</Button>
+                            <Button onClick={this.openCustomizeExamDialog} type="primary" className="editable-add-btn" ghost>自制测试题</Button>
+                        </div>
+                    )
+                });
+            }
+        } else {
+            if (this.listData.length === 3) { //eslint-disable-line
+                this.listData.splice(1, 1);
+            }
+        }
+    }
+
+    updateDraftCourse = (values) => {
+        const {actions: {createDraftOnlineLesson}, draftOnlineLesson} = this.props;
+        const courseID = draftOnlineLesson?.draftLesson?.id;
+        const params = Object.assign({}, draftOnlineLesson?.draftLesson, values);
+        createDraftOnlineLesson(courseID, params)
+            .then(() => {message.success('保存课后测试成功！');})
+            .catch(() => {message.success('保存课后测试失败！');});
+    }
+
     render() {
+        const { submitting, handleSubmit, examInfoList, actions, draftOnlineLesson } = this.props;
+        const examContainer = classNames('row inputRow', style.examContainer);
+        const hasExamList = examInfoList && examInfoList.length > 0;
+        const courseId = draftOnlineLesson?.draftLesson?.id;
         return (
-            <from>
-                <div className="row inputRow">
+            <Form onSubmit={handleSubmit(this.updateDraftCourse)}>
+                <Field
+                    name="needInquiry"
+                    className="col-md-8 col-lg-6 u-push-right-xs"
+                    rowClassName="inputRow"
+                    component={renderSwitch}
+                    checkedChildren="开启"
+                    unCheckedChildren="关闭"
+                    onChange={this.handleSwitchChange}
+                    defaultChecked
+                    label="课后问卷"
+                    title="课后满意度问卷"
+                />
+                <div className={examContainer}>
                     <label htmlFor="sectionButton" className="col-md-2 col-lg-1">课后测试</label>
                     <div className="col-md-8 col-lg-6">
-                        <Divider/>
                         <List
                             itemLayout="vertical"
                             dataSource={this.listData}
@@ -70,12 +147,36 @@ class OnlineLessonQuizzes extends Component {
                         />
                     </div>
                 </div>
-            </from>
+                <div className="row inputRow">
+                    <div className="col-md-8 col-lg-6 offset-md-2 offset-lg-1 u-text-right">
+                        <Button htmlType="submit" loading={submitting} type="primary" className="editable-add-btn">保存</Button>
+                    </div>
+                </div>
+
+                <Divider/>
+
+                {
+                    hasExamList &&
+                    <OnlineLessonQuizzesTable
+                        courseId={courseId}
+                        actions={actions}
+                        dataSource={examInfoList}
+                    />
+                }
+            </Form>
         );
     }
 }
 
-OnlineLessonQuizzes.propTypes = {};
-OnlineLessonQuizzes.defaultProps = {};
+OnlineLessonQuizzes.propTypes = {
+    actions: PropTypes.objectOf(PropTypes.func),
+    handleSubmit: PropTypes.func,
+    showDialog: PropTypes.func,
+    // dispatch: PropTypes.func,
+    examInfoList: PropTypes.array,
+    initialValues: PropTypes.object,
+    draftOnlineLesson: PropTypes.object,
+    submitting: PropTypes.bool
+};
 
 export default OnlineLessonQuizzes;

@@ -1,4 +1,4 @@
-import { Axios } from 'utils';
+import { Axios, paginationSetting } from 'utils';
 import * as TYPES from './actionTypes';
 
 
@@ -51,6 +51,12 @@ export const getCourseDetails = (lessonId) => ({
             .then(response => response?.data);
         if (allNodes.length > 0) {
             Object.assign(result, {allNodes});
+        }
+        //get exams
+        const exams = await Axios.get(`/api/courses/${lessonId}/exams`)
+            .then(response => response.data);
+        if (exams.length > 0) {
+            Object.assign(result, {exams});
         }
         return result;
     }
@@ -105,4 +111,59 @@ export const getCategories = () => ({
 export const resetDraftLessons = () => ({
     type: TYPES.SYNC_RESET_INITIAL_ONLINE_LESSONS,
     payload: null
+});
+
+export const examAllowCourse = (checked) => ({
+    type: TYPES.SYNC_SWITCH_COURSE_EXAM,
+    payload: checked
+});
+
+export const getLibExams = (...params) => ({
+    type: TYPES.ASYNC_LOAD_LIB_EXAMS,
+    payload: () => Axios.get('/api/exams', {params: Object.assign({size: paginationSetting.pageSize}, ...params)})
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const getSelectedLibExam = (exams) => ({
+    type: TYPES.SYNC_GET_SELECTED_LIB_EXAMS,
+    payload: exams
+});
+
+export const saveSelectedLibExams = (courseId, selectedLibExams) => dispatch => {
+    const allPromis = selectedLibExams.map(libExam =>
+        Axios.put(`/api/courses/${courseId}/exams/${libExam.id}`)
+            .then(response => response.data)
+            .catch(error => error?.response?.data));
+    return dispatch({
+        type: TYPES.ASYNC_SAVE_SELECTED_LIB_EXAMS,
+        async payload() {
+            await Promise.all(allPromis);
+            const exams = await Axios.get(`/api/courses/${courseId}/exams`, {params: {size: 2000}})
+                .then(response => response.data);
+            return exams;
+        }
+    });
+};
+
+export const deleteExam = (courseId, examId) => ({
+    type: TYPES.ASYNC_DELETE_EXAM,
+    payload: () => Axios.delete(`/api/courses/${courseId}/exams/${examId}`)
+        .then(() => examId)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+
+export const createCustomizeExam = (courseId, params) => ({
+    type: TYPES.ASYNC_CREATE_CUSTOMIZE_EXAM,
+    async payload() {
+        const newExam = await Axios.post('/api/exams', params)
+            .then(response => response.data);
+        await Axios.put(`/api/courses/${courseId}/exams/${newExam.id}`)
+            .then(response => response.data);
+        const exams = await Axios.get(`/api/courses/${courseId}/exams`, {params: {size: 2000}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        return exams;
+    }
 });

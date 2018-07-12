@@ -56,6 +56,8 @@ export const DIALOG = {
     ORG: 'org',
     ONE_CLICK_TAG: 'oneClickTag',
     LIB_EXAM: 'libExam',
+    COURSE_LIB_EXAM: 'libExamForCourse',
+    COURSE_CUSTOMIZE_EXAM: 'customizeExamForCourse',
     CUSTOMIZE_EXAM: 'customizeExam',
     PROVIDE_DETAIL: 'provideDetail',
     PROVIDE_RATING: 'provideRating'

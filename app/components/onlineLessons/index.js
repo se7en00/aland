@@ -19,3 +19,5 @@ export { default as HomeWorkDialog} from './dialog/HomeWorkDialog';
 export { default as InteractionWorkDialog} from './dialog/InteractionWorkDialog';
 export { default as LibExamDialog} from './dialog/exam/LibExamDialog';
 export { default as CustomizeExamDialog} from './dialog/exam/CustomizeExamDialog';
+export { default as CustomizeExamDialogForCourse} from './dialog/exam/CustomizeExamDialogForCourse';
+export { default as LibExamDialogForCourse} from './dialog/exam/LibExamDialogForCourse';

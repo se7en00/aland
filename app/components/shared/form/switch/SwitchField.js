@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from 'antd';
 import remapReduxFormProps from '../RemapReduxFormProps';
+import switchStyle from './SwitchField.scss';
 
 @remapReduxFormProps
 class SwitchField extends Component {
@@ -11,7 +12,8 @@ class SwitchField extends Component {
         size: PropTypes.string,
         className: PropTypes.string,
         checkedChildren: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-        unCheckedChildren: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
+        unCheckedChildren: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+        title: PropTypes.string
     }
 
     render() {
@@ -21,7 +23,8 @@ class SwitchField extends Component {
             loading,
             className,
             checkedChildren,
-            unCheckedChildren
+            unCheckedChildren,
+            title
         } = this.props;
         let value = input.value;
         if (typeof value !== 'boolean') {
@@ -38,6 +41,7 @@ class SwitchField extends Component {
                     unCheckedChildren={unCheckedChildren}
                     loading={loading}
                 />
+                <span className={switchStyle.switchTitle}>{title}</span>
             </div>
         );
     }

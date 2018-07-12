@@ -42,7 +42,6 @@ class Exam extends Component {
                             component={renderSwitch}
                             checkedChildren="开启"
                             unCheckedChildren="关闭"
-                            onChange={this.handleSwitchChange}
                             defaultChecked
                         />
                         <span className="title">课程点学习完后做测试题</span>
