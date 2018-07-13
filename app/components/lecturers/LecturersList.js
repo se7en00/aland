@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { PATHNAME } from 'constants';
+import { PATHNAME, getLinkByName } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
@@ -34,6 +34,10 @@ class LecturersList extends Component {
             .then(() => setSearchParamsToRedux(params));
     };
 
+    redirect = () => {
+        this.props.actions.push(`${getLinkByName(PATHNAME.MASTER)}/add`);
+    };
+
     render() {
         const {lecturers: {list, searchParams}, actions} = this.props;
         return (
@@ -41,7 +45,7 @@ class LecturersList extends Component {
                 <Header title={PATHNAME.MASTER}/>
                 <div className={panelStyle.panel__body}>
                     <LecturersSearch onSubmit={this.onSearch}/>
-                    <Button type="primary" className="editable-add-btn u-pull-down-md" ghost>新增培训师</Button>
+                    <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增培训师</Button>
                     <Button type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
                     <LecturersListTable dataSource={list} actions={actions} searchParams={searchParams}/>
                 </div>

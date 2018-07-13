@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-import { BASE_URL, DATE_FORMAT } from 'constants';
+import { BASE_URL } from 'constants';
 
 class LecturersListTable extends Component {
     static propTypes = {
@@ -45,11 +45,6 @@ class LecturersListTable extends Component {
             title: '简介',
             align: 'center',
             dataIndex: 'introduce'
-        }, {
-            title: '创建时间',
-            align: 'center',
-            dataIndex: 'createdAt',
-            render: (text, record) => moment(record.createdAt).format(DATE_FORMAT)
         }, {
             title: '操作',
             align: 'center',

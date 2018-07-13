@@ -80,7 +80,8 @@ export const PANEL_TITLE = {
     ONE_CLICK_ADD: '新建一点通',
     MATERIALS: '素材管理',
     EXAM_LIST: '题库管理',
-    TAGS: '标签设置'
+    TAGS: '标签设置',
+    MASTER_ADD: '新增培训师'
 };
 
 export const TAG_CATEGORY = {

@@ -19,6 +19,7 @@ import MaterialsEditView from 'views/materials/MaterialsEditView';
 import ExamsView from 'views/exams/ExamsView';
 import InquiriesView from 'views/inquiry/InquiriesView';
 import LecturersView from 'views/lectures/LecturersView';
+import LecturesAddView from 'views/lectures/LecturesAddView';
 import ProvidesView from 'views/provides/ProvidesView';
 import {ConnectedSwitch} from './ConnectedSwitch';
 
@@ -43,6 +44,7 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/questBank`} component={ExamsView}/>
         <Route exact path={`${match.path}/questionnaire`} component={InquiriesView}/>
         <Route exact path={`${match.path}/master`} component={LecturersView}/>
+        <Route exact path={`${match.path}/master/add`} component={LecturesAddView}/>
         <Route exact path={`${match.path}/vendor`} component={ProvidesView}/>
         <Route exact path={`${match.path}/tagSetting`} component={TagsView}/>
     </ConnectedSwitch>

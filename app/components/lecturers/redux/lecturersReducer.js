@@ -26,6 +26,26 @@ const lecturerReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             ...state
         })
+    },
+
+    [TYPES.ASYNC_LOAD_PROVIDES]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            provides: action.payload
+        })
+    },
+    [TYPES.ASYNC_ADD_LECTURER]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
     }
 }, {});
 
