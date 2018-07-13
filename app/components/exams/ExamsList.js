@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { DATE_FORMAT, PANEL_TITLE } from 'constants';
+import { DATE_FORMAT, PANEL_TITLE, DIALOG } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
@@ -10,12 +10,19 @@ import ExamsSearch from './ExamsSearch';
 
 class ExamsList extends Component {
     static propTypes = {
+        showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
         exams: PropTypes.object
     };
 
     componentDidMount() {
-        this.props.actions.getExamsList({pageSize: paginationSetting.pageSize});
+        this.props.actions.getExamsList({pageSize: paginationSetting.pageSize})
+            .then(() => this.props.actions.getCategories());
+    }
+
+    openCreateDialog = () => {
+        const {showDialog} = this.props;
+        showDialog(DIALOG.CREATE_EXAM)();
     }
 
     onSearch = (values) => {
@@ -35,15 +42,18 @@ class ExamsList extends Component {
     };
 
     render() {
-        const {exams: {list, searchParams}, actions} = this.props;
+        const {exams: {list, searchParams, categoryList}, actions, showDialog} = this.props;
         return (
             <div>
-                <Header title={PANEL_TITLE.MATERIALS}/>
+                <Header title={PANEL_TITLE.EXAM_LIST}/>
                 <div className={panelStyle.panel__body}>
-                    <ExamsSearch onSubmit={this.onSearch}/>
-                    <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增试题</Button>
-                    <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>导入试题</Button>
-                    <ExamsListTable dataSource={list} actions={actions} searchParams={searchParams}/>
+                    <ExamsSearch onSubmit={this.onSearch} categoryList={categoryList}/>
+                    <Button onClick={this.openCreateDialog} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增试题</Button>
+                    <ExamsListTable
+                        showDialog={showDialog}
+                        dataSource={list}
+                        actions={actions}
+                        searchParams={searchParams}/>
                 </div>
             </div>
         );

@@ -10,18 +10,18 @@ import QuestionDetails from './QuestionDetails';
 const mapStateToProp = (state) => {
     if (R.isEmpty(state.point)) return null;
     return {
-        userList: state.point?.userList,
-        questionDetails: state.point?.questionDetails
+        userList: state.draftOnlineLesson?.userList,
+        questionDetails: state.draftOnlineLesson?.questionDetails
     };
 };
 
 @connect(mapStateToProp)
-@reduxForm({form: DIALOG.EXAM_DETAILS})
-class ExamDetailsDialog extends Component {
-    static dialogName = DIALOG.EXAM_DETAILS;
+@reduxForm({form: DIALOG.COURSE_EXAM_DETAILS})
+class ExamDetailsDialogForCourse extends Component {
+    static dialogName = DIALOG.COURSE_EXAM_DETAILS;
 
     closeDialog = () => {
-        this.props.hideDialog(DIALOG.EXAM_DETAILS)();
+        this.props.hideDialog(DIALOG.COURSE_EXAM_DETAILS)();
     }
 
     render() {
@@ -43,11 +43,11 @@ class ExamDetailsDialog extends Component {
     }
 }
 
-ExamDetailsDialog.propTypes = {
+ExamDetailsDialogForCourse.propTypes = {
     hideDialog: PropTypes.func,
     visible: PropTypes.bool,
     userList: PropTypes.object,
     questionDetails: PropTypes.object
 };
 
-export default ExamDetailsDialog;
+export default ExamDetailsDialogForCourse;

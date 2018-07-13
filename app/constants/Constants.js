@@ -57,11 +57,13 @@ export const DIALOG = {
     ONE_CLICK_TAG: 'oneClickTag',
     LIB_EXAM: 'libExam',
     EXAM_DETAILS: 'examDetails',
+    COURSE_EXAM_DETAILS: 'examDetailsForCourse',
     COURSE_LIB_EXAM: 'libExamForCourse',
     COURSE_CUSTOMIZE_EXAM: 'customizeExamForCourse',
     CUSTOMIZE_EXAM: 'customizeExam',
     PROVIDE_DETAIL: 'provideDetail',
-    PROVIDE_RATING: 'provideRating'
+    PROVIDE_RATING: 'provideRating',
+    CREATE_EXAM: 'createExam'
 };
 
 export const PANEL_TITLE = {
@@ -77,6 +79,7 @@ export const PANEL_TITLE = {
     ONE_CLICK: '一点通管理',
     ONE_CLICK_ADD: '新建一点通',
     MATERIALS: '素材管理',
+    EXAM_LIST: '题库管理',
     TAGS: '标签设置'
 };
 

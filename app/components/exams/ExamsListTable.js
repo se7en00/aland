@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-import { DATE_FORMAT, EXAM_TYPE_MAPPING } from 'constants';
+import { DATE_FORMAT, EXAM_TYPE_MAPPING, DIALOG } from 'constants';
 
 class ExamsListTable extends Component {
     static propTypes = {
-        // showDialog: PropTypes.func,
+        showDialog: PropTypes.func,
         searchParams: PropTypes.object,
         actions: PropTypes.objectOf(PropTypes.func),
         dataSource: PropTypes.object
@@ -29,9 +29,9 @@ class ExamsListTable extends Component {
             align: 'center',
             dataIndex: 'question'
         }, {
-            title: '标签',
+            title: '种类',
             align: 'center',
-            dataIndex: 'productTags'
+            dataIndex: 'category'
         }, {
             title: '出题人',
             align: 'center',
@@ -52,7 +52,7 @@ class ExamsListTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" ghost>详情/编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.onEdit(record)} ghost>详情/编辑</Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
@@ -60,6 +60,12 @@ class ExamsListTable extends Component {
             )
         }];
     }
+
+    onEdit = (record) => {
+        const {actions: {editExam}, showDialog} = this.props;
+        editExam(record);
+        showDialog(DIALOG.CREATE_EXAM)();
+    };
 
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {

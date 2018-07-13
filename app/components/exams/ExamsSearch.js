@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'antd';
-import { examTypeOptions } from 'constants';
+import { examTypeOptions, renderOptions } from 'constants';
 import { resetSpecificField } from 'utils';
 import { renderTextField, renderSelectField, renderDateRangeField} from '../shared/form';
 
@@ -11,12 +11,20 @@ class ExamsSearch extends Component {
     static propTypes = {
         handleSubmit: PropTypes.func,
         dispatch: PropTypes.func,
-        submitting: PropTypes.bool
+        submitting: PropTypes.bool,
+        categoryList: PropTypes.array
     };
+
+    renderCategoryOptions = () => {
+        const {categoryList = []} = this.props;
+        return renderOptions('code', 'name')(categoryList);
+    }
 
     render() {
         const { submitting, handleSubmit, dispatch } = this.props;
         const restRangeDateTime = () => resetSpecificField(dispatch, 'examsSearch', 'dateTime', '');
+        const restCategory = () => resetSpecificField(dispatch, 'examsSearch', 'category', '');
+        const restExamType = () => resetSpecificField(dispatch, 'examsSearch', 'type', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
@@ -34,15 +42,19 @@ class ExamsSearch extends Component {
 
                         <Field
                             layout="elementOnly"
-                            name="tag"
                             rowClassName="col-md-2"
-                            component={renderTextField}
-                            placeholder="标签"
-                        />
+                            name="category"
+                            allowClear={true}
+                            resetSelectValue={restCategory}
+                            component={renderSelectField}
+                            placeholder="种类"
+                        >
+                            {this.renderCategoryOptions()}
+                        </Field>
 
                         <Field
                             layout="elementOnly"
-                            name="createUser"
+                            name="createUserName"
                             rowClassName="col-md-2"
                             component={renderTextField}
                             placeholder="出题人"
@@ -52,6 +64,8 @@ class ExamsSearch extends Component {
                             layout="elementOnly"
                             rowClassName="col-md-2"
                             name="type"
+                            allowClear={true}
+                            resetSelectValue={restExamType}
                             component={renderSelectField}
                             placeholder="题型"
                         >

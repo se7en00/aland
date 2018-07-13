@@ -18,17 +18,22 @@ class QuestionDetails extends Component {
                 </Timeline>
             );
         case 'TOF': //eslint-disable-line
-            const isTrue = !!answer;
+            const isTrue = !!+answer;
             return (
                 <Timeline>
-                    <Timeline.Item>{isTrue ? '对的' : '错的'}</Timeline.Item>
+                    <Timeline.Item dot={isTrue ?
+                        <Icon type="check-circle-o" style={{fontSize: '16px', color: '#5DA424'}}/>
+                        : <Icon type="close-circle-o" style={{fontSize: '16px', color: '#f5222d'}}/>}>
+                        {isTrue ? '对的' : '错的'}
+                    </Timeline.Item>
                 </Timeline>
             );
         default:
             return (
                 <Timeline>
-                    {answers.map(item => {
+                    {answers.map((item, index) => {
                         const isCorrect = !!+item.isCorrect;//eslint-disable-line
+                        const answerName = `${String.fromCharCode(97 + index).toUpperCase()} ${item.answer}`;
                         if (isCorrect) {
                             return (
                                 <Timeline.Item
@@ -36,7 +41,7 @@ class QuestionDetails extends Component {
                                     key={uuid()}
                                     dot={<Icon type="check-circle-o" style={{fontSize: '16px', color: '#5DA424'}}/>}
                                 >
-                                    {item.answer}
+                                    {answerName}
                                 </Timeline.Item>
                             );
                         }
@@ -45,7 +50,7 @@ class QuestionDetails extends Component {
                                 color="#2db7f5"
                                 key={uuid()}
                             >
-                                {item.answer}
+                                {answerName}
                             </Timeline.Item>
                         );
                     })}

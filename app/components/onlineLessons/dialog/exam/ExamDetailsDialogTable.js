@@ -28,15 +28,15 @@ class ExamDetailsDialogTable extends Component {
         }, {
             title: '正确答案',
             align: 'center',
-            dataIndex: 'categoryCode'
+            dataIndex: 'correct'
         }, {
             title: '实际答案',
             align: 'center',
-            dataIndex: 'categoryCode'
+            dataIndex: 'uncorrect'
         }, {
             title: '提交时间',
             align: 'center',
-            dataIndex: 'categoryCode'
+            dataIndex: 'date'
         }];
     }
 

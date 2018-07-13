@@ -82,10 +82,10 @@ class OnlineLessonQuizzes extends Component {
 
     componentWillUpdate(nextProps) {
         if (nextProps.initialValues.examAllowCourse) {
-            const hasExams = this.listData.filter(item => item.title === '新建课后测试题');
+            const hasExams = this.listData.filter(item => item.title === '增加课后测试题');
             if (!hasExams || hasExams.length === 0) {
                 this.listData.splice(1, 0, {
-                    title: '新建课后测试题',
+                    title: '增加课后测试题',
                     content: (
                         <div>
                             <Button onClick={this.openLibExamDialog} type="primary" className="editable-add-btn" ghost>题库选择</Button>
@@ -111,7 +111,7 @@ class OnlineLessonQuizzes extends Component {
     }
 
     render() {
-        const { submitting, handleSubmit, examInfoList, actions, draftOnlineLesson } = this.props;
+        const { submitting, handleSubmit, examInfoList, actions, draftOnlineLesson, showDialog } = this.props;
         const examContainer = classNames('row inputRow', style.examContainer);
         const hasExamList = examInfoList && examInfoList.length > 0;
         const courseId = draftOnlineLesson?.draftLesson?.id;
@@ -124,7 +124,6 @@ class OnlineLessonQuizzes extends Component {
                     component={renderSwitch}
                     checkedChildren="开启"
                     unCheckedChildren="关闭"
-                    onChange={this.handleSwitchChange}
                     defaultChecked
                     label="课后问卷"
                     title="课后满意度问卷"
@@ -160,6 +159,7 @@ class OnlineLessonQuizzes extends Component {
                     <OnlineLessonQuizzesTable
                         courseId={courseId}
                         actions={actions}
+                        showDialog={showDialog}
                         dataSource={examInfoList}
                     />
                 }
