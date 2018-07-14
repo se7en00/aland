@@ -7,10 +7,6 @@ import OnlineLessonNode from './OnlineLessonNodes';
 import OnlineLessonQuizzes from './OnlineLessonQuizzes';
 
 class OnlineLessonTab extends Component {
-    handleChange = () => {
-        console.log('222');
-    };
-
     buttonMenu = () => (
         <Menu >
             <Menu.Item key={uuid()}><i className="fas fa-desktop u-push-right-xs"/>PC预览</Menu.Item>
@@ -59,7 +55,7 @@ class OnlineLessonTab extends Component {
         const isDisabledLesson = !draftOnlineLesson?.draftLesson;
         return (
             /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
-            <Tabs defaultActiveKey="1" onChange={this.handleChange}>
+            <Tabs defaultActiveKey="1">
                 <TabPane tab={<span><Icon type="profile"/>课程详情</span>} key="1">
                     <OnlineLessonDetails
                         actions={actions}

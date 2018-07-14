@@ -13,6 +13,7 @@ import TagsView from 'views/tags/TagsView';
 import OrgManagementView from 'views/orgManagement/OrgManagementView';
 import UserListView from 'views/userManagement/UserListView';
 import UserListCreationView from 'views/userManagement/UserListCreationView';
+import UserListDetailsView from 'views/userManagement/UserListDetailsView';
 import UserGroupView from 'views/userGroup/UserGroupView';
 import MaterialsView from 'views/materials/MaterialsView';
 import MaterialsEditView from 'views/materials/MaterialsEditView';
@@ -39,6 +40,7 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/orgManagement`} component={OrgManagementView}/>
         <Route exact path={`${match.path}/userManagement`} component={UserListView}/>
         <Route exact path={`${match.path}/userManagement/creation`} component={UserListCreationView}/>
+        <Route exact path={`${match.path}/userManagement/:userId/details`} component={UserListDetailsView}/>
         <Route exact path={`${match.path}/studentManagement`} component={UserGroupView}/>
         <Route exact path={`${match.path}/materials`} component={MaterialsView}/>
         <Route exact path={`${match.path}/materials/additionMaterial`} component={MaterialsEditView}/>

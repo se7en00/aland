@@ -1,0 +1,18 @@
+@import "~SCSS_PATH/modules";
+
+.userFormContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    :global(.row) + :global(.row) {
+        margin-top: rem(25px);
+    }
+
+    :global(.ant-upload.ant-upload-select-picture-card) {
+        width: 90px;
+        height: 90px;
+    }
+    :global(.ant-upload-list-picture-card .ant-upload-list-item) {
+        width: 90px !important;
+        height: 90px !important;
+    }
+}

@@ -28,3 +28,26 @@ export const setSearchParamsToRedux = (params) => ({
     payload: params
 });
 
+export const getALLAssociations = () => {
+    const allPromises = [
+        Axios.get('/api/departments', {params: {size: 2000}}).then(response => response.data),
+        Axios.get('/api/users/userLevels').then(response => response.data),
+        Axios.get('api/dictionarys/dicType/GENDER').then(response => response.data.map(item => ({code: item.code, name: item.name})))
+    ];
+    return {
+        type: TYPES.ASYNC_LOAD_DEPARTMENTS_AND_USER_LEVELS,
+        payload: Promise.all(allPromises).then(result => ({
+            departments: result[0].elements.map(item => ({id: item.id, name: item.name})),
+            userLevels: result[1],
+            genders: result[2]
+        })).catch(error => Promise.reject(error?.response?.data))
+    };
+};
+
+export const getUserDetails = (userId) => ({
+    type: TYPES.ASYNC_USER_DETAILS,
+    payload: () => Axios.get(`/api/users/${userId}`)
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+

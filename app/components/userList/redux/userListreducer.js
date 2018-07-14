@@ -10,6 +10,7 @@ const userReducer = typeToReducer({
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
+            ...state,
             list: action.payload
         })
     },
@@ -38,6 +39,28 @@ const userReducer = typeToReducer({
         }),
         FULFILLED: (state, action) => ({
             ...state
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_DEPARTMENTS_AND_USER_LEVELS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            ...action.payload
+        })
+    },
+
+    [TYPES.ASYNC_USER_DETAILS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            userDetails: action.payload
         })
     }
 

@@ -6,13 +6,18 @@ import Header from '../../shared/panel/PanelHeader';
 import UserCreationForm from './UserCreationForm';
 
 class UserCreation extends Component {
+    componentDidMount() {
+        const {actions: {getALLAssociations}} = this.props;
+        getALLAssociations();
+    }
+
     render() {
-        const {user} = this.props;
+        const {userList: {departments, userLevels, genders}, actions} = this.props;
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.USER_NEW}/>
                 <div className={panelStyle.panel__body}>
-                    <UserCreationForm user={user}/>
+                    <UserCreationForm actions={actions} departments={departments} userLevels={userLevels} genders={genders}/>
                 </div>
             </Fragment>
         );
@@ -20,7 +25,8 @@ class UserCreation extends Component {
 }
 
 UserCreation.propTypes = {
-    user: PropTypes.object
+    userList: PropTypes.object,
+    actions: PropTypes.objectOf(PropTypes.func)
 };
 
 export default UserCreation;

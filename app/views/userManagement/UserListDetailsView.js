@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators, UserList} from 'components/userList';
+import { actionCreators, UserDetails} from 'components/userList';
 import { push } from 'react-router-redux';
+import { withRouter } from 'react-router';
 
 @connect(state => ({userList: state.userList}), mapDispatchToProps)
-class UserListView extends Component {
+@withRouter
+class UserListDetailsView extends Component {
     render() {
-        return <UserList {...this.props}/>;
+        return <UserDetails {...this.props}/>;
     }
 }
 
@@ -15,4 +17,4 @@ function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({...actionCreators, push}, dispatch) };
 }
 
-export default UserListView;
+export default UserListDetailsView;
