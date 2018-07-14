@@ -10,26 +10,49 @@ import { renderTextField, renderSelectField, renderQuill, UploadFilesField } fro
 
 const required = value => (value ? undefined : '不能为空！');
 
-@reduxForm({form: 'lecturesCreate', initialValues: { typeCode: '1', gender: '男'} })
-@connect(state => ({values: getFormValues('lecturesCreate')(state)}))
+function mapStateToProps(state) {
+    return {
+        initialValues: state.lecturers?.lecturer,
+        values: getFormValues('lecturesCreate')(state),
+        provides: state.lecturers?.provides,
+        lecturer: state.lecturers?.lecturer,
+        levels: state.lecturers?.levels
+    };
+}
+
+@connect(mapStateToProps)
+@reduxForm({form: 'lecturesCreate', enableReinitialize: true })
 class LecturersCreate extends Component {
     static propTypes = {
         handleSubmit: PropTypes.func,
         actions: PropTypes.object,
         submitting: PropTypes.bool,
         values: PropTypes.object,
-        lecturers: PropTypes.object
+        provides: PropTypes.object,
+        lecturer: PropTypes.object,
+        levels: PropTypes.array
     };
 
     componentDidMount() {
-        const { lecturers: { provides }, actions: { loadProvides } } = this.props;
+        const { provides, lecturer, levels, actions: { loadProvides, getLecturer, loadLevels } } = this.props;
+        if (/edit$/g.test(location.pathname) && !lecturer) {
+            const id = location.pathname.match(/(\w)+(?=\/edit$)/g)[0];
+            if (id) {
+                getLecturer(id);
+            }
+        }
+
         if (!provides) {
             loadProvides();
+        }
+
+        if (!levels) {
+            loadLevels();
         }
     }
 
     generateData = (values) => {
-        const { actions: { addLecturer } } = this.props;
+        const { lecturer, actions } = this.props;
         const file = values.avatarUrl?.[0];
         try {
             if (file) {
@@ -38,7 +61,8 @@ class LecturersCreate extends Component {
         } catch (error) {
             throw new SubmissionError({cover: '上传头像失败！'});
         }
-        addLecturer(values).then(() => {
+        const func = lecturer?.id ? 'editLecturer' : 'addLecturer';
+        actions[func](values, lecturer?.id).then(() => {
             message.success('保存成功！');
             this.back();
         }).catch(() => {message.success('保存失败！');});
@@ -50,16 +74,23 @@ class LecturersCreate extends Component {
     };
 
     renderProvidesOptions = () => {
-        const { lecturers: { provides = [] } } = this.props;
+        const { provides = [] } = this.props;
         return renderOptions('id', 'name')(provides);
     };
 
+    renderLevelOptions = () => {
+        const { levels } = this.props;
+        return renderOptions('code', 'name')(levels);
+    };
+
     render() {
-        const { submitting, handleSubmit, values: { typeCode } } = this.props;
+        const { submitting, handleSubmit, values = {}, lecturer } = this.props;
+        const { typeCode } = values;
         const isProvideVisible = typeCode === '2';
+        const title = lecturer?.id ? PANEL_TITLE.MASTER_EDIT : PANEL_TITLE.MASTER_ADD;
         return (
             <Fragment>
-                <Header title={PANEL_TITLE.MASTER_ADD}/>
+                <Header title={title}/>
                 <div className={panelStyle.panel__body}>
                     <form name="lecturesCreate" onSubmit={handleSubmit(this.generateData)}>
 
@@ -147,9 +178,7 @@ class LecturersCreate extends Component {
                             label="等级"
                             placeholder="请选择等级"
                         >
-                            <Select.Option value="1">中级</Select.Option>
-                            <Select.Option value="2">高级</Select.Option>
-                            <Select.Option value="3">专家级</Select.Option>
+                            {this.renderLevelOptions()}
                         </Field>
 
                         <Field

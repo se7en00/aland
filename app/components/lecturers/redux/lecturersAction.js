@@ -38,3 +38,27 @@ export const addLecturer = (data) => ({
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
+
+export const getLecturer = (id) => ({
+    type: TYPES.ASYNC_GET_LECTURER,
+    payload: () => Axios.get(`/api/lecturers/${id}`)
+        .then((response) => response?.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const editLecturer = (data, id) => ({
+    type: TYPES.ASYNC_EDIT_LECTURER,
+    payload: () => Axios.put(`/api/lecturers/${id}`, data)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const loadLevels = () => ({
+    type: TYPES.AYSNC_LOAD_LEVELS,
+    payload: () => Axios.get('/api/dictionarys/dicType/TEACHER_LEVEL')
+        .then(response => {
+            const { data = [] } = response;
+            return data.map(item => ({name: item.name, code: item.code}));
+        })
+        .catch(error => Promise.reject(error?.response?.data))
+});

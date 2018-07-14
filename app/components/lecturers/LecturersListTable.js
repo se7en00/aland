@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-import { BASE_URL } from 'constants';
+import { BASE_URL, PATHNAME, getLinkByName } from 'constants';
 
 class LecturersListTable extends Component {
     static propTypes = {
@@ -44,14 +44,15 @@ class LecturersListTable extends Component {
         }, {
             title: '简介',
             align: 'center',
-            dataIndex: 'introduce'
+            dataIndex: 'introduce',
+            width: 700
         }, {
             title: '操作',
             align: 'center',
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" ghost>详情/编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.redirect(record.id)} ghost>详情/编辑</Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
@@ -87,6 +88,11 @@ class LecturersListTable extends Component {
         }).catch(error => {
             message.error(`删除素材：${lecture.name}失败！`);
         });
+    }
+
+    redirect = (id) => {
+        const { push} = this.props.actions;
+        push(`${getLinkByName(PATHNAME.MASTER)}/${id}/detail`);
     }
 
     render() {

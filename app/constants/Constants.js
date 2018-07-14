@@ -81,7 +81,9 @@ export const PANEL_TITLE = {
     MATERIALS: '素材管理',
     EXAM_LIST: '题库管理',
     TAGS: '标签设置',
-    MASTER_ADD: '新增培训师'
+    MASTER_ADD: '新增培训师',
+    MASTER_EDIT: '编辑培训师',
+    MASTER_DETAIL: '培训师详情'
 };
 
 export const TAG_CATEGORY = {

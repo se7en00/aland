@@ -1,0 +1,14 @@
+:global .lecturer-detail {
+    color: black;
+    img {
+        position: absolute;
+    }
+    .lecturer-info {
+        padding-left: 110px;
+        padding-top: 2em;
+        height: 100px;
+        text {
+            margin-right: 2em;
+        }
+    }
+}

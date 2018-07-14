@@ -46,6 +46,35 @@ const lecturerReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             ...state
         })
+    },
+    [TYPES.ASYNC_GET_LECTURER]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            lecturer: action.payload
+        })
+    },
+    [TYPES.ASYNC_EDIT_LECTURER]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+    [TYPES.AYSNC_LOAD_LEVELS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            levels: action.payload
+        })
     }
 }, {});
 

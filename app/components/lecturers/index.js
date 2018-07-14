@@ -6,3 +6,4 @@ export * as actionCreators from './redux/lecturersAction';
 export { default as LecturersList } from './LecturersList';
 
 export { default as LecturersCreate } from './LecturersCreate';
+export { default as LecturersDetail } from './LecturersDetail';
