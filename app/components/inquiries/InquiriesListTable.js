@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-import { DATE_FORMAT } from 'constants';
+import { DATE_FORMAT, PATHNAME, getLinkByName } from 'constants';
 
 class InquiriesListTable extends Component {
     static propTypes = {
@@ -47,7 +47,7 @@ class InquiriesListTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" ghost>详情/编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.redirect(record.id)} ghost>详情/编辑</Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
@@ -83,6 +83,11 @@ class InquiriesListTable extends Component {
         }).catch(error => {
             message.error(`删除问卷：${inquiry.name}失败！`);
         });
+    }
+
+    redirect = (id) => {
+        const { push} = this.props.actions;
+        push(`${getLinkByName(PATHNAME.QUESTIONNAIRE_BANK)}/${id}/detail`);
     }
 
     render() {

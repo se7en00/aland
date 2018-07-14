@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { DATE_FORMAT, PATHNAME } from 'constants';
+import { DATE_FORMAT, PATHNAME, getLinkByName } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
@@ -33,6 +33,10 @@ class InquiriesList extends Component {
         }, {});
         getInquiryesList({pageSize: paginationSetting.pageSize, ...params})
             .then(() => setSearchParamsToRedux(params));
+    };
+
+    redirect = () => {
+        this.props.actions.push(`${getLinkByName(PATHNAME.QUESTIONNAIRE_BANK)}/add`);
     };
 
     render() {

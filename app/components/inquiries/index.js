@@ -4,3 +4,4 @@ export {default as inquiriesReducer} from './redux/inquiriesReducer';
 export * as actionCreators from './redux/inquiriesAction';
 // component
 export { default as InquiriesList } from './InquiriesList';
+export { default as InquiryDetail } from './InquiryDetail';

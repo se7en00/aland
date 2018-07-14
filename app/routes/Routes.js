@@ -18,6 +18,7 @@ import MaterialsView from 'views/materials/MaterialsView';
 import MaterialsEditView from 'views/materials/MaterialsEditView';
 import ExamsView from 'views/exams/ExamsView';
 import InquiriesView from 'views/inquiry/InquiriesView';
+import InquiryAddView from 'views/inquiry/InquiryAddView';
 import LecturersView from 'views/lectures/LecturersView';
 import LecturesAddView from 'views/lectures/LecturesAddView';
 import LecturersDetailView from 'views/lectures/LecturersDetailView';
@@ -44,6 +45,8 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/materials/:materialId/detail`} component={MaterialsEditView}/>
         <Route exact path={`${match.path}/questBank`} component={ExamsView}/>
         <Route exact path={`${match.path}/questionnaire`} component={InquiriesView}/>
+        <Route exact path={`${match.path}/questionnaire/add`} component={InquiryAddView}/>
+        <Route exact path={`${match.path}/questionnaire/:id/detail`} component={InquiryAddView}/>
         <Route exact path={`${match.path}/master`} component={LecturersView}/>
         <Route exact path={`${match.path}/master/add`} component={LecturesAddView}/>
         <Route exact path={`${match.path}/master/:id/detail`} component={LecturersDetailView}/>

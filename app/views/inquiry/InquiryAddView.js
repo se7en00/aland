@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { actionCreators, InquiriesList} from 'components/inquiries';
+import { actionCreators, InquiryDetail} from 'components/inquiries';
 
 @connect(state => ({inquiries: state.inquiries}), mapDispatchToProps)
-class InquiriesView extends Component {
+class InquiryAddView extends Component {
     render() {
-        return <InquiriesList {...this.props}/>;
+        return <InquiryDetail {...this.props}/>;
     }
 }
 
@@ -15,4 +15,4 @@ function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({...actionCreators, push}, dispatch) };
 }
 
-export default InquiriesView;
+export default InquiryAddView;

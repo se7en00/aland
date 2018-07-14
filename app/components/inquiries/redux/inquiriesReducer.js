@@ -37,6 +37,34 @@ const inquiriesReducer = typeToReducer({
             ...state,
             categoryList: action.payload
         })
+    },
+    [TYPES.ASYNC_ADD_INQUIRY]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+    [TYPES.ASYNC_GET_INQUIRY]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            inquiry: action.payload
+        })
+    },
+    [TYPES.ASYNC_EDIT_INQUIRY]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
     }
 }, {});
 

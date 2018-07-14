@@ -1,0 +1,28 @@
+:global .question-list {
+    max-height: 400px;
+    overflow-y: auto;
+    .question-answer {
+        border: 1px solid rgb(201, 225, 192);
+        margin: 10px;
+        padding-left: 10px;
+        border-radius: 10px;
+        &.odd {
+            background-color: rgb(201, 225, 192);
+        }
+        .ant-list-item-content {
+            display: block;
+            a {
+                margin-left: 1em;
+                text-decoration: underline;
+                color: #5DA424;
+            }
+        }
+    }
+}
+:global .question-summary {
+    text-align: center;
+}
+:global .question-error {
+    color: red;
+    padding: 10px 0;
+}

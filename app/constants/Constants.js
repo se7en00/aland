@@ -83,7 +83,9 @@ export const PANEL_TITLE = {
     TAGS: '标签设置',
     MASTER_ADD: '新增培训师',
     MASTER_EDIT: '编辑培训师',
-    MASTER_DETAIL: '培训师详情'
+    MASTER_DETAIL: '培训师详情',
+    INQUIRY_ADD: '新增问卷',
+    INQUIRY_EDIT: '编辑问卷'
 };
 
 export const TAG_CATEGORY = {

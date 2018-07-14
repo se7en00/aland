@@ -31,3 +31,24 @@ export const setSearchParamsToRedux = (params) => ({
     type: TYPES.SYNC_INQUIRIES_LIST_SEARCH_PARAMS,
     payload: params
 });
+
+export const addInquiry = (data) => ({
+    type: TYPES.ASYNC_ADD_INQUIRY,
+    payload: () => Axios.post('/api/inquirys', data)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const getInquiry = (id) => ({
+    type: TYPES.ASYNC_GET_INQUIRY,
+    payload: () => Axios.get(`/api/inquirys/${id}`)
+        .then((response) => response?.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const editInquiry = (data, id) => ({
+    type: TYPES.ASYNC_EDIT_INQUIRY,
+    payload: () => Axios.put(`/api/inquirys/${id}`, data)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
