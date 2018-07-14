@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-import { DATE_FORMAT, DIALOG } from 'constants';
+import { DATE_FORMAT, PATHNAME, getLinkByName } from 'constants';
 
 class UserListTable extends Component {
     static propTypes = {
-        showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
         dataSource: PropTypes.object,
         searchParams: PropTypes.object
@@ -63,8 +62,8 @@ class UserListTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.EDIT_USER)} ghost>查看详情</Button>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.PERMISSION)} ghost>导出培训数据</Button>
+                    <Button size="small" type="primary" onClick={() => this.onEditPoint(record)} ghost>查看详情</Button>
+                    {/*<Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.PERMISSION)} ghost>导出培训数据</Button>*/}
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
@@ -72,6 +71,11 @@ class UserListTable extends Component {
             )
         }];
     }
+
+    onEditPoint = (record) => {
+        const {actions: {push}} = this.props;
+        push(`${getLinkByName(PATHNAME.USER_MANAGEMENT)}/${record.id}/details`);
+    };
 
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
@@ -86,18 +90,6 @@ class UserListTable extends Component {
         const { getUserList } = this.props.actions;
         const { searchParams } = this.props;
         getUserList(Object.assign({pageSize, page}, searchParams));
-    }
-
-    openDialog = (user, dialog) => {
-        const {showDialog, actions: { syncGetAssociatedUser, getPermissions }} = this.props;
-        syncGetAssociatedUser(user);
-        if (dialog === DIALOG.PERMISSION) {
-            getPermissions(user.id).then(() => {
-                showDialog(dialog)();
-            });
-        } else {
-            showDialog(dialog)();
-        }
     }
 
     onDelete = (user) => {

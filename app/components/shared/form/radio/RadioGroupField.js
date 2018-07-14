@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox } from 'antd';
+import { Radio } from 'antd';
 import remapReduxFormProps from '../RemapReduxFormProps';
 
+const RadioGroup = Radio.Group;
+
 @remapReduxFormProps
-class CheckboxField extends Component {
+class RadioGroupField extends Component {
     static propTypes = {
         input: PropTypes.object,
         className: PropTypes.string,
@@ -20,20 +22,22 @@ class CheckboxField extends Component {
 
     render() {
         const {
+            input,
             className,
-            defaultChecked,
-            checked
+            defaultChecked
         } = this.props;
         return (
             <div className={className}>
-                <Checkbox
-                    checked={checked}
+                <RadioGroup
+                    {...input}
                     defaultChecked={defaultChecked}
                     onChange={this.handleChange}
-                />
+                >
+                    ss
+                </RadioGroup>
             </div>
         );
     }
 }
 
-export default CheckboxField;
+export default RadioGroupField;
