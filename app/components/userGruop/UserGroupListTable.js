@@ -30,21 +30,26 @@ class UserGroupListTable extends Component {
         }, {
             title: '描述',
             align: 'center',
-            dataIndex: 'remark'
+            dataIndex: 'description'
         }, {
             title: '操作',
             align: 'center',
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.EDIT_USER)} ghost>编辑</Button>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.PERMISSION)} ghost>导出名单</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record)} ghost>编辑</Button>
+                    {/*<Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.PERMISSION)} ghost>导出名单</Button>*/}
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
                 </div>
             )
         }];
+    }
+
+    openDialog = (userGroup) => {
+        const {actions: {getUserGroupDetails}, showDialog} = this.props;
+        getUserGroupDetails(userGroup.id).then(() => showDialog(DIALOG.EDIT_USER_GROUP)());
     }
 
     componentWillUpdate(nextProps) {
@@ -57,32 +62,21 @@ class UserGroupListTable extends Component {
     }
 
     handelPageChange = (page, pageSize) => {
-        const { getUserList } = this.props.actions;
-        getUserList(pageSize, page);
+        const { getUserGroupList } = this.props.actions;
+        getUserGroupList({pageSize, page});
     }
 
-    openDialog = (user, dialog) => {
-        const {showDialog, actions: { syncGetAssociatedUser, getPermissions }} = this.props;
-        syncGetAssociatedUser(user);
-        if (dialog === DIALOG.PERMISSION) {
-            getPermissions(user.id).then(() => {
-                showDialog(dialog)();
-            });
-        } else {
-            showDialog(dialog)();
-        }
-    }
 
-    onDelete = (user) => {
+    onDelete = (userGroup) => {
         const {
             dataSource: {paging: {size, page}},
-            actions: {deleteUser, getUserList}
+            actions: {deleteUserGroup, getUserGroupList}
         } = this.props;
-        deleteUser(user.id).then(() => {
-            message.success(`成功删除账户名：${user.name}！`);
-            getUserList(size, page);
+        deleteUserGroup(userGroup.id).then(() => {
+            message.success(`成功删除账户名：${userGroup.title}！`);
+            getUserGroupList({pageSize: size, page});
         }).catch(error => {
-            message.error(`删除账户名：${user.name}失败！`);
+            message.error(`删除账户名：${userGroup.title}失败！`);
         });
     }
 

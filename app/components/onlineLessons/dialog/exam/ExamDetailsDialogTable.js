@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 import PropTypes from 'prop-types';
 import { Table } from 'antd';
+import { DATE_FORMAT } from 'constants';
 // import { EXAM_TYPE_MAPPING, CATEGORY_TYPE_MAPPING } from 'constants';
 
 class ExamDetailsDialogTable extends Component {
@@ -11,7 +12,7 @@ class ExamDetailsDialogTable extends Component {
 
     constructor(props) {
         super(props);
-        this.elements = [];
+        this.elements = rebuildDataWithKey(this.props.dataSource.elements);
         this.pagination = {
             ...paginationSetting,
             onChange: this.handelPageChange
@@ -20,23 +21,30 @@ class ExamDetailsDialogTable extends Component {
         this.columns = [{
             title: '姓名',
             align: 'center',
-            dataIndex: 'question'
+            dataIndex: 'user.name'
         }, {
             title: '工号',
             align: 'center',
-            dataIndex: 'type'
+            dataIndex: 'user.workNum'
         }, {
             title: '正确答案',
             align: 'center',
-            dataIndex: 'correct'
+            dataIndex: 'examData.answer',
+            render: (text, record) => {
+                if (!record.examData?.answer) {
+                    return '';
+                }
+                return record.examData.answer;
+            }
         }, {
             title: '实际答案',
             align: 'center',
-            dataIndex: 'uncorrect'
+            dataIndex: 'answer'
         }, {
             title: '提交时间',
             align: 'center',
-            dataIndex: 'date'
+            dataIndex: 'user.createdAt',
+            render: (text, record) => moment(record.user.createdAt).format(DATE_FORMAT)
         }];
     }
 
@@ -57,7 +65,7 @@ class ExamDetailsDialogTable extends Component {
                 size="middle"
                 dataSource={this.elements}
                 columns={this.columns}
-                pagination={false}
+                pagination={this.pagination}
             />
         );
     }

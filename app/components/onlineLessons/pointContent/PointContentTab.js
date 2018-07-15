@@ -4,6 +4,8 @@ import { Tabs, Icon } from 'antd';
 import StudyContents from './StudyContents';
 import HomeWork from './HomeWork';
 import Exam from './Exam';
+import MultiMaterials from './MultiMaterials';
+import DownMaterials from './DownMaterials';
 
 class PointContentTab extends Component {
     static propTypes = {
@@ -78,10 +80,20 @@ class PointContentTab extends Component {
                     />
                 </TabPane>
                 <TabPane tab={<span><Icon type="tags-o"/>学习资料</span>} key="4">
-                    4
+                    <MultiMaterials
+                        point={point}
+                        actions={actions}
+                        materialsList={point?.olMaterials}
+                        showDialog={showDialog}
+                    />
                 </TabPane>
                 <TabPane tab={<span><Icon type="tags-o"/>下载资料</span>} key="5">
-                    4
+                    <DownMaterials
+                        point={point}
+                        actions={actions}
+                        materialsList={point?.olMaterials}
+                        showDialog={showDialog}
+                    />
                 </TabPane>
             </Tabs>
         );

@@ -10,30 +10,41 @@ class RadioGroupField extends Component {
     static propTypes = {
         input: PropTypes.object,
         className: PropTypes.string,
-        defaultChecked: PropTypes.bool,
-        checked: PropTypes.bool
+        children: PropTypes.node,
+        defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     }
 
-    handleChange = (e) => {
-        const {input} = this.props;
-        const isChecked = e.target.checked;
-        input.onChange(isChecked);
+    state = {
+        value: null
     }
+
+
+    handleChange = (e) => {
+        const isSelected = e.target.value;
+        this.props.input.onChange(isSelected);
+    }
+
+    // componentWillUpdate(nextProps) {
+    //     if (nextProps.value) {
+    //         this.props.input.onChange(nextProps.value);
+    //     }
+    // }
 
     render() {
         const {
-            input,
+            input: {value},
             className,
-            defaultChecked
+            children,
+            defaultValue
         } = this.props;
+        const radioValue = R.isEmpty(value) ? defaultValue : value;
         return (
             <div className={className}>
                 <RadioGroup
-                    {...input}
-                    defaultChecked={defaultChecked}
+                    value={radioValue}
                     onChange={this.handleChange}
                 >
-                    ss
+                    {children}
                 </RadioGroup>
             </div>
         );

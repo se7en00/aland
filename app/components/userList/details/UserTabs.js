@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs } from 'antd';
-import UserCreationForm from '../create/UserCreationForm';
+import UserInfoForm from '../UserInfoForm';
+// import UserTrainings from './UserTrainings';
 
 class UserTabs extends Component {
     initUserDetails= () => {
@@ -19,6 +20,14 @@ class UserTabs extends Component {
                 if (typeof details[k] !== 'object') {
                     map[k] = {key: details[k], label: details?.deptName};
                 }
+            } else if (k === 'userGroupId') {
+                if (typeof details[k] !== 'object') {
+                    map[k] = {key: details[k], label: details?.userGroupName};
+                }
+            } else if (k === 'gender') {
+                map[k] = details[k] === '男' ? '1' : '0';
+            } else if (k === 'avatarUrl') {
+                map[k] = [details[k]];
             } else {
                 map[k] = details[k];
             }
@@ -29,33 +38,17 @@ class UserTabs extends Component {
     }
     render() {
         const TabPane = Tabs.TabPane;
-        const {userList: {departments, userLevels, genders}, actions} = this.props;
+        const {userList: {associations}, actions} = this.props;
         return (
             /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
             <Tabs defaultActiveKey="1" >
                 <TabPane tab="人员档案" key="1">
-                    <UserCreationForm
+                    <UserInfoForm
                         actions={actions}
-                        genders={genders}
-                        departments={departments}
-                        userLevels={userLevels}
+                        isCreate={false}
+                        associations={associations}
                         initialValues={this.initUserDetails()}
                     />
-                </TabPane>
-                <TabPane
-                    tab="培训记录"
-                    key="2">
-                    2
-                </TabPane>
-                <TabPane
-                    tab="学习记录"
-                    key="3">
-                    3
-                </TabPane>
-                <TabPane
-                    tab="学习创作"
-                    key="4">
-                    4
                 </TabPane>
             </Tabs>
         );

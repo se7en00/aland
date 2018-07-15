@@ -10,6 +10,7 @@ const userReducer = typeToReducer({
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
+            ...state,
             list: action.payload
         })
     },
@@ -20,9 +21,46 @@ const userReducer = typeToReducer({
             error: action?.payload?.response?.data
         }),
         FULFILLED: (state, action) => ({
+            ...state,
+            createUserGroup: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_UPDATE_USER_GROUP]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action?.payload?.response?.data
+        }),
+        FULFILLED: (state, action) => ({
             ...state
         })
-    }
+    },
+
+    [TYPES.ASYNC_DELETE_USER_GROUP]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+
+    [TYPES.ASYNC_USER_GROUP_DETAILS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            userGroupDetails: action.payload
+        })
+    },
+
+    [TYPES.SYNC_CLEAR_USER_GROUP_DETAILS]: (state, action) => ({
+        ...state,
+        userGroupDetails: action.payload
+    })
 }, {});
 
 

@@ -47,6 +47,21 @@ export const getPointContent = (courseId, pointId) => ({
         if (exams) {
             result = Object.assign(result, {exams});
         }
+
+        const olMaterials = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/multimedias`, {params: {size: 2000, type: 'OL'}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        if (olMaterials) {
+            result = Object.assign(result, {olMaterials});
+        }
+
+        const dlMaterials = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/multimedias`, {params: {size: 2000, type: 'DL'}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        if (dlMaterials) {
+            result = Object.assign(result, {dlMaterials});
+        }
+
         return result;
     }
 });
@@ -60,6 +75,33 @@ export const getSelectedMaterial = (material) => ({
     type: TYPES.SYNC_GET_SELECTED_MATERIAL,
     payload: material
 });
+
+export const getSelectedMultiMaterials = (materials) => ({
+    type: TYPES.SYNC_GET_SELECTED_MULTIPLE_MATERIAL,
+    payload: materials
+});
+
+
+export const saveSelectedMultiMaterials = (courseId, pointId, selectedMaterials) => dispatch => {
+    const allPromises = selectedMaterials.map(material => {
+        const params = {
+            type: 'OL',
+            multimediaId: material.id
+        };
+        return Axios.put(`/api/courses/${courseId}/nodes/${pointId}/contents/multimedias`, params)
+            .then(response => response.data)
+            .catch(error => error?.response?.data);
+    });
+    return dispatch({
+        type: TYPES.ASYNC_SAVE_SELECTED_MATEROALS,
+        async payload() {
+            await Promise.all(allPromises);
+            const materials = await Axios.get(`api/courses/${courseId}/nodes/${pointId}/contents/multimedias`, {params: {size: 2000, type: 'OL'}})
+                .then(response => response.data);
+            return materials;
+        }
+    });
+};
 
 export const removeSelectedMaterial = () => ({
     type: TYPES.SYNC_REMOVE_SELECTED_MATERIAL,
@@ -265,7 +307,7 @@ export const getExamDetails = (examId) => ({
 
 export const getExamUserList = (pointId, examId) => ({
     type: TYPES.ASYNC_LOAD_EXAM_USER_LIST,
-    payload: () => Axios.get('/api/users/all/exams', {params: {relativeId: pointId, examId}})
+    payload: () => Axios.get('/api/users/ALL/exams', {params: {relativeId: pointId, examId}})
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });

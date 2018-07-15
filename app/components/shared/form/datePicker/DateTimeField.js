@@ -24,10 +24,16 @@ class DateTimeField extends PureComponent {
 
     render() {
         const {allowClear, className, input} = this.props;
+        let value;
+        if (input.value) {
+            value = moment(input.value);
+        } else {
+            value = null;
+        }
         return (
             <div className={className}>
                 <DatePicker
-                    {...input}
+                    value={value}
                     className="u-full-width"
                     onChange={this.handleChange}
                     allowClear={allowClear}

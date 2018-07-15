@@ -17,8 +17,8 @@ const SIDE_BAR_MENU = [
         name: PATHNAME.INFORMATION_MANAGEMENT,
         iconName: 'far fa-newspaper',
         subItems: [
-            {name: PATHNAME.NEWS_MANAGEMENT, link: `${ROOT_PATH}/newsManagement`},
-            {name: PATHNAME.NOTES_MANAGEMENT, link: `${ROOT_PATH}/notesManagement`}
+            {name: PATHNAME.NEWS_MANAGEMENT, link: `${ROOT_PATH}/newsManagement`}
+            // {name: PATHNAME.NOTES_MANAGEMENT, link: `${ROOT_PATH}/notesManagement`}
         ]
     },
     {
@@ -33,28 +33,28 @@ const SIDE_BAR_MENU = [
             {name: PATHNAME.MASTER, link: `${ROOT_PATH}/master`},
             {name: PATHNAME.VENDOR, link: `${ROOT_PATH}/vendor`}
         ]
-    },
-    {
-        name: PATHNAME.TRAINING,
-        iconName: 'fas fa-chalkboard-teacher',
-        subItems: [
-            {name: PATHNAME.PUBLISHED_TRAINING, link: `${ROOT_PATH}/publishedTraining`},
-            {name: PATHNAME.TRAINING_DRAFt, link: `${ROOT_PATH}/draftedTraining`}
-        ]
-    },
-    {name: PATHNAME.LEARN_TASK, link: `${ROOT_PATH}/taskManagement`, iconName: 'far fa-clone'},
-    {name: PATHNAME.LEARN_PROJECT, link: `${ROOT_PATH}/projectManagement`, iconName: 'fas fa-clipboard-list'},
-    {
-        name: PATHNAME.SETTING,
-        iconName: 'fas fa-wrench',
-        subItems: [
-            {name: PATHNAME.TAG_SETTING, link: `${ROOT_PATH}/tagSetting`},
-            {name: PATHNAME.SECURITY_PERMISSION_CATEGORY, link: `${ROOT_PATH}/securityPermissionSetting`},
-            {name: PATHNAME.LESSONS_DIRECTION_SETTING, link: `${ROOT_PATH}/lessonsDirectionSetting`},
-            {name: PATHNAME.TRAINING_AND_COST, link: `${ROOT_PATH}/trainingCostSetting`},
-            {name: PATHNAME.CAROUSEL_SETTING, link: `${ROOT_PATH}/carouselSetting`}
-        ]
     }
+    // {
+    //     name: PATHNAME.TRAINING,
+    //     iconName: 'fas fa-chalkboard-teacher',
+    //     subItems: [
+    //         {name: PATHNAME.PUBLISHED_TRAINING, link: `${ROOT_PATH}/publishedTraining`},
+    //         {name: PATHNAME.TRAINING_DRAFt, link: `${ROOT_PATH}/draftedTraining`}
+    //     ]
+    // },
+    // {name: PATHNAME.LEARN_TASK, link: `${ROOT_PATH}/taskManagement`, iconName: 'far fa-clone'},
+    // {name: PATHNAME.LEARN_PROJECT, link: `${ROOT_PATH}/projectManagement`, iconName: 'fas fa-clipboard-list'},
+    // {
+    //     name: PATHNAME.SETTING,
+    //     iconName: 'fas fa-wrench',
+    //     subItems: [
+    //         {name: PATHNAME.TAG_SETTING, link: `${ROOT_PATH}/tagSetting`},
+    //         {name: PATHNAME.SECURITY_PERMISSION_CATEGORY, link: `${ROOT_PATH}/securityPermissionSetting`},
+    //         {name: PATHNAME.LESSONS_DIRECTION_SETTING, link: `${ROOT_PATH}/lessonsDirectionSetting`},
+    //         {name: PATHNAME.TRAINING_AND_COST, link: `${ROOT_PATH}/trainingCostSetting`},
+    //         {name: PATHNAME.CAROUSEL_SETTING, link: `${ROOT_PATH}/carouselSetting`}
+    //     ]
+    // }
 ];
 
 const renderSideBarWithPermissions = () => {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { PANEL_TITLE } from 'constants';
 import panelStyle from '../../../layout/main/Main.scss';
 import Header from '../../shared/panel/PanelHeader';
-import UserCreationForm from './UserCreationForm';
+import UserInfoForm from '../UserInfoForm';
 
 class UserCreation extends Component {
     componentDidMount() {
@@ -12,12 +12,16 @@ class UserCreation extends Component {
     }
 
     render() {
-        const {userList: {departments, userLevels, genders}, actions} = this.props;
+        const {userList: {associations}, actions} = this.props;
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.USER_NEW}/>
                 <div className={panelStyle.panel__body}>
-                    <UserCreationForm actions={actions} departments={departments} userLevels={userLevels} genders={genders}/>
+                    <UserInfoForm
+                        actions={actions}
+                        isCreate={true}
+                        associations={associations}
+                    />
                 </div>
             </Fragment>
         );

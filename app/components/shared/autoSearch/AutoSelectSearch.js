@@ -18,7 +18,8 @@ class AutoSelectSearch extends Component {
         label: PropTypes.string,
         layout: PropTypes.string,
         placeholder: PropTypes.string,
-        mode: PropTypes.string
+        mode: PropTypes.string,
+        validate: PropTypes.func
     }
 
     static defaultProps = {
@@ -62,7 +63,8 @@ class AutoSelectSearch extends Component {
             placeholder,
             label,
             mode,
-            layout
+            layout,
+            validate
         } = this.props;
         return (
             <Field
@@ -82,6 +84,7 @@ class AutoSelectSearch extends Component {
                 component={renderSelectField}
                 placeholder={placeholder}
                 label={label}
+                validate={validate}
             >
                 {renderOptions(dataSource)}
             </Field>

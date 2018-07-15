@@ -13,12 +13,15 @@ class UserDetails extends Component {
     }
 
     render() {
-        const {userList, actions} = this.props;
+        const {userList, actions, showDialog} = this.props;
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.USER_DETAILS}/>
                 <div className={panelStyle.panel__body}>
-                    <UserTabs actions={actions} userList={userList}/>
+                    <UserTabs
+                        showDialog={showDialog}
+                        actions={actions}
+                        userList={userList}/>
                 </div>
             </Fragment>
         );
@@ -28,6 +31,7 @@ class UserDetails extends Component {
 UserDetails.propTypes = {
     userList: PropTypes.object,
     match: PropTypes.object,
+    showDialog: PropTypes.func,
     actions: PropTypes.objectOf(PropTypes.func)
 };
 

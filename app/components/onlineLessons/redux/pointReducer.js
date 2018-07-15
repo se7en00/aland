@@ -46,6 +46,19 @@ export default typeToReducer({
         selectedMaterial: action.payload
     }),
 
+    [TYPES.SYNC_GET_SELECTED_MULTIPLE_MATERIAL]: (state, action) => ({
+        ...state,
+        selectedMultipleMaterialS: action.payload
+    }),
+
+    [TYPES.ASYNC_SAVE_SELECTED_MATEROALS]: {
+        FULFILLED: (state, action) => {
+            console.log(action.payload);
+            return {...state};
+        }
+    },
+
+
     [TYPES.SYNC_REMOVE_SELECTED_MATERIAL]: (state, action) => ({
         ...state,
         selectedMaterial: action.payload

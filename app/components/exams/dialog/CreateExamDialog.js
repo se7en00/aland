@@ -5,7 +5,7 @@ import { DIALOG, renderOptions } from 'constants/index';
 import classNames from 'classnames';
 import { Modal, Button, Radio, message } from 'antd';
 import uuid from 'uuid/v4';
-import { resetSpecificField, paginationSetting } from 'utils';
+import { resetSpecificField, paginationSetting, debounce } from 'utils';
 import { connect } from 'react-redux';
 import { renderTextField, renderSelectField, renderCheckboxField } from '../../shared/form/index';
 import style from './CreateExamDialog.scss';
@@ -45,8 +45,8 @@ class CreateExamDialog extends Component {
 
     constructor(props) {
         super(props);
-        this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleCheckBoxChange = debounce(this.handleCheckBoxChange.bind(this), 800);
+        this.handleInputChange = debounce(this.handleInputChange.bind(this), 800);
     }
 
     state = {

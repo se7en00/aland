@@ -26,6 +26,16 @@ const userReducer = typeToReducer({
         })
     },
 
+    [TYPES.ASYNC_UPDATE_USER]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action?.payload?.response?.data
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+
     //搜索
     [TYPES.SYNC_USER_LIST_SEARCH_PARAMS]: (state, action) => ({
         ...state,
@@ -42,14 +52,14 @@ const userReducer = typeToReducer({
         })
     },
 
-    [TYPES.ASYNC_LOAD_DEPARTMENTS_AND_USER_LEVELS]: {
+    [TYPES.ASYNC_LOAD_USERS_ASSOCIATIONS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
             ...state,
-            ...action.payload
+            associations: action.payload
         })
     },
 

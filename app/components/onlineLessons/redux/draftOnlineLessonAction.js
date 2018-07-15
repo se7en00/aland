@@ -177,7 +177,7 @@ export const getExamDetails = (examId) => ({
 
 export const getExamUserList = (courseId, examId) => ({
     type: TYPES.ASYNC_LOAD_EXAM_USER_LIST,
-    payload: () => Axios.get('/api/users/all/exams', {params: {relativeId: courseId, examId}})
+    payload: () => Axios.get('/api/users/ALL/exams', {params: {relativeId: courseId, examId}})
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });

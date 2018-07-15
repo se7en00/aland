@@ -98,10 +98,10 @@ class UserListTable extends Component {
             actions: {deleteUser, getUserList}
         } = this.props;
         deleteUser(user.id).then(() => {
-            message.success(`成功删除用户：${user.name}！`);
+            message.success(`成功删除人员：${user.name}！`);
             getUserList(size, page);
         }).catch(error => {
-            message.error(`删除用户：${user.name}失败！`);
+            message.error(`删除人员：${user.name}失败！`);
         });
     }
 
