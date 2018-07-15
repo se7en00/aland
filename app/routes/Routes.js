@@ -24,6 +24,10 @@ import LecturersView from 'views/lectures/LecturersView';
 import LecturesAddView from 'views/lectures/LecturesAddView';
 import LecturersDetailView from 'views/lectures/LecturersDetailView';
 import ProvidesView from 'views/provides/ProvidesView';
+import NoticesView from 'views/notice/NoticesView';
+import NoticeAddView from 'views/notice/NoticeAddView';
+import NoticeDetailView from 'views/notice/NoticeDetailView';
+import NoticeCommentsView from 'views/notice/NoticeCommentsView';
 import {ConnectedSwitch} from './ConnectedSwitch';
 
 const Routes = ({match}) => (
@@ -55,6 +59,10 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/master/:id/edit`} component={LecturesAddView}/>
         <Route exact path={`${match.path}/vendor`} component={ProvidesView}/>
         <Route exact path={`${match.path}/tagSetting`} component={TagsView}/>
+        <Route exact path={`${match.path}/notesManagement`} component={NoticesView}/>
+        <Route exact path={`${match.path}/notesManagement/add`} component={NoticeAddView}/>
+        <Route exact path={`${match.path}/notesManagement/:noticeId/detail`} component={NoticeDetailView}/>
+        <Route exact path={`${match.path}/notesManagement/:noticeId/comments`} component={NoticeCommentsView}/>
     </ConnectedSwitch>
 );
 

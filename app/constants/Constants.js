@@ -86,7 +86,10 @@ export const PANEL_TITLE = {
     MASTER_EDIT: '编辑培训师',
     MASTER_DETAIL: '培训师详情',
     INQUIRY_ADD: '新增问卷',
-    INQUIRY_EDIT: '编辑问卷'
+    INQUIRY_EDIT: '编辑问卷',
+    NOTES_ADD: '新增通知',
+    NOTES_EDIT: '通知详情',
+    NOTES_COMMENTS: '通知评论列表'
 };
 
 export const TAG_CATEGORY = {
