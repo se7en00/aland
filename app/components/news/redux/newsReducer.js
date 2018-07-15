@@ -1,10 +1,10 @@
 import typeToReducer from 'type-to-reducer';
-import * as TYPES from './noticesActionType';
+import * as TYPES from './newsActionType';
 
 //reducer
-const noticesReducer = typeToReducer({
+const newsReducer = typeToReducer({
     //列表
-    [TYPES.ASYNC_LOAD_NOTICES_LIST]: {
+    [TYPES.ASYNC_LOAD_NEWS_LIST]: {
         REJECTED: (state, action) => ({
             error: action.payload
         }),
@@ -13,12 +13,12 @@ const noticesReducer = typeToReducer({
         })
     },
     //搜索
-    [TYPES.SYNC_NOTICES_LIST_SEARCH_PARAMS]: (state, action) => ({
+    [TYPES.SYNC_NEWS_LIST_SEARCH_PARAMS]: (state, action) => ({
         ...state,
         searchParams: action.payload
     }),
 
-    [TYPES.ASYNC_DELETE_NOTICE]: {
+    [TYPES.ASYNC_DELETE_NEWS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action.payload
@@ -38,7 +38,7 @@ const noticesReducer = typeToReducer({
             departments: action.payload
         })
     },
-    [TYPES.ASYNC_ADD_NOTICE]: {
+    [TYPES.ASYNC_ADD_NEWS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action.payload
@@ -47,17 +47,17 @@ const noticesReducer = typeToReducer({
             ...state
         })
     },
-    [TYPES.ASYNC_GET_NOTICE]: {
+    [TYPES.ASYNC_GET_NEWS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
             ...state,
-            notice: action.payload
+            news: action.payload
         })
     },
-    [TYPES.ASYNC_EDIT_NOTICE]: {
+    [TYPES.ASYNC_EDIT_NEWS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action.payload
@@ -66,7 +66,7 @@ const noticesReducer = typeToReducer({
             ...state
         })
     },
-    [TYPES.ASYNC_GET_NOTICE_COMMENTS]: {
+    [TYPES.ASYNC_GET_NEWS_COMMENTS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action.payload
@@ -94,6 +94,7 @@ const noticesReducer = typeToReducer({
             ...state
         })
     }
+
 }, {});
 
-export default noticesReducer;
+export default newsReducer;

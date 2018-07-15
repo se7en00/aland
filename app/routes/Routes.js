@@ -28,6 +28,9 @@ import NoticesView from 'views/notice/NoticesView';
 import NoticeAddView from 'views/notice/NoticeAddView';
 import NoticeDetailView from 'views/notice/NoticeDetailView';
 import NoticeCommentsView from 'views/notice/NoticeCommentsView';
+import NewsView from 'views/news/NewsView';
+import NewsAddView from 'views/news/NewsAddView';
+import NewsDetailView from 'views/news/NewsDetailView';
 import {ConnectedSwitch} from './ConnectedSwitch';
 
 const Routes = ({match}) => (
@@ -63,6 +66,9 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/notesManagement/add`} component={NoticeAddView}/>
         <Route exact path={`${match.path}/notesManagement/:noticeId/detail`} component={NoticeDetailView}/>
         <Route exact path={`${match.path}/notesManagement/:noticeId/comments`} component={NoticeCommentsView}/>
+        <Route exact path={`${match.path}/newsManagement`} component={NewsView}/>
+        <Route exact path={`${match.path}/newsManagement/add`} component={NewsAddView}/>
+        <Route exact path={`${match.path}/newsManagement/:noticeId/detail`} component={NewsDetailView}/>
     </ConnectedSwitch>
 );
 

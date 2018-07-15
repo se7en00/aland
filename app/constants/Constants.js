@@ -89,7 +89,10 @@ export const PANEL_TITLE = {
     INQUIRY_EDIT: '编辑问卷',
     NOTES_ADD: '新增通知',
     NOTES_EDIT: '通知详情',
-    NOTES_COMMENTS: '通知评论列表'
+    NOTES_COMMENTS: '通知评论列表',
+    NEWS_ADD: '新增新闻',
+    NEWS_EDIT: '新闻详情'
+
 };
 
 export const TAG_CATEGORY = {

@@ -15,6 +15,7 @@ import { inquiriesReducer } from 'components/inquiries';
 import { lecturersReducer } from 'components/lecturers';
 import { providesReducer } from 'components/provides';
 import { noticesReducer } from 'components/notice';
+import { newsReducer } from 'components/news';
 import loadingReducer from './middleware/loadingReducer';
 
 export default combineReducers({
@@ -36,5 +37,6 @@ export default combineReducers({
     provides: providesReducer,
     form: formReducer,
     adminList: adminsReducer,
-    notices: noticesReducer
+    notices: noticesReducer,
+    news: newsReducer
 });

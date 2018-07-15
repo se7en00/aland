@@ -1,10 +1,10 @@
 import { Axios, paginationSetting } from 'utils/index';
-import * as TYPES from './noticesActionType';
+import * as TYPES from './newsActionType';
 
 //actions creater
-export const getNoticesList = ({pageSize = paginationSetting.pageSize, ...rest}) => ({
-    type: TYPES.ASYNC_LOAD_NOTICES_LIST,
-    payload: () => Axios.get('/api/notices', {params: {size: pageSize, ...rest}})
+export const getNewsList = ({pageSize = paginationSetting.pageSize, ...rest}) => ({
+    type: TYPES.ASYNC_LOAD_NEWS_LIST,
+    payload: () => Axios.get('/api/news', {params: {size: pageSize, ...rest}})
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
@@ -20,56 +20,56 @@ export const loadDepartments = () => ({
 });
 
 
-export const deleteNotice = (id) => ({
-    type: TYPES.ASYNC_DELETE_NOTICE,
-    payload: () => Axios.delete(`/api/notices/${id}`)
+export const deleteNews = (id) => ({
+    type: TYPES.ASYNC_DELETE_NEWS,
+    payload: () => Axios.delete(`/api/news/${id}`)
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
 export const setSearchParamsToRedux = (params) => ({
-    type: TYPES.SYNC_NOTICES_LIST_SEARCH_PARAMS,
+    type: TYPES.SYNC_NEWS_LIST_SEARCH_PARAMS,
     payload: params
 });
 
-export const addNotice = (data) => ({
-    type: TYPES.ASYNC_ADD_NOTICE,
-    payload: () => Axios.post('/api/notices', data)
+export const addNews = (data) => ({
+    type: TYPES.ASYNC_ADD_NEWS,
+    payload: () => Axios.post('/api/news', data)
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const getNotice = (id) => ({
-    type: TYPES.ASYNC_GET_NOTICE,
-    payload: () => Axios.get(`/api/notices/${id}`)
+export const getNews = (id) => ({
+    type: TYPES.ASYNC_GET_NEWS,
+    payload: () => Axios.get(`/api/news/${id}`)
         .then((response) => response?.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const editNotice = (data, id) => ({
-    type: TYPES.ASYNC_EDIT_NOTICE,
-    payload: () => Axios.put(`/api/notices/${id}`, data)
+export const editNews = (data, id) => ({
+    type: TYPES.ASYNC_EDIT_NEWS,
+    payload: () => Axios.put(`/api/news/${id}`, data)
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const getNoticeComments = (id, {pageSize = paginationSetting.pageSize, ...rest}) => ({
-    type: TYPES.ASYNC_GET_NOTICE_COMMENTS,
-    payload: () => Axios.get(`/api/notices/${id}/comments`, {params: {size: pageSize, ...rest}})
+export const getNewsComments = (id, {pageSize = paginationSetting.pageSize, ...rest}) => ({
+    type: TYPES.ASYNC_GET_NEWS_COMMENTS,
+    payload: () => Axios.get(`/api/news/${id}/comments`, {params: {size: pageSize, ...rest}})
         .then((response) => response?.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
 export const toggleCommentStatus = (id, commentId, status) => ({
     type: TYPES.ASYNC_TOGGLE_COMMENT_STATUS,
-    payload: () => Axios.put(`/api/notices/${id}/comments/${commentId}/${status}`)
+    payload: () => Axios.put(`/api/news/${id}/comments/${commentId}/${status}`)
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
 export const toggleStatus = (id, status) => ({
     type: TYPES.ASYNC_TOGGLE_STATUS,
-    payload: () => Axios.put(`/api/notices/${id}/${status}`)
+    payload: () => Axios.put(`/api/news/${id}/${status}`)
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });

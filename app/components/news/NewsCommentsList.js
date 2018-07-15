@@ -1,14 +1,13 @@
 import React, {Component, Fragment} from 'react';
-import { Table, Button, message } from 'antd';
+import { Table, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-import { PANEL_TITLE } from 'constants';
-import Header from '../shared/panel/PanelHeader';
 
 class NoticeCommentsList extends Component {
     static propTypes = {
         actions: PropTypes.objectOf(PropTypes.func),
-        comments: PropTypes.object
+        comments: PropTypes.object,
+        toggleStatus: PropTypes.func
     };
 
     constructor(props) {
@@ -37,7 +36,7 @@ class NoticeCommentsList extends Component {
             dataIndex: 'status',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.toggleStatus(record.id, record.status)} ghost>{record.status ? '关闭' : '公开'}</Button>
+                    <Button size="small" type="primary" onClick={() => props.toggleStatus(record.id, record.status)} ghost>{record.status ? '关闭' : '公开'}</Button>
                 </div>
             )
         }];
@@ -52,36 +51,14 @@ class NoticeCommentsList extends Component {
         }
     }
 
-    componentDidMount() {
-        const { comments, actions: { getNoticeComments } } = this.props;
-        if (/comments/g.test(location.pathname) && !comments) {
-            const id = location.pathname.match(/(\w)+(?=\/comments)/g)[0];
-            if (id) {
-                getNoticeComments(id, {pageSize: paginationSetting.pageSize});
-            }
-        }
-    }
-
     handelPageChange = (page, pageSize) => {
         const { actions: { getNoticesList } } = this.props;
         getNoticesList(Object.assign({pageSize, page}));
     };
 
-    toggleStatus = (commentId, status) => {
-        const { comments: {paging: {size, page} }, actions: { toggleCommentStatus, getNoticeComments } } = this.props;
-        const id = location.pathname.match(/(\w)+(?=\/comments)/g)[0];
-        const newStatus = status ? 'disable' : 'enable';
-        toggleCommentStatus(id, commentId, newStatus).then(() => {
-            message.success('操作成功！');
-            getNoticeComments(id, {size, page});
-        }).catch(() => {
-            message.success('操作失败！');
-        });
-    };
     render() {
         return (
             <Fragment>
-                <Header title={PANEL_TITLE.NOTES_COMMENTS}/>
                 <Table
                     className="u-pull-down-sm"
                     bordered

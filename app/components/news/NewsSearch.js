@@ -5,8 +5,8 @@ import { Button, Icon, Select } from 'antd';
 import { resetSpecificField } from 'utils';
 import { renderTextField, renderSelectField, renderDateRangeField} from '../shared/form';
 
-@reduxForm({form: 'noticesSearch'})
-class NoticesSearch extends Component {
+@reduxForm({form: 'newsSearch'})
+class NewsSearch extends Component {
     static propTypes = {
         handleSubmit: PropTypes.func,
         dispatch: PropTypes.func,
@@ -15,7 +15,7 @@ class NoticesSearch extends Component {
 
     render() {
         const { submitting, handleSubmit, dispatch } = this.props;
-        const restRangeDateTime = () => resetSpecificField(dispatch, 'noticesSearch', 'dateTime', '');
+        const restRangeDateTime = () => resetSpecificField(dispatch, 'newsSearch', 'dateTime', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
@@ -66,4 +66,4 @@ class NoticesSearch extends Component {
     }
 }
 
-export default NoticesSearch;
+export default NewsSearch;

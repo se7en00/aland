@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 import { DATE_FORMAT, PATHNAME, getLinkByName, BASE_URL } from 'constants';
 
-class NoticesListTable extends Component {
+class NewsListTable extends Component {
     static propTypes = {
         searchParams: PropTypes.object,
         actions: PropTypes.objectOf(PropTypes.func),
@@ -93,18 +93,18 @@ class NoticesListTable extends Component {
     }
 
     handelPageChange = (page, pageSize) => {
-        const { actions: { getNoticesList }, searchParams } = this.props;
-        getNoticesList(Object.assign({pageSize, page}, searchParams));
+        const { actions: { getNewsList }, searchParams } = this.props;
+        getNewsList(Object.assign({pageSize, page}, searchParams));
     };
 
-    onDelete = (notice) => {
+    onDelete = (news) => {
         const {
             dataSource: {paging: {size, page}},
-            actions: {deleteNotice, getNoticesList}
+            actions: {deleteNews, getNewsList}
         } = this.props;
-        deleteNotice(notice.id).then(() => {
+        deleteNews(news.id).then(() => {
             message.success('删除成功!');
-            getNoticesList(size, page);
+            getNewsList(size, page);
         }).catch(error => {
             message.error('删除失败!');
         });
@@ -112,15 +112,15 @@ class NoticesListTable extends Component {
 
     redirect = (id) => {
         const { push} = this.props.actions;
-        push(`${getLinkByName(PATHNAME.NOTES_MANAGEMENT)}/${id}/detail`);
+        push(`${getLinkByName(PATHNAME.NEWS_MANAGEMENT)}/${id}/detail`);
     }
 
     toggleStatus = (id, status) => {
-        const { dataSource: {paging: {size, page}}, actions: { toggleStatus, getNoticesList } } = this.props;
+        const { dataSource: {paging: {size, page}}, actions: { toggleStatus, getNewsList } } = this.props;
         const newStatus = status ? 'disable' : 'enable';
         toggleStatus(id, newStatus).then(() => {
             message.success('操作成功！');
-            getNoticesList(size, page);
+            getNewsList(size, page);
         }).catch(() => {
             message.success('操作失败！');
         });
@@ -139,4 +139,4 @@ class NoticesListTable extends Component {
     }
 }
 
-export default NoticesListTable;
+export default NewsListTable;

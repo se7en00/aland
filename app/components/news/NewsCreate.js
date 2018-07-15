@@ -11,14 +11,14 @@ import { renderTextField, renderSelectField, renderQuill, UploadFilesField } fro
 const required = value => (value ? undefined : '不能为空！');
 function mapStateToProps(state) {
     return {
-        values: getFormValues('noticeCreate')(state),
-        departments: state.notices?.departments
+        values: getFormValues('newsCreate')(state),
+        departments: state.news?.departments
     };
 }
 
 @connect(mapStateToProps)
-@reduxForm({form: 'noticeCreate', enableReinitialize: true })
-class NoticeCreate extends Component {
+@reduxForm({form: 'newsCreate', enableReinitialize: true })
+class NewsCreate extends Component {
     static propTypes = {
         handleSubmit: PropTypes.func,
         actions: PropTypes.object,
@@ -36,7 +36,7 @@ class NoticeCreate extends Component {
     }
 
     generateData = (values) => {
-        const { actions: { addNotice } } = this.props;
+        const { actions: { addNews } } = this.props;
         const file = values.coverImgPath?.[0];
         try {
             if (file) {
@@ -45,7 +45,7 @@ class NoticeCreate extends Component {
         } catch (error) {
             throw new SubmissionError({cover: '上传团片失败！'});
         }
-        addNotice(values).then(() => {
+        addNews(values).then(() => {
             message.success('保存成功！');
             this.back();
         }).catch(() => {message.success('保存失败！');});
@@ -53,7 +53,7 @@ class NoticeCreate extends Component {
 
     back = () => {
         const { actions: { push }} = this.props;
-        push(getLinkByName(PATHNAME.NOTES_MANAGEMENT));
+        push(getLinkByName(PATHNAME.NEWS_MANAGEMENT));
     };
 
     renderDepartmentsOptions = () => {
@@ -66,9 +66,9 @@ class NoticeCreate extends Component {
         const { receiverType } = values;
         return (
             <Fragment>
-                <Header title={PANEL_TITLE.NOTES_ADD}/>
+                <Header title={PANEL_TITLE.NEWS_ADD}/>
                 <div className={panelStyle.panel__body}>
-                    <form name="noticeCreate" onSubmit={handleSubmit(this.generateData)}>
+                    <form name="newsCreate" onSubmit={handleSubmit(this.generateData)}>
                         <Field
                             className="col-md-4 col-lg-3"
                             rowClassName="inputRow"
@@ -142,4 +142,4 @@ class NoticeCreate extends Component {
         );
     }
 }
-export default NoticeCreate;
+export default NewsCreate;
