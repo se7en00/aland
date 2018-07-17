@@ -5,7 +5,7 @@ export const IDENTIFIERS = {
     ACCORDION_CONTENT: 'accordion_content'
 };
 
-export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
+export const BASE_URL = 'http://172.16.1.32:8181/aland-training';
 
 export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -94,8 +94,11 @@ export const PANEL_TITLE = {
     NOTES_EDIT: '通知详情',
     NOTES_COMMENTS: '通知评论列表',
     NEWS_ADD: '新增新闻',
-    NEWS_EDIT: '新闻详情'
-
+    NEWS_EDIT: '新闻详情',
+    TRAINING_LIST: '培训管理',
+    TRAINING_LIST_ADD: '添加培训管理',
+    TRAINING_DETAILS: '培训信息',
+    TASK_LIST: '学习任务管理'
 };
 
 export const TAG_CATEGORY = {

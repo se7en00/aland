@@ -33,16 +33,16 @@ const SIDE_BAR_MENU = [
             {name: PATHNAME.MASTER, link: `${ROOT_PATH}/master`},
             {name: PATHNAME.VENDOR, link: `${ROOT_PATH}/vendor`}
         ]
-    }
-    // {
-    //     name: PATHNAME.TRAINING,
-    //     iconName: 'fas fa-chalkboard-teacher',
-    //     subItems: [
-    //         {name: PATHNAME.PUBLISHED_TRAINING, link: `${ROOT_PATH}/publishedTraining`},
-    //         {name: PATHNAME.TRAINING_DRAFt, link: `${ROOT_PATH}/draftedTraining`}
-    //     ]
-    // },
-    // {name: PATHNAME.LEARN_TASK, link: `${ROOT_PATH}/taskManagement`, iconName: 'far fa-clone'},
+    },
+    {
+        name: PATHNAME.TRAINING,
+        iconName: 'fas fa-chalkboard-teacher',
+        subItems: [
+            {name: PATHNAME.PUBLISHED_TRAINING, link: `${ROOT_PATH}/publishedTraining`}
+            // {name: PATHNAME.TRAINING_DRAFt, link: `${ROOT_PATH}/draftedTraining`}
+        ]
+    },
+    {name: PATHNAME.LEARN_TASK, link: `${ROOT_PATH}/taskManagement`, iconName: 'far fa-clone'}
     // {name: PATHNAME.LEARN_PROJECT, link: `${ROOT_PATH}/projectManagement`, iconName: 'fas fa-clipboard-list'},
     // {
     //     name: PATHNAME.SETTING,

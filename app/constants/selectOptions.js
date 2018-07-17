@@ -82,6 +82,21 @@ export const CATEGORY_TYPE_MAPPING = categoryType.reduce((map, type) => {
     map[type.value] = type.label;
     return map;
 }, {});
+
+const trainingStatus = [
+    {label: '创建中', value: 'CREATING'},
+    {label: '已发布', value: 'PUBISHED'},
+    {label: '已结束', value: 'CLOSED'}
+];
+
+export const trainingStatusOptions = trainingStatus.map(item => (
+    <Option key={uuid()} value={item.value}>{item.label}</Option>
+));
+
+export const TRAINING_STATUES_MAPPING = trainingStatus.reduce((map, type) => {
+    map[type.value] = type.label;
+    return map;
+}, {});
 /**
  * @param list 下拉数据
  * @param keyAsValue
@@ -90,4 +105,3 @@ export const CATEGORY_TYPE_MAPPING = categoryType.reduce((map, type) => {
 export const renderOptions = (keyAsValue, labelName) => (list) => list?.map(item =>
     (<Option key={uuid()} value={item[keyAsValue]}>{item[labelName]}</Option>)
 );
-

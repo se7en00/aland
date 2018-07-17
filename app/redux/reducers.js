@@ -16,6 +16,8 @@ import { lecturersReducer } from 'components/lecturers';
 import { providesReducer } from 'components/provides';
 import { noticesReducer } from 'components/notice';
 import { newsReducer } from 'components/news';
+import { trainingReducer } from 'components/training';
+import { taskReducer } from 'components/task';
 import loadingReducer from './middleware/loadingReducer';
 
 export default combineReducers({
@@ -38,5 +40,7 @@ export default combineReducers({
     form: formReducer,
     adminList: adminsReducer,
     notices: noticesReducer,
-    news: newsReducer
+    news: newsReducer,
+    trainings: trainingReducer,
+    tasks: taskReducer
 });
