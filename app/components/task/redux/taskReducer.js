@@ -44,6 +44,36 @@ const taskReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             ...state
         })
+    },
+    [TYPES.ASYNC_LOAD_DIRECTIONS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            directions: action.payload
+        })
+    },
+    [TYPES.ASYNC_LOAD_COURSES]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            onlineLessons: action.payload
+        })
+    },
+    [TYPES.ASYNC_LOAD_PEDIAS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            oneClicks: action.payload
+        })
     }
 }, {});
 

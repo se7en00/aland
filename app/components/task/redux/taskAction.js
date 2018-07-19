@@ -29,3 +29,36 @@ export const deleteTask = (trainingId) => ({
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
+
+export const loadDirections = () => ({
+    type: TYPES.ASYNC_LOAD_DIRECTIONS,
+    payload: () => Axios.get('/api/settings/courseDirections', {params: {size: 1000}})
+        .then(response => response.data?.elements)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const loadOnlineLessons = () => ({
+    type: TYPES.ASYNC_LOAD_COURSES,
+    payload: () => Axios.get('/api/courses', {params: {size: 1000}})
+        .then((response) => {
+            const { data: { elements } } = response;
+            return elements.map((item, idx) => {
+                item.index = idx + 1;
+                return item;
+            });
+        })
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const loadOneClicks = () => ({
+    type: TYPES.ASYNC_LOAD_PEDIAS,
+    payload: () => Axios.get('/api/pedias', {params: {size: 1000}})
+        .then((response) => {
+            const { data: { elements } } = response;
+            return elements.map((item, idx) => {
+                item.index = idx + 1;
+                return item;
+            });
+        })
+        .catch(error => Promise.reject(error?.response?.data))
+});

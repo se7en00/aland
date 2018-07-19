@@ -8,6 +8,7 @@ class DateRangeField extends PureComponent {
     static propTypes = {
         input: PropTypes.object,
         allowClear: PropTypes.bool,
+        className: PropTypes.string,
         resetSelectValue: PropTypes.func
     }
 
@@ -23,9 +24,10 @@ class DateRangeField extends PureComponent {
 
     render() {
         const { RangePicker } = DatePicker;
-        const {allowClear} = this.props;
+        const {allowClear, className} = this.props;
         return (
             <RangePicker
+                className={className}
                 onChange={this.handleChange}
                 allowClear={allowClear}
                 format={'YYYY-MM-DD'}

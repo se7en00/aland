@@ -98,7 +98,9 @@ export const PANEL_TITLE = {
     TRAINING_LIST: '培训管理',
     TRAINING_LIST_ADD: '添加培训管理',
     TRAINING_DETAILS: '培训信息',
-    TASK_LIST: '学习任务管理'
+    TASK_LIST: '学习任务管理',
+    TASK_ADD: '新增学习任务',
+    TASK_DETAIL: '学习任务详情'
 };
 
 export const TAG_CATEGORY = {

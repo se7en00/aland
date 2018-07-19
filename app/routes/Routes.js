@@ -33,6 +33,8 @@ import NewsAddView from 'views/news/NewsAddView';
 import NewsDetailView from 'views/news/NewsDetailView';
 import TrainingView from 'views/training/TrainingView';
 import TaskView from 'views/task/TaskView';
+import TaskAddView from 'views/task/TaskAddView';
+
 import {ConnectedSwitch} from './ConnectedSwitch';
 
 const Routes = ({match}) => (
@@ -73,6 +75,7 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/newsManagement/:noticeId/detail`} component={NewsDetailView}/>
         <Route exact path={`${match.path}/publishedTraining`} component={TrainingView}/>
         <Route exact path={`${match.path}/taskManagement`} component={TaskView}/>
+        <Route exact path={`${match.path}/taskManagement/add`} component={TaskAddView}/>
     </ConnectedSwitch>
 );
 
