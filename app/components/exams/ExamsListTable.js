@@ -77,10 +77,10 @@ class ExamsListTable extends Component {
     }
 
     handelPageChange = (page, pageSize) => {
-        const { getMaterialsList } = this.props.actions;
-        getMaterialsList(pageSize, page);
+        const { getExamsList } = this.props.actions;
+        getExamsList(pageSize, page);
         const { searchParams } = this.props;
-        getMaterialsList(Object.assign({pageSize, page}, searchParams));
+        getExamsList(Object.assign({pageSize, page}, searchParams));
     }
 
     onDelete = (exam) => {

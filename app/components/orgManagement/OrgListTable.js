@@ -31,7 +31,7 @@ class OrgListTable extends Component {
             align: 'center',
             dataIndex: 'costCenterName'
         }, {
-            title: '通用职位',
+            title: '通用审核员',
             align: 'center',
             dataIndex: 'commonPost',
             render: (text, record) => (
@@ -40,7 +40,7 @@ class OrgListTable extends Component {
                 </div>
             )
         }, {
-            title: '设备职位',
+            title: '设备审核员',
             align: 'center',
             dataIndex: 'equipPost',
             render: (text, record) => (
@@ -49,7 +49,7 @@ class OrgListTable extends Component {
                 </div>
             )
         }, {
-            title: '质量职位',
+            title: '质量审核员',
             align: 'center',
             dataIndex: 'qualityPost',
             render: (text, record) => (
@@ -58,7 +58,7 @@ class OrgListTable extends Component {
                 </div>
             )
         }, {
-            title: '工艺职位',
+            title: '工艺审核员',
             align: 'center',
             dataIndex: 'craftPost',
             render: (text, record) => (

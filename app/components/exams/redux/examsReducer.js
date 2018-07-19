@@ -77,6 +77,16 @@ const examsReducer = typeToReducer({
             delete state.editExam;
         }
         return {...state};
+    },
+
+    [TYPES.ASYNC_IMPORT_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
     }
 }, {});
 

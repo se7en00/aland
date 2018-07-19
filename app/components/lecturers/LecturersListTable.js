@@ -28,10 +28,15 @@ class LecturersListTable extends Component {
             title: '图片',
             align: 'center',
             dataIndex: 'avatarUrl',
+            width: 200,
             render: (text, record) => {
                 const domain = new URL(BASE_URL).origin;
                 const imgUrl = `${domain}/uploads${record.avatarUrl}`;
-                return (<img src={imgUrl} alt="img"/>);
+                return (
+                    <div style={{maxWidth: '100px', margin: '0 auto'}}>
+                        <img src={imgUrl} style={{ width: '100%', height: '100%' }} alt="img"/>
+                    </div>
+                );
             }
         }, {
             title: '姓名',

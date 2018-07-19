@@ -56,7 +56,7 @@ class OnlineLessonTab extends Component {
         return (
             /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
             <Tabs defaultActiveKey="1">
-                <TabPane tab={<span><Icon type="profile"/>课程详情</span>} key="1">
+                <TabPane tab={<span><Icon type="profile"/>基本信息</span>} key="1">
                     <OnlineLessonDetails
                         actions={actions}
                         draftOnlineLesson={draftOnlineLesson}

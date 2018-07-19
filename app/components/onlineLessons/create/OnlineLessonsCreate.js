@@ -23,7 +23,7 @@ class OnlineLessonsCreate extends Component {
     renderHeaderTitle = () => {
         const {draftOnlineLesson} = this.props;
         if (draftOnlineLesson?.isEditable) {
-            return format(PANEL_TITLE.ONLINE_LESSONS_DETAILS, draftOnlineLesson?.draftLesson?.name);
+            return format(PANEL_TITLE.ONLINE_LESSONS_DETAILS, draftOnlineLesson?.draftLesson?.name || '课程详情');
         }
         return PANEL_TITLE.ONLINE_LESSONS_ADD;
     }

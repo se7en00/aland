@@ -261,7 +261,7 @@ class UserInfoForm extends Component {
                             uploadFileCount="1"
                             component={UploadImageField}
                             uploadTitle="上传图片"
-                            label="课程封面"
+                            label="头像"
                         />
 
                         <Field

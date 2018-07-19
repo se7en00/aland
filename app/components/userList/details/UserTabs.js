@@ -11,7 +11,7 @@ class UserTabs extends Component {
         const details = userList.userDetails;
         const result = Object.keys(details).reduce((map, k) => {
             if (k === 'birthday' || k === 'entryDate' || k === 'workDate') {
-                map[k] = moment(details[k]);
+                map[k] = details[k] ? moment(details[k]) : '';
             } else if (k === 'administrationSuperior' || k === 'deptSuperior') {
                 if (typeof details[k] !== 'object') {
                     map[k] = {key: details[k], label: details[k]};

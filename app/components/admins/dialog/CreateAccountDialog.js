@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Modal, Tag, message } from 'antd';
 import { Form, Field, reduxForm, submit, SubmissionError } from 'redux-form';
 import { DIALOG } from 'constants';
+import { paginationSetting } from 'utils';
 import { renderTextField } from '../../shared/form';
 import validate from './accountValidate';
 import style from './CreateAccountDialog.scss';
@@ -41,8 +42,8 @@ class CreateUserDialog extends Component {
         return this.props.actions.createUser(loginName, name)
             .then(() => {
                 message.success('创建用户成功！');
-                this.props.actions.getUserList();
                 this.props.hideDialog(DIALOG.CREATE_USER)();
+                this.props.actions.getAdminList({pageSize: paginationSetting.pageSize});
             })
             .catch(error => {
                 if (error?.errorCode === 'login_user_already_exist') {

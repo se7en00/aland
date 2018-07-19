@@ -4,7 +4,7 @@ import * as TYPES from './userListActionType';
 //actions creater
 export const getUserList = ({pageSize = paginationSetting.pageSize, ...rest}) => ({
     type: TYPES.ASYNC_LOAD_USER_LIST,
-    payload: () => Axios.get('/api/users', {params: {size: pageSize, ...rest}})
+    payload: () => Axios.get('/api/users', {params: {size: pageSize, isAdmin: 0, ...rest}})
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
@@ -12,6 +12,7 @@ export const getUserList = ({pageSize = paginationSetting.pageSize, ...rest}) =>
 export const createUser = (params) => ({
     type: TYPES.ASYNC_CREATE_USER,
     async payload() {
+        params.isAdmin = 0;
         const newUser = await Axios.post('/api/users', params)
             .then(response => response.data);
         if (params.userGroupId) {
@@ -35,6 +36,7 @@ export const createUser = (params) => ({
 export const updateUser = (userId, params) => ({
     type: TYPES.ASYNC_UPDATE_USER,
     async payload() {
+        params.isAdmin = 0;
         const updatedUser = await Axios.put(`/api/users/${userId}`, params)
             .then(response => response.data);
         if (params.userGroupId) {

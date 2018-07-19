@@ -57,3 +57,11 @@ export const resetEditExam = () => ({
     type: TYPES.SYNC_RESET_EDIT_EXAM,
     payload: null
 });
+
+
+export const importExams = (filePath) => ({
+    type: TYPES.ASYNC_IMPORT_EXAM,
+    payload: () => Axios.post('/api/exams/import', {filePath})
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
