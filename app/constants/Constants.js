@@ -5,7 +5,8 @@ export const IDENTIFIERS = {
     ACCORDION_CONTENT: 'accordion_content'
 };
 
-export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
+// export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
+export const BASE_URL = 'http://172.16.1.33:8080/aland-training';
 
 export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -29,7 +30,7 @@ export const PATHNAME = {
     VENDOR: '供应商管理',
     TRAINING: '培训管理',
     PUBLISHED_TRAINING: '已发布培训',
-    TRAINING_DRAFt: '培训草稿',
+    TRAINING_DRAFT: '培训草稿',
     LEARN_TASK: '学习任务管理',
     LEARN_PROJECT: '学习项目管理',
     SETTING: '设置',
@@ -96,7 +97,7 @@ export const PANEL_TITLE = {
     NEWS_ADD: '新增新闻',
     NEWS_EDIT: '新闻详情',
     TRAINING_LIST: '培训管理',
-    TRAINING_LIST_ADD: '添加培训管理',
+    TRAINING_LIST_ADD: '新建培训管理',
     TRAINING_DETAILS: '培训信息',
     TASK_LIST: '学习任务管理',
     TASK_ADD: '新增学习任务',

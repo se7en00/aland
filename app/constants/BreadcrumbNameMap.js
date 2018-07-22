@@ -15,7 +15,9 @@ let breadcrumbNameMap = {
     '/aland/onlineLessons/:lessonId/details': '课程内容',
     '/aland/oneClick/add': '新建一点通',
     '/aland/userManagement/creation': '新建人员',
-    '/aland/userManagement/:id/details': '人员信息详情'
+    '/aland/userManagement/:id/details': '人员信息详情',
+    '/aland/publishedTraining/creation': '新建培训内容',
+    '/aland/publishedTraining/:id/details': '培训内容'
     // '/apps/1': 'Application1',
     // '/apps/2': 'Application2',
     // '/apps/1/detail': 'Detail',

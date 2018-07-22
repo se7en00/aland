@@ -49,7 +49,18 @@ const trainingReducer = typeToReducer({
     [TYPES.SYNC_TRAINING_LIST_SEARCH_PARAMS]: (state, action) => ({
         ...state,
         searchParams: action.payload
-    })
+    }),
+
+    [TYPES.ASYNC_TRAINING_COURSE_DIRECTIONS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            courseDirections: action.payload
+        })
+    }
 }, {});
 
 export default trainingReducer;

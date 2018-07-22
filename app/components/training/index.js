@@ -4,4 +4,4 @@ export {default as trainingReducer} from './redux/trainingReducer';
 export * as actionCreators from './redux/trainingAction';
 // component
 export { default as TrainingList } from './TrainingList';
-//dialog
+export { default as TrainingCreation} from './create/TrainingCreation';

@@ -34,3 +34,10 @@ export const setSearchParamsToRedux = (params) => ({
     type: TYPES.SYNC_TRAINING_LIST_SEARCH_PARAMS,
     payload: params
 });
+
+export const getCourseDirections = () => ({
+    type: TYPES.ASYNC_TRAINING_COURSE_DIRECTIONS,
+    payload: Axios.get('/api/settings/courseDirections')
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});

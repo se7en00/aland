@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { DATE_FORMAT, PANEL_TITLE } from 'constants';
+import { DATE_FORMAT, getLinkByName, PANEL_TITLE, PATHNAME } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
@@ -35,6 +35,11 @@ class UserGroupList extends Component {
             .then(() => setSearchParamsToRedux(params));
     }
 
+    redirect = () => {
+        const {push} = this.props.actions;
+        push(`${getLinkByName(PATHNAME.PUBLISHED_TRAINING)}/creation`);
+    }
+
     render() {
         const {trainings: {list}, actions, showDialog} = this.props;
         return (
@@ -42,7 +47,7 @@ class UserGroupList extends Component {
                 <Header title={PANEL_TITLE.TRAINING_LIST}/>
                 <div className={panelStyle.panel__body}>
                     <TrainingSearch onSubmit={this.onSearch}/>
-                    <Button onClick={this.openCreateDialog} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增培训</Button>
+                    <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增培训</Button>
                     <TrainingListTable dataSource={list} actions={actions} showDialog={showDialog}/>
                 </div>
             </div>

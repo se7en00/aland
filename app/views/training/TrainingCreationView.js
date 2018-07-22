@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
-import { actionCreators, TrainingList} from 'components/training';
+import { actionCreators, TrainingCreation} from 'components/training';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
@@ -9,7 +9,7 @@ import { push } from 'react-router-redux';
 class TrainingCreationView extends Component {
     render() {
         return (
-            <OnlineLessonsCreate {...this.props}/>
+            <TrainingCreation {...this.props}/>
         );
     }
 }
