@@ -19,7 +19,7 @@ class TaskList extends Component {
     }
 
     redirect = () => {
-        this.props.actions.push(`${getLinkByName(PATHNAME.LEARN_TASK)}/add`);
+        this.props.actions.push(`${getLinkByName(PATHNAME.LEARN_TASK)}/creation`);
     };
 
     render() {

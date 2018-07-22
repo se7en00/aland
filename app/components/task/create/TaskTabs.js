@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Menu, Dropdown, Button, Icon } from 'antd';
 import uuid from 'uuid/v4';
-import TrainingDetails from '../details/TrainingDetails';
+import TaskDetails from '../details/TaskDetails';
 
-class TrainingTabs extends Component {
+class TaskTabs extends Component {
     buttonMenu = () => (
         <Menu >
             <Menu.Item key={uuid()}><i className="fas fa-desktop u-push-right-xs"/>PC预览</Menu.Item>
@@ -33,7 +33,7 @@ class TrainingTabs extends Component {
 
     render() {
         const TabPane = Tabs.TabPane;
-        const {trainings, trainings: {associations}, actions} = this.props;
+        const {tasks, tasks: {associations}, actions} = this.props;
         // const isDisabledTrainings = !trainings?.trainingsDetails;
         // let options;
         // if (trainings.courseDirections) {
@@ -46,10 +46,10 @@ class TrainingTabs extends Component {
         return (
             /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
             <Tabs defaultActiveKey="1">
-                <TabPane tab="培训信息" key="1">
-                    <TrainingDetails
+                <TabPane tab="基本信息" key="1">
+                    <TaskDetails
                         actions={actions}
-                        trainings={trainings}
+                        tasks={tasks}
                         associations={associations}
                     />
                 </TabPane>
@@ -58,10 +58,10 @@ class TrainingTabs extends Component {
     }
 }
 
-TrainingTabs.propTypes = {
-    trainings: PropTypes.object,
+TaskTabs.propTypes = {
+    tasks: PropTypes.object,
     // showDialog: PropTypes.func,
     actions: PropTypes.objectOf(PropTypes.func)
 };
 
-export default TrainingTabs;
+export default TaskTabs;

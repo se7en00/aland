@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 // import { paginationSetting } from 'utils';
 import panelStyle from 'layout/main/Main.scss';
 import Header from '../../shared/panel/PanelHeader';
-import TrainingTabs from './TrainingTabs';
+import TaskTabs from './TaskTabs';
 
 
-class TrainingCreation extends Component {
+class TaskCreation extends Component {
     static propTypes = {
         showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
-        trainings: PropTypes.object
+        tasks: PropTypes.object
     };
 
     componentDidMount() {
@@ -25,16 +25,16 @@ class TrainingCreation extends Component {
     }
 
     render() {
-        const {trainings, actions, showDialog} = this.props;
+        const {tasks, actions, showDialog} = this.props;
         return (
             <Fragment>
-                <Header title={PANEL_TITLE.TRAINING_LIST_ADD}/>
+                <Header title={PANEL_TITLE.TASK_ADD}/>
                 <div className={panelStyle.panel__body}>
-                    <TrainingTabs trainings={trainings} actions={actions} showDialog={showDialog}/>
+                    <TaskTabs tasks={tasks} actions={actions} showDialog={showDialog}/>
                 </div>
             </Fragment>
         );
     }
 }
 
-export default TrainingCreation;
+export default TaskCreation;

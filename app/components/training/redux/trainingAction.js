@@ -35,9 +35,47 @@ export const setSearchParamsToRedux = (params) => ({
     payload: params
 });
 
-export const getCourseDirections = () => ({
-    type: TYPES.ASYNC_TRAINING_COURSE_DIRECTIONS,
-    payload: Axios.get('/api/settings/courseDirections')
-        .then(response => response.data)
+export const publishTraining = (trainingId) => ({
+    type: TYPES.ASYNC_PUBLISH_TRAINING,
+    payload: () => Axios.put(`/api/trainings/${trainingId}/publish`)
+        .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
+
+export const closeTraining = (trainingId) => ({
+    type: TYPES.ASYNC_CLOSE_TRAINING,
+    payload: () => Axios.put(`/api/trainings/${trainingId}/close`)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const getALLAssociations = () => {
+    const allPromises = [
+        Axios.get('/api/settings/courseDirections', {params: {parentId: 0}})
+            .then(response => {
+                const {data} = response;
+                const _temps = data.elements.map(item => {
+                    const result = {
+                        value: item.id,
+                        label: item.direction
+                    };
+                    if (item.subDirections) {
+                        Object.assign(result, {children: item.subDirections.map(subItem => ({ value: subItem.id, label: subItem.direction}))});
+                    }
+                    return result;
+                });
+                return _temps;
+            }),
+        Axios.get('/api/userGroups', {params: {size: 2000}}).then(response => {
+            if (!response?.data?.elements) return [];
+            return response?.data?.elements?.map(item => ({id: item.id, name: item.title}));
+        })
+    ];
+    return {
+        type: TYPES.ASYNC_LOAD_TRAINING_ASSOCIATIONS,
+        payload: Promise.all(allPromises).then(result => ({
+            courseDirections: result[0],
+            userGroups: result[1]
+        })).catch(error => Promise.reject(error?.response?.data))
+    };
+};

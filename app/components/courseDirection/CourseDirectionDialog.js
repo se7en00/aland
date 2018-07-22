@@ -19,7 +19,7 @@ class CourseDirectionDialog extends Component {
     }
 
     submit= (values) => {
-       console.log(22);
+        console.log(22);
     }
 
     render() {

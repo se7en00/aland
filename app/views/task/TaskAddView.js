@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getFormValues } from 'redux-form';
 import { push } from 'react-router-redux';
-import { actionCreators, TaskCreate} from 'components/task';
+import { actionCreators, TaskCreation} from 'components/task';
 
-@connect(state => ({tasks: state.tasks, values: getFormValues('taskCreate')(state)}), mapDispatchToProps)
+@connect(state => ({tasks: state.tasks}), mapDispatchToProps)
 class TaskAddView extends Component {
     render() {
-        return <TaskCreate {...this.props}/>;
+        return <TaskCreation {...this.props}/>;
     }
 }
 

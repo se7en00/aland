@@ -53,13 +53,40 @@ class TrainingListTable extends Component {
             render: (text, record) => (
                 <div>
                     <Button size="small" type="primary" onClick={() => this.openDialog(record)} ghost>编辑</Button>
-                    {/*<Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.PERMISSION)} ghost>导出名单</Button>*/}
+                    <Button size="small" type="primary" onClick={() => this.onPublish(record)} ghost>发布</Button>
+                    <Button size="small" type="primary" onClick={() => this.onClose(record)} ghost>关闭</Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
                 </div>
             )
         }];
+    }
+
+    onPublish = (training) => {
+        const {
+            dataSource: {paging: {size, page}},
+            actions: {publishTraining, getTrainingList}
+        } = this.props;
+        publishTraining(training.id).then(() => {
+            message.success(`成功发布培训：${training.title}！`);
+            getTrainingList({pageSize: size, page});
+        }).catch(error => {
+            message.error(`发布培训：${training.title}失败！`);
+        });
+    }
+
+    onClose = (training) => {
+        const {
+            dataSource: {paging: {size, page}},
+            actions: {closeTraining, getTrainingList}
+        } = this.props;
+        closeTraining(training.id).then(() => {
+            message.success(`成功关闭培训：${training.title}！`);
+            getTrainingList({pageSize: size, page});
+        }).catch(error => {
+            message.error(`关闭培训：${training.title}失败！`);
+        });
     }
 
     openDialog = (userGroup) => {

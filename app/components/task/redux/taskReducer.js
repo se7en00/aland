@@ -74,6 +74,17 @@ const taskReducer = typeToReducer({
             ...state,
             oneClicks: action.payload
         })
+    },
+
+    [TYPES.ASYNC_TASK_ASSOCIATIONS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            associations: action.payload
+        })
     }
 }, {});
 

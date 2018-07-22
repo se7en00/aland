@@ -78,7 +78,7 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/publishedTraining`} component={TrainingView}/>
         <Route exact path={`${match.path}/publishedTraining/creation`} component={TrainingCreationView}/>
         <Route exact path={`${match.path}/taskManagement`} component={TaskView}/>
-        <Route exact path={`${match.path}/taskManagement/add`} component={TaskAddView}/>
+        <Route exact path={`${match.path}/taskManagement/creation`} component={TaskAddView}/>
         <Route exact path={`${match.path}/lessonsDirectionSetting`} component={CourseDirectionView}/>
         <Route exact path={`${match.path}/securityPermissionSetting`} component={SecurityView}/>
     </ConnectedSwitch>

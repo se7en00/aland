@@ -1,55 +1,45 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm, Field, Form, getFormValues, SubmissionError} from 'redux-form';
+import { reduxForm, Field, Form, getFormValues} from 'redux-form';
 import { Button, Radio, message } from 'antd';
 import uuid from 'uuid/v4';
 import { renderOptions } from 'constants';
 import { resetSpecificField } from 'utils';
 import { connect } from 'react-redux';
-import { renderTextField, UploadImageField, renderQuill, renderRadioGroupField, renderCascaderField, renderSelectField, CheckBoxGroupField } from '../../shared/form';
+import { renderTextField, renderQuill, renderRadioGroupField, renderCascaderField, renderSelectField, renderDateRangeField } from '../../shared/form';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
 
 const required = value => (value ? undefined : '不能为空！');
 
 function mapStateToProps(state) {
     return {
-        fieldValues: getFormValues('trainingDetails')(state)
+        fieldValues: getFormValues('taskDetails')(state)
     };
 }
 
 @connect(mapStateToProps)
-@reduxForm({form: 'trainingDetails', enableReinitialize: true})
-class TrainingDetails extends Component {
+@reduxForm({form: 'taskDetails', enableReinitialize: true})
+class TaskDetails extends Component {
     renderUserGroupOptions = () => {
         const {associations} = this.props;
         if (!associations?.userGroups) return;
         return renderOptions('id', 'name')(associations.userGroups);
     }
 
-    renderFormsOptions = () => {
-        const costs = ['讲授', '小组讨论', '视频案例', '游戏', '角色扮演', '行动学习', '团队共创', '世界咖啡', '现场演练', '户外拓展', '自定义'];
-        return costs.map(item => ({label: item, value: item}));
-    }
 
     submit = (values) => {
-        const {actions: {createTraining}} = this.props;
-        try {
-            if (values.cover && values.cover[0]) {
-                Object.assign(values, {cover: values.cover[0]?.response?.locations[0]});
-            }
-        } catch (error) {
-            throw new SubmissionError({cover: '上传图片失败！'});
-        }
+        const {actions: {createTask}} = this.props;
 
         const params = Object.keys(values).reduce((map, k) => {
-            if (k === 'direction') {
-                map.direction1 = values[k][0];
-                map.direction2 = values[k][1];
-            } else if (k === 'forms') {
-                map[k] = values[k].join(',');
+            if (k === 'limitTime') {
+                // map.startDate = moment(values[k][0]).format(DATE_FORMAT);
+                map[k] = moment(values[k][1]).valueOf();
             } else if (k === 'manager') {
                 map.managerId = values[k].key;
                 map.manager = values[k].label;
+            } else if (k === 'direction') {
+                map.direction1 = values[k][0];
+                map.direction2 = values[k][1];
             } else if (k === 'persons') {
                 if (values.targetType === 'SPECIFIC') {
                     map.receivers = values[k].map(item => ({receiverId: item.key, receiverName: item.label}));
@@ -60,20 +50,21 @@ class TrainingDetails extends Component {
             return map;
         }, {});
 
-        createTraining(params)
-            .then(() => {message.success(`保存培训${values.title}成功！`);})
-            .catch(() => {message.success(`保存培训${values.title}失败！`);});
+        createTask(params)
+            .then(() => {message.success(`保存学习任务${values.title}成功！`);})
+            .catch(() => {message.success(`保存学习任务${values.title}失败！`);});
     }
 
     render() {
-        const { submitting, handleSubmit, dispatch, trainings, fieldValues, associations} = this.props;
-        console.log(trainings);
+        const { submitting, handleSubmit, dispatch, tasks, fieldValues, associations} = this.props;
+        console.log(tasks);
         const targetType = fieldValues?.targetType || '';
         const courseDirectionOptions = associations?.courseDirections || [];
-        const restManagerValue = () => resetSpecificField(dispatch, 'trainingDetails', 'manager', '');
-        const restDirectionValue = () => resetSpecificField(dispatch, 'trainingDetails', 'direction', '');
-        const restUserGroup = () => resetSpecificField(dispatch, 'trainingDetails', 'userGroupId', '');
-        const resetPersonValue = () => resetSpecificField(dispatch, 'trainingDetails', 'persons', '');
+        const restManagerValue = () => resetSpecificField(dispatch, 'taskDetails', 'manager', '');
+        const restRangeDateTime = () => resetSpecificField(dispatch, 'taskDetails', 'limitTime', '');
+        const restDirectionValue = () => resetSpecificField(dispatch, 'taskDetails', 'direction', '');
+        const restUserGroup = () => resetSpecificField(dispatch, 'taskDetails', 'userGroupId', '');
+        const resetPersonValue = () => resetSpecificField(dispatch, 'taskDetails', 'persons', '');
         return (
             <div>
                 <Form name="form" onSubmit={handleSubmit(this.submit)}>
@@ -83,21 +74,9 @@ class TrainingDetails extends Component {
                         name="title"
                         component={renderTextField}
                         type="text"
-                        placeholder="培训标题"
-                        label="培训标题"
+                        placeholder="任务名称"
+                        label="任务名称"
                         validate={required}
-                    />
-
-                    <Field
-                        className="col-md-4 col-lg-3"
-                        rowClassName="inputRow"
-                        accept="image/*"
-                        style={{alignItems: 'flex-start'}}
-                        name="cover"
-                        uploadFileCount="1"
-                        component={UploadImageField}
-                        uploadTitle="上传图片"
-                        label="封面图片"
                     />
 
                     <Field
@@ -169,22 +148,11 @@ class TrainingDetails extends Component {
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
-                        name="forms"
-                        style={{alignItems: 'flex-start'}}
-                        component={CheckBoxGroupField}
-                        type="text"
-                        options={this.renderFormsOptions()}
-                        label="培训形式"
-                    />
-
-                    <Field
-                        className="col-md-8 col-lg-6"
-                        rowClassName="inputRow"
                         name="totalTime"
                         component={renderTextField}
                         type="text"
                         placeholder="小时"
-                        label="总计课时"
+                        label="总课时"
                     />
 
                     <AutoSelectSearch
@@ -202,10 +170,20 @@ class TrainingDetails extends Component {
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
+                        name="limitTime"
+                        allowClear={true}
+                        resetSelectValue={restRangeDateTime}
+                        component={renderDateRangeField}
+                        label="完成期限"
+                    />
+
+                    <Field
+                        className="col-md-8 col-lg-6"
+                        rowClassName="inputRow"
                         name="targetType"
                         defaultValue="ALL"
                         component={renderRadioGroupField}
-                        label="接收人"
+                        label="学习对象"
                     >
                         <Radio key={uuid()} value="ALL">全员</Radio>
                         <Radio key={uuid()} value="GROUP">学习群组</Radio>
@@ -251,22 +229,10 @@ class TrainingDetails extends Component {
                     }
 
                     <Field
-                        className="col-md-8 col-lg-6"
-                        rowClassName="inputRow"
-                        name="benefit"
-                        style={{alignItems: 'flex-start'}}
-                        component={renderTextField}
-                        rows={4}
-                        type="textarea"
-                        placeholder="课程收益"
-                        label="课程收益"
-                    />
-
-                    <Field
                         className="col-md-10 col-lg-8"
                         rowClassName="inputRow"
-                        name="introduce"
-                        label="课程介绍"
+                        name="addition"
+                        label="任务补充"
                         onlyTextEditable={true}
                         component={renderQuill}
                     />
@@ -282,15 +248,15 @@ class TrainingDetails extends Component {
     }
 }
 
-TrainingDetails.propTypes = {
+TaskDetails.propTypes = {
     actions: PropTypes.objectOf(PropTypes.func),
     handleSubmit: PropTypes.func,
     dispatch: PropTypes.func,
     submitting: PropTypes.bool,
-    trainings: PropTypes.object,
+    tasks: PropTypes.object,
     fieldValues: PropTypes.object,
     associations: PropTypes.object
     // error: PropTypes.string,
 };
 
-export default TrainingDetails;
+export default TaskDetails;

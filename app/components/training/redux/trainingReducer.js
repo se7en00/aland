@@ -46,19 +46,39 @@ const trainingReducer = typeToReducer({
         })
     },
 
+    [TYPES.ASYNC_PUBLISH_TRAINING]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+
+    [TYPES.ASYNC_CLOSE_TRAINING]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+
     [TYPES.SYNC_TRAINING_LIST_SEARCH_PARAMS]: (state, action) => ({
         ...state,
         searchParams: action.payload
     }),
 
-    [TYPES.ASYNC_TRAINING_COURSE_DIRECTIONS]: {
+    [TYPES.ASYNC_LOAD_TRAINING_ASSOCIATIONS]: {
         REJECTED: (state, action) => ({
             ...state,
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
             ...state,
-            courseDirections: action.payload
+            associations: action.payload
         })
     }
 }, {});
