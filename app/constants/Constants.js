@@ -5,8 +5,8 @@ export const IDENTIFIERS = {
     ACCORDION_CONTENT: 'accordion_content'
 };
 
-// export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
-export const BASE_URL = 'http://172.16.1.33:8080/aland-training';
+export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
+// export const BASE_URL = 'http://172.16.1.33:8080/aland-training';
 
 export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -67,7 +67,10 @@ export const DIALOG = {
     CUSTOMIZE_EXAM: 'customizeExam',
     PROVIDE_DETAIL: 'provideDetail',
     PROVIDE_RATING: 'provideRating',
-    CREATE_EXAM: 'createExam'
+    CREATE_EXAM: 'createExam',
+    COURSE_DIRECTION: 'courseDirection',
+    SECURITY_SETTING: 'securitySetting',
+    SECURITY_SETTING_DETAILS: 'securitySettingDetails'
 };
 
 export const PANEL_TITLE = {

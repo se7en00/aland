@@ -10,3 +10,4 @@ export { default as renderQuill } from './richText/RichTextBox';
 export { default as renderSwitch } from './switch/SwitchField';
 export { default as renderCheckboxField } from './checkbox/CheckboxField';
 export { default as renderRadioGroupField } from './radio/RadioGroupField';
+export { default as CheckBoxGroupField } from './checkbox/CheckBoxGroupField';

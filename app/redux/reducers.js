@@ -18,6 +18,8 @@ import { noticesReducer } from 'components/notice';
 import { newsReducer } from 'components/news';
 import { trainingReducer } from 'components/training';
 import { taskReducer } from 'components/task';
+import { courserDirectionReducer } from 'components/courseDirection';
+import { settingReducer } from 'components/setting';
 import loadingReducer from './middleware/loadingReducer';
 
 export default combineReducers({
@@ -42,5 +44,7 @@ export default combineReducers({
     notices: noticesReducer,
     news: newsReducer,
     trainings: trainingReducer,
-    tasks: taskReducer
+    tasks: taskReducer,
+    courserDirection: courserDirectionReducer,
+    setting: settingReducer
 });
