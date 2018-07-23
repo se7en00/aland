@@ -8,6 +8,7 @@ import {message} from 'antd/lib';
 import Header from '../shared/panel/PanelHeader';
 import styles from './NewsDetail.scss';
 import NewsCommentsList from './NewsCommentsList';
+import NewsReceiverDialog from './NewsReceiverDialog';
 
 function mapStateToProps(state) {
     return {
@@ -15,13 +16,17 @@ function mapStateToProps(state) {
         comments: state.news?.comments
     };
 }
-
 @connect(mapStateToProps)
 class NewsDetail extends Component {
     static propTypes = {
         news: PropTypes.object,
         comments: PropTypes.object,
         actions: PropTypes.object
+    };
+
+    state = {
+        dialogVisible: false,
+        currentDialog: ''
     };
 
     componentDidMount() {
@@ -39,6 +44,10 @@ class NewsDetail extends Component {
         if (e) {
             e.preventDefault();
         }
+        this.setState({
+            dialogVisible: true,
+            currentDialog: type
+        });
     };
 
     hideDialog = () => {
@@ -68,7 +77,9 @@ class NewsDetail extends Component {
 
     render() {
         const { news = {}, comments, actions } = this.props;
-        const { title, content, publishAt } = news;
+        const { title, content, publishAt, receiverType, receivers } = news;
+        const { currentDialog, dialogVisible } = this.state;
+        const data = receivers?.map(r => r.receiverName);
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.NEWS_EDIT}/>
@@ -76,7 +87,8 @@ class NewsDetail extends Component {
                     <div className={`col-md-8 col-lg-6 ${styles['news-detail']}`}>
                         <div>
                             <h2>{title}</h2>
-                            <p>{content}</p>
+                            {/*eslint-disable-next-line*/}
+                            <p dangerouslySetInnerHTML={{__html: content}}/>
                         </div>
                         <div>
                             <div>接收人: <a href="###" onClick={(e) => this.showDialog(e, 'receiver')}>点击查看</a></div>
@@ -95,6 +107,12 @@ class NewsDetail extends Component {
                         </div>
                     </div>
                 </div>
+                <NewsReceiverDialog
+                    data={data}
+                    type={receiverType}
+                    visible={dialogVisible && currentDialog === 'receiver'}
+                    onHide={this.hideDialog}
+                />
             </Fragment>
         );
     }

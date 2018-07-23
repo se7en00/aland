@@ -93,8 +93,17 @@ const newsReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             ...state
         })
+    },
+    [TYPES.ASYNC_GET_USERGROUPS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            userGroups: action.payload
+        })
     }
-
 }, {});
 
 export default newsReducer;

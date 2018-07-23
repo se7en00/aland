@@ -46,7 +46,7 @@ class LecturersList extends Component {
                 <div className={panelStyle.panel__body}>
                     <LecturersSearch onSubmit={this.onSearch}/>
                     <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增培训师</Button>
-                    <Button type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
+                    {/*<Button type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>*/}
                     <LecturersListTable dataSource={list} actions={actions} searchParams={searchParams}/>
                 </div>
             </div>

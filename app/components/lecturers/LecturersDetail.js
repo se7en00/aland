@@ -53,7 +53,8 @@ class LecturersDetail extends Component {
                                     <text>{level}</text>
                                 </div>
                             </div>
-                            <p>{introduce}</p>
+                            {/*eslint-disable-next-line*/}
+                            <p dangerouslySetInnerHTML={{__html: introduce}}/>
                             <div className="row inputRow">
                                 <div className="col-12 u-text-right">
                                     <Button type="primary" onClick={this.redirectEdit}>编辑</Button>

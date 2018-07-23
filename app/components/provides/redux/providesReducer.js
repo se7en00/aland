@@ -10,6 +10,7 @@ const materialsReducer = typeToReducer({
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
+            ...state,
             list: action.payload
         })
     },
@@ -34,6 +35,7 @@ const materialsReducer = typeToReducer({
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
+            ...state,
             provide: action.payload
         })
     },
@@ -61,13 +63,33 @@ const materialsReducer = typeToReducer({
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
+            ...state,
             categoryList: action.payload
         })
     },
     [TYPES.SET_CURRENT_PROVIDE]: (state, action) => ({
         ...state,
         provide: action.payload
-    })
+    }),
+    [TYPES.EXPORT_PROVIDES]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+    [TYPES.ASYNC_GET_INQUIRYS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            inquirys: action.payload
+        })
+    }
 }, {});
 
 export default materialsReducer;

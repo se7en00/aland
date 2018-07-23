@@ -8,11 +8,12 @@ import { renderSelectField, renderTextField } from '../shared/form/index';
 
 const required = value => (value ? undefined : '不能为空！');
 const mapStateToProps = (state) => {
-    const {provide = {}, categoryList = [] } = state?.provides;
+    const {provide = {}, categoryList = [], list = {} } = state?.provides;
     return {
         provide,
         categoryList,
-        initialValues: provide
+        initialValues: provide,
+        paging: list.paging
     };
 };
 @connect(mapStateToProps)
@@ -36,22 +37,20 @@ class ProvidesDetailDialog extends Component {
         submitting: PropTypes.bool,
         width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         provide: PropTypes.object,
-        categoryList: PropTypes.array
+        categoryList: PropTypes.array,
+        paging: PropTypes.object
     };
 
-    componentDidMount() {
-        const { actions: { getCategories }, categoryList = [] } = this.props;
-        if (!categoryList.length) {
-            getCategories();
-        }
-    }
 
     handleSubmit = (values) => {
-        const { provide, actions } = this.props;
+        const { provide, actions, paging: {size, page} } = this.props;
         const func = provide?.id ? 'editProvide' : 'addProvide';
         actions[func](values, provide?.id).then(() => {
             message.success('保存成功！');
             this.hideDialog();
+            setTimeout(() => {
+                actions.getProvidesList(size, page);
+            }, 300);
         }).catch(() => { message.success('保存失败！'); });
     };
 

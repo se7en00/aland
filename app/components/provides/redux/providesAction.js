@@ -58,3 +58,18 @@ export const setCurrentProvide = (provide) => ({
     type: TYPES.SET_CURRENT_PROVIDE,
     payload: provide
 });
+
+
+export const exportProvides = (params) => ({
+    type: TYPES.EXPORT_PROVIDES,
+    payload: () => Axios.get('/api/provides/export', params)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const getProvideInquirys = () => ({
+    type: TYPES.ASYNC_GET_INQUIRYS,
+    payload: () => Axios.get('/api/inquirys/provide')
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});

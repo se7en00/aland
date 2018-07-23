@@ -33,7 +33,7 @@ class NewsListTable extends Component {
                 const imgUrl = `${domain}/uploads${record.coverImgPath}`;
                 return (
                     <div style={{maxWidth: '100px', margin: '0 auto'}}>
-                        <img src={imgUrl} style={{ width: '100%', height: '100%' }} alt="img"/>
+                        <img src={imgUrl} style={{ width: '100px', height: '100px' }} alt="img"/>
                     </div>
                 );
             }

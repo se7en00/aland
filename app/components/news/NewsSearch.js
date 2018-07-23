@@ -39,7 +39,7 @@ class NewsSearch extends Component {
                             placeholder="状态"
                         >
                             <Select.Option value={1}>在用</Select.Option>
-                            <Select.Option value={0}>停用</Select.Option>
+                            <Select.Option value="0">停用</Select.Option>
                             <Select.Option value={-1}>删除</Select.Option>
                         </Field>
 

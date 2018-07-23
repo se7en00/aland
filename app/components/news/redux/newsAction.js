@@ -73,3 +73,11 @@ export const toggleStatus = (id, status) => ({
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
+
+export const loadUserGroups = () => ({
+    type: TYPES.ASYNC_GET_USERGROUPS,
+    payload: () => Axios.get('/api/userGroups', {params: {size: 2000}}).then(response => {
+        if (!response?.data?.elements) return [];
+        return response?.data?.elements?.map(item => ({id: item.id, name: item.title}));
+    })
+});

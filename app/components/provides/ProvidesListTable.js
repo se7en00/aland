@@ -35,7 +35,7 @@ class ProvidesListTable extends Component {
             title: '联系方式',
             align: 'center',
             dataIndex: 'tel'
-        }, {
+        }, /*{
             title: '后台打分',
             align: 'center',
             dataIndex: 'fileType'
@@ -43,7 +43,7 @@ class ProvidesListTable extends Component {
             title: '学员打分',
             align: 'center',
             dataIndex: 'uploadUserName'
-        }, {
+        }, */{
             title: '操作',
             align: 'center',
             dataIndex: 'operation',
@@ -53,8 +53,8 @@ class ProvidesListTable extends Component {
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
-                    <Button onClick={() => props.editProvide(record, 'rating')} size="small" type="primary" ghost>打分</Button>
-                    <Button size="small" type="primary" ghost>学员打分详情</Button>
+                    {/*<Button onClick={() => props.editProvide(record, 'rating')} size="small" type="primary" ghost>打分</Button>*/}
+                    {/*<Button size="small" type="primary" ghost>学员打分详情</Button>*/}
                 </div>
             )
         }];

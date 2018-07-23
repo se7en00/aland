@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DATE_FORMAT, PATHNAME, DIALOG } from 'constants';
 import { paginationSetting } from 'utils';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
 import Header from '../shared/panel/PanelHeader';
 import ProvidesListTable from './ProvidesListTable';
@@ -17,6 +17,8 @@ class ProvidesList extends Component {
 
     componentDidMount() {
         this.props.actions.getProvidesList({pageSize: paginationSetting.pageSize});
+        this.props.actions.getCategories();
+        this.props.actions.getProvideInquirys();
     }
 
     onSearch = (values) => {
@@ -42,6 +44,13 @@ class ProvidesList extends Component {
         showDialog(dialog)();
     };
 
+    export = () => {
+        const { provides: {list: { paging: {page, size} }, searchParams}, actions: { exportProvides } } = this.props;
+        exportProvides({page, size, ...searchParams}).then(() => {
+            message.success('导出成功！');
+        }).catch(() => {message.success('导出失败！');});
+    };
+
     render() {
         const {provides: {list, searchParams}, actions } = this.props;
         return (
@@ -50,7 +59,7 @@ class ProvidesList extends Component {
                 <div className={panelStyle.panel__body}>
                     <ProvidesSearch onSubmit={this.onSearch}/>
                     <Button onClick={() => this.editProvide()} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增供应商</Button>
-                    <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
+                    <Button onClick={this.export} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
                     <ProvidesListTable editProvide={this.editProvide} dataSource={list} actions={actions} searchParams={searchParams}/>
                 </div>
             </div>
