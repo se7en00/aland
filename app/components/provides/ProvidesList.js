@@ -7,12 +7,18 @@ import panelStyle from '../../layout/main/Main.scss';
 import Header from '../shared/panel/PanelHeader';
 import ProvidesListTable from './ProvidesListTable';
 import ProvidesSearch from './ProvidesSearch';
+import ProvideRateDialog from './ProvideRateDialog';
 
 class ProvidesList extends Component {
     static propTypes = {
         actions: PropTypes.objectOf(PropTypes.func),
         provides: PropTypes.object,
         showDialog: PropTypes.func
+    };
+
+    state = {
+        currentId: '',
+        rateDialogVisible: false
     };
 
     componentDidMount() {
@@ -39,9 +45,12 @@ class ProvidesList extends Component {
 
     editProvide = (provide = {}, type = 'detail') => {
         const { actions: { setCurrentProvide}, showDialog } = this.props;
-        setCurrentProvide(provide);
-        const dialog = type === 'detail' ? DIALOG.PROVIDE_DETAIL : DIALOG.PROVIDE_RATING;
-        showDialog(dialog)();
+        if (type === 'detail') {
+            setCurrentProvide(provide);
+            showDialog(DIALOG.PROVIDE_DETAIL)();
+        } else if (type === 'rating') {
+            this.showRateDialog(provide.id);
+        }
     };
 
     export = () => {
@@ -51,8 +60,30 @@ class ProvidesList extends Component {
         }).catch(() => {message.success('导出失败！');});
     };
 
+    showRateDialog = (id) => {
+        this.setState({
+            currentId: id,
+            rateDialogVisible: true
+        });
+    };
+
+    hideRateDialog = () => {
+        this.setState({
+            rateDialogVisible: false
+        });
+    };
+
+    submitRate = (data) => {
+        const { actions: { rateProvide } } = this.props;
+        rateProvide(data).then(() => {
+            message.success('打分成功！');
+            this.hideRateDialog();
+        }).catch(() => {message.success('打分失败！');});
+    };
+
     render() {
-        const {provides: {list, searchParams}, actions } = this.props;
+        const {provides: {list, searchParams, inquirys}, actions } = this.props;
+        const { currentId, rateDialogVisible } = this.state;
         return (
             <div>
                 <Header title={PATHNAME.VENDOR}/>
@@ -62,6 +93,13 @@ class ProvidesList extends Component {
                     <Button onClick={this.export} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
                     <ProvidesListTable editProvide={this.editProvide} dataSource={list} actions={actions} searchParams={searchParams}/>
                 </div>
+                <ProvideRateDialog
+                    data={inquirys}
+                    visible={rateDialogVisible}
+                    relativeId={currentId}
+                    hideDialog={this.hideRateDialog}
+                    handleSubmit={this.submitRate}
+                />
             </div>
         );
     }

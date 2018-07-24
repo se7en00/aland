@@ -89,6 +89,15 @@ const materialsReducer = typeToReducer({
             ...state,
             inquirys: action.payload
         })
+    },
+    [TYPES.ASYNC_RATE_PROVIDE]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
     }
 }, {});
 

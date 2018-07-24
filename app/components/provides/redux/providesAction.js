@@ -73,3 +73,10 @@ export const getProvideInquirys = () => ({
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
+
+export const rateProvide = (data) => ({
+    type: TYPES.ASYNC_RATE_PROVIDE,
+    payload: () => Axios.post('/api/userInquirys', data)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
