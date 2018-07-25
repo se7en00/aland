@@ -36,7 +36,7 @@ class OrgListTable extends Component {
             dataIndex: 'commonPost',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'COMMON_POST')} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'COMMON')} ghost>编辑</Button>
                 </div>
             )
         }, {
@@ -45,7 +45,7 @@ class OrgListTable extends Component {
             dataIndex: 'equipPost',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'EQUIP_POST')} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'EQUIP')} ghost>编辑</Button>
                 </div>
             )
         }, {
@@ -54,7 +54,7 @@ class OrgListTable extends Component {
             dataIndex: 'qualityPost',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'QUALITY_POST')} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'QUALITY')} ghost>编辑</Button>
                 </div>
             )
         }, {
@@ -63,7 +63,7 @@ class OrgListTable extends Component {
             dataIndex: 'craftPost',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'CRAFT_POST')} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.openDialog(record.id, 'CRAFT')} ghost>编辑</Button>
                 </div>
             )
         }];

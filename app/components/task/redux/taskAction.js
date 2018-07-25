@@ -16,9 +16,9 @@ export const createTask = (params) => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const updateTask = (userGroupId, params) => ({
+export const updateTask = (taskId, params) => ({
     type: TYPES.ASYNC_UPDATE_TASK,
-    payload: () => Axios.put(`/api/tasks/${userGroupId}`, params)
+    payload: () => Axios.put(`/api/tasks/${taskId}`, params)
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
@@ -70,11 +70,11 @@ export const getALLAssociations = () => {
                 const {data} = response;
                 const _temps = data.elements.map(item => {
                     const result = {
-                        value: item.id,
+                        value: item.direction,
                         label: item.direction
                     };
                     if (item.subDirections) {
-                        Object.assign(result, {children: item.subDirections.map(subItem => ({ value: subItem.id, label: subItem.direction}))});
+                        Object.assign(result, {children: item.subDirections.map(subItem => ({ value: subItem.direction, label: subItem.direction}))});
                     }
                     return result;
                 });
@@ -93,3 +93,19 @@ export const getALLAssociations = () => {
         })).catch(error => Promise.reject(error?.response?.data))
     };
 };
+
+
+export const getTaskDetails = (trainingId) => ({
+    type: TYPES.ASYNC_LOAD_TASK_DETAILS,
+    async payload() {
+        const task = await Axios.get(`/api/tasks/${trainingId}`).then(response => response.data);
+        const result = {taskDetails: task, isEditable: true};
+
+        return result;
+    }
+});
+
+export const resetTask = () => ({
+    type: TYPES.SYNC_RESET_TASK,
+    payload: null
+});

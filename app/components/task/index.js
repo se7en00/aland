@@ -6,3 +6,4 @@ export * as actionCreators from './redux/taskAction';
 export { default as TaskList } from './TaskList';
 export { default as TaskCreation } from './create/TaskCreation';
 //dialog
+export { default as TaskLessonDialog} from './dialog/TaskLessonDialog';

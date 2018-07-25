@@ -33,8 +33,10 @@ import NewsAddView from 'views/news/NewsAddView';
 import NewsDetailView from 'views/news/NewsDetailView';
 import TrainingView from 'views/training/TrainingView';
 import TrainingCreationView from 'views/training/TrainingCreationView';
+import TrainingDetailsView from 'views/training/TrainingDetailsView';
 import TaskView from 'views/task/TaskView';
 import TaskAddView from 'views/task/TaskAddView';
+import TaskDetailsView from 'views/task/TaskDetailsView';
 import CourseDirectionView from 'views/setting/CourseDirectionView';
 import SecurityView from 'views/setting/SecurityView';
 import {ConnectedSwitch} from './ConnectedSwitch';
@@ -77,8 +79,10 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/newsManagement/:noticeId/detail`} component={NewsDetailView}/>
         <Route exact path={`${match.path}/publishedTraining`} component={TrainingView}/>
         <Route exact path={`${match.path}/publishedTraining/creation`} component={TrainingCreationView}/>
+        <Route exact path={`${match.path}/publishedTraining/:id/details`} component={TrainingDetailsView}/>
         <Route exact path={`${match.path}/taskManagement`} component={TaskView}/>
         <Route exact path={`${match.path}/taskManagement/creation`} component={TaskAddView}/>
+        <Route exact path={`${match.path}/taskManagement/:id/details`} component={TaskDetailsView}/>
         <Route exact path={`${match.path}/lessonsDirectionSetting`} component={CourseDirectionView}/>
         <Route exact path={`${match.path}/securityPermissionSetting`} component={SecurityView}/>
     </ConnectedSwitch>

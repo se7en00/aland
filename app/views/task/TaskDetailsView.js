@@ -7,7 +7,7 @@ import Dialog from 'components/shared/dialog';
 
 @connect(state => ({tasks: state.tasks}), mapDispatchToProps)
 @Dialog(<TaskLessonDialog/>)
-class TaskAddView extends Component {
+class TaskDetailsView extends Component {
     render() {
         return <TaskCreation {...this.props}/>;
     }
@@ -17,4 +17,4 @@ function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({...actionCreators, push}, dispatch) };
 }
 
-export default TaskAddView;
+export default TaskDetailsView;

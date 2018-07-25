@@ -12,9 +12,37 @@ import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
 const required = value => (value ? undefined : '不能为空！');
 
 function mapStateToProps(state) {
-    return {
+    const result = {
         fieldValues: getFormValues('trainingDetails')(state)
     };
+    if (R.isEmpty(state.trainings) || !state.trainings?.trainingDetails) {
+        return result;
+    }
+    const values = state.trainings.trainingDetails;
+    const rebuildVaules = Object.keys(values).reduce((map, k) => {
+        if (!values[k]) return map;
+        if (k === 'direction1') {
+            map.direction = [values.direction1, values.direction2];
+        } else if (k === 'manager') {
+            map[k] = {key: values.managerId, label: values.manager};
+        } else if (k === 'cover') {
+            map[k] = [values[k]];
+        } else if (k === 'forms') {
+            map[k] = values[k].split(',');
+        } else if (k === 'receivers') {
+            if (values.targetType === 'USER') {
+                map.persons = values[k].map(item => ({key: item.receiverId, label: item.receiverName}));
+            }
+            if (values.targetType === 'GROUP') {
+                map.userGroupId = values[k].map(item => ({key: item.receiverId, label: item.receiverName}))[0];
+            }
+        } else {
+            map[k] = values[k];
+        }
+        return map;
+    }, {});
+    result.initialValues = rebuildVaules;
+    return result;
 }
 
 @connect(mapStateToProps)
@@ -32,9 +60,13 @@ class TrainingDetails extends Component {
     }
 
     submit = (values) => {
-        const {actions: {createTraining}} = this.props;
+        const {actions: {createTraining, updateTraining}, trainings} = this.props;
+        const isEditable = trainings?.isEditable;
+        const trainningId = trainings?.trainingDetails?.id;
         try {
-            if (values.cover && values.cover[0]) {
+            if (!values.cover || R.isEmpty(values.cover)) {
+                Object.assign(values, {cover: null});
+            } else {
                 Object.assign(values, {cover: values.cover[0]?.response?.locations[0]});
             }
         } catch (error) {
@@ -46,28 +78,35 @@ class TrainingDetails extends Component {
                 map.direction1 = values[k][0];
                 map.direction2 = values[k][1];
             } else if (k === 'forms') {
-                map[k] = values[k].join(',');
+                if (Array.isArray(values[k])) {
+                    map[k] = values[k].join(',');
+                }
             } else if (k === 'manager') {
                 map.managerId = values[k].key;
                 map.manager = values[k].label;
-            } else if (k === 'persons') {
-                if (values.targetType === 'SPECIFIC') {
-                    map.receivers = values[k].map(item => ({receiverId: item.key, receiverName: item.label}));
-                }
+            } else if (k === 'persons' && values.targetType === 'USER') {
+                map.receivers = values[k].map(item => ({receiverId: item.key, receiverName: item.label}));
+            } else if (k === 'userGroupId' && values.targetType === 'GROUP') {
+                map.receivers = [{receiverId: values[k].key, receiverName: values[k].label}];
             } else {
                 map[k] = values[k];
             }
             return map;
         }, {});
 
-        createTraining(params)
-            .then(() => {message.success(`保存培训${values.title}成功！`);})
-            .catch(() => {message.success(`保存培训${values.title}失败！`);});
+        if (isEditable && trainningId) {
+            updateTraining(trainningId, params)
+                .then(() => {message.success(`更新培训${values.title}成功！`);})
+                .catch(() => {message.success(`更新培训${values.title}失败！`);});
+        } else {
+            createTraining(params)
+                .then(() => {message.success(`保存培训${values.title}成功！`);})
+                .catch(() => {message.success(`保存培训${values.title}失败！`);});
+        }
     }
 
     render() {
-        const { submitting, handleSubmit, dispatch, trainings, fieldValues, associations} = this.props;
-        console.log(trainings);
+        const { submitting, handleSubmit, dispatch, fieldValues, associations} = this.props;
         const targetType = fieldValues?.targetType || '';
         const courseDirectionOptions = associations?.courseDirections || [];
         const restManagerValue = () => resetSpecificField(dispatch, 'trainingDetails', 'manager', '');
@@ -209,7 +248,7 @@ class TrainingDetails extends Component {
                     >
                         <Radio key={uuid()} value="ALL">全员</Radio>
                         <Radio key={uuid()} value="GROUP">学习群组</Radio>
-                        <Radio key={uuid()} value="SPECIFIC">指定人员</Radio>
+                        <Radio key={uuid()} value="USER">指定人员</Radio>
                     </Field>
 
                     {
@@ -233,7 +272,7 @@ class TrainingDetails extends Component {
                     }
 
                     {
-                        targetType === 'SPECIFIC' &&
+                        targetType === 'USER' &&
                         <AutoSelectSearch
                             api="/api/users"
                             query="name"

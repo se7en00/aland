@@ -6,7 +6,7 @@ export const IDENTIFIERS = {
 };
 
 export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
-// export const BASE_URL = 'http://172.16.1.33:8080/aland-training';
+// export const BASE_URL = 'http://58.222.218.171:38085/aland-training';
 
 export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -70,7 +70,10 @@ export const DIALOG = {
     CREATE_EXAM: 'createExam',
     COURSE_DIRECTION: 'courseDirection',
     SECURITY_SETTING: 'securitySetting',
-    SECURITY_SETTING_DETAILS: 'securitySettingDetails'
+    SECURITY_SETTING_DETAILS: 'securitySettingDetails',
+    TRAINING_LESSON: 'trainingLesson',
+    TRAINING_LESSON_DETAILS: 'trainingLessonDetails',
+    TASK_LESSONS: 'taskLesson'
 };
 
 export const PANEL_TITLE = {
@@ -82,7 +85,7 @@ export const PANEL_TITLE = {
     USER_GROUP_LIST: '学员群组管理',
     ONLINE_LESSONS: '线上课程库管理',
     ONLINE_LESSONS_ADD: '新建线上课程',
-    ONLINE_LESSONS_DETAILS: '{0}详情',
+    ONLINE_LESSONS_DETAILS: '课程详情({0})',
     ONLINE_LESSONS_POINT: '点内容',
     ONE_CLICK: '一点通管理',
     ONE_CLICK_ADD: '新建一点通',
@@ -101,10 +104,10 @@ export const PANEL_TITLE = {
     NEWS_EDIT: '新闻详情',
     TRAINING_LIST: '培训管理',
     TRAINING_LIST_ADD: '新建培训管理',
-    TRAINING_DETAILS: '培训信息',
+    TRAINING_DETAILS: '培训详情({0})',
     TASK_LIST: '学习任务管理',
     TASK_ADD: '新增学习任务',
-    TASK_DETAIL: '学习任务详情'
+    TASK_DETAIL: '学习任务详情({0})'
 };
 
 export const TAG_CATEGORY = {

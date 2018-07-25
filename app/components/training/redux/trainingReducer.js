@@ -22,7 +22,7 @@ const trainingReducer = typeToReducer({
         }),
         FULFILLED: (state, action) => ({
             ...state,
-            createTraining: action.payload
+            trainingDetails: action.payload
         })
     },
 
@@ -79,6 +79,71 @@ const trainingReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             ...state,
             associations: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_TRAINING_DETAILS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            trainingDetails: action.payload.trainingDetails,
+            isEditable: action.payload.isEditable,
+            lessons: action.payload.lessons,
+            users: action.payload.users
+        })
+    },
+
+    [TYPES.SYNC_RESET_TRAININGS]: (state, action) => ({
+        ...state,
+        trainingDetails: action.payload,
+        isEditable: action.payload,
+        lessons: action.payload,
+        users: action.payload
+    }),
+
+    [TYPES.ASYNC_LOAD_TRAINING_USER_LIST]: (state, action) => ({
+        ...state,
+        users: action.payload
+    }),
+
+    [TYPES.ASYNC_CHECK_IN_TRAINING_USER]: (state, action) => ({
+        ...state,
+        users: action.payload
+    }),
+
+    [TYPES.ASYNC_SAVE_TRAINING_LESSON]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            lessons: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_DELETE_TRAINING_LESSON]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            lessons: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_TRAINING_LESSON_DETAILS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            lessonDetails: action.payload
         })
     }
 }, {});

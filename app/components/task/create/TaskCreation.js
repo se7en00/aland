@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { PANEL_TITLE, PATHNAME, getLinkByName } from 'constants';
+import { PANEL_TITLE} from 'constants';
 import PropTypes from 'prop-types';
-// import { paginationSetting } from 'utils';
+import { format } from 'utils';
 import panelStyle from 'layout/main/Main.scss';
 import Header from '../../shared/panel/PanelHeader';
 import TaskTabs from './TaskTabs';
-
 
 class TaskCreation extends Component {
     static propTypes = {
@@ -15,20 +14,30 @@ class TaskCreation extends Component {
     };
 
     componentDidMount() {
-        this.props.actions.getALLAssociations();
+        const {tasks, actions: {getTaskDetails, getALLAssociations}} = this.props;
+        if (/details$/g.test(location.pathname) && !tasks?.isEditable) {
+            const taskId = location.pathname.match(/(\w)+(?=\/details$)/g)[0];
+            if (taskId) {
+                getTaskDetails(taskId);
+            }
+        }
+        getALLAssociations();
     }
 
-    redirect = () => {
-        const {resetDraftLessons, push} = this.props.actions;
-        resetDraftLessons();
-        push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/additionLesson`);
+    renderHeaderTitle = () => {
+        const {tasks} = this.props;
+        if (tasks?.isEditable) {
+            return format(PANEL_TITLE.TASK_DETAIL, tasks?.taskDetails?.title || '学习任务内容');
+        }
+        return PANEL_TITLE.TASK_ADD;
     }
 
     render() {
         const {tasks, actions, showDialog} = this.props;
+        const title = this.renderHeaderTitle();
         return (
             <Fragment>
-                <Header title={PANEL_TITLE.TASK_ADD}/>
+                <Header title={title}/>
                 <div className={panelStyle.panel__body}>
                     <TaskTabs tasks={tasks} actions={actions} showDialog={showDialog}/>
                 </div>

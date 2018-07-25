@@ -24,9 +24,17 @@ class DateRangeField extends PureComponent {
 
     render() {
         const { RangePicker } = DatePicker;
-        const {allowClear, className} = this.props;
+        const {allowClear, className, input} = this.props;
+        let value;
+        if (!input.value || R.isEmpty(input.value)) {
+            value = [];
+        } else {
+            value = input.value;
+        }
         return (
             <RangePicker
+                defaultValue={value}
+                value={value}
                 className={className}
                 onChange={this.handleChange}
                 allowClear={allowClear}

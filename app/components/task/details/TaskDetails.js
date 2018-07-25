@@ -12,9 +12,37 @@ import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
 const required = value => (value ? undefined : '不能为空！');
 
 function mapStateToProps(state) {
-    return {
+    const result = {
         fieldValues: getFormValues('taskDetails')(state)
     };
+    if (R.isEmpty(state.tasks) || !state.tasks?.taskDetails) {
+        return result;
+    }
+    const values = state.tasks.taskDetails;
+    const rebuildVaules = Object.keys(values).reduce((map, k) => {
+        if (!values[k]) return map;
+        if (k === 'direction1') {
+            map.direction = [values.direction1, values.direction2];
+        } else if (k === 'startDate') {
+            map.limitTime = values[k] ? [moment(values.startDate), moment(values.endDate)] : [];
+        } else if (k === 'manager') {
+            map[k] = {key: values.managerId, label: values.manager};
+        } else if (k === 'forms') {
+            map[k] = values[k].split(',');
+        } else if (k === 'receivers') {
+            if (values.targetType === 'USER') {
+                map.persons = values[k].map(item => ({key: item.receiverId, label: item.receiverName}));
+            }
+            if (values.targetType === 'GROUP') {
+                map.userGroupId = values[k].map(item => ({key: item.receiverId, label: item.receiverName}))[0];
+            }
+        } else {
+            map[k] = values[k];
+        }
+        return map;
+    }, {});
+    result.initialValues = rebuildVaules;
+    return result;
 }
 
 @connect(mapStateToProps)
@@ -28,31 +56,41 @@ class TaskDetails extends Component {
 
 
     submit = (values) => {
-        const {actions: {createTask}} = this.props;
-
+        const {actions: {createTask, updateTask}, tasks} = this.props;
+        const isEditable = tasks?.isEditable;
+        const taskId = tasks?.taskDetails?.id;
         const params = Object.keys(values).reduce((map, k) => {
             if (k === 'limitTime') {
-                // map.startDate = moment(values[k][0]).format(DATE_FORMAT);
-                map[k] = moment(values[k][1]).valueOf();
+                map.startDate = moment(values[k][0]).valueOf();
+                map.endDate = moment(values[k][1]).valueOf();
             } else if (k === 'manager') {
                 map.managerId = values[k].key;
                 map.manager = values[k].label;
-            } else if (k === 'direction') {
-                map.direction1 = values[k][0];
-                map.direction2 = values[k][1];
-            } else if (k === 'persons') {
-                if (values.targetType === 'SPECIFIC') {
-                    map.receivers = values[k].map(item => ({receiverId: item.key, receiverName: item.label}));
+            } else if (k === 'direction' || k === 'direction2') {
+                if (k === 'direction2') {
+                    delete values.direction2;
+                } else {
+                    map.direction1 = values[k][0];
+                    map.direction2 = values[k][1];
                 }
+            } else if (k === 'persons' && values.targetType === 'USER') {
+                map.receivers = values[k].map(item => ({receiverId: item.key, receiverName: item.label}));
+            } else if (k === 'userGroupId' && values.targetType === 'GROUP') {
+                map.receivers = [{receiverId: values[k].key, receiverName: values[k].label}];
             } else {
                 map[k] = values[k];
             }
             return map;
         }, {});
-
-        createTask(params)
-            .then(() => {message.success(`保存学习任务${values.title}成功！`);})
-            .catch(() => {message.success(`保存学习任务${values.title}失败！`);});
+        if (isEditable && taskId) {
+            updateTask(taskId, params)
+                .then(() => {message.success(`更新学习任务${values.title}成功！`);})
+                .catch(() => {message.success(`更新学习任务${values.title}失败！`);});
+        } else {
+            createTask(params)
+                .then(() => {message.success(`保存学习任务${values.title}成功！`);})
+                .catch(() => {message.success(`保存学习任务${values.title}失败！`);});
+        }
     }
 
     render() {
@@ -187,7 +225,7 @@ class TaskDetails extends Component {
                     >
                         <Radio key={uuid()} value="ALL">全员</Radio>
                         <Radio key={uuid()} value="GROUP">学习群组</Radio>
-                        <Radio key={uuid()} value="SPECIFIC">指定人员</Radio>
+                        <Radio key={uuid()} value="USER">指定人员</Radio>
                     </Field>
 
                     {
@@ -211,7 +249,7 @@ class TaskDetails extends Component {
                     }
 
                     {
-                        targetType === 'SPECIFIC' &&
+                        targetType === 'USER' &&
                         <AutoSelectSearch
                             api="/api/users"
                             query="name"

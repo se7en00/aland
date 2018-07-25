@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
-import { DATE_FORMAT, DIALOG, TRAINING_STATUES_MAPPING } from 'constants';
+import {
+    DATE_FORMAT,
+    getLinkByName, PATHNAME,
+    TRAINING_STATUES_MAPPING
+} from 'constants';
 
 class TrainingListTable extends Component {
     static propTypes = {
-        showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
         dataSource: PropTypes.object,
         searchParams: PropTypes.object
@@ -52,7 +55,7 @@ class TrainingListTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.openDialog(record)} ghost>编辑</Button>
+                    <Button size="small" type="primary" onClick={() => this.onEdit(record)} ghost>编辑</Button>
                     <Button size="small" type="primary" onClick={() => this.onPublish(record)} ghost>发布</Button>
                     <Button size="small" type="primary" onClick={() => this.onClose(record)} ghost>关闭</Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
@@ -89,9 +92,13 @@ class TrainingListTable extends Component {
         });
     }
 
-    openDialog = (userGroup) => {
-        const {actions: {getUserGroupDetails}, showDialog} = this.props;
-        getUserGroupDetails(userGroup.id).then(() => showDialog(DIALOG.EDIT_USER_GROUP)());
+    onEdit = (training) => {
+        const {getTrainingDetails, push} = this.props.actions;
+        getTrainingDetails(training.id)
+            .then(() => {
+                push(`${getLinkByName(PATHNAME.PUBLISHED_TRAINING)}/${training.id}/details`);
+            })
+            .catch(error => console.log(error));
     }
 
     componentWillUpdate(nextProps) {

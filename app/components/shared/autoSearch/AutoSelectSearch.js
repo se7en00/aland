@@ -40,8 +40,15 @@ class AutoSelectSearch extends Component {
     autoSearch = (name) => {
         const {api, query} = this.props;
         if (name) {
+            const params = {
+                [query]: name
+            };
+            if (api === '/api/users') {
+                params.isAdmin = 0;
+                params.status = 'ACTIVE';
+            }
             this.setState({ dataSource: [], fetching: true });
-            Axios.get(api, {params: {[query]: name}})
+            Axios.get(api, {params})
                 .then(response => {
                     const {elements = []} = response?.data;
                     this.setState({dataSource: elements, fetching: false});

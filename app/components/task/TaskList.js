@@ -19,7 +19,9 @@ class TaskList extends Component {
     }
 
     redirect = () => {
-        this.props.actions.push(`${getLinkByName(PATHNAME.LEARN_TASK)}/creation`);
+        const {resetTask, push} = this.props.actions;
+        resetTask();
+        push(`${getLinkByName(PATHNAME.LEARN_TASK)}/creation`);
     };
 
     render() {

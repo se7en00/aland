@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { PANEL_TITLE, PATHNAME, getLinkByName } from 'constants';
+import { PANEL_TITLE } from 'constants';
 import PropTypes from 'prop-types';
-// import { paginationSetting } from 'utils';
+import { format } from 'utils';
 import panelStyle from 'layout/main/Main.scss';
 import Header from '../../shared/panel/PanelHeader';
 import TrainingTabs from './TrainingTabs';
@@ -15,20 +15,30 @@ class TrainingCreation extends Component {
     };
 
     componentDidMount() {
-        this.props.actions.getALLAssociations();
+        const {trainings, actions: {getTrainingDetails, getALLAssociations}} = this.props;
+        if (/details$/g.test(location.pathname) && !trainings?.isEditable) {
+            const trainingId = location.pathname.match(/(\w)+(?=\/details$)/g)[0];
+            if (trainingId) {
+                getTrainingDetails(trainingId);
+            }
+        }
+        getALLAssociations();
     }
 
-    redirect = () => {
-        const {resetDraftLessons, push} = this.props.actions;
-        resetDraftLessons();
-        push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/additionLesson`);
+    renderHeaderTitle = () => {
+        const {trainings} = this.props;
+        if (trainings?.isEditable) {
+            return format(PANEL_TITLE.TRAINING_DETAILS, trainings?.trainingDetails?.title || '培训信息');
+        }
+        return PANEL_TITLE.TRAINING_LIST_ADD;
     }
 
     render() {
         const {trainings, actions, showDialog} = this.props;
+        const title = this.renderHeaderTitle();
         return (
             <Fragment>
-                <Header title={PANEL_TITLE.TRAINING_LIST_ADD}/>
+                <Header title={title}/>
                 <div className={panelStyle.panel__body}>
                     <TrainingTabs trainings={trainings} actions={actions} showDialog={showDialog}/>
                 </div>

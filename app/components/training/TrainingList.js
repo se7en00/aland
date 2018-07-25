@@ -36,7 +36,8 @@ class UserGroupList extends Component {
     }
 
     redirect = () => {
-        const {push} = this.props.actions;
+        const {push, resetTrainings} = this.props.actions;
+        resetTrainings();
         push(`${getLinkByName(PATHNAME.PUBLISHED_TRAINING)}/creation`);
     }
 

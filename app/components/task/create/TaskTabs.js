@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tabs, Menu, Dropdown, Button, Icon } from 'antd';
 import uuid from 'uuid/v4';
 import TaskDetails from '../details/TaskDetails';
+import TaskLessons from '../details/TaskLessons';
 
 class TaskTabs extends Component {
     buttonMenu = () => (
@@ -18,31 +19,10 @@ class TaskTabs extends Component {
         </Dropdown>
     );
 
-    initDetailsValues = (values) => {
-        if (!values) return null;
-        const {name, categoryCode, introduce, benefit, cover} = values;
-        const result = {name, categoryCode, introduce, benefit, cover: [cover]};
-        if (values.lecturerId || values.lecturerName) {
-            Object.assign(result, {lecturerId: {key: values.lecturerId, label: values.lecturerName}});
-        }
-        if (values.provideId || values.provide) {
-            Object.assign(result, {provideId: {key: values.provideId, label: values.provide}});
-        }
-        return result;
-    }
-
     render() {
         const TabPane = Tabs.TabPane;
-        const {tasks, tasks: {associations}, actions} = this.props;
-        // const isDisabledTrainings = !trainings?.trainingsDetails;
-        // let options;
-        // if (trainings.courseDirections) {
-        //     options = trainings.courseDirections.map(item => {
-        //         const params = {
-        //             value: item.
-        //         }
-        //     });
-        // }
+        const {tasks, tasks: {associations}, actions, showDialog} = this.props;
+        const isCreated = !tasks?.taskDetails;
         return (
             /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
             <Tabs defaultActiveKey="1">
@@ -53,6 +33,15 @@ class TaskTabs extends Component {
                         associations={associations}
                     />
                 </TabPane>
+
+                <TabPane tab="课件" key="2" disabled={isCreated}>
+                    <TaskLessons
+                        actions={actions}
+                        tasks={tasks}
+                        showDialog={showDialog}
+                        associations={associations}
+                    />
+                </TabPane>
             </Tabs>
         );
     }
@@ -60,7 +49,7 @@ class TaskTabs extends Component {
 
 TaskTabs.propTypes = {
     tasks: PropTypes.object,
-    // showDialog: PropTypes.func,
+    showDialog: PropTypes.func,
     actions: PropTypes.objectOf(PropTypes.func)
 };
 

@@ -22,7 +22,7 @@ const taskReducer = typeToReducer({
         }),
         FULFILLED: (state, action) => ({
             ...state,
-            createTask: action.payload
+            taskDetails: action.payload
         })
     },
 
@@ -85,7 +85,27 @@ const taskReducer = typeToReducer({
             ...state,
             associations: action.payload
         })
-    }
+    },
+
+    //details
+    [TYPES.ASYNC_LOAD_TASK_DETAILS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            taskDetails: action.payload.taskDetails,
+            isEditable: action.payload.isEditable
+        })
+    },
+
+    [TYPES.SYNC_RESET_TASK]: (state, action) => ({
+        ...state,
+        taskDetails: action.payload,
+        isEditable: action.payload
+    })
+
 }, {});
 
 export default taskReducer;

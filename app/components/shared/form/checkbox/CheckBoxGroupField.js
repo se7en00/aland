@@ -28,13 +28,19 @@ class CheckBoxGroupField extends Component {
         const {
             input: {value},
             className,
-            options
+            options = []
         } = this.props;
+        let defaultValue;
+        if (!value || R.isEmpty(value)) {
+            defaultValue = [];
+        } else {
+            defaultValue = value;
+        }
         return (
             <div className={className}>
                 <CheckboxGroup
-                    defaultValue={value}
-                    value={value}
+                    defaultValue={defaultValue}
+                    value={defaultValue}
                     options={options}
                     onChange={this.handleChange}
                 />

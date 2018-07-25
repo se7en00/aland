@@ -17,7 +17,9 @@ let breadcrumbNameMap = {
     '/aland/userManagement/creation': '新建人员',
     '/aland/userManagement/:id/details': '人员信息详情',
     '/aland/publishedTraining/creation': '新建培训内容',
-    '/aland/publishedTraining/:id/details': '培训内容'
+    '/aland/publishedTraining/:id/details': '培训内容',
+    '/aland/taskManagement/creation': '新建学习任务',
+    '/aland/taskManagement/:id/details': '学习任务内容'
     // '/apps/1': 'Application1',
     // '/apps/2': 'Application2',
     // '/apps/1/detail': 'Detail',
