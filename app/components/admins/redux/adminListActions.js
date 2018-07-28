@@ -44,6 +44,13 @@ export const updatePermissions = (userId, permissionsRequest) => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
+export const password = (userId, passwordRequest) => ({
+    type: TYPES.ASYNC_CHANGE_ADMIN_PASSWORD,
+    payload: () => Axios.put(`/api/users/${userId}/password`, passwordRequest)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
 export const resetPassword = (userId) => ({
     type: TYPES.ASYNC_RESET_ADMIN_PASSWORD,
     payload: () => Axios.put(`/api/users/${userId}/resetPassword`)

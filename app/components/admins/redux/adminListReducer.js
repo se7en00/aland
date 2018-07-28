@@ -70,6 +70,17 @@ const adminsReducer = typeToReducer({
         })
     },
 
+    //更新密码
+    [TYPES.ASYNC_CHANGE_ADMIN_PASSWORD]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action?.payload?.response?.data
+        }),
+        FULFILLED: (state) => ({
+            ...state
+        })
+    },
+
     //读取权限
     [TYPES.ASYNC_LOAD_ADMIN_PERMISSIONS]: {
         REJECTED: (state, action) => ({
