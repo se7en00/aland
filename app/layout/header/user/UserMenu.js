@@ -11,15 +11,15 @@ import style from './User.scss';
 import validate from './passwordValidate';
 
 const SubMenu = Menu.SubMenu;
-const {syncGetAssociatedUser, resetPassword} = actionCreators;
+const {syncGetAssociatedUser, password} = actionCreators;
 
-@connect(state => ({initialValues: state.adminList?.editUser}), {syncGetAssociatedUser, logout, resetPassword})
+@connect(state => ({initialValues: state.adminList?.editUser}), {syncGetAssociatedUser, logout, password})
 @reduxForm({form: 'resetSelfPWD', enableReinitialize: true, validate})
 class UserMenu extends Component {
     static propTypes = {
         logout: PropTypes.func,
         syncGetAssociatedUser: PropTypes.func,
-        resetPassword: PropTypes.func,
+        password: PropTypes.func,
         error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
         //redux-form 表单有验证错误为true, 相反为false
         invalid: PropTypes.bool,
@@ -50,7 +50,7 @@ class UserMenu extends Component {
 
     handleSubmit = ({oldPsd, newPsd}) => {
         const { id, loginName } = this.props.initialValues;
-        return this.props.resetPassword(id, {oldPsd, newPsd})
+        return this.props.password(id, {oldPsd, newPsd})
             .then(() => {
                 message.success(`修改${loginName}的密码成功！`);
                 this.handleCancel();

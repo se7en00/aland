@@ -25,6 +25,16 @@ const settingReducer = typeToReducer({
         })
     },
 
+    [TYPES.ASYNC_EDIT_SECRET_LEVEL]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
+        })
+    },
+
     [TYPES.ASYNC_DELETE_TYPE]: {
         REJECTED: (state, action) => ({
             ...state,

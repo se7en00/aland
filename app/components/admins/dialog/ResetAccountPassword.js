@@ -42,8 +42,8 @@ class ResetUserPassword extends Component {
 
     handleSubmit({oldPsd, newPsd}) {
         const { id, loginName } = this.props.initialValues;
-        const { resetPassword } = this.props.actions;
-        return resetPassword(id, {oldPsd, newPsd})
+        const { password } = this.props.actions;
+        return password(id, {oldPsd, newPsd})
             .then(() => {
                 message.success(`修改${loginName}的密码成功！`);
                 this.props.hideDialog(DIALOG.RESET_USER_PASSWORD)();

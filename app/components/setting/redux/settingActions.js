@@ -15,6 +15,13 @@ export const createSecretLevel = (params) => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
+export const editSecretLevel = (id, params) => ({
+    type: TYPES.ASYNC_EDIT_SECRET_LEVEL,
+    payload: () => Axios.put(`/api/dictionarys/${id}`, params)
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
 export const deleteType = (id, dicType) => ({
     type: TYPES.ASYNC_DELETE_TYPE,
     payload: () => Axios.delete(`/api/dictionarys/${id}`, {params: {dicType}})

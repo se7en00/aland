@@ -13,6 +13,7 @@ const mapStateToProp = (state) => {
     if (R.isEmpty(state.setting) || !state?.setting?.typeDetails) return null;
     const { typeDetails } = state.setting;
     return {
+        id: typeDetails.id,
         initialValues: {
             code: typeDetails.code,
             name: typeDetails.name.split(',')
@@ -37,23 +38,20 @@ class SecurityDialog extends Component {
     }
 
     submit= (values) => {
-        const {actions: {createSecretLevel, getList}} = this.props;
+        const {actions: {editSecretLevel, getList}} = this.props;
         const params = {
-            dicType: 'LIMIT_TYPE',
-            dictionaryCreates: [{
-                name: values.name.join(','),
-                code: values.code
-            }]
+            name: values.name.join(','),
+            code: values.code
         };
-        return createSecretLevel(params)
+        return editSecretLevel(this.props.id, params)
             .then(() => {
-                message.success(`修改保密权限种类${values.title}成功！`);
+                message.success(`修改保密权限种类${values.code}成功！`);
                 this.closeDialog();
                 getList({pageSize: paginationSetting.pageSize, dicType: 'LIMIT_TYPE'});
             })
             .catch(error => {
                 throw new SubmissionError({
-                    _error: error?.errorMessage || `修改保密权限种类${values.title}失败！`
+                    _error: error?.errorMessage || `修改保密权限种类${values.code}失败！`
                 });
             });
     }
@@ -106,6 +104,7 @@ class SecurityDialog extends Component {
 }
 
 SecurityDialog.propTypes = {
+    id: PropTypes.string,
     hideDialog: PropTypes.func,
     handleSubmit: PropTypes.func,
     visible: PropTypes.bool,
