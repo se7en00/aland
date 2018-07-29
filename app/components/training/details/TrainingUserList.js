@@ -49,9 +49,9 @@ class TrainingUserList extends Component {
         }, {
             title: '状态',
             align: 'center',
-            dataIndex: 'status',
+            dataIndex: 'checkin',
             render: (text, record) => {
-                if (record.status === 'UNHANDLE') {
+                if (record.checkin === '0') {
                     return '未签到';
                 }
                 return '已签到';

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Popconfirm, Button, message } from 'antd';
+import { Table, Button, message, Popconfirm } from 'antd';
 import { rebuildDataWithKey } from 'utils/index';
-import { DATE_FORMAT, DIALOG } from 'constants/index';
+import { BASE_URL} from 'constants';
 
 class TaskLessTable extends Component {
     constructor(props) {
         super(props);
-        this.elements = rebuildDataWithKey(props.dataSource?.elements);
+        this.elements = rebuildDataWithKey(props.dataSource);
 
         this.columns = [{
             title: '序号',
@@ -15,31 +15,38 @@ class TaskLessTable extends Component {
             dataIndex: 'index',
             width: 70
         }, {
-            title: '培训标题',
+            title: '封面',
             align: 'center',
-            dataIndex: 'title'
+            dataIndex: 'cover',
+            width: 200,
+            render: (text, record) => {
+                if (record.cover) {
+                    const domain = new URL(BASE_URL).origin;
+                    const imgUrl = `${domain}/uploads${record.cover}`;
+                    return (
+                        <div style={{maxWidth: '100px', margin: '0 auto'}}>
+                            <img src={imgUrl} style={{ width: '100px', height: '100px' }} alt="img"/>
+                        </div>
+                    );
+                }
+            }
         }, {
-            title: '培训讲师',
+            title: '名称',
             align: 'center',
-            dataIndex: 'lecturer'
+            dataIndex: 'name'
         }, {
-            title: '起止时间',
+            title: '课件类型',
             align: 'center',
-            dataIndex: 'enddate',
-            render: (text, record) => moment(record.enddate).format(DATE_FORMAT)
-        }, {
-            title: '培训地址',
-            align: 'center',
-            dataIndex: 'address'
+            dataIndex: 'lecturer',
+            render: (text, record) => (record.name ? '在线课程' : '一点通')
         }, {
             title: '操作',
             align: 'center',
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button title="内容修改" onClick={() => this.onEditPoint(record)} type="primary" ghost><i className="far fa-edit"/></Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
-                        <Button type="primary" ghost><i className="far fa-trash-alt"/></Button>
+                        <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
                 </div>
             )
@@ -48,25 +55,23 @@ class TaskLessTable extends Component {
 
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
-            this.elements = rebuildDataWithKey(nextProps.dataSource?.elements);
+            this.elements = rebuildDataWithKey(nextProps.dataSource);
         }
     }
 
-    onEditPoint = (record) => {
-        const {showDialog, actions: {getTrainingLessonDetails}} = this.props;
-        getTrainingLessonDetails(record.trainingId, record.id).then(() => {
-            showDialog(DIALOG.TRAINING_LESSON_DETAILS)();
-        });
-    };
-
     onDelete = (record) => {
-        const {actions: {deleteTrainingLesson}} = this.props;
-        deleteTrainingLesson(record.trainingId, record.id)
+        const {dataSource, taskId} = this.props;
+        const restLessons = dataSource
+            .filter(lesson => lesson.id !== record.id)
+            .map(lesson => ({lessionId: lesson.id, type: lesson.name ? 'COURSE' : 'PEDIA'}));
+
+        const {actions: {saveTaskLessons}} = this.props;
+        saveTaskLessons(taskId, restLessons)
             .then(() => {
-                message.success(`删除课时：${record.title}成功！`);
+                message.success(`删除课时：${record.name || record.subject}成功！`);
             })
             .catch(() => {
-                message.error(`删除课时：${record.title}失败！`);
+                message.error(`删除课时：${record.name || record.subject}失败！`);
             });
     }
 
@@ -85,9 +90,10 @@ class TaskLessTable extends Component {
 }
 
 TaskLessTable.propTypes = {
-    showDialog: PropTypes.func,
+    // showDialog: PropTypes.func,
     actions: PropTypes.objectOf(PropTypes.func),
-    dataSource: PropTypes.object
+    dataSource: PropTypes.array,
+    taskId: PropTypes.string
 };
 
 export default TaskLessTable;

@@ -9,7 +9,8 @@ class CheckboxField extends Component {
         input: PropTypes.object,
         className: PropTypes.string,
         defaultChecked: PropTypes.bool,
-        checked: PropTypes.bool
+        checked: PropTypes.bool,
+        children: PropTypes.node
     }
 
     handleChange = (e) => {
@@ -20,17 +21,21 @@ class CheckboxField extends Component {
 
     render() {
         const {
+            input: {value},
             className,
             defaultChecked,
-            checked
+            checked,
+            children
         } = this.props;
         return (
             <div className={className}>
                 <Checkbox
-                    checked={checked}
+                    checked={checked || value}
                     defaultChecked={defaultChecked}
                     onChange={this.handleChange}
-                />
+                >
+                    {children}
+                </Checkbox>
             </div>
         );
     }

@@ -92,7 +92,8 @@ const trainingReducer = typeToReducer({
             trainingDetails: action.payload.trainingDetails,
             isEditable: action.payload.isEditable,
             lessons: action.payload.lessons,
-            users: action.payload.users
+            users: action.payload.users,
+            exams: action.payload.exams
         })
     },
 
@@ -101,13 +102,33 @@ const trainingReducer = typeToReducer({
         trainingDetails: action.payload,
         isEditable: action.payload,
         lessons: action.payload,
-        users: action.payload
+        users: action.payload,
+        exams: action.payload
     }),
 
-    [TYPES.ASYNC_LOAD_TRAINING_USER_LIST]: (state, action) => ({
-        ...state,
-        users: action.payload
-    }),
+
+    [TYPES.ASYNC_UPDATE_TRAINING_EXAMS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            trainingDetails: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_TRAINING_USER_LIST]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            users: action.payload
+        })
+    },
+
 
     [TYPES.ASYNC_CHECK_IN_TRAINING_USER]: (state, action) => ({
         ...state,
@@ -144,6 +165,112 @@ const trainingReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             ...state,
             lessonDetails: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_LIB_EXAMS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            libExams: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_SAVE_SELECTED_LIB_EXAMS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            exams: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_CREATE_CUSTOMIZE_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            exams: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_START_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            exams: action.payload
+        })
+    },
+
+
+    [TYPES.ASYNC_PAUSE_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            exams: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_CATEGORIES]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            categoryList: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_DELETE_EXAM]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            exams: action.payload
+        })
+    },
+
+    [TYPES.SYNC_GET_SELECTED_LIB_EXAMS]: (state, action) => ({
+        ...state,
+        selectedLibExams: action.payload
+    }),
+
+
+    [TYPES.ASYNC_LOAD_EXAM_DETAILS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            questionDetails: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_EXAM_USER_LIST]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            userList: action.payload
         })
     }
 }, {});

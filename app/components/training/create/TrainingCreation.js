@@ -15,7 +15,7 @@ class TrainingCreation extends Component {
     };
 
     componentDidMount() {
-        const {trainings, actions: {getTrainingDetails, getALLAssociations}} = this.props;
+        const {trainings, actions: {getTrainingDetails, getALLAssociations, getCategories}} = this.props;
         if (/details$/g.test(location.pathname) && !trainings?.isEditable) {
             const trainingId = location.pathname.match(/(\w)+(?=\/details$)/g)[0];
             if (trainingId) {
@@ -23,6 +23,7 @@ class TrainingCreation extends Component {
             }
         }
         getALLAssociations();
+        getCategories();
     }
 
     renderHeaderTitle = () => {

@@ -6,7 +6,8 @@ import uuid from 'uuid/v4';
 import { renderOptions } from 'constants';
 import { resetSpecificField } from 'utils';
 import { connect } from 'react-redux';
-import { renderTextField, renderQuill, renderRadioGroupField, renderCascaderField, renderSelectField, renderDateRangeField } from '../../shared/form';
+import { renderTextField, renderQuill, renderRadioGroupField, renderCascaderField,
+    renderSelectField, renderDateRangeField, renderCheckboxField, renderSwitch } from '../../shared/form';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
 
 const required = value => (value ? undefined : '不能为空！');
@@ -36,6 +37,8 @@ function mapStateToProps(state) {
             if (values.targetType === 'GROUP') {
                 map.userGroupId = values[k].map(item => ({key: item.receiverId, label: item.receiverName}))[0];
             }
+        } else if (k === 'summaryOn' || k === 'surveyOn' || k === 'ccLeader') {
+            map[k] = values[k] === 'true';
         } else {
             map[k] = values[k];
         }
@@ -275,8 +278,42 @@ class TaskDetails extends Component {
                         component={renderQuill}
                     />
 
+                    <Field
+                        name="summaryOn"
+                        className="col-md-6 col-lg-6 u-push-right-xs"
+                        rowClassName="inputRow"
+                        component={renderSwitch}
+                        checkedChildren="开启"
+                        unCheckedChildren="关闭"
+                        defaultChecked
+                        label="培训小结"
+                        title="培训小结"
+                    />
+
+                    <Field
+                        className="col-md-6 col-lg-6 u-push-right-xs"
+                        rowClassName="inputRow"
+                        name="ccLeader"
+                        defaultChecked={false}
+                        component={renderCheckboxField}
+                        type="text"
+                        label="抄送领导"
+                    />
+
+                    <Field
+                        name="surveyOn"
+                        className="col-md-8 col-lg-6 u-push-right-xs"
+                        rowClassName="inputRow"
+                        component={renderSwitch}
+                        checkedChildren="开启"
+                        unCheckedChildren="关闭"
+                        defaultChecked
+                        label="课后问卷"
+                        title="课后满意度问卷"
+                    />
+
                     <div className="row inputRow">
-                        <div className="col-md-8 col-lg-6 offset-md-2 offset-lg-1 u-text-right">
+                        <div className="col-md-8 col-lg-6 offset-md-2 offset-lg-1">
                             <Button htmlType="submit" loading={submitting} type="primary" className="editable-add-btn">保存</Button>
                         </div>
                     </div>

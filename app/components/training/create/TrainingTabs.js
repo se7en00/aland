@@ -5,6 +5,7 @@ import uuid from 'uuid/v4';
 import TrainingDetails from '../details/TrainingDetails';
 import Lessons from '../details/Lessons';
 import TrainingUserList from '../details/TrainingUserList';
+import TrainingQuizzes from '../details/TrainingQuizzes';
 
 class TrainingTabs extends Component {
     buttonMenu = () => (
@@ -19,6 +20,18 @@ class TrainingTabs extends Component {
             <Button type="primary" icon="eye-o">预览 <Icon type="down"/></Button>
         </Dropdown>
     );
+
+    initExamValues = (values) => {
+        if (!values) return null;
+        const {summaryOn = 'false', surveyOn = 'false', ccLeader = 'false', examAmount = '', examPassRate = ''} = values;
+        return {
+            summaryOn: summaryOn === 'true',
+            surveyOn: surveyOn === 'true',
+            ccLeader: ccLeader === 'true',
+            examAmount,
+            examPassRate
+        };
+    }
 
     render() {
         const TabPane = Tabs.TabPane;
@@ -44,9 +57,12 @@ class TrainingTabs extends Component {
                     />
                 </TabPane>
                 <TabPane tab="测试题" key="3" disabled={isCreated}>
-                    <TrainingDetails
+                    <TrainingQuizzes
+                        examInfoList={trainings?.exams}
+                        showDialog={showDialog}
                         actions={actions}
                         trainings={trainings}
+                        initialValues={this.initExamValues(trainings?.trainingDetails)}
                     />
                 </TabPane>
                 {

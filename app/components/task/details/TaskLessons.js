@@ -5,18 +5,34 @@ import { DIALOG } from 'constants';
 import TaskLessTable from './TaskLessTable';
 
 class TaskLessons extends Component {
+    componentDidMount() {
+        const {actions: {loadRelatedLessons}} = this.props;
+        loadRelatedLessons();
+    }
+
     render() {
-        const {showDialog, actions, lessons} = this.props;
-        const hasLessons = !!lessons;
+        const {showDialog, actions, tasks} = this.props;
+        let taskId;
+        let lessons = [];
+        if (tasks?.taskDetails) {
+            taskId = tasks.taskDetails.id;
+            if (tasks.taskDetails.courses && tasks.taskDetails.courses.length > 0) {
+                lessons = lessons.concat(tasks.taskDetails.courses);
+            }
+
+            if (tasks.taskDetails.pedias && tasks.taskDetails.pedias.length > 0) {
+                lessons = lessons.concat(tasks.taskDetails.pedias);
+            }
+        }
         return (
             <form>
                 <div className="row inputRow">
                     <div className="col-md-8 col-lg-6">
-                        <Button htmlType="button" onClick={showDialog(DIALOG.TRAINING_LESSON)} type="primary" ghost>添加课件</Button>
+                        <Button htmlType="button" onClick={showDialog(DIALOG.TASK_LESSONS)} type="primary" ghost>添加课件</Button>
                     </div>
                 </div>
                 {
-                    hasLessons && <TaskLessTable showDialog={showDialog} actions={actions} dataSource={lessons}/>
+                    lessons.length > 0 && <TaskLessTable showDialog={showDialog} taskId={taskId} actions={actions} dataSource={lessons}/>
                 }
             </form>
         );
@@ -25,7 +41,7 @@ class TaskLessons extends Component {
 
 TaskLessons.propTypes = {
     showDialog: PropTypes.func,
-    lessons: PropTypes.object,
+    tasks: PropTypes.object,
     actions: PropTypes.objectOf(PropTypes.func)
 };
 

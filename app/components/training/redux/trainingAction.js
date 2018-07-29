@@ -101,7 +101,24 @@ export const getTrainingDetails = (trainingId) => ({
         if (users && users.elements.length > 0) {
             result.users = users;
         }
+
+        const exams = await Axios.get(`/api/trainings/${trainingId}/exams`, {params: {size: 2000}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        if (exams) {
+            result.exams = exams;
+        }
         return result;
+    }
+});
+
+export const saveTrainingsExamConfig = (trainingId, examParams) => ({
+    type: TYPES.ASYNC_UPDATE_TRAINING_EXAMS,
+    async payload() {
+        const training = await Axios.get(`/api/trainings/${trainingId}`).then(response => response.data);
+        Object.assign(training, examParams);
+        const trainingDetails = await Axios.put(`/api/trainings/${trainingId}`, training).then(response => response.data);
+        return trainingDetails;
     }
 });
 
@@ -170,5 +187,105 @@ export const checkIn = ({userId, trainingId, ...rest}) => ({
             return Promise.reject(error?.response?.data);
         }
     }
+});
+
+export const getLibExams = (...params) => ({
+    type: TYPES.ASYNC_LOAD_LIB_EXAMS,
+    payload: () => Axios.get('/api/exams', {params: Object.assign({size: paginationSetting.pageSize}, ...params)})
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const getSelectedLibExam = (exams) => ({
+    type: TYPES.SYNC_GET_SELECTED_LIB_EXAMS,
+    payload: exams
+});
+
+export const saveSelectedLibExams = (trainingId, selectedLibExams) => dispatch => {
+    const allPromis = selectedLibExams.map(libExam =>
+        Axios.post(`/api/trainings/${trainingId}/exams`, {examId: libExam.id})
+            .then(response => response.data)
+            .catch(error => error?.response?.data));
+    return dispatch({
+        type: TYPES.ASYNC_SAVE_SELECTED_LIB_EXAMS,
+        async payload() {
+            await Promise.all(allPromis);
+            const exams = await Axios.get(`/api/trainings/${trainingId}/exams`, {params: {size: 2000}})
+                .then(response => response.data);
+            return exams;
+        }
+    });
+};
+
+export const getCategories = () => ({
+    type: TYPES.ASYNC_LOAD_CATEGORIES,
+    payload: () => Axios.get('/api/dictionarys/dicType/CATEGORY')
+        .then(response => {
+            const { data = [] } = response;
+            return data.map(item => ({name: item.name, code: item.code}));
+        })
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const createCustomizeExam = (trainingId, params) => ({
+    type: TYPES.ASYNC_CREATE_CUSTOMIZE_EXAM,
+    async payload() {
+        const newExam = await Axios.post('/api/exams', params)
+            .then(response => response.data);
+        await Axios.post(`/api/trainings/${trainingId}/exams`, {examId: newExam.id})
+            .then(response => response.data);
+        const exams = await Axios.get(`/api/trainings/${trainingId}/exams`, {params: {size: 2000}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        return exams;
+    }
+});
+
+
+export const startExam = (trainingId, examId) => ({
+    type: TYPES.ASYNC_START_EXAM,
+    async payload() {
+        await Axios.put(`/api/trainings/${trainingId}/exams/${examId}/start`);
+        const exams = await Axios.get(`/api/trainings/${trainingId}/exams`, {params: {size: 2000}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        return exams;
+    }
+});
+
+export const pauseExam = (trainingId, examId) => ({
+    type: TYPES.ASYNC_PAUSE_EXAM,
+    async payload() {
+        await Axios.put(`/api/trainings/${trainingId}/exams/${examId}/pause`);
+        const exams = await Axios.get(`/api/trainings/${trainingId}/exams`, {params: {size: 2000}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        return exams;
+    }
+});
+
+export const deleteExam = (trainingId, examId) => ({
+    type: TYPES.ASYNC_DELETE_EXAM,
+    async payload() {
+        await Axios.delete(`/api/trainings/${trainingId}/exams/${examId}`);
+        const exams = await Axios.get(`/api/trainings/${trainingId}/exams`, {params: {size: 2000}})
+            .then(response => response.data)
+            .catch((error) => Promise.reject(error?.response?.data));
+        return exams;
+    }
+});
+
+export const getExamDetails = (examId) => ({
+    type: TYPES.ASYNC_LOAD_EXAM_DETAILS,
+    payload: () => Axios.get(`/api/exams/${examId}`)
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const getExamUserList = (trainingId, examId) => ({
+    type: TYPES.ASYNC_LOAD_EXAM_USER_LIST,
+    payload: () => Axios.get('/api/users/ALL/exams', {params: {relativeId: trainingId, examId}})
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
 });
 

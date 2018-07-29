@@ -55,26 +55,6 @@ const taskReducer = typeToReducer({
             directions: action.payload
         })
     },
-    [TYPES.ASYNC_LOAD_COURSES]: {
-        REJECTED: (state, action) => ({
-            ...state,
-            error: action.payload
-        }),
-        FULFILLED: (state, action) => ({
-            ...state,
-            onlineLessons: action.payload
-        })
-    },
-    [TYPES.ASYNC_LOAD_PEDIAS]: {
-        REJECTED: (state, action) => ({
-            ...state,
-            error: action.payload
-        }),
-        FULFILLED: (state, action) => ({
-            ...state,
-            oneClicks: action.payload
-        })
-    },
 
     [TYPES.ASYNC_TASK_ASSOCIATIONS]: {
         REJECTED: (state, action) => ({
@@ -104,7 +84,73 @@ const taskReducer = typeToReducer({
         ...state,
         taskDetails: action.payload,
         isEditable: action.payload
-    })
+    }),
+
+    [TYPES.ASYNC_LOAD_RELATED_LESSONS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            ...action.payload
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_RELATED_ONLINELESSONS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            onlineLessons: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_LOAD_RELATED_ONECLICK]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            oneClicks: action.payload
+        })
+    },
+
+    //搜索
+    [TYPES.SYNC_SEARCH_PARAMS]: (state, action) => ({
+        ...state,
+        searchParams: action.payload
+    }),
+
+    [TYPES.SYNC_SELECTED_LESSONS]: (state, action) => ({
+        ...state,
+        ...action.payload
+    }),
+
+    [TYPES.ASYNC_LOAD_CATEGORIES]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            categoryList: action.payload
+        })
+    },
+
+    [TYPES.ASYNC_SAVE_TASK_LESSONS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            taskDetails: action.payload
+        })
+    }
 
 }, {});
 

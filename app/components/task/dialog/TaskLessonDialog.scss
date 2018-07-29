@@ -1,11 +1,5 @@
-:global .task-lessons-dialog-row {
-    font-size: 12px;
-    height: 20px;
-    line-height: 20px;
-    td, th {
-        padding: 4px 0 !important;
+.lessonDialog {
+    :global(.ant-modal-header) {
+       display: none !important;
     }
-}
-:global .task-lessons-dialog-action {
-    text-align: right;
 }

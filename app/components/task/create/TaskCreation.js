@@ -14,7 +14,7 @@ class TaskCreation extends Component {
     };
 
     componentDidMount() {
-        const {tasks, actions: {getTaskDetails, getALLAssociations}} = this.props;
+        const {tasks, actions: {getTaskDetails, getALLAssociations, getCategories}} = this.props;
         if (/details$/g.test(location.pathname) && !tasks?.isEditable) {
             const taskId = location.pathname.match(/(\w)+(?=\/details$)/g)[0];
             if (taskId) {
@@ -22,6 +22,7 @@ class TaskCreation extends Component {
             }
         }
         getALLAssociations();
+        getCategories();
     }
 
     renderHeaderTitle = () => {

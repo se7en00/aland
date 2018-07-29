@@ -37,30 +37,64 @@ export const loadDirections = () => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const loadOnlineLessons = () => ({
-    type: TYPES.ASYNC_LOAD_COURSES,
-    payload: () => Axios.get('/api/courses', {params: {size: 1000}})
-        .then((response) => {
-            const { data: { elements } } = response;
-            return elements.map((item, idx) => {
-                item.index = idx + 1;
-                return item;
-            });
-        })
+
+export const loadRelatedLessons = (pageSize = 10, page) => {
+    const allPromises = [
+        Axios.get('/api/courses', {params: {size: pageSize, page}})
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data)),
+        Axios.get('/api/pedias', {params: {size: pageSize, page}})
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data))
+    ];
+
+    return {
+        type: TYPES.ASYNC_LOAD_RELATED_LESSONS,
+        payload: Promise.all(allPromises).then(result => ({
+            onlineLessons: result[0],
+            oneClicks: result[1]
+        })).catch(error => Promise.reject(error?.response?.data))
+    };
+};
+
+export const searchOnlineLessons = ({pageSize = 10, ...rest}) => ({
+    type: TYPES.ASYNC_LOAD_RELATED_ONLINELESSONS,
+    payload: () => Axios.get('/api/courses', {params: {size: pageSize, ...rest}})
+        .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const loadOneClicks = () => ({
-    type: TYPES.ASYNC_LOAD_PEDIAS,
-    payload: () => Axios.get('/api/pedias', {params: {size: 1000}})
-        .then((response) => {
-            const { data: { elements } } = response;
-            return elements.map((item, idx) => {
-                item.index = idx + 1;
-                return item;
-            });
-        })
+export const searchOneClicks = ({pageSize = 10, ...rest}) => ({
+    type: TYPES.ASYNC_LOAD_RELATED_ONECLICK,
+    payload: () => Axios.get('/api/pedias', {params: {size: pageSize, ...rest}})
+        .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
+});
+
+
+export const setSearchParamsToRedux = (params) => ({
+    type: TYPES.SYNC_SEARCH_PARAMS,
+    payload: params
+});
+
+export const selectedLessons = (lessons, type) => ({
+    type: TYPES.SYNC_SELECTED_LESSONS,
+    payload: {[`${type}Selected`]: lessons}
+});
+
+export const saveTaskLessons = (taskId, lessons) => ({
+    type: TYPES.ASYNC_SAVE_TASK_LESSONS,
+    async payload() {
+        try {
+            const task = await Axios.get(`/api/tasks/${taskId}`).then(response => response.data);
+            task.lessions = lessons;
+            await Axios.put(`/api/tasks/${taskId}`, task).then(response => response.data);
+            const updatedTask = await Axios.get(`/api/tasks/${taskId}`).then(response => response.data);
+            return updatedTask;
+        } catch (error) {
+            return Promise.reject(error?.response?.data);
+        }
+    }
 });
 
 export const getALLAssociations = () => {
@@ -95,12 +129,11 @@ export const getALLAssociations = () => {
 };
 
 
-export const getTaskDetails = (trainingId) => ({
+export const getTaskDetails = (taskId) => ({
     type: TYPES.ASYNC_LOAD_TASK_DETAILS,
     async payload() {
-        const task = await Axios.get(`/api/tasks/${trainingId}`).then(response => response.data);
+        const task = await Axios.get(`/api/tasks/${taskId}`).then(response => response.data);
         const result = {taskDetails: task, isEditable: true};
-
         return result;
     }
 });
@@ -108,4 +141,15 @@ export const getTaskDetails = (trainingId) => ({
 export const resetTask = () => ({
     type: TYPES.SYNC_RESET_TASK,
     payload: null
+});
+
+
+export const getCategories = () => ({
+    type: TYPES.ASYNC_LOAD_CATEGORIES,
+    payload: () => Axios.get('/api/dictionarys/dicType/CATEGORY')
+        .then(response => {
+            const { data = [] } = response;
+            return data.map(item => ({name: item.name, code: item.code}));
+        })
+        .catch(error => Promise.reject(error?.response?.data))
 });

@@ -1,0 +1,8 @@
+@import "~SCSS_PATH/modules";
+
+.traningExamContainer {
+    align-items: flex-start !important;
+    :global(.ant-list-item) {
+        padding-top: 0;
+    }
+}

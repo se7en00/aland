@@ -5,7 +5,7 @@ import { DIALOG, renderOptions } from 'constants';
 import { Modal, Button, message} from 'antd';
 import { resetSpecificField } from 'utils';
 import { connect } from 'react-redux';
-import { renderTextField, renderDateTimeField } from '../../shared/form';
+import { renderTextField, renderDateRangeField } from '../../shared/form';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
 import validate from './validate';
 
@@ -33,6 +33,9 @@ class LessonDialog extends Component {
         const params = Object.keys(values).reduce((map, k) => {
             if (k === 'lecturer') {
                 map[k] = values[k].label;
+            } else if (k === 'limitTime') {
+                map.startDate = moment(values[k][0]).valueOf();
+                map.endDate = moment(values[k][1]).valueOf();
             } else {
                 map[k] = values[k];
             }
@@ -53,7 +56,7 @@ class LessonDialog extends Component {
     render() {
         const {submitting, handleSubmit, visible, width, dispatch, error} = this.props;
         const restLecturerValue = () => resetSpecificField(dispatch, DIALOG.TRAINING_LESSON, 'lecturer', '');
-        const restRangeDateTime = () => resetSpecificField(dispatch, DIALOG.TRAINING_LESSON, 'enddate', '');
+        const restRangeDateTime = () => resetSpecificField(dispatch, DIALOG.TRAINING_LESSON, 'limitTime', '');
         return (
             <Modal
                 visible={visible}
@@ -94,15 +97,14 @@ class LessonDialog extends Component {
                             renderOptions={renderOptions('id', 'name')}
                         />
 
-
                         <Field
                             labelClassName="col-md-2"
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
-                            name="enddate"
+                            name="limitTime"
                             allowClear={true}
                             resetSelectValue={restRangeDateTime}
-                            component={renderDateTimeField}
+                            component={renderDateRangeField}
                             label="起止时间"
                         />
 
