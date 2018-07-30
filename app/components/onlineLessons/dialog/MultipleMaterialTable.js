@@ -7,7 +7,7 @@ class MultipleMaterialTable extends Component {
     static propTypes = {
         onChange: PropTypes.func,
         dataSource: PropTypes.array,
-        selectedKeys: PropTypes.string
+        selectedKeys: PropTypes.array
     }
 
     constructor(props) {
@@ -40,7 +40,7 @@ class MultipleMaterialTable extends Component {
 
     componentWillUpdate(nextProps) {
         if (nextProps.selectedKeys) {
-            this.rowSelection.selectedRowKeys = [nextProps.selectedKeys];
+            this.rowSelection.selectedRowKeys = nextProps.selectedKeys;
         }
         if (nextProps.dataSource) {
             this.elements = rebuildDataWithKey(nextProps.dataSource);

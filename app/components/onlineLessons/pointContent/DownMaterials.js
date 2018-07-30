@@ -8,7 +8,7 @@ class DownMaterials extends Component {
     static propTypes = {
         point: PropTypes.object,
         showDialog: PropTypes.func,
-        materialsList: PropTypes.array,
+        materialsList: PropTypes.object,
         actions: PropTypes.objectOf(PropTypes.func)
     }
 
@@ -24,7 +24,7 @@ class DownMaterials extends Component {
 
     render() {
         const {point, materialsList, showDialog, actions} = this.props;
-        const hasMterialsList = materialsList && materialsList.length > 0;
+        const hasMterialsList = materialsList && materialsList.elements.length > 0;
         return (
             <Fragment>
                 <div className="row inputRow">
@@ -38,6 +38,7 @@ class DownMaterials extends Component {
                         courseId={point?.pointContent?.courseId}
                         pointId={point?.pointContent?.pointId}
                         actions={actions}
+                        type="DL"
                         showDialog={showDialog}
                         dataSource={materialsList}
                     />

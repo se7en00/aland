@@ -14,6 +14,16 @@ class PointContentTab extends Component {
         point: PropTypes.object
     }
 
+    handleChange = (key) => {
+        if (key === '4') {
+            this.props.actions.setMaterialsType('OL');
+        }
+
+        if (key === '5') {
+            this.props.actions.setMaterialsType('DL');
+        }
+    }
+
     initStudyContentsValues = (point) => {
         const {pointContent} = point;
         switch (pointContent?.type) {
@@ -91,7 +101,7 @@ class PointContentTab extends Component {
                     <DownMaterials
                         point={point}
                         actions={actions}
-                        materialsList={point?.olMaterials}
+                        materialsList={point?.dlMaterials}
                         showDialog={showDialog}
                     />
                 </TabPane>

@@ -13,6 +13,7 @@ const mapStateToProp = (state) => {
     return {
         courseId,
         pointId,
+        materialsType: state.point?.materialsType,
         materials: state.point?.materials,
         selectedMultipleMaterials: state.point?.selectedMultipleMaterials
     };
@@ -34,13 +35,19 @@ class MultipleMaterialDialog extends Component {
     }
 
     onSelectChange = (selectedRowKeys, selectedRows) => {
-        const {actions: {getSelectedMultiMaterials}} = this.props;
-        getSelectedMultiMaterials(selectedRows);
+        const {actions: {getSelectedMultiMaterials}, materialsType} = this.props;
+        getSelectedMultiMaterials(selectedRows, materialsType);
     }
 
     saveSelectedMaterials = () => {
         const {courseId, pointId, selectedMultipleMaterials, actions: {saveSelectedMultiMaterials}, dispatch, hideDialog} = this.props;
-        return saveSelectedMultiMaterials(courseId, pointId, selectedMultipleMaterials)
+        let type;
+        let ids;
+        if (selectedMultipleMaterials && !R.isEmpty(selectedMultipleMaterials)) {
+            type = Object.keys(selectedMultipleMaterials)[0];
+            ids = selectedMultipleMaterials[type].map(item => item.id);
+        }
+        return saveSelectedMultiMaterials(courseId, pointId, ids, type)
             .then(() => {
                 dispatch(clearSubmitErrors(DIALOG.MULTIPLE_MATERIAL));
                 dispatch(reset(DIALOG.MULTIPLE_MATERIAL));
@@ -50,7 +57,16 @@ class MultipleMaterialDialog extends Component {
 
     render() {
         const {submitting, handleSubmit, visible, width, error, materials, selectedMultipleMaterials} = this.props;
-        const selectedKeys = selectedMultipleMaterials ? selectedMultipleMaterials.key : '';
+        let keys = [];
+        if (selectedMultipleMaterials) {
+            if (selectedMultipleMaterials?.OL) {
+                keys = selectedMultipleMaterials.OL.map(item => item.key);
+            }
+
+            if (selectedMultipleMaterials?.DL) {
+                keys = selectedMultipleMaterials.DL.map(item => item.key);
+            }
+        }
         return (
             <Modal
                 visible={visible}
@@ -58,7 +74,7 @@ class MultipleMaterialDialog extends Component {
                 title="素材库"
                 onCancel={this.closeDialog}
                 footer={[
-                    <Button key="submit" disabled={!selectedMultipleMaterials} onClick={this.saveSelectedMaterials} loading={submitting} type="primary">保存</Button>,
+                    <Button key="submit" onClick={this.saveSelectedMaterials} loading={submitting} type="primary">保存</Button>,
                     <Button key="back" onClick={this.closeDialog}>取消</Button>
                 ]}
             >
@@ -101,7 +117,7 @@ class MultipleMaterialDialog extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <MultipleMaterialTable selectedKeys={selectedKeys} onChange={this.onSelectChange} dataSource={materials?.elements}/>
+                        <MultipleMaterialTable selectedKeys={keys} onChange={this.onSelectChange} dataSource={materials?.elements}/>
                     </div>
                 </Form>
             </Modal>
@@ -121,7 +137,8 @@ MultipleMaterialDialog.propTypes = {
     dispatch: PropTypes.func,
     courseId: PropTypes.string,
     pointId: PropTypes.string,
-    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    materialsType: PropTypes.string
 };
 
 export default MultipleMaterialDialog;

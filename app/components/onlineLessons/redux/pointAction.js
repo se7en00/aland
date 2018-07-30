@@ -76,17 +76,21 @@ export const getSelectedMaterial = (material) => ({
     payload: material
 });
 
-export const getSelectedMultiMaterials = (materials) => ({
+export const getSelectedMultiMaterials = (materials, type) => ({
     type: TYPES.SYNC_GET_SELECTED_MULTIPLE_MATERIAL,
-    payload: materials
+    payload: {[type]: materials}
 });
 
+export const setMaterialsType = (type) => ({
+    type: TYPES.SYNC_SET_MULTIPLE_MATERIAL_TYPE,
+    payload: type
+});
 
-export const saveSelectedMultiMaterials = (courseId, pointId, selectedMaterials) => dispatch => {
-    const allPromises = selectedMaterials.map(material => {
+export const saveSelectedMultiMaterials = (courseId, pointId, ids, type) => dispatch => {
+    const allPromises = ids.map(id => {
         const params = {
-            type: 'OL',
-            multimediaId: material.id
+            type,
+            multimediaId: id
         };
         return Axios.put(`/api/courses/${courseId}/nodes/${pointId}/contents/multimedias`, params)
             .then(response => response.data)
@@ -96,12 +100,31 @@ export const saveSelectedMultiMaterials = (courseId, pointId, selectedMaterials)
         type: TYPES.ASYNC_SAVE_SELECTED_MATEROALS,
         async payload() {
             await Promise.all(allPromises);
-            const materials = await Axios.get(`api/courses/${courseId}/nodes/${pointId}/contents/multimedias`, {params: {size: 2000, type: 'OL'}})
+            const materials = await Axios.get(`api/courses/${courseId}/nodes/${pointId}/contents/multimedias`, {params: {size: 2000, type}})
                 .then(response => response.data);
-            return materials;
+            if (type === 'OL') {
+                return {olMaterials: materials};
+            }
+            return {dlMaterials: materials};
         }
     });
 };
+
+export const deleteMultiMaterials = (courseId, pointId, id, type) => ({
+    type: TYPES.ASYNC_DELETE_MATEROAL,
+    async payload() {
+        try {
+            await Axios.delete(`/api/courses/${courseId}/nodes/${pointId}/contents/multimedias/${id}`).then(() => true);
+            const materials = await Axios.get(`api/courses/${courseId}/nodes/${pointId}/contents/multimedias`, {params: {size: 2000, type}}).then(response => response.data);
+            if (type === 'OL') {
+                return {olMaterials: materials};
+            }
+            return {dlMaterials: materials};
+        } catch (error) {
+            return Promise.reject(error?.response?.data);
+        }
+    }
+});
 
 export const removeSelectedMaterial = () => ({
     type: TYPES.SYNC_REMOVE_SELECTED_MATERIAL,
