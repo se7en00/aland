@@ -3,8 +3,17 @@ import PropTypes from 'prop-types';
 import { reduxForm, reset, submit, Form, Field, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { DIALOG } from 'constants';
 import { Modal, Button, message} from 'antd';
+import { connect } from 'react-redux';
 import { renderTextField } from '../../shared/form';
 
+
+const mapStateToProps = (state) => ({
+    draftLesson: state.draftOnlineLesson?.draftLesson,
+    chapters: state.draftOnlineLesson?.chapters,
+    sections: state.draftOnlineLesson?.sections
+});
+
+@connect(mapStateToProps)
 @reduxForm({form: DIALOG.CHAPTER})
 class CreateChapterDialog extends Component {
     static dialogName = DIALOG.CHAPTER;
