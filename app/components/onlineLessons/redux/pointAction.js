@@ -18,20 +18,8 @@ export const getPointContent = (courseId, pointId) => ({
                 }
                 return Promise.reject(error);
             });
-        const pedias = await Axios.get('/api/pedias', {params: {size: 1000}}).then(response => response.data);
         //build
-        result = {pointContent, pedias, type: pointContent.type || 'ARTICLE'};
-        //if it's pediaInfo， load the part of pediaInfo
-        if (pointContent && pointContent.type === 'PEDIA') {
-            const pediaInfo = await Axios.get(`/api/pedias/${pointContent.link}`).then(response => response.data);
-            pointContent.pediaSubject = pediaInfo.subject;
-            result = Object.assign(result, { selectedPedia: pediaInfo});
-        }
-        //load material list
-        if (pointContent && pointContent.type === 'MEDIA') {
-            const materialInfo = await Axios.get(`/api/multimedias/${pointContent.link}`).then(response => response.data);
-            result = Object.assign(result, {selectedMaterial: materialInfo});
-        }
+        result = {pointContent, videoType: /^\/upload/.test(pointContent.link) ? '2' : '1'};
 
         //load homework
         const homeWorks = await Axios.get(`/api/courses/${courseId}/nodes/${pointId}/contents/works`, {params: {size: 1000}})
@@ -66,9 +54,9 @@ export const getPointContent = (courseId, pointId) => ({
     }
 });
 
-export const switchStudyContentType = (type = 'ARTICLE') => ({
+export const switchStudyContentType = (videoType) => ({
     type: TYPES.SYNC_CHANGE_STUDY_CONTENTS_TYPE,
-    payload: type
+    payload: videoType
 });
 
 export const getSelectedMaterial = (material) => ({

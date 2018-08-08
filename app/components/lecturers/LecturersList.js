@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { PATHNAME, getLinkByName } from 'constants';
+import { PATHNAME, getLinkByName, BASE_URL } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
@@ -38,6 +38,10 @@ class LecturersList extends Component {
         this.props.actions.push(`${getLinkByName(PATHNAME.MASTER)}/add`);
     };
 
+    export = () => {
+        location.href = `${BASE_URL}/api/lecturers/export`;// eslint-disable-line
+    }
+
     render() {
         const {lecturers: {list, searchParams}, actions} = this.props;
         return (
@@ -46,7 +50,7 @@ class LecturersList extends Component {
                 <div className={panelStyle.panel__body}>
                     <LecturersSearch onSubmit={this.onSearch}/>
                     <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增培训师</Button>
-                    {/*<Button type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>*/}
+                    <Button onClick={this.export} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
                     <LecturersListTable dataSource={list} actions={actions} searchParams={searchParams}/>
                 </div>
             </div>

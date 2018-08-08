@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field, Form } from 'redux-form';
-import {studyContentsOptions} from 'constants';
-import { Button, message } from 'antd';
-import { renderSelectField, renderQuill, renderTextField, UploadFilesField } from '../../shared/form';
+import { Button, message} from 'antd';
+import { renderQuill, renderTextField, UploadFilesField } from '../../shared/form';
 import validate from './studyContentsValidate';
-import MaterialsForStudyContent from './MaterialsForStudyContent';
-import PediaForStudyContent from './PediaForStudyContent';
+
 
 @reduxForm({form: 'pointStudyContents', enableReinitialize: true, validate})
 class StudyContents extends Component {
@@ -14,38 +12,28 @@ class StudyContents extends Component {
         actions: PropTypes.objectOf(PropTypes.func),
         handleSubmit: PropTypes.func,
         // dispatch: PropTypes.func,
-        showDialog: PropTypes.func,
+        // showDialog: PropTypes.func,
         point: PropTypes.object,
         submitting: PropTypes.bool,
-        invalid: PropTypes.bool
+        invalid: PropTypes.bool,
+        videoType: PropTypes.string
         // error: PropTypes.string,
     }
 
-    onSelect = (value) => {
-        const {actions: {switchStudyContentType}} = this.props;
-        switchStudyContentType(value);
-    }
-
     submit = (values) => {
-        const {type} = values;
-        const {point: {pointContent, selectedMaterial}, actions: {saveStudyContent}} = this.props;
-        let studyUpdate = {type};
+        const {content} = values;
+        const {point: {pointContent}, videoType, actions: {saveStudyContent}} = this.props;
+        let studyUpdate = {content};
         const {courseId, pointId} = pointContent;
-        switch (type) {
-        case 'LINK':
-            studyUpdate = Object.assign(studyUpdate, {link: values.url});
+        switch (videoType) {
+        case '1':
+            studyUpdate = Object.assign(studyUpdate, {link: values.url, videoFlg: '1'});
             break;
-        case 'UPLOAD':
-            studyUpdate = Object.assign(studyUpdate, {link: values.files.url});
-            break;
-        case 'PEDIA':
-            studyUpdate = Object.assign(studyUpdate, {link: values.pedias.key, content: values.prediaContent});
-            break;
-        case 'MEDIA':
-            studyUpdate = Object.assign(studyUpdate, {link: selectedMaterial.id});
+        case '2':
+            studyUpdate = Object.assign(studyUpdate, {link: values.files.url, videoFlg: '1'});
             break;
         default:
-            studyUpdate = Object.assign(studyUpdate, {content: values.content});
+            studyUpdate = Object.assign(studyUpdate, {content: values.content, videoFlg: '0'});
             break;
         }
         saveStudyContent(courseId, pointId, studyUpdate)
@@ -53,51 +41,26 @@ class StudyContents extends Component {
             .catch(() => {message.error('保存失败！');});
     }
 
+    changeVideoType = (key = '0') => {
+        const {actions: {switchStudyContentType}} = this.props;
+        switchStudyContentType(key);
+    }
+
     render() {
-        const {submitting, handleSubmit, invalid, point, showDialog, actions} = this.props;
+        const {submitting, handleSubmit, invalid, videoType} = this.props;
         return (
             <div>
                 <Form onSubmit={handleSubmit(this.submit)}>
-                    <Field
-                        className="col-md-8 col-lg-6"
-                        rowClassName="inputRow"
-                        name="type"
-                        onSelect={this.onSelect}
-                        component={renderSelectField}
-                        label="模块"
-                    >
-                        {studyContentsOptions}
-                    </Field>
+                    <div className="row inputRow">
+                        <div className="col-md-12 col-lg-12">
+                            <Button htmlType="button" onClick={this.changeVideoType} name="sectionButton" type="primary" ghost>添加图文信息</Button>
+                            <Button htmlType="button" onClick={() => this.changeVideoType('1')} name="sectionButton" type="primary" ghost>添加链接</Button>
+                            <Button htmlType="button" onClick={() => this.changeVideoType('2')} name="sectionButton" type="primary" ghost>本地上传</Button>
+                        </div>
+                    </div>
 
                     {
-                        point.type === 'ARTICLE' &&
-                        <Field
-                            className="col-md-10 offset-md-1"
-                            rowClassName="inputRow inputRow__richText"
-                            name="content"
-                            component={renderQuill}
-                        />
-                    }
-
-                    {
-                        point.type === 'MEDIA' &&
-                        <MaterialsForStudyContent
-                            point={point}
-                            actions={actions}
-                            showDialog={showDialog}
-                        />
-                    }
-
-                    {
-                        point.type === 'PEDIA' &&
-                        <PediaForStudyContent
-                            point={point}
-                            actions={actions}
-                        />
-                    }
-
-                    {
-                        point.type === 'LINK' &&
+                        videoType === '1' &&
                         <Field
                             className="col-md-8 col-lg-6"
                             rowClassName="inputRow"
@@ -108,16 +71,26 @@ class StudyContents extends Component {
                             label="链接"
                         />
                     }
+                    {
+                        videoType === '2' &&
+                        <Field
+                            className="col-md-8 col-lg-9"
+                            rowClassName="inputRow"
+                            style={{display: 'flex'}}
+                            name="files"
+                            onlyOneFile={true}
+                            accept="video/*"
+                            component={UploadFilesField}
+                            uploadTitle="上传视频文件"
+                            label="学习资料"
+                        />
+                    }
 
                     <Field
-                        className="col-md-8 col-lg-9"
-                        rowClassName="inputRow"
-                        style={{display: point.type === 'UPLOAD' ? 'flex' : 'none'}}
-                        name="files"
-                        onlyOneFile={true}
-                        component={UploadFilesField}
-                        uploadTitle="上传文件"
-                        label="学习资料"
+                        className="col-md-10"
+                        rowClassName="inputRow inputRow__richText"
+                        name="content"
+                        component={renderQuill}
                     />
 
 
@@ -125,7 +98,7 @@ class StudyContents extends Component {
                         <div className="col-md-10 offset-md-2 offset-lg-1">
                             <Button
                                 htmlType="submit"
-                                disabled={invalid || (!point?.selectedMaterial && point.type === 'MEDIA')}
+                                disabled={invalid}
                                 loading={submitting}
                                 type="primary"
                                 className="editable-add-btn">

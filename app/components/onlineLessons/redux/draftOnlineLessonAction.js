@@ -81,7 +81,7 @@ export const createChapters = (lessonId, chapters) => ({
         try {
             const course = lessonId ? {id: lessonId} : Axios.post('/api/courses', {}).then(response => response.data);
             const initCourse = await course;
-            const chaptersElements = await Axios.post(`/api/courseNodes/courses/${initCourse.id}/chapters`, {subjects: Object.values(chapters)})
+            const chaptersElements = await Axios.post(`/api/courseNodes/courses/${lessonId}/chapters`, {subjects: Object.values(chapters)})
                 .then(response => response?.data);
             const hasCreateNewCourse = Object.prototype.hasOwnProperty.call(initCourse, 'name');
             return Object.assign({chaptersElements}, hasCreateNewCourse ? {draftLesson: initCourse} : {});

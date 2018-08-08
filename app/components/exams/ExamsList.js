@@ -9,6 +9,7 @@ import Header from '../shared/panel/PanelHeader';
 import ExamsListTable from './ExamsListTable';
 import ExamsSearch from './ExamsSearch';
 import { UploadFilesField } from '../shared/form';
+import template from './template.xlsx';
 
 
 @reduxForm({form: 'examsUpload'})
@@ -64,6 +65,7 @@ class ExamsList extends Component {
                 <div className={panelStyle.panel__body}>
                     <ExamsSearch onSubmit={this.onSearch} categoryList={categoryList}/>
                     <Button onClick={this.openCreateDialog} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增试题</Button>
+                    <a href={template} download="下载模版.xlsx" className="ant-btn" style={{marginLeft: '20px'}}>下载模版</a>
                     <form style={{display: 'inline-block'}}>
                         <Field
                             layout="elementOnly"

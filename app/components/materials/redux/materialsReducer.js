@@ -27,6 +27,7 @@ const materialsReducer = typeToReducer({
             ...state
         })
     },
+
     [TYPES.ASYNC_GET_MATERIAL]: {
         REJECTED: (state, action) => ({
             ...state,
@@ -63,6 +64,16 @@ const materialsReducer = typeToReducer({
         FULFILLED: (state, action) => ({
             ...state,
             categoryList: action.payload
+        })
+    },
+
+    [TYPES.AYSNC_EXPORT_MATERIALS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state
         })
     }
 }, {});

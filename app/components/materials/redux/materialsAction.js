@@ -60,3 +60,9 @@ export const getCategories = () => ({
         })
         .catch(error => Promise.reject(error?.response?.data))
 });
+
+export const exportMateials = () => ({
+    type: TYPES.AYSNC_EXPORT_MATERIALS,
+    payload: () => Axios.get('/api/multimedias/export')
+        .catch(error => Promise.reject(error?.response?.data))
+});

@@ -5,8 +5,8 @@ import { message } from 'antd';
 import configureStore from '../redux/configureStore';
 
 const instance = axios.create({
-    baseURL: BASE_URL,
-    timeout: 5000
+    baseURL: BASE_URL
+    // timeout: 5000
     // withCredentials: true,
     // transformResponse: [(data) => {
     //     if (typeof data === 'string') {

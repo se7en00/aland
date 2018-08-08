@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { DATE_FORMAT, PATHNAME, DIALOG } from 'constants';
+import { DATE_FORMAT, PATHNAME, DIALOG, BASE_URL } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button, message } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
@@ -52,13 +52,9 @@ class ProvidesList extends Component {
             this.showRateDialog(provide.id);
         }
     };
-
     export = () => {
-        const { provides: {list: { paging: {page, size} }, searchParams}, actions: { exportProvides } } = this.props;
-        exportProvides({page, size, ...searchParams}).then(() => {
-            message.success('导出成功！');
-        }).catch(() => {message.success('导出失败！');});
-    };
+        location.href = `${BASE_URL}/api/provides/export`;// eslint-disable-line
+    }
 
     showRateDialog = (id) => {
         this.setState({

@@ -20,6 +20,7 @@ import { trainingReducer } from 'components/training';
 import { taskReducer } from 'components/task';
 import { courserDirectionReducer } from 'components/courseDirection';
 import { settingReducer } from 'components/setting';
+import { summaryReducer } from 'components/summary';
 import loadingReducer from './middleware/loadingReducer';
 
 export default combineReducers({
@@ -46,5 +47,6 @@ export default combineReducers({
     trainings: trainingReducer,
     tasks: taskReducer,
     courserDirection: courserDirectionReducer,
-    setting: settingReducer
+    setting: settingReducer,
+    summary: summaryReducer
 });

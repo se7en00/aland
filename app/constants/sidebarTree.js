@@ -17,8 +17,8 @@ const SIDE_BAR_MENU = [
         name: PATHNAME.INFORMATION_MANAGEMENT,
         iconName: 'far fa-newspaper',
         subItems: [
-            {name: PATHNAME.NEWS_MANAGEMENT, link: `${ROOT_PATH}/newsManagement`}
-            // {name: PATHNAME.NOTES_MANAGEMENT, link: `${ROOT_PATH}/notesManagement`}
+            {name: PATHNAME.NEWS_MANAGEMENT, link: `${ROOT_PATH}/newsManagement`},
+            {name: PATHNAME.NOTES_MANAGEMENT, link: `${ROOT_PATH}/notesManagement`}
         ]
     },
     {
@@ -43,7 +43,7 @@ const SIDE_BAR_MENU = [
         ]
     },
     {name: PATHNAME.LEARN_TASK, link: `${ROOT_PATH}/taskManagement`, iconName: 'far fa-clone'},
-    // {name: PATHNAME.LEARN_PROJECT, link: `${ROOT_PATH}/projectManagement`, iconName: 'fas fa-clipboard-list'},
+    {name: PATHNAME.SUMMARY, link: `${ROOT_PATH}/summary`, iconName: 'fas fa-chart-bar'},
     {
         name: PATHNAME.SETTING,
         iconName: 'fas fa-wrench',

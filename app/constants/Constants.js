@@ -5,8 +5,8 @@ export const IDENTIFIERS = {
     ACCORDION_CONTENT: 'accordion_content'
 };
 
-export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
-// export const BASE_URL = 'http://58.222.218.171:38085/aland-training';
+// export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
+export const BASE_URL = 'http://58.222.218.171:38085/aland-training';
 
 export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -33,6 +33,7 @@ export const PATHNAME = {
     TRAINING_DRAFT: '培训草稿',
     LEARN_TASK: '学习任务管理',
     LEARN_PROJECT: '学习项目管理',
+    SUMMARY: '培训汇总表',
     SETTING: '设置',
     TAG_SETTING: '标签设置',
     SECURITY_PERMISSION_CATEGORY: '保密权限种类设置',
@@ -110,7 +111,8 @@ export const PANEL_TITLE = {
     TRAINING_DETAILS: '培训详情({0})',
     TASK_LIST: '学习任务管理',
     TASK_ADD: '新增学习任务',
-    TASK_DETAIL: '学习任务详情({0})'
+    TASK_DETAIL: '学习任务详情({0})',
+    SUMMARY: '培训汇总表'
 };
 
 export const TAG_CATEGORY = {

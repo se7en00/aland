@@ -39,6 +39,7 @@ import TaskAddView from 'views/task/TaskAddView';
 import TaskDetailsView from 'views/task/TaskDetailsView';
 import CourseDirectionView from 'views/setting/CourseDirectionView';
 import SecurityView from 'views/setting/SecurityView';
+import SummaryView from 'views/summary/SummaryView';
 import {ConnectedSwitch} from './ConnectedSwitch';
 
 const Routes = ({match}) => (
@@ -85,6 +86,7 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/taskManagement/:id/details`} component={TaskDetailsView}/>
         <Route exact path={`${match.path}/lessonsDirectionSetting`} component={CourseDirectionView}/>
         <Route exact path={`${match.path}/securityPermissionSetting`} component={SecurityView}/>
+        <Route exact path={`${match.path}/summary`} component={SummaryView}/>
     </ConnectedSwitch>
 );
 

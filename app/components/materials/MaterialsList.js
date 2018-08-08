@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { DATE_FORMAT, PANEL_TITLE, PATHNAME, getLinkByName } from 'constants';
+import { DATE_FORMAT, PANEL_TITLE, PATHNAME, getLinkByName, BASE_URL } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button } from 'antd';
 import panelStyle from '../../layout/main/Main.scss';
@@ -39,6 +39,11 @@ class MaterialsList extends Component {
         push(`${getLinkByName(PATHNAME.MATERIALS)}/additionMaterial`);
     }
 
+
+    export = () => {
+       location.href = `${BASE_URL}/api/multimedias/export`;// eslint-disable-line
+    }
+
     render() {
         const {materials: {list, searchParams}, actions} = this.props;
         return (
@@ -47,6 +52,7 @@ class MaterialsList extends Component {
                 <div className={panelStyle.panel__body}>
                     <MaterialsSearch onSubmit={this.onSearch}/>
                     <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增素材</Button>
+                    <Button onClick={this.export} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出素材</Button>
                     <MaterialsListTable dataSource={list} actions={actions} searchParams={searchParams}/>
                 </div>
             </div>

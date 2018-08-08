@@ -24,31 +24,16 @@ class PointContentTab extends Component {
         }
     }
 
-    initStudyContentsValues = (point) => {
-        const {pointContent} = point;
-        switch (pointContent?.type) {
-        case 'LINK':
-            return {
-                type: pointContent.type,
-                url: pointContent.link
-            };
-        case 'UPLOAD':
-            return {
-                type: pointContent.type,
-                files: pointContent.link
-            };
-        case 'PEDIA':
-            return {
-                type: pointContent.type,
-                pedias: {key: pointContent?.link, label: pointContent?.pediaSubject},
-                prediaContent: pointContent.content
-            };
-        default:
-            return {
-                type: pointContent?.type || 'ARTICLE',
-                content: pointContent?.content
-            };
+    initStudyValues = (point, videoType) => {
+        if (R.isEmpty(point) || !point?.pointContent) return;
+        const param = {
+            content: point.pointContent.content
+        };
+        const isMatch = /^\/upload/.test(point.pointContent.link);
+        if (!isMatch) {
+            param.url = point.pointContent.link;
         }
+        return param;
     }
 
     initExamValues = (point) => {
@@ -63,14 +48,16 @@ class PointContentTab extends Component {
     render() {
         const TabPane = Tabs.TabPane;
         const {point, actions, showDialog} = this.props;
+        const videoType = point?.videoType || '0';
         return (
             <Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>
                 <TabPane tab={<span><Icon type="profile"/>学习内容</span>} key="1">
                     <StudyContents
                         point={point}
+                        videoType={videoType}
                         actions={actions}
                         showDialog={showDialog}
-                        initialValues={this.initStudyContentsValues(point)}
+                        initialValues={this.initStudyValues(point, videoType)}
                     />
                 </TabPane>
                 <TabPane tab={<span><i style={{marginRight: '8px'}} className="fas fa-project-diagram"/>课内作业</span>} key="2">

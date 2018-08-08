@@ -18,6 +18,7 @@ const dev = (paths) => {
         //chunkFilename: 'static/js/[name].chunk.js',
         // This is the URL that app is served from. We use "/" in development.
         publicPath: '/',
+        globalObject: 'this',
         // Point sourcemap entries to original disk location (format as URL on Windows)
         // redfined the
         devtoolModuleFilenameTemplate: (info) =>
@@ -39,6 +40,7 @@ const prod = (paths) => {
         //chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
         // We inferred the "public path" (such as / or /my-project) from homepage.
         publicPath: paths.servedPath,
+        globalObject: 'this',
         // Point sourcemap entries to original disk location (format as URL on Windows)
         devtoolModuleFilenameTemplate: info =>
             path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/')

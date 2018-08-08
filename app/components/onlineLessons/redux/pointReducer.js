@@ -5,7 +5,7 @@ export default typeToReducer({
 
     [TYPES.SYNC_CHANGE_STUDY_CONTENTS_TYPE]: (state, action) => ({
         ...state,
-        type: action.payload
+        videoType: action.payload
     }),
 
     [TYPES.ASYNC_LOAD_POINT_CONTENT]: {
