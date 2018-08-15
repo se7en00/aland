@@ -33,13 +33,16 @@ export const PATHNAME = {
     TRAINING_DRAFT: '培训草稿',
     LEARN_TASK: '学习任务管理',
     LEARN_PROJECT: '学习项目管理',
-    SUMMARY: '培训汇总表',
+    TRAINING_SUMMARY: '学习任务培训汇总表',
+    USER_SUMMARY: '用户学习任务培训汇总表',
+    SUMMARY: '汇总表',
     SETTING: '设置',
     TAG_SETTING: '标签设置',
     SECURITY_PERMISSION_CATEGORY: '保密权限种类设置',
     LESSONS_DIRECTION_SETTING: '课程方向设置',
     TRAINING_AND_COST: '培训种类/成本类型设置',
-    CAROUSEL_SETTING: '学习端转播图设置'
+    CAROUSEL_SETTING: '学习端转播图设置',
+    PICTURE: '学习端转播图设置'
 
 };
 
@@ -73,6 +76,7 @@ export const DIALOG = {
     PROVIDE_RATING: 'provideRating',
     CREATE_EXAM: 'createExam',
     COURSE_DIRECTION: 'courseDirection',
+    COURSE_EDIT_DIRECTION: 'courseEditDirection',
     SECURITY_SETTING: 'securitySetting',
     SECURITY_SETTING_DETAILS: 'securitySettingDetails',
     TRAINING_LESSON: 'trainingLesson',
@@ -112,7 +116,9 @@ export const PANEL_TITLE = {
     TASK_LIST: '学习任务管理',
     TASK_ADD: '新增学习任务',
     TASK_DETAIL: '学习任务详情({0})',
-    SUMMARY: '培训汇总表'
+    TRAINING_SUMMARY: '学习任务培训汇总表',
+    USER_SUMMARY: '用户学习任务培训汇总表',
+    SUMMARY: '汇总表'
 };
 
 export const TAG_CATEGORY = {

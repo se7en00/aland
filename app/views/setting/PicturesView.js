@@ -3,14 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { resetForm } from 'redux/globalAction';
-import { actionCreators, CourseDirectionList, CourseDirectionDialog, CourseDirectionEditDialog } from 'components/courseDirection';
+import { actionCreators, SecurityList} from 'components/setting';
 import Dialog from 'components/shared/dialog';
 
-@connect(state => ({courserDirection: state.courserDirection}), mapDispatchToProps)
-@Dialog(<CourseDirectionDialog/>, <CourseDirectionEditDialog/>)
-class CourseDirectionView extends Component {
+@connect(state => ({setting: state.setting}), mapDispatchToProps)
+@Dialog(<SecurityDialog/>, <SecurityEditDialog/>)
+class SecurityView extends Component {
     render() {
-        return <CourseDirectionList {...this.props}/>;
+        return <SecurityList {...this.props}/>;
     }
 }
 
@@ -18,4 +18,4 @@ function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({...actionCreators, push, resetForm}, dispatch) };
 }
 
-export default CourseDirectionView;
+export default SecurityView;

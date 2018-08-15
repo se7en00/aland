@@ -21,6 +21,7 @@ import { taskReducer } from 'components/task';
 import { courserDirectionReducer } from 'components/courseDirection';
 import { settingReducer } from 'components/setting';
 import { summaryReducer } from 'components/summary';
+import { userSummaryReducer } from 'components/usersSummary';
 import loadingReducer from './middleware/loadingReducer';
 
 export default combineReducers({
@@ -48,5 +49,6 @@ export default combineReducers({
     tasks: taskReducer,
     courserDirection: courserDirectionReducer,
     setting: settingReducer,
-    summary: summaryReducer
+    summary: summaryReducer,
+    userSummary: userSummaryReducer
 });

@@ -100,3 +100,10 @@ export const getUserDetails = (userId) => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
+export const resetPassword = (userId) => ({
+    type: TYPES.ASYNC_RESET_ADMIN_PASSWORD,
+    payload: () => Axios.put(`/api/users/${userId}/resetPassword`)
+        .then(() => true)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+

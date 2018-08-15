@@ -6,3 +6,4 @@ export * as actionCreators from './redux/courseDirectionActions';
 export { default as CourseDirectionList } from './CourseDirectionList';
 //dialog
 export { default as CourseDirectionDialog } from './CourseDirectionDialog';
+export { default as CourseDirectionEditDialog } from './CourseDirectionEditDialog';

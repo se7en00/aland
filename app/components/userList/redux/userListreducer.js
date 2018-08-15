@@ -72,6 +72,17 @@ const userReducer = typeToReducer({
             ...state,
             userDetails: action.payload
         })
+    },
+
+    //重置密码
+    [TYPES.ASYNC_RESET_ADMIN_PASSWORD]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action?.payload?.response?.data
+        }),
+        FULFILLED: (state) => ({
+            ...state
+        })
     }
 
 }, {});

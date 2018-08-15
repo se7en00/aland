@@ -11,28 +11,28 @@ export const getCourseDirectionList = ({pageSize = paginationSetting.pageSize, .
 
 export const createCourseDirection = (params) => ({
     type: TYPES.ASYNC_CREATE_COURSE_DIRECTION,
-    payload: () => Axios.post('/api/userGroups', params)
+    payload: () => Axios.post('/api/settings/courseDirections', params)
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const updateCourseDirection = (userGroupId, params) => ({
+export const updateCourseDirection = (id, params) => ({
     type: TYPES.ASYNC_UPDATE_COURSE_DIRECTION,
-    payload: () => Axios.put(`/api/userGroups/${userGroupId}`, params)
+    payload: () => Axios.put(`/api/settings/courseDirections/${id}`, params)
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const deleteCourseDirection = (userId) => ({
+export const deleteCourseDirection = (id) => ({
     type: TYPES.ASYNC_DELETE_COURSE_DIRECTION,
-    payload: () => Axios.delete(`/api/userGroups/${userId}`)
+    payload: () => Axios.delete(`/api/settings/courseDirections/${id}`)
         .then(() => true)
         .catch(error => Promise.reject(error?.response?.data))
 });
 
-export const getCourseDirectionDetails = (userGroupId) => ({
+export const getCourseDirectionDetails = (id) => ({
     type: TYPES.ASYNC_COURSE_DIRECTION_DETAILS,
-    payload: () => Axios.get(`/api/userGroups/${userGroupId}`)
+    payload: () => Axios.get(`/api/settings/courseDirections/${id}`)
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });

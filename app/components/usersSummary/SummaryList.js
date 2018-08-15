@@ -11,7 +11,7 @@ import SummarySearch from './SummarySearch';
 class SummaryList extends Component {
     static propTypes = {
         actions: PropTypes.objectOf(PropTypes.func),
-        summary: PropTypes.object
+        userSummary: PropTypes.object
     };
 
     componentDidMount() {
@@ -40,10 +40,10 @@ class SummaryList extends Component {
     }
 
     render() {
-        const {summary: {list, searchParams}, actions} = this.props;
+        const {userSummary: {list, searchParams}, actions} = this.props;
         return (
             <div>
-                <Header title={PANEL_TITLE.TRAINING_SUMMARY}/>
+                <Header title={PANEL_TITLE.USER_SUMMARY}/>
                 <div className={panelStyle.panel__body}>
                     <SummarySearch onSubmit={this.onSearch}/>
                     <Button onClick={this.export} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出</Button>

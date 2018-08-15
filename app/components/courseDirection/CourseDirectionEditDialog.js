@@ -4,28 +4,49 @@ import { reduxForm, Field, Form, clearSubmitErrors, reset, submit } from 'redux-
 import { DIALOG } from 'constants';
 import { Modal, Button, message } from 'antd';
 import { paginationSetting } from 'utils';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import uuid from 'uuid/v4';
 import { renderTextField } from '../shared/form';
-
 
 const required = value => (value ? undefined : '不能为空！');
 
-@reduxForm({form: DIALOG.COURSE_DIRECTION})
-class CourseDirectionDialog extends Component {
-    static dialogName = DIALOG.COURSE_DIRECTION;
+const mapStateToProp = (state) => {
+    if (R.isEmpty(state.courserDirection) || !state?.courserDirection?.courseDirectionDetails) return null;
+    const { courseDirectionDetails } = state.courserDirection;
+    let others;
+    if (courseDirectionDetails.subDirections) {
+        others = courseDirectionDetails.subDirections.reduce((map, item, index) => {
+            map[`subDirections_${index}`] = item.direction;
+            return map;
+        }, {});
+    }
+    return {
+        initialValues: {
+            direction: courseDirectionDetails.direction,
+            ...others
+        },
+        courseDirectionDetails
+    };
+};
+
+@connect(mapStateToProp)
+@reduxForm({form: DIALOG.COURSE_EDIT_DIRECTION, enableReinitialize: true})
+class CourseDirectionEditDialog extends Component {
+    static dialogName = DIALOG.COURSE_EDIT_DIRECTION;
 
     state = {
-        rows: 3
+        rows: 3,
+        isRowsChanged: false
     }
 
     closeDialog = () => {
-        this.props.dispatch(clearSubmitErrors(DIALOG.COURSE_DIRECTION));
-        this.props.dispatch(reset(DIALOG.COURSE_DIRECTION));
-        this.props.hideDialog(DIALOG.COURSE_DIRECTION)();
+        this.props.dispatch(clearSubmitErrors(DIALOG.COURSE_EDIT_DIRECTION));
+        this.props.dispatch(reset(DIALOG.COURSE_EDIT_DIRECTION));
+        this.props.hideDialog(DIALOG.COURSE_EDIT_DIRECTION)();
     }
 
     submit= (values) => {
-        const {createCourseDirection, getCourseDirectionList} = this.props.actions;
+        const {updateCourseDirection, getCourseDirectionList} = this.props.actions;
         const params = {
             direction: values.direction
         };
@@ -39,16 +60,23 @@ class CourseDirectionDialog extends Component {
                 return '';
             }).filter(Boolean);
         }
-        createCourseDirection(params)
+        updateCourseDirection(this.props.courseDirectionDetails.id, params)
             .then(() => {
                 getCourseDirectionList({pageSize: paginationSetting.pageSize, parentId: 0}).then(() => {
-                    message.success('创建成功');
+                    message.success('更新成功');
                     this.closeDialog();
                 });
             })
             .catch(error => {
-                message.success('创建失败');
+                message.success('更新失败');
             });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {isRowsChanged} = this.state;
+        if (nextProps.courseDirectionDetails && nextProps.courseDirectionDetails.subDirections && nextProps.courseDirectionDetails.subDirections.length > 0 && !isRowsChanged) {
+            this.setState({rows: nextProps.courseDirectionDetails.subDirections.length});
+        }
     }
 
     renderSecondItem = () => {
@@ -57,6 +85,7 @@ class CourseDirectionDialog extends Component {
         for (let i = 0; i < rows; i++) { //eslint-disable-line
             result.push(
                 <Field
+                    key={uuid()}
                     labelClassName="col-md-3"
                     className="col-md-8"
                     rowClassName="dialogContainer__inputRow"
@@ -73,7 +102,7 @@ class CourseDirectionDialog extends Component {
 
     addRow = () => {
         const {rows} = this.state;
-        this.setState({rows: rows + 1});
+        this.setState({rows: rows + 1, isRowsChanged: true});
     }
 
     render() {
@@ -85,7 +114,7 @@ class CourseDirectionDialog extends Component {
                 title="新增"
                 onCancel={this.closeDialog}
                 footer={[
-                    <Button key="submit" onClick={() => dispatch(submit(DIALOG.COURSE_DIRECTION))} loading={submitting} type="primary">保存</Button>,
+                    <Button key="submit" onClick={() => dispatch(submit(DIALOG.COURSE_EDIT_DIRECTION))} loading={submitting} type="primary">保存</Button>,
                     <Button key="back" onClick={this.closeDialog}>取消</Button>
                 ]}
             >
@@ -121,15 +150,16 @@ class CourseDirectionDialog extends Component {
     }
 }
 
-CourseDirectionDialog.propTypes = {
+CourseDirectionEditDialog.propTypes = {
     hideDialog: PropTypes.func,
     handleSubmit: PropTypes.func,
     visible: PropTypes.bool,
     submitting: PropTypes.bool,
+    courseDirectionDetails: PropTypes.object,
     actions: PropTypes.objectOf(PropTypes.func),
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     dispatch: PropTypes.func,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 };
 
-export default CourseDirectionDialog;
+export default CourseDirectionEditDialog;

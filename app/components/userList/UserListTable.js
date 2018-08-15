@@ -64,6 +64,9 @@ class UserListTable extends Component {
                 <div>
                     <Button size="small" type="primary" onClick={() => this.onEditPoint(record)} ghost>查看详情</Button>
                     {/*<Button size="small" type="primary" onClick={() => this.openDialog(record, DIALOG.PERMISSION)} ghost>导出培训数据</Button>*/}
+                    <Popconfirm title="你确认要把密码重置成:123456 吗？" okText="确认" cancelText="取消" onConfirm={() => this.onResetPWD(record)}>
+                        <Button size="small" type="primary" ghost>重置密码</Button>
+                    </Popconfirm>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>
@@ -71,6 +74,17 @@ class UserListTable extends Component {
             )
         }];
     }
+
+    onResetPWD = (user) => {
+        const {
+            actions: {resetPassword}
+        } = this.props;
+        resetPassword(user.id).then(() => {
+            message.success(`成功重置账户名：${user.name}的密码！`);
+        }).catch(error => {
+            message.error(`重置账户名：${user.name}的密码失败！`);
+        });
+    };
 
     onEditPoint = (record) => {
         const {actions: {push}} = this.props;

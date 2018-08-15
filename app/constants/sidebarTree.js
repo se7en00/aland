@@ -42,8 +42,19 @@ const SIDE_BAR_MENU = [
             // {name: PATHNAME.TRAINING_DRAFt, link: `${ROOT_PATH}/draftedTraining`}
         ]
     },
+    {
+        name: PATHNAME.SUMMARY,
+        iconName: 'fas fa-chart-bar',
+        subItems: [
+            {name: PATHNAME.TRAINING_SUMMARY, link: `${ROOT_PATH}/summary` },
+            {name: PATHNAME.USER_SUMMARY, link: `${ROOT_PATH}/userSummary`},
+            {name: PATHNAME.PICTURE, link: `${ROOT_PATH}/picture`}
+
+        ]
+    },
+
     {name: PATHNAME.LEARN_TASK, link: `${ROOT_PATH}/taskManagement`, iconName: 'far fa-clone'},
-    {name: PATHNAME.SUMMARY, link: `${ROOT_PATH}/summary`, iconName: 'fas fa-chart-bar'},
+
     {
         name: PATHNAME.SETTING,
         iconName: 'fas fa-wrench',

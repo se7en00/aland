@@ -30,7 +30,13 @@ class CourseDirectionTable extends Component {
         }, {
             title: '二级种类名称',
             align: 'center',
-            dataIndex: 'description'
+            dataIndex: 'description',
+            render: (text, record) => {
+                if (Object.hasOwnProperty.call(record, 'subDirections') && record.subDirections.length > 0) {
+                    return record.subDirections.map(item => item.direction).join('、');
+                }
+                return '';
+            }
         }, {
             title: '操作',
             align: 'center',
@@ -47,9 +53,9 @@ class CourseDirectionTable extends Component {
         }];
     }
 
-    openDialog = (userGroup) => {
-        const {actions: {getUserGroupDetails}, showDialog} = this.props;
-        getUserGroupDetails(userGroup.id).then(() => showDialog(DIALOG.EDIT_USER_GROUP)());
+    openDialog = (record) => {
+        const {actions: {getCourseDirectionDetails}, showDialog} = this.props;
+        getCourseDirectionDetails(record.id).then(() => showDialog(DIALOG.COURSE_EDIT_DIRECTION)());
     }
 
     componentWillUpdate(nextProps) {
@@ -67,16 +73,16 @@ class CourseDirectionTable extends Component {
     }
 
 
-    onDelete = (userGroup) => {
+    onDelete = (record) => {
         const {
             dataSource: {paging: {size, page}},
-            actions: {deleteUserGroup, getCourseDirectionList}
+            actions: {deleteCourseDirection, getCourseDirectionList}
         } = this.props;
-        deleteUserGroup(userGroup.id).then(() => {
-            message.success(`成功删除账户名：${userGroup.title}！`);
-            getCourseDirectionList({pageSize: size, page});
+        deleteCourseDirection(record.id).then(() => {
+            message.success(`成功删除：${record.direction}！`);
+            getCourseDirectionList({pageSize: size, page, parentId: 0});
         }).catch(error => {
-            message.error(`删除账户名：${userGroup.title}失败！`);
+            message.error(`删除：${record.direction}失败！`);
         });
     }
 

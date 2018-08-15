@@ -3,38 +3,37 @@ import PropTypes from 'prop-types';
 import { DIALOG, PATHNAME } from 'constants';
 import { paginationSetting } from 'utils';
 import { Button } from 'antd';
-import panelStyle from '../../layout/main/Main.scss';
-import Header from '../shared/panel/PanelHeader';
-import CourseDirectionTable from './CourseDirectionTable';
+import panelStyle from '../../../layout/main/Main.scss';
+import Header from '../../shared/panel/PanelHeader';
 
-class CourseDirectionList extends Component {
+class PictureList extends Component {
     static propTypes = {
         showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
-        courserDirection: PropTypes.object
+        setting: PropTypes.object
     };
 
     componentDidMount() {
-        this.props.actions.getCourseDirectionList({pageSize: paginationSetting.pageSize, parentId: 0});
+        this.props.actions.getList({pageSize: paginationSetting.pageSize, dicType: 'LIMIT_TYPE'});
     }
 
     openCreateDialog = () => {
         const {showDialog} = this.props;
-        showDialog(DIALOG.COURSE_DIRECTION)();
+        showDialog(DIALOG.SECURITY_SETTING)();
     };
 
     render() {
-        const {courserDirection: {list}, actions, showDialog} = this.props;
+        const {setting: {pictureList}} = this.props;
+        console.log(pictureList);
         return (
             <div>
-                <Header title={PATHNAME.LESSONS_DIRECTION_SETTING}/>
+                <Header title={PATHNAME.PICTURE}/>
                 <div className={panelStyle.panel__body}>
                     <Button onClick={this.openCreateDialog} type="primary" className="editable-add-btn u-pull-down-md" ghost>添加</Button>
-                    <CourseDirectionTable dataSource={list} actions={actions} showDialog={showDialog}/>
                 </div>
             </div>
         );
     }
 }
 
-export default CourseDirectionList;
+export default PictureList;
