@@ -3,14 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { resetForm } from 'redux/globalAction';
-import { actionCreators, SecurityList} from 'components/setting';
-import Dialog from 'components/shared/dialog';
+import { actionCreators, PictureList} from 'components/setting';
 
 @connect(state => ({setting: state.setting}), mapDispatchToProps)
-@Dialog(<SecurityDialog/>, <SecurityEditDialog/>)
 class SecurityView extends Component {
     render() {
-        return <SecurityList {...this.props}/>;
+        return <PictureList {...this.props}/>;
     }
 }
 

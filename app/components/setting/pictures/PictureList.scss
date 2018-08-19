@@ -1,0 +1,10 @@
+.carouselForm {
+    :global(.ant-upload.ant-upload-select-picture-card) {
+        width: 100% !important;
+        height: 300px !important;
+    }
+    :global(.ant-upload-list-picture-card .ant-upload-list-item) {
+        width: 100% !important;
+        height: 300px !important;
+    }
+}
