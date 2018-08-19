@@ -41,7 +41,8 @@ export const PATHNAME = {
     SECURITY_PERMISSION_CATEGORY: '保密权限种类设置',
     LESSONS_DIRECTION_SETTING: '课程方向设置',
     TRAINING_AND_COST: '培训种类/成本类型设置',
-    CAROUSEL_SETTING: '学习端转播图设置'
+    CAROUSEL_SETTING: '学习端转播图设置',
+    LECTURER_LEVEL: '培训师等级设置'
 };
 
 export const DIALOG = {
@@ -130,6 +131,11 @@ export const TAG_CATEGORY = {
     MATERIALS: '相关材料',
     BASE_OPERATION: '相关基本工作操作',
     SECURITY_RISK: '安全风险'
+};
+
+export const TRAINING_COST_CATEGORY = {
+    TRAINING: '培训种类',
+    COST: '成本类型'
 };
 
 export const TYPE_MAPPING = {

@@ -42,6 +42,8 @@ import SecurityView from 'views/setting/SecurityView';
 import SummaryView from 'views/summary/SummaryView';
 import UserSummaryView from 'views/summary/UserSummaryView';
 import PicturesView from 'views/setting/PicturesView';
+import TrainingCostView from 'views/setting/TrainingCostView';
+import LecturerSettingView from 'views/setting/LecturerSettingView';
 import {ConnectedSwitch} from './ConnectedSwitch';
 
 const Routes = ({match}) => (
@@ -91,6 +93,8 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/summary`} component={SummaryView}/>
         <Route exact path={`${match.path}/userSummary`} component={UserSummaryView}/>
         <Route exact path={`${match.path}/carouselSetting`} component={PicturesView}/>
+        <Route exact path={`${match.path}/trainingCostSetting`} component={TrainingCostView}/>
+        <Route exact path={`${match.path}/lecturerLevelSetting`} component={LecturerSettingView}/>
     </ConnectedSwitch>
 );
 
