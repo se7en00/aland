@@ -32,6 +32,10 @@ class AutoSelectSearch extends Component {
         this.autoSearch = debounce(this.autoSearch, 800);
     }
 
+    componentDidMount() {
+        this.autoSearch("");
+    }
+
     state = {
         dataSource: [],
         fetching: false
@@ -39,13 +43,14 @@ class AutoSelectSearch extends Component {
 
     autoSearch = (name) => {
         const {api, query} = this.props;
-        if (name) {
+        if (name || name === '') {
             const params = {
                 [query]: name
             };
             if (api === '/api/users') {
                 params.isAdmin = 0;
                 params.status = 'ACTIVE';
+                params.size = 2000;
             }
             this.setState({ dataSource: [], fetching: true });
             Axios.get(api, {params})

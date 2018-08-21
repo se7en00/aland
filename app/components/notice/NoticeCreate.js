@@ -4,15 +4,18 @@ import panelStyle from 'layout/main/Main.scss';
 import { PANEL_TITLE, PATHNAME, getLinkByName, renderOptions } from 'constants';
 import {reduxForm, Field, getFormValues, SubmissionError} from 'redux-form';
 import { connect } from 'react-redux';
+import { resetSpecificField } from 'utils';
 import { Button, Select, message } from 'antd';
 import Header from '../shared/panel/PanelHeader';
 import { renderTextField, renderSelectField, renderQuill, UploadFilesField } from '../shared/form';
+import AutoSelectSearch from '../shared/autoSearch/AutoSelectSearch';
 
 const required = value => (value ? undefined : '不能为空！');
 function mapStateToProps(state) {
     return {
         values: getFormValues('noticeCreate')(state),
-        departments: state.notices?.departments
+        departments: state.notices?.departments,
+        userGroups: state.news?.userGroups
     };
 }
 
@@ -23,15 +26,20 @@ class NoticeCreate extends Component {
         handleSubmit: PropTypes.func,
         actions: PropTypes.object,
         submitting: PropTypes.bool,
-        values: PropTypes.object,
-        departments: PropTypes.object
+        fieldValues: PropTypes.object,
+        departments: PropTypes.object,
+        userGroups: PropTypes.object,
+        dispatch: PropTypes.func
     };
 
     componentDidMount() {
-        const { departments, actions: { loadDepartments } } = this.props;
+        const { departments, userGroups, actions: { loadDepartments, loadUserGroups } } = this.props;
 
         if (!departments) {
             loadDepartments();
+        }
+        if (!userGroups) {
+            loadUserGroups();
         }
     }
 
@@ -43,9 +51,20 @@ class NoticeCreate extends Component {
                 Object.assign(values, {coverImgPath: file?.response?.locations[0]});
             }
         } catch (error) {
-            throw new SubmissionError({cover: '上传团片失败！'});
+            throw new SubmissionError({cover: '上传图片失败！'});
         }
-        addNotice(values).then(() => {
+
+        const data = Object.keys(values).reduce((prev, next) => {
+            if (next === 'userGroupId' && values.receiverType === 'GROUP') {
+                prev.receiverIds = [values[next]];
+            } else if (next === 'persons' && values.receiverType === 'USER') {
+                prev.receiverIds = values[next].map(item => item.key);
+            } else {
+                prev[next] = values[next];
+            }
+            return prev;
+        }, {});
+        addNotice(data).then(() => {
             message.success('保存成功！');
             this.back();
         }).catch(() => {message.success('保存失败！');});
@@ -61,9 +80,16 @@ class NoticeCreate extends Component {
         return renderOptions('id', 'name')(departments);
     };
 
+    renderUserGroupOptions = () => {
+        const { userGroups = [] } = this.props;
+        return renderOptions('id', 'name')(userGroups);
+    }
+
     render() {
-        const { submitting, handleSubmit, values = {} } = this.props;
-        const { receiverType } = values;
+        const { submitting, handleSubmit, fieldValues = {}, dispatch } = this.props;
+        const { receiverType } = fieldValues;
+        const restUserGroup = () => resetSpecificField(dispatch, 'taskDetails', 'userGroupId', '');
+        const resetPersonValue = () => resetSpecificField(dispatch, 'taskDetails', 'persons', '');
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.NOTES_ADD}/>
@@ -107,7 +133,43 @@ class NoticeCreate extends Component {
                             <Select.Option value="USER">指定人员</Select.Option>
                         </Field>
 
-                        {receiverType === 'GROUP' && <Fragment/>}
+                        {
+                            receiverType === 'GROUP' &&
+                            <Field
+                                className="col-md-4 col-lg-3"
+                                rowClassName="inputRow"
+                                name="userGroupId"
+                                showSearch={true}
+                                labelInValue={true}
+                                allowClear={true}
+                                filterOption={this.filterDept}
+                                resetSelectValue={restUserGroup}
+                                component={renderSelectField}
+                                placeholder="学员群组"
+                                label="学员群组"
+                                validate={required}
+                            >
+                                {this.renderUserGroupOptions()}
+                            </Field>
+                        }
+
+                        {
+                            receiverType === 'USER' &&
+                            <AutoSelectSearch
+                                api="/api/users"
+                                query="name"
+                                mode="multiple"
+                                resetSelectValue={resetPersonValue}
+                                labelClassName="col-md-2 col-lg-1"
+                                className="col-md-4 col-lg-3"
+                                rowClassName="inputRow"
+                                name="persons"
+                                placeholder="搜索人员(可添加多个)"
+                                label="人员"
+                                validate={required}
+                                renderOptions={renderOptions('id', 'name')}
+                            />
+                        }
 
                         <Field
                             className="col-md-4 col-lg-3"

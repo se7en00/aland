@@ -7,6 +7,7 @@ import { paginationSetting, resetSpecificField } from 'utils';
 import { connect } from 'react-redux';
 import { renderTextField } from '../../shared/form';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
+import validate from "../../admins/dialog/accountValidate";
 
 const required = value => (value ? undefined : '不能为空！');
 
@@ -28,7 +29,7 @@ const mapStateToProp = (state) => {
 };
 
 @connect(mapStateToProp)
-@reduxForm({form: DIALOG.EDIT_USER_GROUP})
+@reduxForm({form: DIALOG.EDIT_USER_GROUP, enableReinitialize: true, validate})
 class UserGroupEditDialog extends Component {
     static dialogName = DIALOG.EDIT_USER_GROUP;
 

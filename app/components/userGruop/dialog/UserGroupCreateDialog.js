@@ -40,7 +40,7 @@ class UserGroupCreateDialog extends Component {
 
     render() {
         const {submitting, handleSubmit, visible, width, error, dispatch} = this.props;
-        const resetPersonValue = () => resetSpecificField(dispatch, DIALOG.CREATE_USER_GROUP, 'userIds', '');
+        const resetPersonValue = () => resetSpecificField(dispatch, DIALOG.CREATE_USER_GROUP, 'userIds', []);
         return (
             <Modal
                 visible={visible}

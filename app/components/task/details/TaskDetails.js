@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field, Form, getFormValues} from 'redux-form';
 import { Button, Radio, message } from 'antd';
 import uuid from 'uuid/v4';
-import { renderOptions } from 'constants';
+import { renderOptions, getLinkByName, PATHNAME } from 'constants';
 import { resetSpecificField } from 'utils';
 import { connect } from 'react-redux';
 import { renderTextField, renderQuill, renderRadioGroupField, renderCascaderField,
@@ -59,7 +59,7 @@ class TaskDetails extends Component {
 
 
     submit = (values) => {
-        const {actions: {createTask, updateTask}, tasks} = this.props;
+        const {actions: {createTask, updateTask, push}, tasks} = this.props;
         const isEditable = tasks?.isEditable;
         const taskId = tasks?.taskDetails?.id;
         const params = Object.keys(values).reduce((map, k) => {
@@ -87,11 +87,17 @@ class TaskDetails extends Component {
         }, {});
         if (isEditable && taskId) {
             updateTask(taskId, params)
-                .then(() => {message.success(`更新学习任务${values.title}成功！`);})
+                .then(() => {
+                    message.success(`更新学习任务${values.title}成功！`);
+                    push(`${getLinkByName(PATHNAME.LEARN_TASK)}`);
+                })
                 .catch(() => {message.success(`更新学习任务${values.title}失败！`);});
         } else {
             createTask(params)
-                .then(() => {message.success(`保存学习任务${values.title}成功！`);})
+                .then(() => {
+                    message.success(`保存学习任务${values.title}成功！`);
+                    push(`${getLinkByName(PATHNAME.LEARN_TASK)}`);
+                })
                 .catch(() => {message.success(`保存学习任务${values.title}失败！`);});
         }
     }
