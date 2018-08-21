@@ -54,7 +54,33 @@ const settingReducer = typeToReducer({
             ...state,
             typeDetails: action.payload
         })
-    }
+    },
+
+    [TYPES.ASYNC_CREATE_SLIDERS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state) => ({
+            ...state
+        })
+    },
+
+    [TYPES.ASYNC_GET_SLIDERS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            sliders: action.payload
+        })
+    },
+
+    [TYPES.SYNC_RESET_SLIDERS]: (state, action) => ({
+        ...state,
+        sliders: action.payload
+    })
 }, {});
 
 

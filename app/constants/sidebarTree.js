@@ -47,8 +47,7 @@ const SIDE_BAR_MENU = [
         iconName: 'fas fa-chart-bar',
         subItems: [
             {name: PATHNAME.TRAINING_SUMMARY, link: `${ROOT_PATH}/summary` },
-            {name: PATHNAME.USER_SUMMARY, link: `${ROOT_PATH}/userSummary`},
-            {name: PATHNAME.PICTURE, link: `${ROOT_PATH}/picture`}
+            {name: PATHNAME.USER_SUMMARY, link: `${ROOT_PATH}/userSummary`}
 
         ]
     },
@@ -61,9 +60,10 @@ const SIDE_BAR_MENU = [
         subItems: [
             // {name: PATHNAME.TAG_SETTING, link: `${ROOT_PATH}/tagSetting`},
             {name: PATHNAME.SECURITY_PERMISSION_CATEGORY, link: `${ROOT_PATH}/securityPermissionSetting`},
-            {name: PATHNAME.LESSONS_DIRECTION_SETTING, link: `${ROOT_PATH}/lessonsDirectionSetting`}
-            // {name: PATHNAME.TRAINING_AND_COST, link: `${ROOT_PATH}/trainingCostSetting`},
-            // {name: PATHNAME.CAROUSEL_SETTING, link: `${ROOT_PATH}/carouselSetting`}
+            {name: PATHNAME.LESSONS_DIRECTION_SETTING, link: `${ROOT_PATH}/lessonsDirectionSetting`},
+            {name: PATHNAME.TRAINING_AND_COST, link: `${ROOT_PATH}/trainingCostSetting`},
+            {name: PATHNAME.LECTURER_LEVEL, link: `${ROOT_PATH}/lecturerLevelSetting`},
+            {name: PATHNAME.CAROUSEL_SETTING, link: `${ROOT_PATH}/carouselSetting`}
         ]
     }
 ];

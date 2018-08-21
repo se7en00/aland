@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { resetForm } from 'redux/globalAction';
-import { actionCreators, PictureList} from 'components/setting';
+import { actionCreators, TrainingCost} from 'components/setting';
 
 @connect(state => ({setting: state.setting}), mapDispatchToProps)
-class SecurityView extends Component {
+class TrainingCostView extends Component {
     render() {
-        return <PictureList {...this.props}/>;
+        return <TrainingCost {...this.props}/>;
     }
 }
 
@@ -16,4 +16,4 @@ function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({...actionCreators, push, resetForm}, dispatch) };
 }
 
-export default SecurityView;
+export default TrainingCostView;

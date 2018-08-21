@@ -35,3 +35,26 @@ export const getDicTypeById = (id, dicType) => ({
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
+
+export const setSliders = (images) => {
+    const allPromises = images.map(image => Axios.post('/api/settings/sliders', {image})
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data)));
+    return {
+        type: TYPES.ASYNC_CREATE_SLIDERS,
+        payload: Promise.all(allPromises)
+            .catch(error => Promise.reject(error?.response?.data))
+    };
+};
+
+export const getSliders = () => ({
+    type: TYPES.ASYNC_GET_SLIDERS,
+    payload: () => Axios.get('/api/settings/sliders', {params: {page: 1, size: 4}})
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const resetSliders = () => ({
+    type: TYPES.SYNC_RESET_SLIDERS,
+    payload: null
+});

@@ -100,7 +100,7 @@ class TrainingUserList extends Component {
     handelPageChange = (page, pageSize) => {
         const { actions: {getUsers}, trainings } = this.props;
         const trainingId = trainings?.trainingDetails?.id;
-        getUsers(Object.assign({trainingId, pageSize: pageSize, page}));
+        getUsers(Object.assign({trainingId, pageSize, page}));
     }
 
     render() {

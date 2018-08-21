@@ -1,0 +1,29 @@
+@import "~SCSS_PATH/modules";
+
+.tagCollapse {
+    border: none !important;
+    outline: none !important;
+    background-color:$white !important;
+    :global(.ant-collapse-item.ant-collapse-item-active) {
+        :global(.ant-collapse-header) {
+            background-color: $highlightColor;
+            color: $white;
+        }
+    }
+
+    @include e(panel) {
+        outline: none !important;
+        border: 1px solid $accentColor !important;
+        border-radius: rem(4px);
+        margin-bottom: rem(24px) !important;
+        overflow: hidden;
+
+        :global(.ant-collapse-header) {
+            outline: none !important;
+        }
+
+        :global(.ant-collapse-content) {
+            border-top: 1px solid $accentColor !important;
+        }
+    }
+}

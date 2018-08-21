@@ -5,8 +5,8 @@ export const IDENTIFIERS = {
     ACCORDION_CONTENT: 'accordion_content'
 };
 
-// export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
-export const BASE_URL = 'http://58.222.218.171:38085/aland-training';
+export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
+// export const BASE_URL = 'http://58.222.218.171:38085/aland-training';
 
 export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -42,8 +42,7 @@ export const PATHNAME = {
     LESSONS_DIRECTION_SETTING: '课程方向设置',
     TRAINING_AND_COST: '培训种类/成本类型设置',
     CAROUSEL_SETTING: '学习端转播图设置',
-    PICTURE: '学习端转播图设置'
-
+    LECTURER_LEVEL: '培训师等级设置'
 };
 
 export const DIALOG = {
@@ -118,7 +117,8 @@ export const PANEL_TITLE = {
     TASK_DETAIL: '学习任务详情({0})',
     TRAINING_SUMMARY: '学习任务培训汇总表',
     USER_SUMMARY: '用户学习任务培训汇总表',
-    SUMMARY: '汇总表'
+    SUMMARY: '汇总表',
+    PICTURE: '学习端转播图设置'
 };
 
 export const TAG_CATEGORY = {
@@ -131,6 +131,11 @@ export const TAG_CATEGORY = {
     MATERIALS: '相关材料',
     BASE_OPERATION: '相关基本工作操作',
     SECURITY_RISK: '安全风险'
+};
+
+export const TRAINING_COST_CATEGORY = {
+    TRAINING: '培训种类',
+    COST: '成本类型'
 };
 
 export const TYPE_MAPPING = {
