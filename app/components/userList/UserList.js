@@ -42,12 +42,12 @@ class UserList extends Component {
     }
 
     render() {
-        const {userList: {list, searchParams, departments, userLevels}, actions} = this.props;
+        const {userList: {list, searchParams, associations}, actions} = this.props;
         return (
             <div>
                 <Header title={PANEL_TITLE.USER_LIST}/>
                 <div className={panelStyle.panel__body}>
-                    <UserSearch onSubmit={this.onSearch} departments={departments} userLevels={userLevels}/>
+                    <UserSearch onSubmit={this.onSearch} departments={associations ? associations.departments : []} userLevels={associations ? associations.userLevels : []}/>
                     <Button onClick={this.redirect} type="primary" className="editable-add-btn u-pull-down-md" ghost>新增人员</Button>
                     <UserListTable dataSource={list} actions={actions} searchParams={searchParams}/>
                 </div>
