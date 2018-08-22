@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs } from 'antd';
 import UserInfoForm from '../UserInfoForm';
+import Record from '../Record';
 // import UserTrainings from './UserTrainings';
 
 class UserTabs extends Component {
@@ -38,7 +39,8 @@ class UserTabs extends Component {
     }
     render() {
         const TabPane = Tabs.TabPane;
-        const {userList: {associations}, actions} = this.props;
+        const {userList: {associations}, actions, userId} = this.props;
+        console.log(associations);
         return (
             /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
             <Tabs defaultActiveKey="1" >
@@ -49,6 +51,12 @@ class UserTabs extends Component {
                         associations={associations}
                         initialValues={this.initUserDetails()}
                     />
+                   
+                </TabPane>
+                <TabPane tab="人员记录" key="2">
+                <Record
+                    userId={userId}
+                />
                 </TabPane>
             </Tabs>
         );

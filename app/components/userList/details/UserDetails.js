@@ -9,11 +9,13 @@ class UserDetails extends Component {
     componentDidMount() {
         const {actions: {getALLAssociations, getUserDetails}, match} = this.props;
         const {userId} = match.params;
+       
         getUserDetails(userId).then(() => getALLAssociations());
     }
 
     render() {
-        const {userList, actions, showDialog} = this.props;
+        const {userList, actions, showDialog, match} = this.props;
+        const userId = match.params;
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.USER_DETAILS}/>
@@ -21,6 +23,7 @@ class UserDetails extends Component {
                     <UserTabs
                         showDialog={showDialog}
                         actions={actions}
+                        userId={userId}
                         userList={userList}/>
                 </div>
             </Fragment>
