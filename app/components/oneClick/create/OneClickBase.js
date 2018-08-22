@@ -13,15 +13,20 @@ class OneClickBase extends Component {
     }
 
     generateData = (values) => {
-        const { handleSave, oneClick: { currentTags, oneClick } } = this.props;
+        const { handleSave, oneClick: { currentTags, oneClick } , editType } = this.props;
         if (currentTags && currentTags.categoryCode) {
             Object.assign(values, { categoryCode: currentTags.categoryCode });
         }
         const data = R.pick(['categoryCode', 'subject', 'summary', 'trainTarget', 'introduce', 'benefit'], values);
-        handleSave(data, oneClick?.id).then(() => {
+        handleSave(data, oneClick?.id).then((data) => {
             message.success('保存成功！');
-            this.back();
+            editType === "create"?this.toDetail(data.value.id):this.back();
         }).catch(() => { message.success('保存失败！'); });
+    };
+
+    toDetail = (id)=>{
+        const { actions: { push }} = this.props;
+        push(`${getLinkByName(PATHNAME.ONE_CLICK)}/${id}/detail`);
     };
 
     back = () => {
