@@ -1,5 +1,6 @@
 export { default as renderTextField } from './input/InputElement';
 export { default as renderSelectField } from './select/SelectField';
+export { default as renderTreeSelectField } from './tree/TreeField';
 export { default as renderCascaderField } from './select/CascaderField';
 export { default as renderAutoCompleteField } from './autoComplete/AutoCompleteField';
 export { default as renderDateRangeField } from './datePicker/DateRangeField';

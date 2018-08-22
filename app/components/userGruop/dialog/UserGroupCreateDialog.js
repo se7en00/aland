@@ -6,7 +6,7 @@ import { Modal, Button, message } from 'antd';
 import { paginationSetting, resetSpecificField } from 'utils';
 import { renderTextField } from '../../shared/form';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
-
+import AutoTreeSelect from '../../shared/autoSearch/AutoSelectSearch';
 const required = value => (value ? undefined : '不能为空！');
 
 @reduxForm({form: DIALOG.CREATE_USER_GROUP})
@@ -81,7 +81,7 @@ class UserGroupCreateDialog extends Component {
                             validate={required}
                         />
 
-                        <AutoSelectSearch
+                        {/* <AutoSelectSearch
                             api="/api/users"
                             query="name"
                             mode="multiple"
@@ -94,7 +94,9 @@ class UserGroupCreateDialog extends Component {
                             label="人员"
                             validate={required}
                             renderOptions={renderOptions('id', 'name')}
-                        />
+                        /> */}
+                        <AutoTreeSelect/>
+
                     </div>
                 </Form>
             </Modal>

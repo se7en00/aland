@@ -45,7 +45,7 @@ class Record extends Component {
             title: '培训时间',
             align: 'center',
             dataIndex: 'time',
-            render: (text, record) => moment(record.time).format(DATE_FORMAT)
+            render: (text, record) => moment(parseInt(record.time.split(',')[0])).format(DATE_FORMAT)+'-'+(moment(parseInt(record.time.split(',')[1])).format(DATE_FORMAT))
         }];
     }
 
@@ -71,10 +71,11 @@ class Record extends Component {
                         name: item.trainingData ? item.trainingData.title : "",
                         type: item.trainingData ? item.trainingData.trainType : "",
                         teacher: item.trainingData ? item.trainingData.manager : "",
-                        time: "2018-08-08"
+                        time: item.trainingData ?(( item.trainingData.startDate || '')+','+( item.trainingData.endDate || "") ): ",",
                     });
                 });
             }
+         
             this.setState({
                 elements: this.elements,
                 total: data.data.paging.total
