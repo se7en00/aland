@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import { Axios, debounce } from 'utils';
 import { renderTreeSelectField } from '../form';
 
-class AutoSelectSearch extends Component {
+class AutoTreeSelect extends Component {
     static propTypes = {
         resetSelectValue: PropTypes.func,
         style: PropTypes.object,
@@ -32,15 +32,12 @@ class AutoSelectSearch extends Component {
         this.autoSearch = debounce(this.autoSearch, 800);
     }
 
-    componentDidMount() {
-        this.autoSearch("");
-    }
-
+    
     state = {
         dataSource: [],
         fetching: false
     }
-
+   
     autoSearch = (name) => {
         const {api, query} = this.props;
         if (name || name === '') {
@@ -76,10 +73,13 @@ class AutoSelectSearch extends Component {
             label,
             mode,
             layout,
-            validate
+            validate,
+            api
         } = this.props;
+      
         return (
             <Field
+               api={api}
                 showSearch={true}
                 allowClear={true}
                 mode={mode}
@@ -98,10 +98,9 @@ class AutoSelectSearch extends Component {
                 label={label}
                 validate={validate}
             >
-                {renderOptions(dataSource)}
             </Field>
         );
     }
 }
 
-export default AutoSelectSearch;
+export default AutoTreeSelect;
