@@ -20,6 +20,8 @@ class UserGroupCreateDialog extends Component {
     }
 
     submit= (values) => {
+        console.log(values)
+        return
         const {actions: {createUserGroup, getUserGroupList}} = this.props;
         if (values.userIds) {
             const ids = values.userIds.map(id => id.key);
@@ -99,13 +101,13 @@ class UserGroupCreateDialog extends Component {
                             api="/api/departments/users"
                             label="人员"
                             mode="multiple"
-                            validate={required}
+                            
                             labelClassName="col-md-2"
                             className="col-md-8"
                             rowClassName="dialogContainer__inputRow"
                             name="userIds"
                             placeholder="搜索人员(可添加多个)"
-                            renderOptions={renderOptions('id', 'name')}
+                           
                         />
 
                     </div>

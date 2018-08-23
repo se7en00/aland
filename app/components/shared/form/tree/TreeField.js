@@ -10,6 +10,7 @@ class TreeField extends Component {
   constructor(props) {
     super(props);
     this.treeData =[];
+    this.pareTreeData = this.pareTreeData.bind(this)
     this.state = {
       value: undefined,
       treeData: [
@@ -55,45 +56,60 @@ class TreeField extends Component {
     this.setState({ value });
   }
   dataAction() {
+    let self = this;
     const { api } = this.props;
     Axios.get(api)
       .then(response => {
-        const { elements = [] } = response ?.data;
-        console.log(this.pareTreeData(elements))
+        const elements = response.data || [];
+       let result = this.pareTreeData(elements)
+        this.setState({
+          treeData:result
+        })
       })
       .catch(error => console.log(error));
   }
   pareTreeData(elements) {
     var result = [], temp;
+ 
 
-    for(let i=0,len = elements.lenght;i<len;i++){
-      // if(elements[i].childDepartmentUsers){
-      //   result[i] = {
-      //     title: elements[i].departmentName,
-      //     value: elements[i].departmentId,
-      //     key: elements[i].departmentId,
-      //   }
-      // }
-      let _obj ={};
-      Object.keys(elements[i]).forEach(key=>{
-        if(elements[i].departmentName){
-          if('departmentName' == key){
-            _obj.title = elements[i][key];
-          }
-          if('departmentId' == key){
-            _obj.value = elements[i][key];
-            _obj.key = elements[i][key];
-          }
-        }
-        if(elements[i].users){
+    if(!Array.isArray(elements) || elements.length<=0) return '';
+    elements.forEach((item, i)=>{
+      let _children = {
+        title:item.departmentName,
+        value:item.departmentId,
+        key:item.departmentId
+      }
+      if(Array.isArray(item.childDepartmentUsers) && item.childDepartmentUsers.length>0&& !item.users){
+        _children.children = this.pareTreeData(item.childDepartmentUsers);
+      }
+      if(Array.isArray(item.users) && item.users.length>0 &&Array.isArray(item.childDepartmentUsers) && item.childDepartmentUsers.length>0 ){
+        let __children = [];
+        item.users.forEach(_item=>{
           
-        }
-       
-      })
-    }
+          __children.push({
+            title:_item.name,
+            value:_item.id,
+            key:_item.id
+          })
 
+        })
+        _children.children =__children.concat( this.pareTreeData(item.childDepartmentUsers));
+      }
+      if(Array.isArray(item.users) && item.users.length>0 && !item.childDepartmentUsers){
+        _children.children = [];
+        item.users.forEach(_item=>{
+          
+          _children.children.push({
+            title:_item.name,
+            value:_item.id,
+            key:_item.id
+          })
 
-      
+        })
+      }
+      result.push(_children)
+    })
+    
     return result;
   }
   render() {
@@ -129,6 +145,7 @@ class TreeField extends Component {
     };
     return (
       <div className={className}>
+      <input {...input} type="hidden" value={this.state.value}/>
         <TreeSelect {...tProps} />
       </div>
     );

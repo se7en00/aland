@@ -76,7 +76,7 @@ class AutoTreeSelect extends Component {
             validate,
             api
         } = this.props;
-      
+      console.log(name)
         return (
             <Field
                api={api}
@@ -97,6 +97,7 @@ class AutoTreeSelect extends Component {
                 placeholder={placeholder}
                 label={label}
                 validate={validate}
+             
             >
             </Field>
         );
