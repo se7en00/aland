@@ -53,7 +53,7 @@ class UserTabs extends Component {
                     />
                    
                 </TabPane>
-                <TabPane tab="人员记录" key="2">
+                <TabPane tab="培训记录" key="2">
                 <Record
                     userId={userId}
                 />
