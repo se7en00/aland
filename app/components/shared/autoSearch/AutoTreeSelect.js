@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Axios, debounce } from 'utils';
 import { renderTreeSelectField } from '../form';
+import EventEmitter from 'events';
+let emitter = new EventEmitter;
 
 class AutoTreeSelect extends Component {
     static propTypes = {
@@ -19,7 +21,9 @@ class AutoTreeSelect extends Component {
         layout: PropTypes.string,
         placeholder: PropTypes.string,
         mode: PropTypes.string,
-        validate: PropTypes.func
+        validate: PropTypes.func,
+        popUserIds:PropTypes.func,
+        onRef:PropTypes.func
     }
 
     static defaultProps = {
@@ -37,7 +41,10 @@ class AutoTreeSelect extends Component {
         dataSource: [],
         fetching: false
     }
-   
+    resetaction(data){
+      
+        emitter.emit('resetaction',data);
+    }
     autoSearch = (name) => {
         const {api, query} = this.props;
         if (name || name === '') {
@@ -74,11 +81,14 @@ class AutoTreeSelect extends Component {
             mode,
             layout,
             validate,
-            api
+            popUserIds,
+            api,
+            values
         } = this.props;
-      console.log(name)
+
         return (
             <Field
+               values={values}
                api={api}
                 showSearch={true}
                 allowClear={true}
@@ -96,8 +106,9 @@ class AutoTreeSelect extends Component {
                 component={renderTreeSelectField}
                 placeholder={placeholder}
                 label={label}
+                popUserIds={popUserIds}
                 validate={validate}
-             
+                emitter={emitter}
             >
             </Field>
         );

@@ -4,7 +4,7 @@ import { TreeSelect } from 'antd';
 import { Axios, debounce } from 'utils';
 import remapReduxFormProps from '../RemapReduxFormProps';
 const TreeNode = TreeSelect.TreeNode;
-const SHOW_PARENT = TreeSelect.SHOW_PARENT;
+const SHOW_CHILD = TreeSelect.SHOW_CHILD;
 @remapReduxFormProps
 class TreeField extends Component {
   constructor(props) {
@@ -46,14 +46,54 @@ class TreeField extends Component {
   static propTypes = {
     className: PropTypes.string,
     api: PropTypes.string,
+    popUserIds:PropTypes.func,
+    onRef:PropTypes.func
   }
   componentDidMount() {
-    this.dataAction("");
+  
+    this.dataAction();
+    // console.log('1')
+    // this.eventEmitter = this.props.emitter.on('resetaction', (data) => {
+    //   console(data)
+    //   this.setState({
+    //     value:data,
+    //   })
+    // });
+    // this.eventEmitter2 = this.props.emitter.on('resetaction2', (data) => {
+    //   console(data)
+    //   this.setState({
+    //     value:data,
+    //   })
+    // });
+    this.setState({
+      value:this.props.values
+    })
   }
-
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps.values)
+   
+    if(!nextProps.values){
+      this.setState({
+        value:[],
+      })
+    }else{
+      if(this.props.values.join(',')!=nextProps.values.join(",")){
+      this.setState({
+        value:nextProps.values,
+      })
+    }
+  }
+  }
+  componentWillUnmount() {
+   
+}
   onChange = (value) => {
-    console.log(value);
+
+    const { popUserIds ,input:{name}} = this.props;
+  
+    popUserIds({name,value})
     this.setState({ value });
+    
   }
   dataAction() {
     let self = this;
@@ -136,17 +176,15 @@ class TreeField extends Component {
       value: this.state.value,
       onChange: this.onChange,
       treeCheckable: true,
-      showCheckedStrategy: SHOW_PARENT,
+      showCheckedStrategy: SHOW_CHILD,
       searchPlaceholder: placeholder,
-
       style: {
         width: 300,
       },
     };
     return (
       <div className={className}>
-      <input {...input} type="hidden" value={this.state.value}/>
-        <TreeSelect {...tProps} />
+        <TreeSelect {...tProps}  ref="treeselect"/>
       </div>
     );
   }
