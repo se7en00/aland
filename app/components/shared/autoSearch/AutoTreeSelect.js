@@ -83,9 +83,10 @@ class AutoTreeSelect extends Component {
             validate,
             popUserIds,
             api,
-            values
+            values,
+            
         } = this.props;
-
+  const labelInValue = this.props.labelInValue || false;
         return (
             <Field
                values={values}
@@ -99,7 +100,7 @@ class AutoTreeSelect extends Component {
                 rowClassName={rowClassName}
                 name={name}
                 layout={layout}
-                labelInValue={true}
+                labelInValue={labelInValue}
                 fetching={fetching}
                 onSearch={this.autoSearch}
                 resetSelectValue={resetSelectValue}

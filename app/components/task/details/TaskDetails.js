@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { renderTextField, renderQuill, renderRadioGroupField, renderCascaderField,
     renderSelectField, renderDateRangeField, renderCheckboxField, renderSwitch } from '../../shared/form';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
-
+import AutoTreeSelect from '../../shared/autoSearch/AutoTreeSelect'
 const required = value => (value ? undefined : '不能为空！');
 
 function mapStateToProps(state) {
@@ -57,8 +57,21 @@ class TaskDetails extends Component {
         return renderOptions('id', 'name')(associations.userGroups);
     }
 
-
+    popUserIds(obj){
+        console.log(obj)
+        this.extendObj = obj;
+    }
     submit = (values) => {
+        let _tmp=[];
+        if(this.extendObj){
+            this.extendObj.value.forEach(item=>{
+                _tmp.push({
+                    receiverId:item.value,
+                    receiverName:item.label
+                })
+            })
+            values.receivers = _tmp;
+        }
         const {actions: {createTask, updateTask, push}, tasks} = this.props;
         const isEditable = tasks?.isEditable;
         const taskId = tasks?.taskDetails?.id;
@@ -105,6 +118,18 @@ class TaskDetails extends Component {
     render() {
         const { submitting, handleSubmit, dispatch, tasks, fieldValues, associations} = this.props;
         console.log(tasks);
+        let value =[]
+        if(tasks.taskDetails && tasks.taskDetails.receivers && tasks.taskDetails.receivers.length>0){
+            tasks.taskDetails.receivers.forEach(item=>{
+            value.push({
+                label:item.receiverName,
+                value:item.receiverId
+            })
+          })
+        }else{
+            value = [{}]
+        }
+        console.log(associations);
         const targetType = fieldValues?.targetType || '';
         const courseDirectionOptions = associations?.courseDirections || [];
         const restManagerValue = () => resetSpecificField(dispatch, 'taskDetails', 'manager', '');
@@ -126,7 +151,7 @@ class TaskDetails extends Component {
                         validate={required}
                     />
 
-                    <Field
+                    {/* <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="businessUnit"
@@ -134,9 +159,19 @@ class TaskDetails extends Component {
                         type="text"
                         placeholder="业务单元"
                         label="业务单元"
+                    /> */}
+                    <AutoSelectSearch
+                        api="/api/dictionarys/dicType/BUSINESS_UNIT"
+                        query=""
+                      //  resetSelectValue={restManagerValue}
+                        className="col-md-8 col-lg-6"
+                        rowClassName="inputRow"
+                        name="manager"
+                        placeholder="业务单元"
+                        label="业务单元"
+                        renderOptions={renderOptions('id', 'name')}
                     />
-
-                    <Field
+                    {/* <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="costCenter"
@@ -144,8 +179,18 @@ class TaskDetails extends Component {
                         type="text"
                         placeholder="成本中心"
                         label="成本中心"
+                    /> */}
+                      <AutoSelectSearch
+                        api="/api/dictionarys/dicType/COST_CENTER"
+                        query=""
+                      //  resetSelectValue={restManagerValue}
+                        className="col-md-8 col-lg-6"
+                        rowClassName="inputRow"
+                        name="manager"
+                        placeholder="成本中心"
+                        label="成本中心"
+                        renderOptions={renderOptions('id', 'name')}
                     />
-
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
@@ -158,7 +203,7 @@ class TaskDetails extends Component {
                         <Radio key={uuid()} value="0">否</Radio>
                     </Field>
 
-                    <Field
+                    {/* <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="trainType"
@@ -166,8 +211,18 @@ class TaskDetails extends Component {
                         type="text"
                         placeholder="培训种类"
                         label="培训种类"
+                    /> */}
+                     <AutoSelectSearch
+                        api="/api/dictionarys/dicType/TRAINING_TYPE"
+                        query=""
+                      //  resetSelectValue={restManagerValue}
+                        className="col-md-8 col-lg-6"
+                        rowClassName="inputRow"
+                        name="manager"
+                        placeholder="培训种类"
+                        label="培训种类"
+                        renderOptions={renderOptions('id', 'name')}
                     />
-
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
@@ -259,20 +314,34 @@ class TaskDetails extends Component {
 
                     {
                         targetType === 'USER' &&
-                        <AutoSelectSearch
-                            api="/api/users"
-                            query="name"
-                            mode="multiple"
-                            resetSelectValue={resetPersonValue}
-                            labelClassName="col-md-2 col-lg-1"
-                            className="col-md-8 col-lg-6"
-                            rowClassName="inputRow"
-                            name="persons"
-                            placeholder="搜索人员(可添加多个)"
-                            label="人员"
-                            validate={required}
-                            renderOptions={renderOptions('id', 'name')}
-                        />
+                        // <AutoSelectSearch
+                        //     api="/api/users"
+                        //     query="name"
+                        //     mode="multiple"
+                        //     resetSelectValue={resetPersonValue}
+                        //     labelClassName="col-md-2 col-lg-1"
+                        //     className="col-md-8 col-lg-6"
+                        //     rowClassName="inputRow"
+                        //     name="persons"
+                        //     placeholder="搜索人员(可添加多个)"
+                        //     label="人员"
+                        //     validate={required}
+                        //     renderOptions={renderOptions('id', 'name')}
+                        // />
+                        <AutoTreeSelect
+                        
+                        api="/api/departments/users"
+                        label="人员"
+                        mode="multiple"
+                        popUserIds={this.popUserIds.bind(this)}
+                        labelClassName="col-md-2 col-lg-1"
+                        className="col-md-8"
+                        rowClassName="inputRow"
+                        labelInValue={true}
+                        name="userIds"
+                        placeholder="搜索人员(可添加多个)"
+                        values={value}
+                    />
                     }
 
                     <Field

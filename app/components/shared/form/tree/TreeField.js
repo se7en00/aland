@@ -172,6 +172,7 @@ class TreeField extends Component {
       mode
     } = this.props;
     const tProps = {
+      labelInValue:labelInValue || false,
       treeData: this.state.treeData,
       value: this.state.value,
       onChange: this.onChange,
