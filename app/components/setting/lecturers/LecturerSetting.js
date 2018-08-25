@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { PATHNAME, TRAINING_COST_CATEGORY } from 'constants';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import { paginationSetting } from 'utils';
 import uuid from 'uuid/v4';
 import { Collapse } from 'antd';
@@ -12,9 +12,13 @@ import style from './LecturerSetting.scss';
 class LecturerSetting extends Component {
     static propTypes = {
         // showDialog: PropTypes.func
-        // actions: PropTypes.objectOf(PropTypes.func),
-        // onlineLessons: PropTypes.object
+        actions: PropTypes.objectOf(PropTypes.func),
+        setting: PropTypes.object
     };
+
+    componentDidMount() {
+        this.props.actions.getLecturesLevels();
+    }
 
     renderCategoriesPanel = () => {
         const Panel = Collapse.Panel;
@@ -26,12 +30,12 @@ class LecturerSetting extends Component {
     }
 
     render() {
-        // const {onlineLessons: {list}, actions} = this.props;
+        const {setting: {lecturesLevels}, actions} = this.props;
         return (
             <Fragment>
                 <Header title={PATHNAME.LECTURER_LEVEL}/>
                 <div className={panelStyle.panel__body}>
-                    <LecturerGroup/>
+                    <LecturerGroup actions={actions} lecturesLevels={lecturesLevels}/>
                 </div>
             </Fragment>
         );

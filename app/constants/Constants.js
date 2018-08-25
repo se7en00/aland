@@ -134,8 +134,8 @@ export const TAG_CATEGORY = {
 };
 
 export const TRAINING_COST_CATEGORY = {
-    TRAINING: '培训种类',
-    COST: '成本类型'
+    TRAINING_TYPE: '培训种类',
+    COST_TYPE: '成本类型'
 };
 
 export const TYPE_MAPPING = {

@@ -57,10 +57,24 @@ class TaskDetails extends Component {
         return renderOptions('id', 'name')(associations.userGroups);
     }
 
+
     popUserIds(obj){
         console.log(obj)
         this.extendObj = obj;
     }
+
+    renderTrainingOptions = () => {
+        const {associations} = this.props;
+        if (!associations?.trainingTypes) return;
+        return renderOptions('name', 'name')(associations.trainingTypes);
+    }
+
+    renderCostOptions = () => {
+        const {associations} = this.props;
+        if (!associations?.costTypes) return;
+        return renderOptions('name', 'name')(associations.costTypes);
+    }
+
     submit = (values) => {
         let _tmp=[];
         if(this.extendObj){
@@ -137,6 +151,8 @@ class TaskDetails extends Component {
         const restDirectionValue = () => resetSpecificField(dispatch, 'taskDetails', 'direction', '');
         const restUserGroup = () => resetSpecificField(dispatch, 'taskDetails', 'userGroupId', '');
         const resetPersonValue = () => resetSpecificField(dispatch, 'taskDetails', 'persons', '');
+        const restTrainingType = () => resetSpecificField(dispatch, 'taskDetails', 'trainType', '');
+        const restCostType = () => resetSpecificField(dispatch, 'taskDetails', 'costType', '');
         return (
             <div>
                 <Form name="form" onSubmit={handleSubmit(this.submit)}>
@@ -207,8 +223,10 @@ class TaskDetails extends Component {
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="trainType"
-                        component={renderTextField}
-                        type="text"
+                        showSearch={true}
+                        allowClear={true}
+                        resetSelectValue={restTrainingType}
+                        component={renderSelectField}
                         placeholder="培训种类"
                         label="培训种类"
                     /> */}
@@ -223,6 +241,27 @@ class TaskDetails extends Component {
                         label="培训种类"
                         renderOptions={renderOptions('id', 'name')}
                     />
+
+                        {/* validate={required}
+                    >
+                        {this.renderTrainingOptions()}
+                    </Field> */}
+
+                    <Field
+                        className="col-md-8 col-lg-6"
+                        rowClassName="inputRow"
+                        name="costType"
+                        showSearch={true}
+                        allowClear={true}
+                        resetSelectValue={restCostType}
+                        component={renderSelectField}
+                        placeholder="成本类型"
+                        label="成本类型"
+                    >
+                        {this.renderCostOptions()}
+                    </Field>
+
+
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
