@@ -109,6 +109,6 @@ class Record extends Component {
 
 Record.propTypes = {
     // associations: PropTypes.object,
-    userId: PropTypes.string
+    userId: PropTypes.object
 };
 export default Record;

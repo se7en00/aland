@@ -64,8 +64,8 @@ class OnlineMessageArea extends Component {
     handelPageChange() {
 
     }
-    showTable(userId, page, size){
-        Axios.get(`/api/users/${userId.userId}/trainings`,{params:{
+    showTable(lid, page, size){
+        Axios.get(`/api/courses/${lid}/comments`,{params:{
             page: page,
             size: size
         }}).then(data => {
@@ -95,11 +95,19 @@ class OnlineMessageArea extends Component {
         });
     }
     componentDidMount(){
-        const {userId} = this.props;
-        this.showTable(userId, this.page, this.size);
+       // const {userId} = this.props;
+        if (/details$/g.test(location.pathname)) {
+            const courseId = location.pathname.match(/(\w)+(?=\/details$)/g)[0];
+            if (courseId) {
+
+                this.courseId = courseId;
+                this.showTable(courseId, this.page, this.size);
+            }
+        }
+       
     }
     render() {
-        const {userId} = this.props;
+      //  const {userId} = this.props;
         let self = this;
         return (
             <Table
@@ -112,7 +120,7 @@ class OnlineMessageArea extends Component {
                     total: this.state.total,
                     pageSize: this.size,
                     onChange(current){
-                        self.showTable(userId, current, self.size);
+                        self.showTable(self.courseId, current, self.size);
                     }
                 }}
             />);
@@ -121,6 +129,6 @@ class OnlineMessageArea extends Component {
 
 OnlineMessageArea.propTypes = {
     // associations: PropTypes.object,
-    userId: PropTypes.string
+   // lid: PropTypes.string
 };
 export default OnlineMessageArea;

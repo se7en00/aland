@@ -88,9 +88,9 @@ class OnlineLessonTab extends Component {
                 <TabPane
                     disabled={isDisabledLesson}
                     tab={<span><Icon type="book"/>留言区</span>}
-                    key="3">
+                    key="4">
                     <OnlineMessageArea
-                         userId={userId}
+                    
                     />
                 </TabPane>
             </Tabs>

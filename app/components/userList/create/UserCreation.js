@@ -21,6 +21,7 @@ class UserCreation extends Component {
                         actions={actions}
                         isCreate={true}
                         associations={associations}
+                        defaultGender="1"
                     />
                 </div>
             </Fragment>
