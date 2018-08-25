@@ -54,6 +54,12 @@ class TrainingDetails extends Component {
         return renderOptions('id', 'name')(associations.userGroups);
     }
 
+    renderTrainingOptions = () => {
+        const {associations} = this.props;
+        if (!associations?.trainingTypes) return;
+        return renderOptions('name', 'name')(associations.trainingTypes);
+    }
+
     renderFormsOptions = () => {
         const costs = ['讲授', '小组讨论', '视频案例', '游戏', '角色扮演', '行动学习', '团队共创', '世界咖啡', '现场演练', '户外拓展', '自定义'];
         return costs.map(item => ({label: item, value: item}));
@@ -113,6 +119,7 @@ class TrainingDetails extends Component {
         const restDirectionValue = () => resetSpecificField(dispatch, 'trainingDetails', 'direction', '');
         const restUserGroup = () => resetSpecificField(dispatch, 'trainingDetails', 'userGroupId', '');
         const resetPersonValue = () => resetSpecificField(dispatch, 'trainingDetails', 'persons', '');
+        const restTrainingType = () => resetSpecificField(dispatch, 'trainingDetails', 'trainType', '');
         return (
             <div>
                 <Form name="form" onSubmit={handleSubmit(this.submit)}>
@@ -175,11 +182,16 @@ class TrainingDetails extends Component {
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="trainType"
-                        component={renderTextField}
-                        type="text"
+                        showSearch={true}
+                        allowClear={true}
+                        resetSelectValue={restTrainingType}
+                        component={renderSelectField}
                         placeholder="培训种类"
                         label="培训种类"
-                    />
+                        validate={required}
+                    >
+                        {this.renderTrainingOptions()}
+                    </Field>
 
                     <Field
                         className="col-md-8 col-lg-6"
@@ -260,7 +272,6 @@ class TrainingDetails extends Component {
                             showSearch={true}
                             labelInValue={true}
                             allowClear={true}
-                            filterOption={this.filterDept}
                             resetSelectValue={restUserGroup}
                             component={renderSelectField}
                             placeholder="学员群组"

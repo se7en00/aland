@@ -58,3 +58,129 @@ export const resetSliders = () => ({
     type: TYPES.SYNC_RESET_SLIDERS,
     payload: null
 });
+
+//lecture
+export const getLecturesLevels = () => ({
+    type: TYPES.ASYNC_GET_LECTURES,
+    payload: () => Axios.get('api/dictionarys/dicType/TEACHER_LEVEL')
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const saveLecturesLevels = (newName, code) => ({
+    type: TYPES.ASYNC_SAVE_LECTURES,
+    async payload() {
+        const params = {
+            dicType: 'TEACHER_LEVEL',
+            dictionaryCreates: [{
+                name: newName,
+                code
+            }]
+        };
+        await Axios.post('/api/dictionarys', params)
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        const list = await Axios.get('api/dictionarys/dicType/TEACHER_LEVEL')
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        return list;
+    }
+});
+
+export const deleteLctureLevels = (id) => ({
+    type: TYPES.ASYNC_SAVE_LECTURES,
+    async payload() {
+        await Axios.delete(`/api/dictionarys/${id}`)
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        const list = await Axios.get('api/dictionarys/dicType/TEACHER_LEVEL')
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        return list;
+    }
+});
+
+export const getTrainings = () => ({
+    type: TYPES.ASYNC_GET_TRAINING_TYPE,
+    payload: () => Axios.get('api/dictionarys/dicType/TRAINING_TYPE')
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const getCosts = () => ({
+    type: TYPES.ASYNC_GET_COST_TYPE,
+    payload: () => Axios.get('api/dictionarys/dicType/COST_TYPE')
+        .then(response => response.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const saveTrainingType = (newName, code) => ({
+    type: TYPES.ASYNC_SAVE_TRAINING,
+    async payload() {
+        const params = {
+            dicType: 'TRAINING_TYPE',
+            dictionaryCreates: [{
+                name: newName,
+                code
+            }]
+        };
+        await Axios.post('/api/dictionarys', params)
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        const list = await Axios.get('api/dictionarys/dicType/TRAINING_TYPE')
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        return list;
+    }
+});
+
+export const saveCostTypes = (newName, code) => ({
+    type: TYPES.ASYNC_SAVE_COST,
+    async payload() {
+        const params = {
+            dicType: 'COST_TYPE',
+            dictionaryCreates: [{
+                name: newName,
+                code
+            }]
+        };
+        await Axios.post('/api/dictionarys', params)
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        const list = await Axios.get('api/dictionarys/dicType/COST_TYPE')
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        return list;
+    }
+});
+
+export const deleteTraining = (id) => ({
+    type: TYPES.ASYNC_REMOVE_TRAINING,
+    async payload() {
+        await Axios.delete(`/api/dictionarys/${id}`)
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        const list = await Axios.get('api/dictionarys/dicType/TRAINING_TYPE')
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        return list;
+    }
+});
+
+export const deleteCost = (id) => ({
+    type: TYPES.ASYNC_REMOVE_COST,
+    async payload() {
+        await Axios.delete(`/api/dictionarys/${id}`)
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        const list = await Axios.get('api/dictionarys/dicType/COST_TYPE')
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data));
+        return list;
+    }
+});
+
+export const setActivePanel = (keys) => ({
+    type: TYPES.SYNC_ACTIVE_PANEL,
+    payload: keys
+});

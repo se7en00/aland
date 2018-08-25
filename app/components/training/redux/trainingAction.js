@@ -69,13 +69,17 @@ export const getALLAssociations = () => {
         Axios.get('/api/userGroups', {params: {size: 2000}}).then(response => {
             if (!response?.data?.elements) return [];
             return response?.data?.elements?.map(item => ({id: item.id, name: item.title}));
-        })
+        }),
+        Axios.get('api/dictionarys/dicType/TRAINING_TYPE')
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data))
     ];
     return {
         type: TYPES.ASYNC_LOAD_TRAINING_ASSOCIATIONS,
         payload: Promise.all(allPromises).then(result => ({
             courseDirections: result[0],
-            userGroups: result[1]
+            userGroups: result[1],
+            trainingTypes: result[2]
         })).catch(error => Promise.reject(error?.response?.data))
     };
 };
