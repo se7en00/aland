@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Axios, debounce } from 'utils';
-import { renderSelectField } from '../form';
+import { renderTreeSelectField } from '../form';
+import EventEmitter from 'events';
+let emitter = new EventEmitter;
 
-class AutoSelectSearch extends Component {
+class AutoTreeSelect extends Component {
     static propTypes = {
         resetSelectValue: PropTypes.func,
         style: PropTypes.object,
@@ -19,7 +21,9 @@ class AutoSelectSearch extends Component {
         layout: PropTypes.string,
         placeholder: PropTypes.string,
         mode: PropTypes.string,
-        validate: PropTypes.func
+        validate: PropTypes.func,
+        popUserIds:PropTypes.func,
+        onRef:PropTypes.func
     }
 
     static defaultProps = {
@@ -32,15 +36,15 @@ class AutoSelectSearch extends Component {
         this.autoSearch = debounce(this.autoSearch, 800);
     }
 
-    componentDidMount() {
-        this.autoSearch("");
-    }
-
+    
     state = {
         dataSource: [],
         fetching: false
     }
-
+    resetaction(data){
+      
+        emitter.emit('resetaction',data);
+    }
     autoSearch = (name) => {
         const {api, query} = this.props;
         if (name || name === '') {
@@ -76,10 +80,16 @@ class AutoSelectSearch extends Component {
             label,
             mode,
             layout,
-            validate
+            validate,
+            popUserIds,
+            api,
+            values
         } = this.props;
+
         return (
             <Field
+               values={values}
+               api={api}
                 showSearch={true}
                 allowClear={true}
                 mode={mode}
@@ -93,15 +103,16 @@ class AutoSelectSearch extends Component {
                 fetching={fetching}
                 onSearch={this.autoSearch}
                 resetSelectValue={resetSelectValue}
-                component={renderSelectField}
+                component={renderTreeSelectField}
                 placeholder={placeholder}
                 label={label}
+                popUserIds={popUserIds}
                 validate={validate}
+                emitter={emitter}
             >
-                {renderOptions(dataSource)}
             </Field>
         );
     }
 }
 
-export default AutoSelectSearch;
+export default AutoTreeSelect;

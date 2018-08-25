@@ -7,6 +7,8 @@ import { paginationSetting, resetSpecificField } from 'utils';
 import { connect } from 'react-redux';
 import { renderTextField } from '../../shared/form';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
+import AutoTreeSelect from '../../shared/autoSearch/AutoTreeSelect';
+import validate from "../../admins/dialog/accountValidate";
 
 const required = value => (value ? undefined : '不能为空！');
 
@@ -23,12 +25,13 @@ const mapStateToProp = (state) => {
             description: userGroupDetails.description,
             users: userGroupDetails.users
         },
-        userGroupId: userGroupDetails.id || ''
+        userGroupId: userGroupDetails.id || '',
+        users:userGroupDetails.users
     };
 };
 
 @connect(mapStateToProp)
-@reduxForm({form: DIALOG.EDIT_USER_GROUP})
+@reduxForm({form: DIALOG.EDIT_USER_GROUP, enableReinitialize: true, validate})
 class UserGroupEditDialog extends Component {
     static dialogName = DIALOG.EDIT_USER_GROUP;
 
@@ -37,17 +40,34 @@ class UserGroupEditDialog extends Component {
         this.props.dispatch(reset(DIALOG.EDIT_USER_GROUP));
         this.props.hideDialog(DIALOG.EDIT_USER_GROUP)();
     }
-
+    componentDidMount(){
+        
+        // console.log(this.refs.autotreeselect)
+    }
+    componentWillUpdate(){
+        console.log(this.props.users)
+    }
+    popUserIds(obj){
+        
+        this.extendObj = obj;
+    }
     submit= (values) => {
-        const {actions: {updateUserGroup, getUserGroupList}, userGroupId} = this.props;
-        if (values.users) {
-            const ids = values.users.map(id => id.key);
-            Object.assign(values, {userIds: ids});
+        const {actions: {updateUserGroup, getUserGroupList}, userGroupId,users} = this.props;
+        console.log(values);
+        if(this.extendObj){
+            values[this.extendObj.name] = this.extendObj.value;
         }
+       
+        //return;
+        // if (values.users) {
+        //     const ids = values.users.map(id => id.key);
+        //     Object.assign(values, {userIds: ids});
+        // }
         return updateUserGroup(userGroupId, values)
             .then(() => {
                 message.success(`更新群组${values.title}成功！`);
                 this.closeDialog();
+              //  this.refs.autotreeselect2.resetaction([]);
                 getUserGroupList({pageSize: paginationSetting.pageSize});
             })
             .catch(error => {
@@ -58,8 +78,12 @@ class UserGroupEditDialog extends Component {
     }
 
     render() {
-        const {submitting, handleSubmit, visible, width, error, dispatch} = this.props;
+        const {submitting, handleSubmit, visible, width, error, dispatch,users} = this.props;
         const resetPersonValue = () => resetSpecificField(dispatch, DIALOG.EDIT_USER_GROUP, 'userIds', '');
+         console.log(users)
+         const ids = users && users.length>0 && users.map(id => id.key);
+         console.log(ids)
+        // this.refs.autotreeselect.resetaction([]);
         return (
             <Modal
                 visible={visible}
@@ -99,7 +123,7 @@ class UserGroupEditDialog extends Component {
                             label="描述"
                         />
 
-                        <AutoSelectSearch
+                        {/* <AutoSelectSearch
                             api="/api/users"
                             query="name"
                             mode="multiple"
@@ -112,7 +136,22 @@ class UserGroupEditDialog extends Component {
                             label="人员"
                             validate={required}
                             renderOptions={renderOptions('id', 'name')}
+                        /> */}
+
+                         <AutoTreeSelect
+                            api="/api/departments/users"
+                            label="人员"
+                            mode="multiple"
+                            popUserIds={this.popUserIds.bind(this)}
+                            labelClassName="col-md-2"
+                            className="col-md-8"
+                            rowClassName="dialogContainer__inputRow"
+                            name="userIds"
+                            placeholder="搜索人员(可添加多个)"
+                            refs="autotreeselect2"
+                            values={ids}
                         />
+                        
                     </div>
                 </Form>
             </Modal>

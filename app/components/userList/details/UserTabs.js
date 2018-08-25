@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs } from 'antd';
 import UserInfoForm from '../UserInfoForm';
+import Record from '../Record';
 // import UserTrainings from './UserTrainings';
 
 class UserTabs extends Component {
@@ -9,6 +10,7 @@ class UserTabs extends Component {
         const {userList} = this.props;
         if (R.isEmpty(userList) || !userList?.userDetails) return null;
         const details = userList.userDetails;
+       
         const result = Object.keys(details).reduce((map, k) => {
             if (k === 'birthday' || k === 'entryDate' || k === 'workDate') {
                 map[k] = details[k] ? moment(details[k]) : '';
@@ -25,7 +27,7 @@ class UserTabs extends Component {
                     map[k] = {key: details[k], label: details?.userGroupName};
                 }
             } else if (k === 'gender') {
-                map[k] = details[k] === '男' ? '1' : '0';
+                map[k] = details[k] == '1' ? '1' : '0';
             } else if (k === 'avatarUrl') {
                 map[k] = [details[k]];
             } else {
@@ -38,7 +40,8 @@ class UserTabs extends Component {
     }
     render() {
         const TabPane = Tabs.TabPane;
-        const {userList: {associations}, actions} = this.props;
+        const {userList: {associations}, actions, userId} = this.props;
+      
         return (
             /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
             <Tabs defaultActiveKey="1" >
@@ -49,6 +52,12 @@ class UserTabs extends Component {
                         associations={associations}
                         initialValues={this.initUserDetails()}
                     />
+                   
+                </TabPane>
+                <TabPane tab="培训记录" key="2">
+                <Record
+                    userId={userId}
+                />
                 </TabPane>
             </Tabs>
         );

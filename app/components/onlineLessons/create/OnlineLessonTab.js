@@ -5,7 +5,7 @@ import uuid from 'uuid/v4';
 import OnlineLessonDetails from './OnlineLessonDetails';
 import OnlineLessonNode from './OnlineLessonNodes';
 import OnlineLessonQuizzes from './OnlineLessonQuizzes';
-
+import OnlineMessageArea from './OnlineMessageArea';
 class OnlineLessonTab extends Component {
     buttonMenu = () => (
         <Menu >
@@ -83,6 +83,14 @@ class OnlineLessonTab extends Component {
                         draftOnlineLesson={draftOnlineLesson}
                         examInfoList={draftOnlineLesson?.exams}
                         initialValues={this.initExamValues(draftOnlineLesson?.draftLesson)}
+                    />
+                </TabPane>
+                <TabPane
+                    disabled={isDisabledLesson}
+                    tab={<span><Icon type="book"/>留言区</span>}
+                    key="4">
+                    <OnlineMessageArea
+                    
                     />
                 </TabPane>
             </Tabs>

@@ -30,7 +30,8 @@ class UserListTable extends Component {
         }, {
             title: '性别',
             align: 'center',
-            dataIndex: 'gender'
+            dataIndex: 'gender',
+           render: (text, record) => this.parseGender(record.gender)
         }, {
             title: '手机号',
             align: 'center',
@@ -55,7 +56,7 @@ class UserListTable extends Component {
             title: '从岗时间',
             align: 'center',
             dataIndex: 'workDate',
-            render: (text, record) => moment(record.workDate).format(DATE_FORMAT)
+            render: (text, record) => this.parseDate(record.workDate)
         }, {
             title: '操作',
             align: 'center',
@@ -74,7 +75,12 @@ class UserListTable extends Component {
             )
         }];
     }
-
+    parseGender(gender){
+      return gender==1?'男':gender==0?'女':'无'
+    }
+    parseDate(date){
+        return date == null? '无' :moment(date).format(DATE_FORMAT)
+    }
     onResetPWD = (user) => {
         const {
             actions: {resetPassword}

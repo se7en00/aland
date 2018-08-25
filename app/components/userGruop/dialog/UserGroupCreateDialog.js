@@ -6,29 +6,39 @@ import { Modal, Button, message } from 'antd';
 import { paginationSetting, resetSpecificField } from 'utils';
 import { renderTextField } from '../../shared/form';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
-
+import AutoTreeSelect from '../../shared/autoSearch/AutoTreeSelect';
 const required = value => (value ? undefined : '不能为空！');
 
 @reduxForm({form: DIALOG.CREATE_USER_GROUP})
 class UserGroupCreateDialog extends Component {
     static dialogName = DIALOG.CREATE_USER_GROUP;
-
+    constructor(props){
+        super(props);
+    }
     closeDialog = () => {
         this.props.dispatch(clearSubmitErrors(DIALOG.CREATE_USER_GROUP));
         this.props.dispatch(reset(DIALOG.CREATE_USER_GROUP));
         this.props.hideDialog(DIALOG.CREATE_USER_GROUP)();
     }
-
+    popUserIds(obj){
+        console.log(obj)
+        this.extendObj = obj;
+    }
     submit= (values) => {
+        console.log(this.extendObj)
+        if(this.extendObj){
+            values[this.extendObj.name] = this.extendObj.value;
+        }  
         const {actions: {createUserGroup, getUserGroupList}} = this.props;
-        if (values.userIds) {
-            const ids = values.userIds.map(id => id.key);
-            Object.assign(values, {userIds: ids});
-        }
+        // if (values.userIds) { //改动前，antd的treeselect 的value直接为id 所以这里没有进行key的过滤
+        //     const ids = values.userIds.map(id => id.key);
+        //     Object.assign(values, {userIds: ids});
+        // }
         return createUserGroup(values)
             .then(() => {
                 message.success(`创建群组${values.title}成功！`);
                 this.closeDialog();
+               // this.refs.autotreeselect.resetaction([]);
                 getUserGroupList({pageSize: paginationSetting.pageSize});
             })
             .catch(error => {
@@ -37,10 +47,10 @@ class UserGroupCreateDialog extends Component {
                 });
             });
     }
-
+  
     render() {
         const {submitting, handleSubmit, visible, width, error, dispatch} = this.props;
-        const resetPersonValue = () => resetSpecificField(dispatch, DIALOG.CREATE_USER_GROUP, 'userIds', '');
+        const resetPersonValue = () => resetSpecificField(dispatch, DIALOG.CREATE_USER_GROUP, 'userIds', []);
         return (
             <Modal
                 visible={visible}
@@ -81,7 +91,7 @@ class UserGroupCreateDialog extends Component {
                             validate={required}
                         />
 
-                        <AutoSelectSearch
+                        {/* <AutoSelectSearch
                             api="/api/users"
                             query="name"
                             mode="multiple"
@@ -94,7 +104,21 @@ class UserGroupCreateDialog extends Component {
                             label="人员"
                             validate={required}
                             renderOptions={renderOptions('id', 'name')}
+                        /> */}
+                        <AutoTreeSelect
+                            ref="autotreeselect"
+                            api="/api/departments/users"
+                            label="人员"
+                            mode="multiple"
+                            popUserIds={this.popUserIds.bind(this)}
+                            labelClassName="col-md-2"
+                            className="col-md-8"
+                            rowClassName="dialogContainer__inputRow"
+                            name="userIds"
+                            placeholder="搜索人员(可添加多个)"
+                            values =""
                         />
+
                     </div>
                 </Form>
             </Modal>

@@ -30,6 +30,7 @@ class OneClickDetail extends Component {
                                 {...this.props}
                                 initialValues={oneClick}
                                 handleSave={editOneClick}
+                                editType={"edit"}
                             />
                         </TabPane>
                         <TabPane

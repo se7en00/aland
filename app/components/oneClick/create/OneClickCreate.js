@@ -4,10 +4,12 @@ import panelStyle from 'layout/main/Main.scss';
 import { PANEL_TITLE } from 'constants';
 import Header from '../../shared/panel/PanelHeader';
 import OneClickBase from './OneClickBase';
+import {Icon, Tabs} from "antd";
 
 class OneClickCreate extends Component {
     render() {
         const { actions: { addOneClick } } = this.props;
+        const TabPane = Tabs.TabPane;
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.ONE_CLICK_ADD}/>
@@ -15,6 +17,7 @@ class OneClickCreate extends Component {
                     <OneClickBase
                         {...this.props}
                         handleSave={addOneClick}
+                        editType={"create"}
                     />
                 </div>
             </Fragment>

@@ -50,6 +50,9 @@ class UserInfoForm extends Component {
             isAdmin: 0,
             loginName: values.phoneNumber
         };
+        if(values.gender == null){
+            values.gender = this.props.defaultGender;
+        }
         const {actions: {createUser, updateUser, push}, isCreate} = this.props;
         try {
             if (!values.avatarUrl || R.isEmpty(values.avatarUrl)) {
@@ -132,7 +135,7 @@ class UserInfoForm extends Component {
                             className="col-md-8 col-lg-9"
                             labelClassName="col-md-4 col-lg-3"
                             name="gender"
-                            defaultValue="1"
+                            defaultValue={this.props.defaultGender}
                             component={renderRadioGroupField}
                             placeholder="性别"
                             label="性别"

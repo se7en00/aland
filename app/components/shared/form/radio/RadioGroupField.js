@@ -23,7 +23,7 @@ class RadioGroupField extends Component {
         const isSelected = e.target.value;
         this.props.input.onChange(isSelected);
     }
-
+  
     // componentWillUpdate(nextProps) {
     //     if (nextProps.value) {
     //         this.props.input.onChange(nextProps.value);
@@ -37,6 +37,7 @@ class RadioGroupField extends Component {
             children,
             defaultValue
         } = this.props;
+        
         const radioValue = R.isEmpty(value) ? defaultValue : value;
         return (
             <div className={className}>

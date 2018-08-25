@@ -73,10 +73,10 @@ class UserGroupListTable extends Component {
             actions: {deleteUserGroup, getUserGroupList}
         } = this.props;
         deleteUserGroup(userGroup.id).then(() => {
-            message.success(`成功删除账户名：${userGroup.title}！`);
+            message.success(`成功删除群组：${userGroup.title}！`);
             getUserGroupList({pageSize: size, page});
         }).catch(error => {
-            message.error(`删除账户名：${userGroup.title}失败！`);
+            message.error(`删除群组：${userGroup.title}失败！`);
         });
     }
 
