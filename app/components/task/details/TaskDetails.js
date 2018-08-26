@@ -13,6 +13,7 @@ import AutoTreeSelect from '../../shared/autoSearch/AutoTreeSelect'
 const required = value => (value ? undefined : '不能为空！');
 
 function mapStateToProps(state) {
+
     const result = {
         fieldValues: getFormValues('taskDetails')(state)
     };
@@ -64,6 +65,7 @@ class TaskDetails extends Component {
     }
 
     renderTrainingOptions = () => {
+        console.log(this.props.associations)
         const {associations} = this.props;
         if (!associations?.trainingTypes) return;
         return renderOptions('name', 'name')(associations.trainingTypes);
@@ -131,7 +133,7 @@ class TaskDetails extends Component {
 
     render() {
         const { submitting, handleSubmit, dispatch, tasks, fieldValues, associations} = this.props;
-        console.log(tasks);
+        
         let value =[]
         if(tasks.taskDetails && tasks.taskDetails.receivers && tasks.taskDetails.receivers.length>0){
             tasks.taskDetails.receivers.forEach(item=>{
@@ -153,6 +155,7 @@ class TaskDetails extends Component {
         const resetPersonValue = () => resetSpecificField(dispatch, 'taskDetails', 'persons', '');
         const restTrainingType = () => resetSpecificField(dispatch, 'taskDetails', 'trainType', '');
         const restCostType = () => resetSpecificField(dispatch, 'taskDetails', 'costType', '');
+      
         return (
             <div>
                 <Form name="form" onSubmit={handleSubmit(this.submit)}>
@@ -219,7 +222,7 @@ class TaskDetails extends Component {
                         <Radio key={uuid()} value="0">否</Radio>
                     </Field>
 
-                    {/* <Field
+                    <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="trainType"
@@ -229,8 +232,11 @@ class TaskDetails extends Component {
                         component={renderSelectField}
                         placeholder="培训种类"
                         label="培训种类"
-                    /> */}
-                     <AutoSelectSearch
+                    >
+                    
+                        {this.renderTrainingOptions()}
+                    </Field>
+                    {/* <AutoSelectSearch
                         api="/api/dictionarys/dicType/TRAINING_TYPE"
                         query=""
                       //  resetSelectValue={restManagerValue}
@@ -240,13 +246,7 @@ class TaskDetails extends Component {
                         placeholder="培训种类"
                         label="培训种类"
                         renderOptions={renderOptions('id', 'name')}
-                    />
-
-                        {/* validate={required}
-                    >
-                        {this.renderTrainingOptions()}
-                    </Field> */}
-
+                    /> */}
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"

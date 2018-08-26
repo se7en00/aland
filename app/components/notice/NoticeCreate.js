@@ -1,19 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid/v4';
 import panelStyle from 'layout/main/Main.scss';
 import { PANEL_TITLE, PATHNAME, getLinkByName, renderOptions } from 'constants';
 import {reduxForm, Field, getFormValues, SubmissionError} from 'redux-form';
 import { connect } from 'react-redux';
 import { resetSpecificField } from 'utils';
-import { Button, Select, message } from 'antd';
+import { Button, Select, message ,Radio} from 'antd';
 import Header from '../shared/panel/PanelHeader';
-import { renderTextField, renderSelectField, renderQuill, UploadFilesField } from '../shared/form';
+import { renderTextField, renderSelectField, renderQuill, UploadFilesField,renderRadioGroupField } from '../shared/form';
 import AutoSelectSearch from '../shared/autoSearch/AutoSelectSearch';
-
+import AutoTreeSelect from '../shared/autoSearch/AutoTreeSelect';
 const required = value => (value ? undefined : '不能为空！');
 function mapStateToProps(state) {
     return {
         values: getFormValues('noticeCreate')(state),
+        fieldValues: getFormValues('noticeCreate')(state),
         departments: state.notices?.departments,
         userGroups: state.news?.userGroups
     };
@@ -42,8 +44,20 @@ class NoticeCreate extends Component {
             loadUserGroups();
         }
     }
-
+    popUserIds(obj){
+        this.extendObj = obj;
+    }
     generateData = (values) => {
+        let _tmp=[];
+        if(this.extendObj){
+            this.extendObj.value.forEach(item=>{
+                _tmp.push(
+                    item.value
+                   
+                )
+            })
+            values.receiverIds = _tmp;
+        }
         const { actions: { addNotice } } = this.props;
         const file = values.coverImgPath?.[0];
         try {
@@ -56,7 +70,7 @@ class NoticeCreate extends Component {
 
         const data = Object.keys(values).reduce((prev, next) => {
             if (next === 'userGroupId' && values.receiverType === 'GROUP') {
-                prev.receiverIds = [values[next]];
+                prev.receiverIds =[values[next].key];
             } else if (next === 'persons' && values.receiverType === 'USER') {
                 prev.receiverIds = values[next].map(item => item.key);
             } else {
@@ -86,10 +100,14 @@ class NoticeCreate extends Component {
     }
 
     render() {
+        
         const { submitting, handleSubmit, fieldValues = {}, dispatch } = this.props;
         const { receiverType } = fieldValues;
+        console.log(receiverType)
         const restUserGroup = () => resetSpecificField(dispatch, 'taskDetails', 'userGroupId', '');
         const resetPersonValue = () => resetSpecificField(dispatch, 'taskDetails', 'persons', '');
+        let value =[]
+        
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.NOTES_ADD}/>
@@ -118,19 +136,32 @@ class NoticeCreate extends Component {
                             {this.renderDepartmentsOptions()}
                         </Field>
 
+                         <AutoSelectSearch
+                        api="/api/inquirys"
+                        query=""
+                      //  resetSelectValue={restManagerValue}
+                        className="col-md-8 col-lg-6"
+                        rowClassName="inputRow"
+                        name="inquiryId"
+                        placeholder="选择问卷"
+                        label="通知问卷"
+                        renderOptions={renderOptions('id', 'name')}
+                    />
+                    
                         <Field
-                            className="col-md-4 col-lg-3"
+                            className="col-md-8 col-lg-6"
                             rowClassName="inputRow"
                             name="receiverType"
-                            component={renderSelectField}
-                            type="text"
+                            component={renderRadioGroupField}
+                           
                             label="接收人"
-                            placeholder="请选择接收人"
+                            defaultValue="ALL"
+                           
                             validate={required}
                         >
-                            <Select.Option value="ALL">全员</Select.Option>
-                            <Select.Option value="GROUP">学习群组</Select.Option>
-                            <Select.Option value="USER">指定人员</Select.Option>
+                            <Radio key={uuid()} value="ALL">全员</Radio>
+                        <Radio key={uuid()} value="GROUP">学习群组</Radio>
+                        <Radio key={uuid()} value="USER">指定人员</Radio>
                         </Field>
 
                         {
@@ -155,20 +186,34 @@ class NoticeCreate extends Component {
 
                         {
                             receiverType === 'USER' &&
-                            <AutoSelectSearch
-                                api="/api/users"
-                                query="name"
-                                mode="multiple"
-                                resetSelectValue={resetPersonValue}
-                                labelClassName="col-md-2 col-lg-1"
-                                className="col-md-4 col-lg-3"
-                                rowClassName="inputRow"
-                                name="persons"
-                                placeholder="搜索人员(可添加多个)"
-                                label="人员"
-                                validate={required}
-                                renderOptions={renderOptions('id', 'name')}
-                            />
+                            // <AutoSelectSearch
+                            //     api="/api/users"
+                            //     query="name"
+                            //     mode="multiple"
+                            //     resetSelectValue={resetPersonValue}
+                            //     labelClassName="col-md-2 col-lg-1"
+                            //     className="col-md-4 col-lg-3"
+                            //     rowClassName="inputRow"
+                            //     name="persons"
+                            //     placeholder="搜索人员(可添加多个)"
+                            //     label="人员"
+                            //     validate={required}
+                            //     renderOptions={renderOptions('id', 'name')}
+                            // />
+                            <AutoTreeSelect
+                        
+                        api="/api/departments/users"
+                        label="人员"
+                        mode="multiple"
+                        popUserIds={this.popUserIds.bind(this)}
+                        labelClassName="col-md-2 col-lg-1"
+                        className="col-md-8"
+                        rowClassName="inputRow"
+                        labelInValue={true}
+                        name="userIds"
+                        placeholder="搜索人员(可添加多个)"
+                        values={value}
+                    />
                         }
 
                         <Field

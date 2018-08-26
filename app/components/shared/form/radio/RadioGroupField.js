@@ -21,6 +21,7 @@ class RadioGroupField extends Component {
 
     handleChange = (e) => {
         const isSelected = e.target.value;
+       
         this.props.input.onChange(isSelected);
     }
   

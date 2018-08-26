@@ -123,6 +123,12 @@ export const getALLAssociations = () => {
             .catch(error => Promise.reject(error?.response?.data)),
         Axios.get('api/dictionarys/dicType/COST_TYPE')
             .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data)),
+            Axios.get('api/dictionarys/dicType/BUSINESS_UNIT')
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data)),
+            Axios.get('api/dictionarys/dicType/COST_CENTER')
+            .then(response => response.data)
             .catch(error => Promise.reject(error?.response?.data))
     ];
     return {
