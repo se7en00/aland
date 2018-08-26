@@ -76,6 +76,16 @@ class TaskDetails extends Component {
         if (!associations?.costTypes) return;
         return renderOptions('name', 'name')(associations.costTypes);
     }
+    renderBusinessOptions = () => {
+        const {associations} = this.props;
+        if (!associations?.businessUnit) return;
+        return renderOptions('name', 'name')(associations.businessUnit);
+    }
+    renderCostcenterOptions = () => {
+        const {associations} = this.props;
+        if (!associations?.costCenter) return;
+        return renderOptions('name', 'name')(associations.costCenter);
+    }
 
     submit = (values) => {
         let _tmp=[];
@@ -155,7 +165,8 @@ class TaskDetails extends Component {
         const resetPersonValue = () => resetSpecificField(dispatch, 'taskDetails', 'persons', '');
         const restTrainingType = () => resetSpecificField(dispatch, 'taskDetails', 'trainType', '');
         const restCostType = () => resetSpecificField(dispatch, 'taskDetails', 'costType', '');
-      
+       const restBusinessUnit =()=>resetSpecificField(dispatch, 'taskDetails', 'businessUnit', '');
+       const restCostCenter = ()=>resetSpecificField(dispatch, 'taskDetails', 'costCenter', '');
         return (
             <div>
                 <Form name="form" onSubmit={handleSubmit(this.submit)}>
@@ -170,46 +181,30 @@ class TaskDetails extends Component {
                         validate={required}
                     />
 
-                    {/* <Field
+                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="businessUnit"
-                        component={renderTextField}
+                        component={renderSelectField}
+                        resetSelectValue={restBusinessUnit}
                         type="text"
                         placeholder="业务单元"
                         label="业务单元"
-                    /> */}
-                    <AutoSelectSearch
-                        api="/api/dictionarys/dicType/BUSINESS_UNIT"
-                        query=""
-                      //  resetSelectValue={restManagerValue}
-                        className="col-md-8 col-lg-6"
-                        rowClassName="inputRow"
-                        name="manager"
-                        placeholder="业务单元"
-                        label="业务单元"
-                        renderOptions={renderOptions('id', 'name')}
-                    />
-                    {/* <Field
+                    >
+                        {this.renderBusinessOptions()}
+                    </Field>
+                    <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="costCenter"
-                        component={renderTextField}
+                        resetSelectValue={restCostCenter}
+                        component={renderSelectField}
                         type="text"
                         placeholder="成本中心"
                         label="成本中心"
-                    /> */}
-                      <AutoSelectSearch
-                        api="/api/dictionarys/dicType/COST_CENTER"
-                        query=""
-                      //  resetSelectValue={restManagerValue}
-                        className="col-md-8 col-lg-6"
-                        rowClassName="inputRow"
-                        name="manager"
-                        placeholder="成本中心"
-                        label="成本中心"
-                        renderOptions={renderOptions('id', 'name')}
-                    />
+                    >
+                    {this.renderCostcenterOptions()}
+                    </Field> 
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
@@ -236,17 +231,7 @@ class TaskDetails extends Component {
                     
                         {this.renderTrainingOptions()}
                     </Field>
-                    {/* <AutoSelectSearch
-                        api="/api/dictionarys/dicType/TRAINING_TYPE"
-                        query=""
-                      //  resetSelectValue={restManagerValue}
-                        className="col-md-8 col-lg-6"
-                        rowClassName="inputRow"
-                        name="manager"
-                        placeholder="培训种类"
-                        label="培训种类"
-                        renderOptions={renderOptions('id', 'name')}
-                    /> */}
+                   
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"

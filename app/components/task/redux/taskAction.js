@@ -137,7 +137,9 @@ export const getALLAssociations = () => {
             courseDirections: result[0],
             userGroups: result[1],
             trainingTypes: result[2],
-            costTypes: result[3]
+            costTypes: result[3],
+            businessUnit:result[4],
+            costCenter:result[5]
         })).catch(error => Promise.reject(error?.response?.data))
     };
 };

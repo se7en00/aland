@@ -54,7 +54,7 @@ class OnlineMessageArea extends Component {
                 let _isShow = (record.isShow == '1');
                 return (
                 <span>
-                  <a href="javascript:;">留言人禁言</a>
+                  <a href="javascript:;" style="display:none">留言人禁言</a>
                   <Divider type="vertical" />
                   
                   {_isShow ?(<a href="javascript:;" onClick={() => this.show(form, record.key)}>显示</a>):(<a href="javascript:;" onClick={() => this.noshow(form, record.key)}>不显示</a>)}
