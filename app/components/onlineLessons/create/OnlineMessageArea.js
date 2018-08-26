@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'antd';
+import { Table,Divider,message } from 'antd';
 import { DATE_FORMAT } from 'constants';
 import { Axios, paginationSetting } from 'utils/index';
 import { BASE_URL } from 'constants/index';
@@ -45,24 +45,45 @@ class OnlineMessageArea extends Component {
             title: '留言时间',
             align: 'center',
             dataIndex: 'time',
-            render: (text, record) => moment(parseInt(record.time.split(',')[0])).format(DATE_FORMAT)+'-'+(moment(parseInt(record.time.split(',')[1])).format(DATE_FORMAT))
+            render: (text, record) => moment(record.time).format(DATE_FORMAT)
         },{
             title: '操作',
             align: 'center',
             key: 'action',
-            render: (text, record) => (
+            render: (text, record) => {
+                let _isShow = (record.isShow == '1');
+                return (
                 <span>
                   <a href="javascript:;">留言人禁言</a>
                   <Divider type="vertical" />
-                  <a href="javascript:;">不展示</a>
+                  
+                  {_isShow ?(<a href="javascript:;" onClick={() => this.show(form, record.key)}>显示</a>):(<a href="javascript:;" onClick={() => this.noshow(form, record.key)}>不显示</a>)}
+                  
+                  
+                  
                 </span>
-              ),
+                )
+            },
 
         }];
     }
 
     handelPageChange() {
 
+    }
+    show(form,key){
+       
+        Axios.put(`/api/userComments/${key}/disable`).then(()=>{
+            message.success('修改成功！');
+            this.showTable(this.courseId, this.page, this.size);
+        })
+
+    }
+    noshow(form,key){
+        Axios.put(`/api/userComments/${key}/enable`).then(()=>{
+            message.success('修改成功！');
+            this.showTable(this.courseId, this.page, this.size);
+        })
     }
     showTable(lid, page, size){
         Axios.get(`/api/courses/${lid}/comments`,{params:{
@@ -78,12 +99,13 @@ class OnlineMessageArea extends Component {
                 data.data.elements.forEach(item => {
                     i++;
                     this.elements.push({
-                        key: i,
+                        key: item.id,
                         index: i,
-                        name: item.trainingData ? item.trainingData.title : "",
-                        type: item.trainingData ? item.trainingData.trainType : "",
-                        teacher: item.trainingData ? item.trainingData.manager : "",
-                        time: item.trainingData ?(( item.trainingData.startDate || '')+','+( item.trainingData.endDate || "") ): ",",
+                        name: item.userName ? item.userName : "",
+                        content: item.comment ? item.comment : "",
+                        person: item.userName ? item.userName : "",
+                        time: item.createdAt ?item.createdAt:"",
+                        isShow:item.isShow,
                     });
                 });
             }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table, Popconfirm, Button, message } from 'antd';
 import { rebuildDataWithKey } from 'utils';
 import { getLinkByName, PATHNAME } from 'constants';
-
+import { DIALOG } from 'constants';
 class OnlineLessonsPointsTable extends Component {
     constructor(props) {
         super(props);
@@ -32,7 +32,7 @@ class OnlineLessonsPointsTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button title="更改章节点" type="primary" ghost><i className="fas fa-retweet"/></Button>
+                    <Button title="更改章节点" type="primary" ghost onClick={this.props.showDialog(DIALOG.EDITPOINT,record)}><i className="fas fa-retweet"/></Button>
                     <Button title="内容编辑" onClick={() => this.onEditPoint(record)} type="primary" ghost><i className="far fa-edit"/></Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button type="primary" ghost><i className="far fa-trash-alt"/></Button>
@@ -47,7 +47,10 @@ class OnlineLessonsPointsTable extends Component {
             this.elements = rebuildDataWithKey(nextProps.dataSource);
         }
     }
-
+    onResetPoint =(point) =>{
+        console.log(point)
+        this.props.showDialog(DIALOG.EDITPOINT)
+    } 
     onEditPoint = (point) => {
         const {lessonId, actions: {push}} = this.props;
         push(`${getLinkByName(PATHNAME.ONLINE_LESSONS)}/${lessonId}/details/point/${point.pointId}`);

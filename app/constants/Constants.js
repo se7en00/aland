@@ -56,6 +56,7 @@ export const DIALOG = {
     CHAPTER: 'chapter',
     SECTION: 'section',
     POINT: 'point',
+    EDITPOINT:'editpoint',
     MATERIAL: 'material',
     MULTIPLE_MATERIAL: 'multipleMaterial',
     HOME_WORK: 'homeWork',
