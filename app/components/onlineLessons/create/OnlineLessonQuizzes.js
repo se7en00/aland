@@ -12,7 +12,8 @@ import OnlineLessonQuizzesTable from './OnlineLessonQuizzesTable';
 class OnlineLessonQuizzes extends Component {
     handleExamSwitchChange = (e, value) => {
         const {actions: {examAllowCourse}} = this.props;
-        examAllowCourse(value);
+        console.log(value)
+       // examAllowCourse(value);
     }
 
     listData = [{

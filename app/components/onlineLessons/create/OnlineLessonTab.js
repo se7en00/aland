@@ -34,8 +34,12 @@ class OnlineLessonTab extends Component {
     }
 
     initExamValues = (values) => {
+       
         if (!values) return null;
         const {needInquiry = 'false', examAllowNode = 'false', examAllowCourse = 'false', examAmount = '', examPassRate = ''} = values;
+        console.log(needInquiry)
+        console.log(examAllowNode)
+        console.log(examAllowCourse)
         const params = {
             needInquiry: needInquiry === 'true',
             examAllowNode: examAllowNode === 'true',
@@ -46,10 +50,12 @@ class OnlineLessonTab extends Component {
         if (Object.hasOwnProperty.call(this.props.draftOnlineLesson, 'enableCourseExam')) {
             params.examAllowCourse = this.props.draftOnlineLesson.enableCourseExam;
         }
+        console.log(params)
         return params;
     }
 
     render() {
+     
         const TabPane = Tabs.TabPane;
         const {draftOnlineLesson, showDialog, actions} = this.props;
         const isDisabledLesson = !draftOnlineLesson?.draftLesson;
