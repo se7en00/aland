@@ -30,7 +30,12 @@ class TrainingCostGroup extends Component {
         const {actions, list, type} = this.props;
         const inputValue = state.inputValue;
         const tags = list.map(lecture => (lecture.name));
-        const maxCode = list.reduce((pre, next) => (pre > next ? pre : next));
+        let maxCode;
+        if (!list || !list.length) {
+            maxCode = 0
+        } else {
+            maxCode = list.reduce((pre, next) => (pre > next ? pre : next));
+        }
         if (inputValue && tags.indexOf(inputValue) === -1) {
             if (type === 'TRAINING_TYPE') {
                 actions.saveTrainingType(inputValue, maxCode + 1).then(() => {

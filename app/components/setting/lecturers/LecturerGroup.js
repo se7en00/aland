@@ -31,7 +31,12 @@ class LecturerSetting extends Component {
         const {actions, lecturesLevels} = this.props;
         const inputValue = state.inputValue;
         const tags = lecturesLevels.map(lecture => (lecture.name));
-        const maxCode = lecturesLevels.reduce((pre, next) => (pre > next ? pre : next));
+        let maxCode
+        if (!lecturesLevels || !lecturesLevels.length) {
+            maxCode = 0
+        } else {
+            maxCode = lecturesLevels.reduce((pre, next) => (pre > next ? pre : next));
+        }
         if (inputValue && tags.indexOf(inputValue) === -1) {
             actions.saveLecturesLevels(inputValue, maxCode + 1).then(() => {
                 this.setState({
