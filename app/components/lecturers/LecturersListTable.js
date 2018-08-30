@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Popconfirm, message } from 'antd';
+import { Table, Button, Popconfirm, message, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import { rebuildDataWithKey, paginationSetting } from 'utils';
 import { BASE_URL, PATHNAME, getLinkByName } from 'constants';
@@ -11,7 +11,53 @@ class LecturersListTable extends Component {
         actions: PropTypes.objectOf(PropTypes.func),
         dataSource: PropTypes.object
     };
+    parseString(str,b){
 
+    //    return str && str.replace(/<[^>]*>/g,'')
+        let _str = str? str.replace(/<[^>]*>/g,''):''
+        if(b) return _str;
+        if(!_str){
+            return ''
+        }else{
+            return this.cutstr(_str,50)
+        }
+    }
+     GetLength = function (str) {
+        ///<summary>获得字符串实际长度，中文2，英文1</summary>
+        ///<param name="str">要获得长度的字符串</param>
+        var realLength = 0, len = str.length, charCode = -1;
+        for (var i = 0; i < len; i++) {
+            charCode = str.charCodeAt(i);
+            if (charCode >= 0 && charCode <= 128) realLength += 1;
+            else realLength += 2;
+        }
+        return realLength;
+    };
+
+     cutstr(str, len) {
+        var str_length = 0;
+        var str_len = 0;
+        var str_cut = new String();
+        str_len = str.length;
+        for (var i = 0; i < str_len; i++) {
+            var a = str.charAt(i);
+            str_length++;
+            if (escape(a).length > 4) {
+                //中文字符的长度经编码之后大于4  
+                str_length++;
+            }
+            str_cut = str_cut.concat(a);
+            if (str_length >= len) {
+                str_cut = str_cut.concat("...");
+                return str_cut;
+            }
+        }
+        console.log(str)
+        //如果给定字符串小于指定长度，则返回源字符串；  
+        if (str_length < len) {
+            return str;
+        }
+    }
     constructor(props) {
         super(props);
         this.elements = [];
@@ -41,11 +87,13 @@ class LecturersListTable extends Component {
         }, {
             title: '姓名',
             align: 'center',
-            dataIndex: 'name'
+            dataIndex: 'name',
+            width:170,
         }, {
             title: '类别',
             align: 'center',
-            dataIndex: 'type'
+            dataIndex: 'type',
+            width:170,
         }, {
             title: '简介',
             align: 'center',
@@ -53,12 +101,16 @@ class LecturersListTable extends Component {
             width: 700,
             render: (text, record) => (
                 /*eslint-disable-next-line*/
-                <p dangerouslySetInnerHTML={{__html: record.introduce}}/>
+                // <p dangerouslySetInnerHTML={{__html: record.introduce}}/>
+                <Tooltip title={this.parseString(record.introduce,true)}>
+                <p>{this.parseString(record.introduce)}</p>
+                </Tooltip>
             )
         }, {
             title: '操作',
             align: 'center',
             dataIndex: 'operation',
+            width:200,
             render: (text, record) => (
                 <div>
                     <Button size="small" type="primary" onClick={() => this.redirect(record.id)} ghost>详情/编辑</Button>

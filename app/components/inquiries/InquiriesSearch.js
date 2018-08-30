@@ -38,13 +38,13 @@ class InquiriesSearch extends Component {
                             placeholder="问卷"
                         />
 
-                        <Field
+                        {/* <Field
                             layout="elementOnly"
                             name="tag"
                             rowClassName="col-md-3"
                             component={renderTextField}
                             placeholder="标签"
-                        />
+                        /> */}
 
                         <Field
                             layout="elementOnly"

@@ -28,6 +28,20 @@ export const createPoint = (lessonId, sectionId, points) => ({
         }
     }
 });
+export const editPoint = (lessonId, sectionId, pointId) => ({
+    type: TYPES.ASYNC_EDIT_POINTS,
+    async payload() {
+        try {
+            await Axios.put(`/api/courseNodes/sections/${sectionId}/points/${pointId}`)
+                .then(response => response?.data);
+            const getALLNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`)
+                .then(response => response?.data);
+            return getALLNodes;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+});
 
 export const getCourseDetails = (lessonId) => ({
     type: TYPES.ASYNC_LOAD_ONLINE_LESSON_DETAILS,

@@ -48,7 +48,7 @@ class MaterialsListTable extends Component {
             title: '创建时间',
             align: 'center',
             dataIndex: 'createdAt',
-            render: (text, record) => moment(record.createdAt).format(DATE_FORMAT)
+            render: (text, record) => record.createdAt?moment(record.createdAt).format(DATE_FORMAT):'无'
         }, {
             title: '操作',
             align: 'center',

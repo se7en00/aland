@@ -7,7 +7,7 @@ import { Modal, Button, message} from 'antd';
 import { renderTextField, renderSelectField } from '../../shared/form';
 
 
-@connect(state => ({chapters: state.draftOnlineLesson?.chapters}))
+@connect(state => ({chapters: state.draftOnlineLesson?.chapters,draftLesson: state.draftOnlineLesson?.draftLesson}))
 @reduxForm({form: DIALOG.SECTION, enableReinitialize: true})
 class CreateSectionDialog extends Component {
     static dialogName = DIALOG.SECTION;
@@ -26,7 +26,7 @@ class CreateSectionDialog extends Component {
         if (R.isEmpty(sections)) {
             throw new SubmissionError({_error: '请至少输入一个节名称！'});
         }
-        const {dispatch, hideDialog, actions: {createSections}} = this.props;
+        const {draftLesson,dispatch, hideDialog, actions: {createSections}} = this.props;
 
         createSections(values.chapterForSection, sections)
             .then(() => {

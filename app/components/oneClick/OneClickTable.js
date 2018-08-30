@@ -33,10 +33,6 @@ class OneClickTable extends Component {
             align: 'center',
             dataIndex: 'category'
         }, {
-            title: '标签',
-            align: 'center',
-            dataIndex: 'tag'
-        }, {
             title: '状态',
             align: 'center',
             dataIndex: 'status'
@@ -52,6 +48,7 @@ class OneClickTable extends Component {
             title: '创建时间',
             align: 'center',
             dataIndex: 'createdAt',
+            width:170,
             render: (text, record) => moment(record.createdAt).format(DATE_FORMAT)
         }, {
             title: '操作',

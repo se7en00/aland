@@ -24,7 +24,7 @@ class OnlineLessonsListTable extends Component {
             title: '序号',
             align: 'center',
             dataIndex: 'index',
-            width: 70
+            width: 40
         }, {
             title: '课程名称',
             align: 'center',
@@ -33,27 +33,33 @@ class OnlineLessonsListTable extends Component {
             title: '状态',
             align: 'center',
             dataIndex: 'status',
+            width:80,
             render: (text, record) => COURSE_STATUS_MAPPING[record.status]
         }, {
             title: '课程讲师',
             align: 'center',
-            dataIndex: 'lecturerName'
+            dataIndex: 'lecturerName',
+            width:120,
         }, {
             title: '保密权限',
             align: 'center',
-            dataIndex: 'secretLevel'
+            dataIndex: 'secretLevel',
+            width:80,
         }, {
             title: '创建人',
             align: 'center',
-            dataIndex: 'createUserName'
+            dataIndex: 'createUserName',
+            width:120,
         }, {
             title: '发布时间',
             align: 'center',
             dataIndex: 'createdAt',
+            width:170,
             render: (text, record) => moment(record.createdAt).format(DATE_FORMAT)
         }, {
             title: '操作',
             align: 'center',
+           width:320,
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>

@@ -41,6 +41,17 @@ export default typeToReducer({
             allNodes: action.payload
         })
     },
+  
+    [TYPES.ASYNC_EDIT_POINTS]:{
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            allNodes: action.payload
+        })
+    },
 
     [TYPES.ASYNC_REMOVE_POINTS]: {
         REJECTED: (state, action) => ({

@@ -33,10 +33,6 @@ class InquiriesListTable extends Component {
             align: 'center',
             dataIndex: 'category'
         }, {
-            title: '标签',
-            align: 'center',
-            dataIndex: 'productTags'
-        }, {
             title: '创建时间',
             align: 'center',
             dataIndex: 'createdAt',

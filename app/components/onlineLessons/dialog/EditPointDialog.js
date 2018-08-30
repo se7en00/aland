@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
 });
 
 @connect(mapStateToProps)
-@reduxForm({form: DIALOG.EDITPOINT,enableReinitialize: true})
+@reduxForm({form: DIALOG.EDITPOINT})
 class EditPointDialog extends Component {
     static dialogName = DIALOG.EDITPOINT;
 
@@ -38,37 +38,24 @@ class EditPointDialog extends Component {
         // if (R.isEmpty(points)) {
         //     throw new SubmissionError({_error: '请至少输入一个点名称！'});
         // }
-        const {draftLesson, dispatch, hideDialog, actions: {createPoint}} = this.props;
-        // createPoint(draftLesson?.id, values.sectionForPoint, points)
-        //     .then(() => {
-        //         dispatch(reset(DIALOG.EDITPOINT));
-        //         message.success('创建点成功！');
-        //         hideDialog(DIALOG.EDITPOINT)();
-        //     })
-        //     .catch(error => {
-        //         throw new SubmissionError({
-        //             _error: error?.errorMessage || '创建点失败'
-        //         });
-        //     });
+        const {draftLesson, dispatch, hideDialog, actions: {editPoint}} = this.props;
+       
        
        const sectionId = values.sectionForPoint;
         const pointId = this.props.title?this.props.title.pointId:'';
-        
-        Axios.put(`/api/courseNodes/sections/${sectionId}/points/${pointId}`).then(()=>{
-            
-           // Axios.get(`/api/courseNodes/courses/${draftLesson.id}`).then(()=>{
+
+        editPoint(draftLesson?.id, sectionId, pointId)
+            .then(() => {
                 dispatch(reset(DIALOG.EDITPOINT));
                 message.success('更新成功！');
                 hideDialog(DIALOG.EDITPOINT)();
-           // })
-
-          
-        })
-        .catch(error => {
-            throw new SubmissionError({
-                _error: error?.errorMessage || '创建点失败'
+            })
+            .catch(error => {
+                throw new SubmissionError({
+                    _error: error?.errorMessage || '更新失败'
+                });
             });
-        });
+  
     }
 
     onSelect = (value) => {//章修改 显示 节
