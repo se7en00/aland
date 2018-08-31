@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { DATE_FORMAT } from 'constants';
 import { Axios, paginationSetting } from 'utils/index';
 import { BASE_URL } from 'constants/index';
@@ -52,6 +52,9 @@ class Record extends Component {
     handelPageChange() {
 
     }
+    downloadAction (){
+        location.href = `${BASE_URL}/api/taskTraining/export`;// eslint-disable-line
+    }
     showTable(userId, page, size){
         Axios.get(`/api/users/${userId.userId}/trainings`,{params:{
             page: page,
@@ -90,6 +93,8 @@ class Record extends Component {
         const {userId} = this.props;
         let self = this;
         return (
+            <div>
+                <Button onClick={this.downloadAction} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
             <Table
                 className="u-pull-down-sm"
                 bordered
@@ -103,7 +108,8 @@ class Record extends Component {
                         self.showTable(userId, current, self.size);
                     }
                 }}
-            />);
+            /></div>
+            );
     }
 }
 
