@@ -100,7 +100,8 @@ export default typeToReducer({
                 chapters = action.payload.chaptersElements;
             }
             const hasDraftLessonAttr = Object.prototype.hasOwnProperty.call(result, 'draftLesson');
-            return Object.assign(state, {chapters}, hasDraftLessonAttr ? { draftLesson: result.draftLesson} : {});
+            
+            return Object.assign(state, {chapters}, {allNodes:result.getALLNodes},hasDraftLessonAttr ? { draftLesson: result.draftLesson} : {});
         }
     },
 
@@ -112,16 +113,29 @@ export default typeToReducer({
         FULFILLED: (state, action) => {
             let sections;
             if (state?.sections) {
-                sections = R.mergeWith(R.concat, state.sections, action.payload);
+                console.log(action.payload.sections)
+                sections = R.mergeWith(R.concat, state.sections, ...action.payload.sections);
             } else {
-                sections = action.payload;
+                sections = action.payload.sections;
             }
-            return {
-                ...state,
-                sections
-            };
+            return Object.assign(state,{sections},{allNodes:action.payload.getALLNodes})
+            // return {
+            //     ...state,
+            //     sections,
+            //     allNodes: action.payload.getALLNodes
+            // };
         }
     },
+    // [TYPES.ASYNC_CREATE_SECTIONS]: {
+    //     REJECTED: (state, action) => ({
+    //         ...state,
+    //         error: action.payload
+    //     }),
+    //     FULFILLED: (state, action) => ({
+    //         ...state,
+    //         allNodes: action.payload
+    //     })
+    // },
 
     [TYPES.SYNC_SWITCH_COURSE_EXAM]: (state, action) => ({
         ...state,

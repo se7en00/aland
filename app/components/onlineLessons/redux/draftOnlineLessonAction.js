@@ -98,7 +98,9 @@ export const createChapters = (lessonId, chapters) => ({
             const chaptersElements = await Axios.post(`/api/courseNodes/courses/${lessonId}/chapters`, {subjects: Object.values(chapters)})
                 .then(response => response?.data);
             const hasCreateNewCourse = Object.prototype.hasOwnProperty.call(initCourse, 'name');
-            return Object.assign({chaptersElements}, hasCreateNewCourse ? {draftLesson: initCourse} : {});
+            const getALLNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`)
+                .then(response => response?.data);
+            return Object.assign({chaptersElements},{getALLNodes}, hasCreateNewCourse ? {draftLesson: initCourse} : {});
         } catch (error) {
             return Promise.reject(error);
         }
@@ -111,7 +113,20 @@ export const createSections = (chapterId, sections) => ({
         .then(response => ({[chapterId]: response?.data}))
         .catch(error => Promise.reject(error?.response?.data))
 });
-
+// export const createSections = (chapterId, sections,lessonId) => ({
+//     type: TYPES.ASYNC_CREATE_SECTIONS,
+//     async payload() {
+//         try {
+//            const gsections =  await Axios.post(`/api/courseNodes/chapters/${chapterId}/sections`, {subjects: Object.values(sections)})
+//             .then(response => response?.data)
+//             const getALLNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`)
+//                 .then(response => response?.data);
+//             return Object.assign({},{getALLNodes},{getsections:{[chapterId]:gsections}})
+//         } catch (error) {
+//             return Promise.reject(error);
+//         }
+//     }
+// });
 export const getCategories = () => ({
     type: TYPES.LOAD_ONLINE_LESSONS_CATEGORIES,
     payload: () => Axios.get('/api/dictionarys/dicType/CATEGORY')

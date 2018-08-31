@@ -27,8 +27,8 @@ class CreateSectionDialog extends Component {
             throw new SubmissionError({_error: '请至少输入一个节名称！'});
         }
         const {draftLesson,dispatch, hideDialog, actions: {createSections}} = this.props;
-
-        createSections(values.chapterForSection, sections)
+       
+        createSections(values.chapterForSection, sections,draftLesson?.id)
             .then(() => {
                 dispatch(reset(DIALOG.SECTION));
                 message.success('创建节成功！');

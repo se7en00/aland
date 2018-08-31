@@ -18,6 +18,17 @@ class RadioGroupField extends Component {
         value: null
     }
 
+    componentDidMount(){
+        const {
+            input: {value},
+            className,
+            children,
+            defaultValue
+        } = this.props;
+
+        const radioValue = R.isEmpty(value) ? defaultValue : value;
+        this.props.input.onChange(radioValue);
+    }
 
     handleChange = (e) => {
         const isSelected = e.target.value;
@@ -40,6 +51,7 @@ class RadioGroupField extends Component {
         } = this.props;
         
         const radioValue = R.isEmpty(value) ? defaultValue : value;
+       
         return (
             <div className={className}>
                 <RadioGroup

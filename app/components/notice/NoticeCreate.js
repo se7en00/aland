@@ -58,6 +58,10 @@ class NoticeCreate extends Component {
             })
             values.receiverIds = _tmp;
         }
+        if(values.inquiryId){
+            values.inquiryId = values.inquiryId.key;
+        }
+       
         const { actions: { addNotice } } = this.props;
         const file = values.coverImgPath?.[0];
         try {
@@ -68,16 +72,19 @@ class NoticeCreate extends Component {
             throw new SubmissionError({cover: '上传图片失败！'});
         }
 
+       
         const data = Object.keys(values).reduce((prev, next) => {
             if (next === 'userGroupId' && values.receiverType === 'GROUP') {
                 prev.receiverIds =[values[next].key];
-            } else if (next === 'persons' && values.receiverType === 'USER') {
+            } else if (next === 'userIds' && values.receiverType === 'USER') {
                 prev.receiverIds = values[next].map(item => item.key);
             } else {
                 prev[next] = values[next];
             }
             return prev;
         }, {});
+        console.log(data);
+      
         addNotice(data).then(() => {
             message.success('保存成功！');
             this.back();
@@ -103,7 +110,7 @@ class NoticeCreate extends Component {
         
         const { submitting, handleSubmit, fieldValues = {}, dispatch } = this.props;
         const { receiverType } = fieldValues;
-        console.log(receiverType)
+
         const restUserGroup = () => resetSpecificField(dispatch, 'taskDetails', 'userGroupId', '');
         const resetPersonValue = () => resetSpecificField(dispatch, 'taskDetails', 'persons', '');
         let value =[]
@@ -145,6 +152,7 @@ class NoticeCreate extends Component {
                         name="inquiryId"
                         placeholder="选择问卷"
                         label="通知问卷"
+                        validate={required}
                         renderOptions={renderOptions('id', 'name')}
                     />
                     

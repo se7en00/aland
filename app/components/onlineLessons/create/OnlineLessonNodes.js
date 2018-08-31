@@ -11,6 +11,7 @@ class OnlineLessonNodes extends Component {
         const hasPointsElement = !!draftOnlineLesson?.allNodes;
         const hasChapters = !!draftOnlineLesson?.chapters;
         const hasSections = !!draftOnlineLesson?.sections;
+        console.log(draftOnlineLesson)
         return (
             <form>
                 <div className="row inputRow">

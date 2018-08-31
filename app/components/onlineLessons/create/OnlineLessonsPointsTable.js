@@ -43,6 +43,7 @@ class OnlineLessonsPointsTable extends Component {
     }
 
     componentWillUpdate(nextProps) {
+        console.log(nextProps)
         if (nextProps.dataSource) {
             this.elements = rebuildDataWithKey(nextProps.dataSource);
         }
@@ -68,6 +69,7 @@ class OnlineLessonsPointsTable extends Component {
     }
 
     render() {
+        console.log(this.elements)
         return (
             <Table
                 className="u-pull-down-sm"
