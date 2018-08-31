@@ -107,26 +107,26 @@ export const createChapters = (lessonId, chapters) => ({
     }
 });
 
-export const createSections = (chapterId, sections) => ({
-    type: TYPES.ASYNC_CREATE_SECTIONS,
-    payload: () => Axios.post(`/api/courseNodes/chapters/${chapterId}/sections`, {subjects: Object.values(sections)})
-        .then(response => ({[chapterId]: response?.data}))
-        .catch(error => Promise.reject(error?.response?.data))
-});
-// export const createSections = (chapterId, sections,lessonId) => ({
+// export const createSections = (chapterId, sections) => ({
 //     type: TYPES.ASYNC_CREATE_SECTIONS,
-//     async payload() {
-//         try {
-//            const gsections =  await Axios.post(`/api/courseNodes/chapters/${chapterId}/sections`, {subjects: Object.values(sections)})
-//             .then(response => response?.data)
-//             const getALLNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`)
-//                 .then(response => response?.data);
-//             return Object.assign({},{getALLNodes},{getsections:{[chapterId]:gsections}})
-//         } catch (error) {
-//             return Promise.reject(error);
-//         }
-//     }
+//     payload: () => Axios.post(`/api/courseNodes/chapters/${chapterId}/sections`, {subjects: Object.values(sections)})
+//         .then(response => ({[chapterId]: response?.data}))
+//         .catch(error => Promise.reject(error?.response?.data))
 // });
+export const createSections = (chapterId, sections,lessonId) => ({
+    type: TYPES.ASYNC_CREATE_SECTIONS,
+    async payload() {
+        try {
+           const gsections =  await Axios.post(`/api/courseNodes/chapters/${chapterId}/sections`, {subjects: Object.values(sections)})
+            .then(response => response?.data)
+            const getALLNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`)
+                .then(response => response?.data);
+            return Object.assign({},{getALLNodes},{getsections:{[chapterId]:gsections}})
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+});
 export const getCategories = () => ({
     type: TYPES.LOAD_ONLINE_LESSONS_CATEGORIES,
     payload: () => Axios.get('/api/dictionarys/dicType/CATEGORY')

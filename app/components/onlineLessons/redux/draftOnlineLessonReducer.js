@@ -113,10 +113,10 @@ export default typeToReducer({
         FULFILLED: (state, action) => {
             let sections;
             if (state?.sections) {
-                console.log(action.payload.sections)
-                sections = R.mergeWith(R.concat, state.sections, ...action.payload.sections);
+                console.log(action.payload.getsections)
+                sections = R.mergeWith(R.concat, state.sections,action.payload.getsections);
             } else {
-                sections = action.payload.sections;
+                sections = action.payload.getsections;
             }
             return Object.assign(state,{sections},{allNodes:action.payload.getALLNodes})
             // return {
