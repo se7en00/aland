@@ -76,6 +76,56 @@ const noticesReducer = typeToReducer({
             comments: action.payload
         })
     },
+    [TYPES.ASYNC_GET_NOTICE_RECEIVERS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            comments: action.payload
+        })
+    },
+    [TYPES.ASYNC_GET_NOTICE_JOINS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            comments: action.payload
+        })
+    },
+    [TYPES.ASYNC_GET_NOTICE_KNOWS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            comments: action.payload
+        })
+    },
+    [TYPES.ASYNC_GET_NOTICE_LIKES]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            comments: action.payload
+        })
+    },
+    [TYPES.ASYNC_GET_NOTICE_INQUIRYS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            comments: action.payload
+        })
+    },
     [TYPES.ASYNC_TOGGLE_COMMENT_STATUS]: {
         REJECTED: (state, action) => ({
             ...state,

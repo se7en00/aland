@@ -60,6 +60,37 @@ export const getNoticeComments = (id, {pageSize = paginationSetting.pageSize, ..
         .catch(error => Promise.reject(error?.response?.data))
 });
 
+export const getNoticeReceivers = (id, {pageSize = paginationSetting.pageSize, ...rest}) => ({
+    type: TYPES.ASYNC_GET_NOTICE_RECEIVERS,
+    payload: () => Axios.get(`/api/notices/${id}/receivers`, {params: {size: pageSize, ...rest}})
+        .then((response) => response?.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+
+export const getNoticeJoin = (id, {pageSize = paginationSetting.pageSize, ...rest}) => ({
+    type: TYPES.ASYNC_GET_NOTICE_JOINS,
+    payload: () => Axios.get(`/api/notices/${id}/joins`, {params: {size: pageSize, ...rest}})
+        .then((response) => response?.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+export const getNoticeKnow = (id, {pageSize = paginationSetting.pageSize, ...rest}) => ({
+    type: TYPES.ASYNC_GET_NOTICE_KNOWS,
+    payload: () => Axios.get(`/api/notices/${id}/knows`, {params: {size: pageSize, ...rest}})
+        .then((response) => response?.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+export const getNoticeInquirys = (id, {pageSize = paginationSetting.pageSize, ...rest}) => ({
+    type: TYPES.ASYNC_GET_NOTICE_INQUIRYS,
+    payload: () => Axios.get(`/api/userInquirys?relativeId=${id}&showUsers=true`, {params: {size: pageSize, ...rest}})
+        .then((response) => response?.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
+export const getNoticeLike = (id, {pageSize = paginationSetting.pageSize, ...rest}) => ({
+    type: TYPES.ASYNC_GET_NOTICE_LIKES,
+    payload: () => Axios.get(`/api/notices/${id}/likes`, {params: {size: pageSize, ...rest}})
+        .then((response) => response?.data)
+        .catch(error => Promise.reject(error?.response?.data))
+});
 export const toggleCommentStatus = (id, commentId, status) => ({
     type: TYPES.ASYNC_TOGGLE_COMMENT_STATUS,
     payload: () => Axios.put(`/api/notices/${id}/comments/${commentId}/${status}`)

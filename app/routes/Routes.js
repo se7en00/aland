@@ -28,6 +28,10 @@ import NoticesView from 'views/notice/NoticesView';
 import NoticeAddView from 'views/notice/NoticeAddView';
 import NoticeDetailView from 'views/notice/NoticeDetailView';
 import NoticeCommentsView from 'views/notice/NoticeCommentsView';
+import NoticeSreceiversView from 'views/notice/NoticeSreceiversView';
+import NoticeJoinView from 'views/notice/NoticeJoinView';
+import NoticeKnowsView from 'views/notice/NoticeKnowsView';
+import NoticeLikeView from 'views/notice/NoticeLikeView';
 import NewsView from 'views/news/NewsView';
 import NewsAddView from 'views/news/NewsAddView';
 import NewsDetailView from 'views/news/NewsDetailView';
@@ -45,7 +49,7 @@ import PicturesView from 'views/setting/PicturesView';
 import TrainingCostView from 'views/setting/TrainingCostView';
 import LecturerSettingView from 'views/setting/LecturerSettingView';
 import {ConnectedSwitch} from './ConnectedSwitch';
-
+import NoticeInquirysView from 'views/notice/NoticeInquirysView';
 const Routes = ({match}) => (
     <ConnectedSwitch>
         <Route exact path={`${match.path}`} component={DashboardView}/>
@@ -79,6 +83,11 @@ const Routes = ({match}) => (
         <Route exact path={`${match.path}/notesManagement/add`} component={NoticeAddView}/>
         <Route exact path={`${match.path}/notesManagement/:noticeId/detail`} component={NoticeDetailView}/>
         <Route exact path={`${match.path}/notesManagement/:noticeId/comments`} component={NoticeCommentsView}/>
+        <Route exact path={`${match.path}/notesManagement/:noticeId/sreceivers`} component={NoticeSreceiversView}/>
+        <Route exact path={`${match.path}/notesManagement/:noticeId/sign`} component={NoticeJoinView}/>
+        <Route exact path={`${match.path}/notesManagement/:noticeId/know`} component={NoticeKnowsView}/>
+        <Route exact path={`${match.path}/notesManagement/:noticeId/like`} component={NoticeLikeView}/>
+        <Route exact path={`${match.path}/notesManagement/:noticeId/inquiry`} component={NoticeInquirysView}/>
         <Route exact path={`${match.path}/newsManagement`} component={NewsView}/>
         <Route exact path={`${match.path}/newsManagement/add`} component={NewsAddView}/>
         <Route exact path={`${match.path}/newsManagement/:noticeId/detail`} component={NewsDetailView}/>

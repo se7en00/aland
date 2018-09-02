@@ -45,6 +45,7 @@ class NoticeDetail extends Component {
         if (e) {
             e.preventDefault();
         }
+      
         const { notice: { id }, actions: { push }} = this.props;
         push(`${getLinkByName(PATHNAME.NOTES_MANAGEMENT)}/${id}/${page}`);
     };
@@ -62,13 +63,13 @@ class NoticeDetail extends Component {
                             <p>{content}</p>
                         </div>
                         <div>
-                            <div>接收人: <a href="###" onClick={(e) => this.showDialog(e, 'receiver')}>点击查看</a></div>
+                            <div>接收人: <a href="###" onClick={(e) => this.redirect(e, 'sreceivers')}>点击查看</a></div>
                             <div>发布时间: {moment(publishAt).format(DATE_FORMAT)}</div>
-                            <div>报名名单: <a href="###" onClick={(e) => this.showDialog(e, 'sign')}>点击查看</a></div>
-                            <div>知道名单: <a href="###" onClick={(e) => this.showDialog(e, 'know')}>点击查看</a></div>
-                            <div>点赞名单: <a href="###" onClick={(e) => this.showDialog(e, 'like')}>点击查看</a></div>
+                            <div>报名名单: <a href="###" onClick={(e) => this.redirect(e, 'sign')}>点击查看</a></div>
+                            <div>知道名单: <a href="###" onClick={(e) => this.redirect(e, 'know')}>点击查看</a></div>
+                            <div>点赞名单: <a href="###" onClick={(e) => this.redirect(e, 'like')}>点击查看</a></div>
                             <div>评论名单: <a href="###" onClick={(e) => this.redirect(e, 'comments')}>点击查看</a></div>
-                            <div>问卷名单: <a href="###" onClick={(e) => this.showDialog(e, 'inquiry')}>点击查看</a></div>
+                            <div>问卷名单: <a href="###" onClick={(e) => this.redirect(e, 'inquiry')}>点击查看</a></div>
                         </div>
                     </div>
                 </div>
