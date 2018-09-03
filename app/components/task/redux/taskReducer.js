@@ -14,6 +14,20 @@ const taskReducer = typeToReducer({
             list: action.payload
         })
     },
+    [TYPES.SYNC_TASK_LIST_SEARCH_PARAMS]: (state, action) => ({
+        ...state,
+        searchParams: action.payload
+    }),
+    [TYPES.GET_TASK_MANAGERS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            userManagers: action.payload
+        })
+    },
     //新增用户
     [TYPES.ASYNC_CREATE_TASK]: {
         REJECTED: (state, action) => ({

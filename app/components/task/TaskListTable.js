@@ -79,8 +79,13 @@ class TaskListTable extends Component {
     }
 
     handelPageChange = (page, pageSize) => {
+        const {searchParams}  = this.props;
         const { getTasksList } = this.props.actions;
-        getTasksList({pageSize, page});
+        console.log(searchParams)
+        getTasksList(Object.assign({pageSize, page}, searchParams));
+
+       
+
     }
 
 

@@ -16,6 +16,10 @@ export const createTask = (params) => ({
         .catch(error => Promise.reject(error?.response?.data))
 });
 
+export const getManagers = () => ({
+    type: TYPES.GET_TASK_MANAGERS,
+    payload: () => Axios.get('/api/taskManagers').then(response => response.data)
+})
 export const updateTask = (taskId, params) => ({
     type: TYPES.ASYNC_UPDATE_TASK,
     payload: () => Axios.put(`/api/tasks/${taskId}`, params)
