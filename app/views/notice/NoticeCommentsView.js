@@ -6,7 +6,7 @@ import { actionCreators, NoticeCommentsList} from 'components/notice';
 @connect(state => ({comments: state.notices?.comments}), mapDispatchToProps)
 class NoticeCommentsView extends Component {
     render() {
-        console.log(this.props)
+       
         return <NoticeCommentsList {...this.props}/>;
     }
 }

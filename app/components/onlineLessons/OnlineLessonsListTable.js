@@ -53,9 +53,9 @@ class OnlineLessonsListTable extends Component {
         }, {
             title: '发布时间',
             align: 'center',
-            dataIndex: 'createdAt',
+            dataIndex: 'publishDate',
             width:170,
-            render: (text, record) => moment(record.createdAt).format(DATE_FORMAT)
+            render: (text, record) => moment(record.publishDate).format(DATE_FORMAT)
         }, {
             title: '操作',
             align: 'center',

@@ -52,8 +52,8 @@ class Record extends Component {
     handelPageChange() {
 
     }
-    downloadAction (){
-        location.href = `${BASE_URL}/api/taskTraining/export`;// eslint-disable-line
+    downloadAction (userId){
+        location.href = `${BASE_URL}/api/taskTraining/export?userId=${userId.userId}`;// eslint-disable-line
     }
     showTable(userId, page, size){
         Axios.get(`/api/users/${userId.userId}/trainings`,{params:{
@@ -94,7 +94,7 @@ class Record extends Component {
         let self = this;
         return (
             <div>
-                <Button onClick={this.downloadAction} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
+                <Button onClick={this.downloadAction(userId)} type="primary" className="editable-add-btn u-pull-down-md" ghost>导出数据</Button>
             <Table
                 className="u-pull-down-sm"
                 bordered

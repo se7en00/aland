@@ -6,7 +6,7 @@ export const IDENTIFIERS = {
 };
 
 export const BASE_URL = 'http://118.178.237.18:8181/aland-training';
-// export const BASE_URL = 'http://58.222.218.171:38085/aland-training';
+ //export const BASE_URL = 'http://58.222.218.171:38085/aland-training';
 
 export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 

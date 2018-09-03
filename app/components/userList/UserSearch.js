@@ -26,6 +26,7 @@ class UserSearch extends Component {
 
     renderUserLevelsOptions = () => {
         const {userLevels = []} = this.props;
+        console.log(userLevels)
         return userLevels.map(item => (
             <Option key={uuid()} value={item}>{item}</Option>
         ));

@@ -38,6 +38,7 @@ class TrainingTabs extends Component {
         const {trainings, trainings: {associations}, actions, showDialog} = this.props;
         const isCreated = !trainings?.trainingDetails;
         const isEditable = trainings.isEditable;
+        console.log(trainings)
         return (
             /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
             <Tabs defaultActiveKey="1">
@@ -69,7 +70,7 @@ class TrainingTabs extends Component {
                     isEditable &&
                     <TabPane tab="培训人员" key="4" >
                         <TrainingUserList
-                            dataSource={trainings?.users}
+                            dataSource={!!trainings.user?strainings.users:{elements:[], paging :{}}}
                             actions={actions}
                             trainings={trainings}
                         />

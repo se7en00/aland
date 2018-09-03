@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
+import uuid from 'uuid/v4';
 import { Button, Icon, Select } from 'antd';
 import { resetSpecificField } from 'utils';
 import { renderTextField, renderSelectField, renderDateRangeField } from '../shared/form';
 
-
+const Option = Select.Option;
 @reduxForm({form: 'pediasSearch'})
 class OneClickSearch extends Component {
     static propTypes = {
@@ -13,52 +14,62 @@ class OneClickSearch extends Component {
         handleSubmit: PropTypes.func,
         dispatch: PropTypes.func,
         // showDialog: PropTypes.func,
-        submitting: PropTypes.bool
+        submitting: PropTypes.bool,
+        userLecturers: PropTypes.array
         // error: PropTypes.string
     };
 
     submit = (values) => {
         console.log(values);
     }
+    renderLecturersOptions = () => {
+        let {userLecturers = []} = this.props;
+         console.log(userLecturers)
+        // userLecturers=[{id:1,name:1},{id:2,name:2}]
+        return userLecturers.length>0 && userLecturers.map(item => (
+            <Option key={uuid()} value={item.id}>{item.name}</Option>
+        ));
+    }
 
     render() {
-        const Option = Select.Option;
-        const { submitting, handleSubmit, dispatch } = this.props;
+       
+        const { submitting, handleSubmit, dispatch ,userLecturers} = this.props;
         const restRangeDateTime = () => resetSpecificField(dispatch, 'pediasSearch', 'dateTime', '');
+        console.log(userLecturers)
         return (
             <div>
-                <form name="form" onSubmit={handleSubmit(this.submit)}>
+                <form name="form" onSubmit={handleSubmit}>
                     <div className="row">
 
                         <Field
                             layout="elementOnly"
-                            name="username"
+                            name="createUser"
                             rowClassName="col-md-2"
                             component={renderTextField}
                             type="text"
                             prefix={<Icon type="search"/>}
-                            placeholder="关键字"
+                            placeholder="创建人"
                         />
 
                         <Field
                             layout="elementOnly"
-                            name="test"
+                            name="status"
                             rowClassName="col-md-2"
                             component={renderSelectField}
                             placeholder="状态">
-                            <Option value="jack">Jack</Option>
-                            <Option value="lucy">Lucy</Option>
-                            <Option value="disabled" disabled>Disabled</Option>
-                            <Option value="Yiminghe">yiminghe</Option>
+                            <Option value="">全部</Option>
+                            <Option value="CREATED">创建</Option>
+                            <Option value="CHECKING">审核中</Option>
+                            <Option value="PASSED">通过</Option>
                         </Field>
 
                         <Field
                             layout="elementOnly"
-                            name="master"
+                            name="createUser"
                             rowClassName="col-md-2"
                             component={renderSelectField}
                             placeholder="课程讲师">
-                            <Option value="jack">Jack</Option>
+                           {this.renderLecturersOptions()}
                         </Field>
 
                         <Field

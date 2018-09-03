@@ -9,7 +9,8 @@ class OneClickTable extends Component {
     static propTypes = {
         // showDialog: PropTypes.func,
         actions: PropTypes.objectOf(PropTypes.func),
-        dataSource: PropTypes.object
+        dataSource: PropTypes.object,
+        searchParams: PropTypes.object,
     };
 
     constructor(props) {
@@ -72,8 +73,10 @@ class OneClickTable extends Component {
     }
 
     handelPageChange = (page, pageSize) => {
-        const { getUserList } = this.props.actions;
-        getUserList(pageSize, page);
+       
+        const {searchParams}  = this.props;
+        const { getOneClickList } = this.props.actions;
+        getOneClickList(Object.assign({pageSize, page}, searchParams));
     };
 
     componentWillUpdate(nextProps) {

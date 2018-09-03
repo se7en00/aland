@@ -1,9 +1,14 @@
 import { paginationSetting, Axios } from 'utils/index';
 import * as TYPES from './oneClickActionTypes';
 
-export const getOneClickList = (pageSize = paginationSetting.pageSize, page) => ({
+export const getOneClickList = ({pageSize = paginationSetting.pageSize, page,status,createUser,startDate,endDate}) => ({
     type: TYPES.LOAD_ONE_CLICK_LIST,
-    payload: () => Axios.get('/api/pedias', {params: {size: pageSize, page}}).then(response => response.data)
+    payload: () => Axios.get('/api/pedias', {params: {size: pageSize, page,status,createUser,startDate,endDate}}).then(response => response.data)
+});
+
+export const getLecturers = () => ({
+    type: TYPES.LOAD_ONE_CLICK_LECTURERS,
+    payload: () => Axios.get('/api/lecturers').then(response => response.data)
 });
 
 export const addOneClick = (data) => ({
@@ -12,7 +17,10 @@ export const addOneClick = (data) => ({
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
-
+export const setSearchParamsToRedux = (params) => ({
+    type: TYPES.SYNC_USER_LIST_SEARCH_PARAMS,
+    payload: params
+});
 
 export const getCategories = () => ({
     type: TYPES.LOAD_CATEGORIES,

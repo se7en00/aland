@@ -12,11 +12,15 @@ class TrainingUserList extends Component {
 
     constructor(props) {
         super(props);
+        console.log(this.props)
         const { dataSource: {elements = [], paging = {}} } = this.props;
+      
+        
         this.elements = rebuildDataWithKey(elements);
         const { size: pageSize = 0, total = 0} = paging;
         this.pagination = {...this.pagination, pageSize, total, onChange: this.handelPageChange};
-
+       
+        
         this.columns = [{
             title: '序号',
             align: 'center',

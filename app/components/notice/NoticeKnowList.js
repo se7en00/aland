@@ -45,8 +45,8 @@ class NoticeKnowList extends Component {
 
     componentDidMount() {
         const { comments, actions: { getNoticeKnow } } = this.props;
-        if (/sreceivers/g.test(location.pathname)) {
-            const id = location.pathname.match(/(\w)+(?=\/sreceivers)/g)[0];
+        if (/know/g.test(location.pathname)) {
+            const id = location.pathname.match(/(\w)+(?=\/know)/g)[0];
             if (id) {
                 this.id= id;
               //  getNoticeComments(id, {pageSize: paginationSetting.pageSize});

@@ -45,8 +45,8 @@ class NoticeJoinList extends Component {
 
     componentDidMount() {
         const { comments, actions: { getNoticeJoin } } = this.props;
-        if (/sreceivers/g.test(location.pathname)) {
-            const id = location.pathname.match(/(\w)+(?=\/sreceivers)/g)[0];
+        if (/sign/g.test(location.pathname) && !comments) {
+            const id = location.pathname.match(/(\w)+(?=\/sign)/g)[0];
             if (id) {
                 this.id= id;
               //  getNoticeComments(id, {pageSize: paginationSetting.pageSize});

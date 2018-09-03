@@ -20,6 +20,22 @@ export default typeToReducer({
             ...state
         })
     },
+    [TYPES.LOAD_ONE_CLICK_LECTURERS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            userLecturers:action.payload
+        })
+    },
+      //搜索
+    [TYPES.SYNC_USER_LIST_SEARCH_PARAMS]: (state, action) => ({
+        ...state,
+        searchParams: action.payload
+    }),
+
     [TYPES.LOAD_CATEGORIES]: {
         REJECTED: (state, action) => ({
             ...state,

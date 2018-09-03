@@ -46,8 +46,8 @@ class NoticeInquirysList extends Component {
 
     componentDidMount() {
         const { comments, actions: { getNoticeJoin } } = this.props;
-        if (/sreceivers/g.test(location.pathname)) {
-            const id = location.pathname.match(/(\w)+(?=\/sreceivers)/g)[0];
+        if (/inquiry/g.test(location.pathname)) {
+            const id = location.pathname.match(/(\w)+(?=\/inquiry)/g)[0];
             if (id) {
                 this.id= id;
               //  getNoticeComments(id, {pageSize: paginationSetting.pageSize});
