@@ -72,6 +72,12 @@ export const getALLAssociations = () => {
         }),
         Axios.get('api/dictionarys/dicType/TRAINING_TYPE')
             .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data)),
+            Axios.get('api/dictionarys/dicType/BUSINESS_UNIT')
+            .then(response => response.data)
+            .catch(error => Promise.reject(error?.response?.data)),
+            Axios.get('api/dictionarys/dicType/COST_CENTER')
+            .then(response => response.data)
             .catch(error => Promise.reject(error?.response?.data))
     ];
     return {
@@ -79,7 +85,9 @@ export const getALLAssociations = () => {
         payload: Promise.all(allPromises).then(result => ({
             courseDirections: result[0],
             userGroups: result[1],
-            trainingTypes: result[2]
+            trainingTypes: result[2],
+            businessUnit:result[3],
+            costCenter:result[4]
         })).catch(error => Promise.reject(error?.response?.data))
     };
 };

@@ -63,6 +63,8 @@ class LecturersDetail extends Component {
                         </div>
                     </div>
                 </div>
+                <p>授课记录</p>
+                
             </Fragment>
         );
     }

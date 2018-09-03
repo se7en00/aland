@@ -38,7 +38,9 @@ function mapStateToProps(state) {
             if (values.targetType === 'GROUP') {
                 map.userGroupId = values[k].map(item => ({key: item.receiverId, label: item.receiverName}))[0];
             }
-        } else if (k === 'summaryOn' || k === 'surveyOn' || k === 'ccLeader') {
+        } else if (k === 'summaryOn' || k === 'surveyOn') {
+            map[k] = values[k] == '1'?true:false;
+        }else if( k === 'ccLeader'){
             map[k] = values[k] === 'true';
         } else {
             map[k] = values[k];
@@ -124,6 +126,10 @@ class TaskDetails extends Component {
             }
             return map;
         }, {});
+      
+        params.summaryOn?params.summaryOn=1:params.summary=0;
+        params.surveyOn?params.surveyOn=1:params.surveyOn=0;
+      
         if (isEditable && taskId) {
             updateTask(taskId, params)
                 .then(() => {

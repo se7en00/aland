@@ -26,7 +26,7 @@ class LessonsTable extends Component {
             title: '起止时间',
             align: 'center',
             dataIndex: 'enddate',
-            render: (text, record) => moment(record.enddate).format(DATE_FORMAT)
+            render: (text, record) => {return moment(record.startDate).format(DATE_FORMAT)+'-'+moment(record.endDate).format(DATE_FORMAT)}
         }, {
             title: '培训地址',
             align: 'center',

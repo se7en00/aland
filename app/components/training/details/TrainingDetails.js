@@ -64,7 +64,16 @@ class TrainingDetails extends Component {
         const costs = ['讲授', '小组讨论', '视频案例', '游戏', '角色扮演', '行动学习', '团队共创', '世界咖啡', '现场演练', '户外拓展', '自定义'];
         return costs.map(item => ({label: item, value: item}));
     }
-
+    renderBusinessOptions = () => {
+        const {associations} = this.props;
+        if (!associations?.businessUnit) return;
+        return renderOptions('name', 'name')(associations.businessUnit);
+    }
+    renderCostcenterOptions = () => {
+        const {associations} = this.props;
+        if (!associations?.costCenter) return;
+        return renderOptions('name', 'name')(associations.costCenter);
+    }
     submit = (values) => {
         const {actions: {createTraining, updateTraining}, trainings} = this.props;
         const isEditable = trainings?.isEditable;
@@ -150,22 +159,26 @@ class TrainingDetails extends Component {
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="businessUnit"
-                        component={renderTextField}
+                        allowClear={true}
+                        component={renderSelectField}
                         type="text"
                         placeholder="业务单元"
                         label="业务单元"
-                    />
-
+                    >
+                        {this.renderBusinessOptions()}
+                    </Field>
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"
                         name="costCenter"
-                        component={renderTextField}
+                        allowClear={true}
+                        component={renderSelectField}
                         type="text"
                         placeholder="成本中心"
                         label="成本中心"
-                    />
-
+                    >
+                     {this.renderCostcenterOptions()}
+                    </Field> 
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"

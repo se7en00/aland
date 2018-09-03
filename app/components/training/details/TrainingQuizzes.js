@@ -58,6 +58,8 @@ class TrainingQuizzes extends Component {
     updateDraftCourse = (values) => {
         const {actions: {saveTrainingsExamConfig}, trainings} = this.props;
         const trainingID = trainings?.trainingDetails?.id;
+        values.summaryOn?values.summaryOn=1:values.summaryOn=0;
+        values.surveyOn?values.surveyOn=1:values.surveyOn=0;
         saveTrainingsExamConfig(trainingID, values)
             .then(() => {message.success('保存课后测试成功！');})
             .catch(() => {message.success('保存课后测试失败！');});
