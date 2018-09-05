@@ -114,6 +114,10 @@ export const getTrainingDetails = (trainingId) => ({
             result.users = users;
         }
 
+        const tusers = await Axios.get(`/api/tasks/${trainingId}/users`).then(response => response?.data);
+        if (users && users.elements.length > 0) {
+            result.tusers = tusers;
+        }
         const exams = await Axios.get(`/api/trainings/${trainingId}/exams`, {params: {size: 2000}})
             .then(response => response.data)
             .catch((error) => Promise.reject(error?.response?.data));

@@ -93,7 +93,8 @@ const trainingReducer = typeToReducer({
             isEditable: action.payload.isEditable,
             lessons: action.payload.lessons,
             users: action.payload.users,
-            exams: action.payload.exams
+            exams: action.payload.exams,
+            tusers:action.payload.tusers
         })
     },
 

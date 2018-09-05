@@ -23,10 +23,10 @@ class TrainingTabs extends Component {
 
     initExamValues = (values) => {
         if (!values) return null;
-        const {summaryOn = 'false', surveyOn = 'false', ccLeader = 'false', examAmount = '', examPassRate = ''} = values;
+        const {summaryOn = '0', surveyOn = '0', ccLeader = 'false', examAmount = '', examPassRate = ''} = values;
         return {
-            summaryOn: summaryOn === 'true',
-            surveyOn: surveyOn === 'true',
+            summaryOn: summaryOn === '1',
+            surveyOn: surveyOn === '1',
             ccLeader: ccLeader === 'true',
             examAmount,
             examPassRate

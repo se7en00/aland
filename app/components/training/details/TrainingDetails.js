@@ -8,7 +8,7 @@ import { resetSpecificField } from 'utils';
 import { connect } from 'react-redux';
 import { renderTextField, UploadImageField, renderQuill, renderRadioGroupField, renderCascaderField, renderSelectField, CheckBoxGroupField } from '../../shared/form';
 import AutoSelectSearch from '../../shared/autoSearch/AutoSelectSearch';
-
+import AutoTreeSelect from '../../shared/autoSearch/AutoTreeSelect';
 const required = value => (value ? undefined : '不能为空！');
 
 function mapStateToProps(state) {
@@ -74,7 +74,20 @@ class TrainingDetails extends Component {
         if (!associations?.costCenter) return;
         return renderOptions('name', 'name')(associations.costCenter);
     }
+    popUserIds(obj){
+        this.extendObj = obj;
+    }
     submit = (values) => {
+        let _tmp=[];
+        if(this.extendObj){
+            this.extendObj.value.forEach(item=>{
+                _tmp.push({
+                    receiverId:item.value,
+                    receiverName:item.label
+                })
+            })
+            values.receivers = _tmp;
+        }
         const {actions: {createTraining, updateTraining}, trainings} = this.props;
         const isEditable = trainings?.isEditable;
         const trainningId = trainings?.trainingDetails?.id;
@@ -121,7 +134,20 @@ class TrainingDetails extends Component {
     }
 
     render() {
-        const { submitting, handleSubmit, dispatch, fieldValues, associations} = this.props;
+        const { submitting, handleSubmit, dispatch, fieldValues, associations, trainings} = this.props;
+
+        let value =[]
+        if(trainings.trainingDetails && trainings.trainingDetails.receivers && trainings.trainingDetails.receivers.length>0){
+            trainings.trainingDetails.receivers.forEach(item=>{
+            value.push({
+                label:item.receiverName,
+                value:item.receiverId
+            })
+          })
+        }else{
+            value = [{}]
+        }
+
         const targetType = fieldValues?.targetType || '';
         const courseDirectionOptions = associations?.courseDirections || [];
         const restManagerValue = () => resetSpecificField(dispatch, 'trainingDetails', 'manager', '');
@@ -297,20 +323,34 @@ class TrainingDetails extends Component {
 
                     {
                         targetType === 'USER' &&
-                        <AutoSelectSearch
-                            api="/api/users"
-                            query="name"
-                            mode="multiple"
-                            resetSelectValue={resetPersonValue}
-                            labelClassName="col-md-2 col-lg-1"
-                            className="col-md-8 col-lg-6"
-                            rowClassName="inputRow"
-                            name="persons"
-                            placeholder="搜索人员(可添加多个)"
-                            label="人员"
-                            validate={required}
-                            renderOptions={renderOptions('id', 'name')}
-                        />
+                        // <AutoSelectSearch
+                        //     api="/api/users"
+                        //     query="name"
+                        //     mode="multiple"
+                        //     resetSelectValue={resetPersonValue}
+                        //     labelClassName="col-md-2 col-lg-1"
+                        //     className="col-md-8 col-lg-6"
+                        //     rowClassName="inputRow"
+                        //     name="persons"
+                        //     placeholder="搜索人员(可添加多个)"
+                        //     label="人员"
+                        //     validate={required}
+                        //     renderOptions={renderOptions('id', 'name')}
+                        // />
+                        <AutoTreeSelect
+                        
+                        api="/api/departments/users"
+                        label="人员"
+                        mode="multiple"
+                        popUserIds={this.popUserIds.bind(this)}
+                        labelClassName="col-md-2 col-lg-1"
+                        className="col-md-8"
+                        rowClassName="inputRow"
+                        labelInValue={true}
+                        name="userIds"
+                        placeholder="搜索人员(可添加多个)"
+                        values={value}
+                    />
                     }
 
                     <Field
