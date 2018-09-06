@@ -18,7 +18,21 @@ class SummaryList extends Component {
         const {actions: {getSummaryList}} = this.props;
         getSummaryList({pageSize: paginationSetting.pageSize});
     }
-
+    urlEncode = (param, key, encode)=> {
+        if (param==null) return '';
+        var paramStr = '';
+        var t = typeof (param);
+        if (t == 'string' || t == 'number' || t == 'boolean') {
+            paramStr += '&' + key + '='  + ((encode==null||encode) ? encodeURIComponent(param) : param); 
+        } else {
+            for (var i in param) {
+                var k = key == null ? i : i
+                paramStr += this.urlEncode(param[i], k, encode)
+            }
+        }
+        return paramStr;
+    
+    }
     onSearch = (values) => {
         const {setSearchParamsToRedux, getSummaryList} = this.props.actions;
         //search 条件
@@ -31,13 +45,18 @@ class SummaryList extends Component {
             }
             return map;
         }, {});
-        console.log(params)
+       
         getSummaryList({pageSize: paginationSetting.pageSize, ...params})
             .then(() => setSearchParamsToRedux(params));
+        let _params = Object.assign({},params);
+        let __params =  JSON.parse(JSON.stringify(_params).replace('key','managerId').replace('label','manager'))
+       
+           this.__params = this.urlEncode(__params).slice(1)
+          
     }
 
     export = () => {
-        location.href = `${BASE_URL}/api/taskTraining/export`;// eslint-disable-line
+        location.href = `${BASE_URL}/api/taskTraining/export?${this.__params}`;// eslint-disable-line
     }
 
     render() {

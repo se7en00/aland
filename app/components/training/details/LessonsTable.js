@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Popconfirm, Button, message } from 'antd';
+import { Table, Popconfirm, Button, message ,Popover} from 'antd';
 import { rebuildDataWithKey } from 'utils';
 import { DATE_FORMAT, DIALOG } from 'constants';
-
+import Code from './Code';
+const content = (
+    <div>
+      <p>Content</p>
+      <p>Content</p>
+    </div>
+  );
 class LessonsTable extends Component {
     constructor(props) {
         super(props);
@@ -37,6 +43,7 @@ class LessonsTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
+                    <Popover content={<Code extend={record}/>} title="二维码" trigger="click"><Button>二维码</Button></Popover>
                     <Button title="内容修改" onClick={() => this.onEditPoint(record)} type="primary" ghost><i className="far fa-edit"/></Button>
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button type="primary" ghost><i className="far fa-trash-alt"/></Button>
@@ -45,13 +52,15 @@ class LessonsTable extends Component {
             )
         }];
     }
-
+    
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
             this.elements = rebuildDataWithKey(nextProps.dataSource?.elements);
         }
     }
-
+    showCode = (record) =>{
+        
+    }
     onEditPoint = (record) => {
         const {showDialog, actions: {getTrainingLessonDetails}} = this.props;
         getTrainingLessonDetails(record.trainingId, record.id).then(() => {

@@ -29,23 +29,23 @@ class TrainingUserList extends Component {
         }, {
             title: '姓名',
             align: 'center',
-            dataIndex: 'userData.name'
+            dataIndex: 'name'
         }, {
             title: '性别',
             align: 'center',
-            dataIndex: 'userData.gender'
+            dataIndex: 'gender'
         }, {
             title: '手机号',
             align: 'center',
-            dataIndex: 'userData.phoneNumber'
+            dataIndex: 'phoneNumber'
         }, {
             title: '部门',
             align: 'center',
-            dataIndex: 'userData.deptName'
+            dataIndex: 'deptName'
         }, {
             title: '岗位',
             align: 'center',
-            dataIndex: 'userData.post'
+            dataIndex: 'post'
         }, {
             title: '分组',
             align: 'center',

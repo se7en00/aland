@@ -4,7 +4,7 @@ import * as TYPES from './summaryActionTypes';
 
 export const getSummaryList = ({pageSize = paginationSetting.pageSize, ...rest}) => ({
     type: TYPES.ASYNC_LOAD_TRAINING_TASK_SUMMARY_LIST,
-    payload: () => Axios.get('/api/taskTraining', {params: {size: pageSize, ...rest}})
+    payload: () => Axios.get('/api/userTaskTraining', {params: {size: pageSize, ...rest}})
         .then(response => response.data)
         .catch(error => Promise.reject(error?.response?.data))
 });

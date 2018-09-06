@@ -23,23 +23,35 @@ class SummaryListTable extends Component {
             align: 'center',
             dataIndex: 'index',
             width: 70
-        }, {
-            title: '图片',
+         }, 
+        //{
+        //     title: '图片',
+        //     align: 'center',
+        //     dataIndex: 'attachment',
+        //     width: 200,
+        //     render: (text, record) => {
+        //         if (record.attachment) {
+        //             const domain = new URL(BASE_URL).origin;
+        //             const imgUrl = `${domain}/uploads${record.attachment}`;
+        //             return (
+        //                 <div style={{maxWidth: '100px', margin: '0 auto'}}>
+        //                     <img src={imgUrl} style={{ width: '100px', height: '100px' }} alt="img"/>
+        //                 </div>
+        //             );
+        //         }
+        //     }
+        // },
+        {
+            title: '姓名',
             align: 'center',
-            dataIndex: 'attachment',
-            width: 200,
-            render: (text, record) => {
-                if (record.attachment) {
-                    const domain = new URL(BASE_URL).origin;
-                    const imgUrl = `${domain}/uploads${record.attachment}`;
-                    return (
-                        <div style={{maxWidth: '100px', margin: '0 auto'}}>
-                            <img src={imgUrl} style={{ width: '100px', height: '100px' }} alt="img"/>
-                        </div>
-                    );
-                }
-            }
-        }, {
+            dataIndex: 'userName'
+        },
+        {
+            title: '工号',
+            align: 'center',
+            dataIndex: 'userWorkNum'
+        },
+         {
             title: '学习任务',
             align: 'center',
             dataIndex: 'title'
