@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button, message } from 'antd';
 import PropTypes from 'prop-types';
+import { BASE_URL } from 'constants';
 import { rebuildDataWithKey } from 'utils';
 
 class TrainingUserList extends Component {
@@ -14,7 +15,7 @@ class TrainingUserList extends Component {
         super(props);
         console.log(this.props)
         const { dataSource: {elements = [], paging = {}} } = this.props;
-      
+       this.printWord = this.printWord.bind(this);
         
         this.elements = rebuildDataWithKey(elements);
         const { size: pageSize = 0, total = 0} = paging;
@@ -65,13 +66,25 @@ class TrainingUserList extends Component {
             align: 'center',
             dataIndex: 'operation',
             render: (text, record) => {
+                let statusBtn,contractBtn;
+
                 if (record.status === 'UNHANDLE') {
-                    return (
-                        <div>
+                    statusBtn = (
+                        
                             <Button size="small" type="primary" onClick={() => this.onCheckIn(record)} ghost>补签到</Button>
-                        </div>
+                       
                     );
                 }
+                if(!record.contractUrl){
+                    contractBtn = (
+                        <Button size="small" type="primary">协议上传</Button>
+                    ) 
+                }
+                return(
+                    <div>
+                     {statusBtn}{contractBtn}
+                    </div>
+                )
             }
         }];
     }
@@ -100,15 +113,32 @@ class TrainingUserList extends Component {
             this.pagination = {...this.pagination, pageSize, total};
         }
     }
-
+    parseName(elements){
+        let str = '',i=0;
+     elements.forEach(item=>{
+          if(i==0){
+            str+=`?name=${item.name}`
+          }else{
+            str+=`&name=${item.name}` 
+          }
+        i++;
+     })
+     return str;
+    }
     handelPageChange = (page, pageSize) => {
         const { actions: {getUsers}, trainings } = this.props;
         const trainingId = trainings?.trainingDetails?.id;
         getUsers(Object.assign({trainingId, pageSize, page}));
     }
-
+    printWord(){
+        const { dataSource: {elements = [], paging = {}} } = this.props;
+       // console.log( `${BASE_URL}/api/printSeat${this.parseName(elements)}`)
+        location.href = `${BASE_URL}/api/printSeat${this.parseName(elements)}`;// eslint-disable-line
+    }
     render() {
         return (
+            <div>
+            <Button onClick={this.printWord}>打印席卡</Button>
             <Table
                 className="u-pull-down-sm"
                 bordered
@@ -116,7 +146,9 @@ class TrainingUserList extends Component {
                 dataSource={this.elements}
                 columns={this.columns}
                 pagination={this.pagination}
-            />);
+            />
+            </div>
+            );
     }
 }
 

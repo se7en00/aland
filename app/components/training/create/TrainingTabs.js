@@ -42,6 +42,8 @@ class TrainingTabs extends Component {
         trainings.users && trainings.users.elements.length > 0 && trainings.users.elements.forEach(item=>{
             item.userData.checkin = item.checkin;
             item.userData.status = item.status;
+            item.userData.certificateUrl = item.certificateUrl;
+            item.userData.contractUrl = item.contractUrl;
             _elements.push(
                 item.userData
             ) 
