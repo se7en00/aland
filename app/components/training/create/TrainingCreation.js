@@ -37,6 +37,7 @@ class TrainingCreation extends Component {
     render() {
         const {trainings, actions, showDialog} = this.props;
         const title = this.renderHeaderTitle();
+        console.log(trainings)
         return (
             <Fragment>
                 <Header title={title}/>

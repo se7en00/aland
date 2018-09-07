@@ -211,11 +211,13 @@ export const uploadFileTrue = ({userId,trainingId,contractUrl,...rest}) =>({
     async payload() {
         try{
             console.log(contractUrl)
-            await Axios.post(`${BASE_URL}/api/users/${userId}/trainings/${trainingId}/contract`,{trainingCertificateRequest:{contractUrl}}).then(response => response?.data);
+            let result ={}
+            await Axios.put(`/api/users/${userId}/trainings/${trainingId}/contract`,{contractUrl}).then(response => response?.data);
            console.log(contractUrl)
             const users = await Axios.get(`/api/trainings/${trainingId}/users`, {params: {...rest}})
             .then(response => response?.data);
-        return users;
+            result.users =users;
+        return result;
         }
         catch (error) {
             return Promise.reject(error?.response?.data);

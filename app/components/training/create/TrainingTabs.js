@@ -51,6 +51,7 @@ class TrainingTabs extends Component {
                 item.userData
             ) 
         })
+        console.log(trainings);
         return (
             /*<Tabs defaultActiveKey="1" onChange={this.handleChange} tabBarExtraContent={this.reviewOperation}>*/
             <Tabs defaultActiveKey="1">

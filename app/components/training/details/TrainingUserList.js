@@ -15,14 +15,14 @@ class TrainingUserList extends Component {
     constructor(props) {
         super(props);
         console.log(this.props)
-        const { dataSource: {elements = [], paging = {}} } = this.props;
-       this.printWord = this.printWord.bind(this);
-        
+        const { dataSource: { elements = [], paging = {} } } = this.props;
+        this.printWord = this.printWord.bind(this);
+
         this.elements = rebuildDataWithKey(elements);
-        const { size: pageSize = 0, total = 0} = paging;
-        this.pagination = {...this.pagination, pageSize, total, onChange: this.handelPageChange};
-       
-        
+        const { size: pageSize = 0, total = 0 } = paging;
+        this.pagination = { ...this.pagination, pageSize, total, onChange: this.handelPageChange };
+
+
         this.columns = [{
             title: '序号',
             align: 'center',
@@ -67,67 +67,80 @@ class TrainingUserList extends Component {
             align: 'center',
             dataIndex: 'operation',
             render: (text, record) => {
-                let statusBtn,contractBtn;
+                let statusBtn, contractBtn,certificateBtn
 
                 if (record.status === 'UNHANDLE') {
                     statusBtn = (
-                        
-                            <Button size="small" type="primary" onClick={() => this.onCheckIn(record)} ghost>补签到</Button>
-                       
+
+                        <Button size="small" type="primary" onClick={() => this.onCheckIn(record)} ghost>补签到</Button>
+
                     );
                 }
-                if(!record.contractUrl){
+                if (!record.contractUrl) {
                     contractBtn = (
                         <span className={extendStyle.fileinput}>
-                        <span>协议上传</span>
-                        <Input type="file" onChange={this.update} onClick={() => this.onCheckFile(record)}></Input>
+                            <span>协议上传</span>
+                            <Input type="file" onChange={this.update} onClick={() => this.onCheckFile(record)}></Input>
                         </span>
-                    ) 
+                    )
                 }
-                return(
+                if(record.certificateUrl){
+                    certificateBtn = (
+                        <Button size="small" type="primary"><a href={record.certificateUrl} target="_blank">查看证书</a></Button>
+                    )
+                }
+                if (record.contractUrl) {
+                    contractBtn = (
+                        <Button size="small" type="primary"><a href={record.contractUrl} target="_blank">查看协议</a></Button>
+                    )
+                    }
+                return (
                     <div>
-                     {statusBtn}{contractBtn}
+                        {statusBtn}{contractBtn}
                     </div>
                 )
             }
         }];
     }
-    onCheckFile(record){
-       this._record=record;
-      
-    }
-    update =(e) =>{
-      
-        const {actions:{uploadFileTrue},dataSource: {paging}} = this.props;
-        let file = e.target.files[0];
-        let param = new FormData(); 
-        param.append('file',file);
-        console.log(param.get('file')); 
-        let config = {
-          headers:{'Content-Type':'multipart/form-data'}
-        }; //添加请求头
-        Axios.post(`${BASE_URL}/api/uploads`,param,config)
-      
-          .then(response=>{
-              console.log(response.data.locations[0])
-            const params = {
-                userId: this._record.userId,
-                trainingId: this._record.trainingId,
-                contractUrl:response.data.locations[0],
-                ...paging
-            }
-            console.log(paging)
-            //console.log(response.data);
-            uploadFileTrue(params).then(()=>{
-                message.success(`上传成功！`);
-            }).catch(()=>{
-                message.success(`上传失败！`);
-            })
-          })
+    onCheckFile(record) {
+        this._record = record;
 
     }
+    update = (e) => {
+
+        const { actions: { uploadFileTrue }, dataSource: { paging } } = this.props;
+        let file = e.target.files[0];
+        let param = new FormData();
+        param.append('file', file);
+        console.log(param.get('file'));
+        let config = {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }; //添加请求头
+        Axios.post(`${BASE_URL}/api/uploads`, param, config)
+
+            .then(response => {
+                console.log(response.data.locations[0])
+                const params = {
+                    userId: this._record.userId,
+                    trainingId: this._record.trainingId,
+                    contractUrl: response.data.locations[0],
+                    ...paging
+                }
+                console.log(paging)
+                //console.log(response.data);
+                uploadFileTrue(params).then(() => {
+                    message.success(`上传成功！`);
+                }).catch(() => {
+                    message.success(`上传失败！`);
+                })
+            })
+
+    }
+    showContract(record) {
+        window.open=record.contractUrl;
+    }
     onCheckIn = (record) => {
-        const {actions: {checkIn}, dataSource: {paging}} = this.props;
+        const { actions: { checkIn }, dataSource: { paging } } = this.props;
         const params = {
             userId: record.userId,
             trainingId: record.trainingId,
@@ -144,48 +157,49 @@ class TrainingUserList extends Component {
 
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
-            const { dataSource: {elements = [], paging = {}} } = nextProps;
+            const { dataSource: { elements = [], paging = {} } } = nextProps;
             this.elements = rebuildDataWithKey(elements);
-            const { size: pageSize = 0, total = 0} = paging;
-            this.pagination = {...this.pagination, pageSize, total};
+            const { size: pageSize = 0, total = 0 } = paging;
+            this.pagination = { ...this.pagination, pageSize, total };
         }
     }
-    parseName(elements){
-        let str = '',i=0;
-     elements.forEach(item=>{
-          if(i==0){
-            str+=`?name=${item.name}`
-          }else{
-            str+=`&name=${item.name}` 
-          }
-        i++;
-     })
-     return str;
+    parseName(elements) {
+        let str = '', i = 0;
+        elements.forEach(item => {
+            if (i == 0) {
+                str += `?name=${item.name}`
+            } else {
+                str += `&name=${item.name}`
+            }
+            i++;
+        })
+        return str;
     }
     handelPageChange = (page, pageSize) => {
-        const { actions: {getUsers}, trainings } = this.props;
-        const trainingId = trainings?.trainingDetails?.id;
-        getUsers(Object.assign({trainingId, pageSize, page}));
+        const { actions: { getUsers }, trainings } = this.props;
+        const trainingId = trainings ?.trainingDetails ?.id;
+        getUsers(Object.assign({ trainingId, pageSize, page }));
     }
-    printWord(){
-        const { dataSource: {elements = [], paging = {}} } = this.props;
-       // console.log( `${BASE_URL}/api/printSeat${this.parseName(elements)}`)
+    printWord() {
+        const { dataSource: { elements = [], paging = {} } } = this.props;
+        // console.log( `${BASE_URL}/api/printSeat${this.parseName(elements)}`)
         location.href = `${BASE_URL}/api/printSeat${this.parseName(elements)}`;// eslint-disable-line
     }
     render() {
+        console.log(this.elements)
         return (
             <div>
-            <Button onClick={this.printWord}>打印席卡</Button>
-            <Table
-                className="u-pull-down-sm"
-                bordered
-                size="middle"
-                dataSource={this.elements}
-                columns={this.columns}
-                pagination={this.pagination}
-            />
+                <Button onClick={this.printWord}>打印席卡</Button>
+                <Table
+                    className="u-pull-down-sm"
+                    bordered
+                    size="middle"
+                    dataSource={this.elements}
+                    columns={this.columns}
+                    pagination={this.pagination}
+                />
             </div>
-            );
+        );
     }
 }
 
