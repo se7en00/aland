@@ -135,6 +135,10 @@ const trainingReducer = typeToReducer({
         ...state,
         users: action.payload
     }),
+    [TYPES.ASYNC_UPLOADFILETRUE]: (state, action) => ({
+        ...state,
+        users: action.payload
+    }),
 
     [TYPES.ASYNC_SAVE_TRAINING_LESSON]: {
         REJECTED: (state, action) => ({

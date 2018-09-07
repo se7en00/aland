@@ -39,11 +39,14 @@ class TrainingTabs extends Component {
         const isCreated = !trainings?.trainingDetails;
         const isEditable = trainings.isEditable;
         let _elements = [];
+        let paging = trainings.users.paging;
         trainings.users && trainings.users.elements.length > 0 && trainings.users.elements.forEach(item=>{
             item.userData.checkin = item.checkin;
             item.userData.status = item.status;
             item.userData.certificateUrl = item.certificateUrl;
             item.userData.contractUrl = item.contractUrl;
+            item.userData.userId = item.userId;
+            item.userData.trainingId = item.trainingData.id;
             _elements.push(
                 item.userData
             ) 
@@ -79,7 +82,7 @@ class TrainingTabs extends Component {
                     isEditable &&
                     <TabPane tab="培训人员" key="4" >
                         <TrainingUserList
-                            dataSource={{elements:_elements, paging :{}}}
+                            dataSource={{elements:_elements, paging :paging}}
                             actions={actions}
                             trainings={trainings}
                         />

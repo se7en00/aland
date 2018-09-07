@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Button, message } from 'antd';
+import { Table, Button, message, Input } from 'antd';
 import PropTypes from 'prop-types';
 import { BASE_URL } from 'constants';
+import extendStyle from 'layout/main/extend.scss';
 import { rebuildDataWithKey } from 'utils';
-
+import { Axios, paginationSetting } from 'utils/index';
 class TrainingUserList extends Component {
     static propTypes = {
         trainings: PropTypes.object,
@@ -77,7 +78,10 @@ class TrainingUserList extends Component {
                 }
                 if(!record.contractUrl){
                     contractBtn = (
-                        <Button size="small" type="primary">协议上传</Button>
+                        <span className={extendStyle.fileinput}>
+                        <span>协议上传</span>
+                        <Input type="file" onChange={this.update} onClick={() => this.onCheckFile(record)}></Input>
+                        </span>
                     ) 
                 }
                 return(
@@ -88,20 +92,53 @@ class TrainingUserList extends Component {
             }
         }];
     }
+    onCheckFile(record){
+       this._record=record;
+      
+    }
+    update =(e) =>{
+      
+        const {actions:{uploadFileTrue},dataSource: {paging}} = this.props;
+        let file = e.target.files[0];
+        let param = new FormData(); 
+        param.append('file',file);
+        console.log(param.get('file')); 
+        let config = {
+          headers:{'Content-Type':'multipart/form-data'}
+        }; //添加请求头
+        Axios.post(`${BASE_URL}/api/uploads`,param,config)
+      
+          .then(response=>{
+              console.log(response.data.locations[0])
+            const params = {
+                userId: this._record.userId,
+                trainingId: this._record.trainingId,
+                contractUrl:response.data.locations[0],
+                ...paging
+            }
+            console.log(paging)
+            //console.log(response.data);
+            uploadFileTrue(params).then(()=>{
+                message.success(`上传成功！`);
+            }).catch(()=>{
+                message.success(`上传失败！`);
+            })
+          })
 
+    }
     onCheckIn = (record) => {
         const {actions: {checkIn}, dataSource: {paging}} = this.props;
         const params = {
             userId: record.userId,
-            trainingId: record.trainingData.id,
+            trainingId: record.trainingId,
             ...paging
         };
         checkIn(params)
             .then(() => {
-                message.success(`${record.userData.name}补签成功！`);
+                message.success(`补签成功！`);
             })
             .catch(() => {
-                message.error(`${record.userData.name}补签失败！`);
+                message.error(`补签失败！`);
             });
     }
 

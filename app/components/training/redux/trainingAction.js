@@ -206,6 +206,22 @@ export const checkIn = ({userId, trainingId, ...rest}) => ({
     }
 });
 
+export const uploadFileTrue = ({userId,trainingId,contractUrl,...rest}) =>({
+    type: TYPES.ASYNC_UPLOADFILETRUE,
+    async payload() {
+        try{
+            console.log(contractUrl)
+            await Axios.post(`${BASE_URL}/api/users/${userId}/trainings/${trainingId}/contract`,{trainingCertificateRequest:{contractUrl}}).then(response => response?.data);
+           console.log(contractUrl)
+            const users = await Axios.get(`/api/trainings/${trainingId}/users`, {params: {...rest}})
+            .then(response => response?.data);
+        return users;
+        }
+        catch (error) {
+            return Promise.reject(error?.response?.data);
+        }
+    }
+});
 export const getLibExams = (...params) => ({
     type: TYPES.ASYNC_LOAD_LIB_EXAMS,
     payload: () => Axios.get('/api/exams', {params: Object.assign({size: paginationSetting.pageSize}, ...params)})
