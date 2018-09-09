@@ -39,7 +39,7 @@ class TrainingTabs extends Component {
         const isCreated = !trainings?.trainingDetails;
         const isEditable = trainings.isEditable;
         let _elements = [];
-        let paging = trainings.users.paging;
+        let paging = trainings.users ?trainings.users.paging : {};
         trainings.users && trainings.users.elements.length > 0 && trainings.users.elements.forEach(item=>{
             item.userData.checkin = item.checkin;
             item.userData.status = item.status;
@@ -85,6 +85,7 @@ class TrainingTabs extends Component {
                         <TrainingUserList
                             dataSource={{elements:_elements, paging :paging}}
                             actions={actions}
+                            showDialog={showDialog}
                             trainings={trainings}
                         />
                     </TabPane>

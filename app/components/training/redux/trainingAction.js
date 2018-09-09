@@ -197,7 +197,7 @@ export const checkIn = ({userId, trainingId, ...rest}) => ({
     async payload() {
         try {
             await Axios.put(`/api/users/${userId}/trainings/${trainingId}/checkin`).then(() => true);
-            const users = await Axios.get(`/api/trainings/${trainingId}/users`, {params: {...rest}})
+            const users = await Axios.get(`/api/trainings/${trainingId}/users?status=STUDYING&status=FINISHED`, {params: {...rest}})
                 .then(response => response?.data);
             return users;
         } catch (error) {
@@ -214,7 +214,7 @@ export const uploadFileTrue = ({userId,trainingId,contractUrl,...rest}) =>({
             let result ={}
             await Axios.put(`/api/users/${userId}/trainings/${trainingId}/contract`,{contractUrl}).then(response => response?.data);
            console.log(contractUrl)
-            const users = await Axios.get(`/api/trainings/${trainingId}/users`, {params: {...rest}})
+            const users = await Axios.get(`/api/trainings/${trainingId}/users?status=STUDYING&status=FINISHED`, {params: {...rest}})
             .then(response => response?.data);
             result.users =users;
         return result;

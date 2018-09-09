@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button, message, Input } from 'antd';
 import PropTypes from 'prop-types';
-import { BASE_URL } from 'constants';
+import {DIALOG, BASE_URL } from 'constants';
 import extendStyle from 'layout/main/extend.scss';
 import { rebuildDataWithKey } from 'utils';
 import { Axios, paginationSetting } from 'utils/index';
@@ -163,6 +163,7 @@ class TrainingUserList extends Component {
             this.pagination = { ...this.pagination, pageSize, total };
         }
     }
+
     parseName(elements) {
         let str = '', i = 0;
         elements.forEach(item => {
@@ -185,10 +186,15 @@ class TrainingUserList extends Component {
         // console.log( `${BASE_URL}/api/printSeat${this.parseName(elements)}`)
         location.href = `${BASE_URL}/api/printSeat${this.parseName(elements)}`;// eslint-disable-line
     }
+    groupaction(){
+        const {showDialog} = this.props;
+        showDialog(DIALOG.GROUP_ACTION)();
+    }
     render() {
         console.log(this.elements)
         return (
             <div>
+                <Button onClick={()=>this.groupaction(this.elements)}>分组</Button>
                 <Button onClick={this.printWord}>打印席卡</Button>
                 <Table
                     className="u-pull-down-sm"

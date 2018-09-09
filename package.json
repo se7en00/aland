@@ -26,6 +26,7 @@
     "consecutive": "^5.0.4",
     "core-decorators": "^0.20.0",
     "history": "^4.7.2",
+    "jquery": "^3.3.1",
     "js-base64": "^2.4.3",
     "moment": "^2.19.3",
     "prop-types": "^15.6.0",

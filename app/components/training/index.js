@@ -12,3 +12,4 @@ export { default as LessonEditDialog } from './dialog/LessonEditDialog';
 export { default as LibExamDialog } from './dialog/exam/LibExamDialog';
 export { default as CustomizeExamDialog } from './dialog/exam/CustomizeExamDialog';
 export { default as ExamDetailsDialog } from './dialog/exam/ExamDetailsDialog';
+export { default as GroupActionDialog} from './dialog/GroupActionDialog';

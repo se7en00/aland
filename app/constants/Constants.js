@@ -72,6 +72,7 @@ export const DIALOG = {
     COURSE_CUSTOMIZE_EXAM: 'customizeExamForCourse',
     CUSTOMIZE_EXAM: 'customizeExam',
     TRAINING_CUSTOMIZE_EXAM: 'trainingCustomizeExam',
+    GROUP_ACTION:'groupAction',
     PROVIDE_DETAIL: 'provideDetail',
     PROVIDE_RATING: 'provideRating',
     CREATE_EXAM: 'createExam',

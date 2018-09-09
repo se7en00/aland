@@ -24,3 +24,80 @@
     color: #5DA424;
     border: 1px solid #5DA424;
 }
+
+ 
+.select {
+    width: 650px;
+    height: 340px;
+   
+}
+ 
+.select div {
+    float: left;
+}
+ 
+.select .selectitem {
+    padding: 5px 20px;
+}
+ 
+.select .selectitem select {
+    width: 220px;
+    height: 300px;
+    border: 1px #bbb solid;
+    padding: 4px;
+    font-size: 14px;
+}
+.groupwrap{overflow-y: auto;width: 350px;height: 340px;}
+.select .selectitem  #select2{height: 150px;}
+.btnitem{
+    float: left;
+    margin-top: 75px; 
+}
+.btnitem {
+    float: left;
+    margin-top: 75px;
+    p {
+        margin-top: 16px;
+    }
+    p span {
+        display: block;
+        text-align: center;
+        width: 50px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 14px;
+        border: 1px solid #bbb;
+        line-height: 30px;
+        font-size: 20px;
+    }
+}
+ 
+.transfertitle{
+    font-size: 14px;
+    float: none !important;
+    font-weight: bold;
+    span {
+        float: left;
+    }
+    button {
+        float: right;
+        background: none;
+        margin: 0 0 2px 5px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        outline: none;
+        width: 18px;
+    }
+}
+ 
+.transferinfo{
+    text-align: left;
+    margin-left: 20px;
+}
+ 
+.transferbtn{
+    text-align: center;
+    margin-top: 5px;
+}
+
+.groupleft{width:230px;float: left;}
