@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, reset, submit, Form, Field, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { DIALOG } from 'constants';
+import { DIALOG, BASE_URL  } from 'constants';
 import { Modal, Button, message} from 'antd';
 import { resetSpecificField } from 'utils';
 import { connect } from 'react-redux';
 import extendStyle from 'layout/main/extend.scss';
 import validate from './validate';
 import $ from  'jquery'
+import Axios from 'axios';
 const mapStateToProp = (state) => {
     if (R.isEmpty(state.trainings) || !state.trainings?.trainingDetails) return null;
     const {id: trainingId} = state.trainings.trainingDetails;
@@ -39,21 +40,44 @@ class GroupActionDialog extends Component {
     }
     componentDidMount(){
         console.log(this.props.trainings)
-        $(document).on("click", "#add", function() {
+        $(document).on("click", ".add", function() {
+            var index = $(document).find('.add').index($(this));
+           
             if (!$("#select1 option").is(":selected")) {
             alert("请选择移动的选项");
             } else {
-            $("#select1 option:selected").appendTo(".targetSelect");
+                var $target = $(".targetSelect").eq(index)
+            $("#select1 option:selected").appendTo($target);
             }
         });
         //移到左边
-        $(document).on("click", "#remove", function() {
-            if (!$(".targetSelect option").is(":selected")) {
+        $(document).on("click", ".remove", function() {
+            var index = $(document).find('.remove').index($(this));
+            if (!$(".targetSelect").eq(index).find("option").is(":selected")) {
             alert("请选择移动的选项");
             } else {
-            $(".targetSelect option:selected").appendTo("#select1");
+            $(".targetSelect").eq(index).find("option:selected").appendTo("#select1");
             }
         });
+    }
+    saveGroup(){
+        var arr = [];
+        $(".targetSelect").each(function(){
+            var index = $(".targetSelect").index($(this))
+         $(".targetSelect").eq(index).find('option').each(function(){
+            arr.push({
+                id:$(this).attr('value'),
+                groupId:index
+            }
+            ) 
+         })
+
+        })
+        console.log(arr)
+      
+        // Axios.post(`${BASE_URL}/api/uploads`, param, config).then(response=>{
+
+        // })
     }
     addGroupAction(){
         // groupid++;
@@ -82,7 +106,7 @@ class GroupActionDialog extends Component {
                 visible={visible}
                 onCancel={this.closeDialog}
                 footer={[
-                    <Button key="submit" loading={submitting} type="primary">保存</Button>,
+                    <Button key="submit" loading={submitting} type="primary" onClick={this.saveGroup}>保存</Button>,
                     <Button key="back" onClick={this.closeDialog}>取消</Button>
                 ]}
             >
