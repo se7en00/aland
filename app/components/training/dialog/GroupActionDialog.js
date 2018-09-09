@@ -66,8 +66,8 @@ class GroupActionDialog extends Component {
         const {submitting, handleSubmit, width, dispatch, error,visible,trainings} = this.props;
         let _elements = [];
         let paging = trainings.users ?trainings.users.paging : {};
-        console.log(users)
-        trainings.users && users.elements.length > 0 && trainings.users.elements.forEach(item=>{
+       
+        trainings.users && trainings.users.elements.length > 0 && trainings.users.elements.forEach(item=>{
             _elements.push(
                 {
                     id:item.userData.id,
