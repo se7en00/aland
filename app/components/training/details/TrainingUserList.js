@@ -51,7 +51,7 @@ class TrainingUserList extends Component {
         }, {
             title: '分组',
             align: 'center',
-            dataIndex: 'userLevel'
+            dataIndex: 'groupId'
         }, {
             title: '状态',
             align: 'center',

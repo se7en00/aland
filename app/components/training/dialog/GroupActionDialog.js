@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { reduxForm, reset, submit, Form, Field, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { DIALOG, BASE_URL  } from 'constants';
 import { Modal, Button, message} from 'antd';
-import { resetSpecificField } from 'utils';
+import {Axios, resetSpecificField } from 'utils';
 import { connect } from 'react-redux';
 import extendStyle from 'layout/main/extend.scss';
 import validate from './validate';
 import $ from  'jquery'
-import Axios from 'axios';
+
 const mapStateToProp = (state) => {
     if (R.isEmpty(state.trainings) || !state.trainings?.trainingDetails) return null;
     const {id: trainingId} = state.trainings.trainingDetails;
@@ -33,6 +33,7 @@ class GroupActionDialog extends Component {
         this.state={
            key:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
         }
+        this.saveGroup = this.saveGroup.bind(this);
         this.addGroupAction = this.addGroupAction.bind(this);
      }
     resetTransferDefault(){
@@ -61,6 +62,7 @@ class GroupActionDialog extends Component {
         });
     }
     saveGroup(){
+        const {actions:{savaGroupAction}} = this.props;
         var arr = [];
         $(".targetSelect").each(function(){
             var index = $(".targetSelect").index($(this))
@@ -74,10 +76,21 @@ class GroupActionDialog extends Component {
 
         })
         console.log(arr)
-      
-        // Axios.post(`${BASE_URL}/api/uploads`, param, config).then(response=>{
-
-        // })
+        const param = {
+            userTaskInfoList:arr
+        }
+        Axios.put(`${BASE_URL}/api/trainings/${this.props.trainingId}/userGroups`, arr).then(response=>{
+            const params = {
+              
+                trainingId: this.props.trainingId,
+                
+                
+            }
+            savaGroupAction(params).then(()=>{
+                message.success(`分组成功！`);
+                this.closeDialog();
+            })
+        })
     }
     addGroupAction(){
         // groupid++;
@@ -94,7 +107,7 @@ class GroupActionDialog extends Component {
         trainings.users && trainings.users.elements.length > 0 && trainings.users.elements.forEach(item=>{
             _elements.push(
                 {
-                    id:item.userData.id,
+                    id:item.id,
                     name:item.userData.name,
                 }
             ) 

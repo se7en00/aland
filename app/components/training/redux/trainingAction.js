@@ -109,7 +109,7 @@ export const getTrainingDetails = (trainingId) => ({
             result.lessons = lessons;
         }
 
-        const users = await Axios.get(`/api/trainings/${trainingId}/users`).then(response => response?.data);
+        const users = await Axios.get(`/api/trainings/${trainingId}/users?status=STUDYING&status=FINISHED`).then(response => response?.data);
         if (users && users.elements.length > 0) {
             result.users = users;
           
@@ -201,6 +201,24 @@ export const checkIn = ({userId, trainingId, ...rest}) => ({
                 .then(response => response?.data);
             return users;
         } catch (error) {
+            return Promise.reject(error?.response?.data);
+        }
+    }
+});
+
+export const savaGroupAction = ({trainingId,...rest}) =>({
+    type: TYPES.ASYNC_SAVEGROUP_ACTION,
+    async payload() {
+        try{
+           
+            let result ={}
+           
+            const users = await Axios.get(`/api/trainings/${trainingId}/users?status=STUDYING&status=FINISHED`, {params: {...rest}})
+            .then(response => response?.data);
+            result.users =users;
+        return result;
+        }
+        catch (error) {
             return Promise.reject(error?.response?.data);
         }
     }
