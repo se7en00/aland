@@ -50,13 +50,20 @@ class SummaryList extends Component {
             .then(() => setSearchParamsToRedux(params));
         let _params = Object.assign({},params);
         let __params =  JSON.parse(JSON.stringify(_params).replace('key','managerId').replace('label','manager'))
-       
+        delete __params.manager.manager;
+      
            this.__params = this.urlEncode(__params).slice(1)
+        
           
     }
 
     export = () => {
-        location.href = `${BASE_URL}/api/taskTraining/export?${this.__params}`;// eslint-disable-line
+        if(this.__params){
+            
+        location.href = `${BASE_URL}/api/userTaskTraining/export?${this.__params}`;// eslint-disable-line
+        }else{
+            location.href = `${BASE_URL}/api/userTaskTraining/export`;// eslint-disable-line
+        }
     }
 
     render() {

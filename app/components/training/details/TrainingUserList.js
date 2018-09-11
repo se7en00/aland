@@ -17,7 +17,7 @@ class TrainingUserList extends Component {
         console.log(this.props)
         const { dataSource: { elements = [], paging = {} } } = this.props;
         this.printWord = this.printWord.bind(this);
-
+        this.export = this.export.bind(this);
         this.elements = rebuildDataWithKey(elements);
         const { size: pageSize = 0, total = 0 } = paging;
         this.pagination = { ...this.pagination, pageSize, total, onChange: this.handelPageChange };
@@ -86,17 +86,17 @@ class TrainingUserList extends Component {
                 }
                 if(record.certificateUrl){
                     certificateBtn = (
-                        <Button size="small" type="primary"><a href={record.certificateUrl} target="_blank">查看证书</a></Button>
+                        <Button size="small" type="primary"><a href={'http://58.222.218.171:38085/uploads'+record.certificateUrl} target="_blank">查看证书</a></Button>
                     )
                 }
                 if (record.contractUrl) {
                     contractBtn = (
-                        <Button size="small" type="primary"><a href={record.contractUrl} target="_blank">查看协议</a></Button>
+                        <Button size="small" type="primary"><a href={'http://58.222.218.171:38085/uploads'+record.contractUrl} target="_blank">查看协议</a></Button>
                     )
                     }
                 return (
                     <div>
-                        {statusBtn}{contractBtn}
+                        {statusBtn}{contractBtn}{certificateBtn}
                     </div>
                 )
             }
@@ -190,10 +190,16 @@ class TrainingUserList extends Component {
         const {showDialog} = this.props;
         showDialog(DIALOG.GROUP_ACTION)();
     }
+    export(){
+        const {trainings } = this.props;
+        const trainingId = trainings ?.trainingDetails ?.id;
+        location.href = `${BASE_URL}/api/userTaskTraining/export?taskTrainingId=${trainingId}`;// eslint-disable-line
+    }
     render() {
         console.log(this.elements)
         return (
             <div>
+                <Button onClick={this.export}>导出数据</Button>
                 <Button onClick={()=>this.groupaction(this.elements)}>分组</Button>
                 <Button onClick={this.printWord}>打印席卡</Button>
                 <Table

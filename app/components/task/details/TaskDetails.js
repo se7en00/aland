@@ -90,6 +90,7 @@ class TaskDetails extends Component {
     }
 
     submit = (values) => {
+       
         let _tmp=[];
         if(this.extendObj){
             this.extendObj.value.forEach(item=>{
@@ -129,7 +130,8 @@ class TaskDetails extends Component {
       
         params.summaryOn?params.summaryOn=1:params.summary=0;
         params.surveyOn?params.surveyOn=1:params.surveyOn=0;
-      
+        console.log(params);
+        return
         if (isEditable && taskId) {
             updateTask(taskId, params)
                 .then(() => {

@@ -50,6 +50,7 @@ class UserInfoForm extends Component {
             isAdmin: 0,
             loginName: values.phoneNumber
         };
+        let deptName;
         if(values.gender == null){
             values.gender = this.props.defaultGender;
         }
@@ -70,8 +71,11 @@ class UserInfoForm extends Component {
             } else if (k === 'administrationSuperior' || k === 'deptSuperior') {
                 map[k] = values[k].label;
             } else if (k === 'deptId') {
+                console.log(k)
+                console.log(values)
                 map[k] = values[k].key;
                 map.deptName = values[k].label;
+                deptName = map.deptName;
             } else if (k === 'userGroupId') {
                 map[k] = values[k].key;
                 map.userGroupName = values[k].label;
@@ -80,6 +84,10 @@ class UserInfoForm extends Component {
             }
             return map;
         }, {});
+        if(deptName){
+        params.deptName = deptName;
+        }
+        console.log(params)
         if (isCreate) {
             return createUser(Object.assign(params, defaultParams))
                 .then(() => {
