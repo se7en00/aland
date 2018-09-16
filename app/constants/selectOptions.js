@@ -105,3 +105,7 @@ export const TRAINING_STATUES_MAPPING = trainingStatus.reduce((map, type) => {
 export const renderOptions = (keyAsValue, labelName) => (list) => list?.map(item =>
     (<Option key={uuid()} value={item[keyAsValue]}>{item[labelName]}</Option>)
 );
+
+export const renderOptionsExtend = (keyAsValue, labelName, extendName) => (list) => list?.map(item =>
+    (<Option key={uuid()} value={item[extendName]+'-'+item[keyAsValue]}>{item[extendName]+'-'+item[labelName]}</Option>)
+);

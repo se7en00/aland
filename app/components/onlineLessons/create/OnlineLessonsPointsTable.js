@@ -58,14 +58,41 @@ class OnlineLessonsPointsTable extends Component {
     };
 
     onDelete = (record) => {
-        const {lessonId, actions: {removePoint}} = this.props;
-        removePoint(lessonId, record)
+        const {lessonId, actions: {removePoint,removeChapters,removeSection}} = this.props;
+        console.log(record);
+        if(record.pointId && record.chapterId && record.sectionId){
+            removePoint(lessonId, record)
             .then(() => {
                 message.success(`删除点：${record.point}成功！`);
             })
             .catch(() => {
                 message.error(`删除点：${record.point}失败！`);
             });
+           
+        }
+     if(!record.pointId && record.chapterId && !record.sectionId){
+        removeChapters(lessonId, record)
+            .then(() => {
+                message.success(`删除章：${record.chapter}成功！`);
+            })
+            .catch(() => {
+                message.error(`删除章：${record.chapter}失败！`);
+            });
+            return
+        }
+        if(!record.pointId && record.chapterId && record.sectionId){
+            removeSection(lessonId, record)
+                .then(() => {
+                    message.success(`删除节：${record.section}成功！`);
+                })
+                .catch(() => {
+                    message.error(`删除节：${record.section}失败！`);
+                });
+                return
+            }
+      
+        
+      
     }
 
     render() {

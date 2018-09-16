@@ -36,19 +36,21 @@ class NoticeInquirysList extends Component {
     }
 
     componentWillUpdate(nextProps) {
-        // if (nextProps.comments) {
-        //     const { comments: {elements = [], paging = {}} } = nextProps;
-        //     this.elements = rebuildDataWithKey(elements);
-        //     const { size: pageSize = 0, total = 0} = paging;
-        //     this.pagination = {...this.pagination, pageSize, total};
-        // }
+        if (nextProps.comments) {
+            const { comments: {elements = [], paging = {}} } = nextProps;
+            this.elements = rebuildDataWithKey(elements);
+            const { size: pageSize = 0, total = 0} = paging;
+            this.pagination = {...this.pagination, pageSize, total};
+        }
     }
 
     componentDidMount() {
-        const { comments, actions: { getNoticeJoin } } = this.props;
+       
+        const { comments, actions: { getNoticeInquirys } } = this.props;
         if (/inquiry/g.test(location.pathname)) {
             const id = location.pathname.match(/(\w)+(?=\/inquiry)/g)[0];
             if (id) {
+             
                 this.id= id;
               //  getNoticeComments(id, {pageSize: paginationSetting.pageSize});
                 getNoticeInquirys(id, {pageSize: paginationSetting.pageSize});
@@ -57,7 +59,7 @@ class NoticeInquirysList extends Component {
     }
 
     handelPageChange = (page, pageSize) => {
-        const { actions: { getNoticeJoin } } = this.props;
+        const { actions: { getNoticeInquirys } } = this.props;
         getNoticeInquirys(this.id, Object.assign({pageSize, page}));
     };
 

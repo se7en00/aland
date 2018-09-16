@@ -90,7 +90,7 @@ class TaskDetails extends Component {
     }
 
     submit = (values) => {
-       
+      
         let _tmp=[];
         if(this.extendObj){
             this.extendObj.value.forEach(item=>{
@@ -101,13 +101,17 @@ class TaskDetails extends Component {
             })
             values.receivers = _tmp;
         }
+        console.log(values)
         const {actions: {createTask, updateTask, push}, tasks} = this.props;
         const isEditable = tasks?.isEditable;
         const taskId = tasks?.taskDetails?.id;
         const params = Object.keys(values).reduce((map, k) => {
             if (k === 'limitTime') {
+                console.log(moment(values[k][0]))
+                console.log(moment(values[k][1]))
                 map.startDate = moment(values[k][0]).valueOf();
                 map.endDate = moment(values[k][1]).valueOf();
+                this.endDate = map.endDate;
             } else if (k === 'manager') {
                 map.managerId = values[k].key;
                 map.manager = values[k].label;
@@ -123,15 +127,16 @@ class TaskDetails extends Component {
             } else if (k === 'userGroupId' && values.targetType === 'GROUP') {
                 map.receivers = [{receiverId: values[k].key, receiverName: values[k].label}];
             } else {
+              
                 map[k] = values[k];
+                map.endDate = this.endDate;
             }
             return map;
         }, {});
       
         params.summaryOn?params.summaryOn=1:params.summary=0;
         params.surveyOn?params.surveyOn=1:params.surveyOn=0;
-        console.log(params);
-        return
+      
         if (isEditable && taskId) {
             updateTask(taskId, params)
                 .then(() => {

@@ -35,6 +35,7 @@ function mapStateToProps(state) {
             }
             if (values.targetType === 'GROUP') {
                 map.userGroupId = values[k].map(item => ({key: item.receiverId, label: item.receiverName}))[0];
+             
             }
         } else {
             map[k] = values[k];
@@ -116,6 +117,7 @@ class TrainingDetails extends Component {
                 map.receivers = values[k].map(item => ({receiverId: item.key, receiverName: item.label}));
             } else if (k === 'userGroupId' && values.targetType === 'GROUP') {
                 map.receivers = [{receiverId: values[k].key, receiverName: values[k].label}];
+             // map.receivers = [ values[k].key];
             } else {
                 map[k] = values[k];
             }

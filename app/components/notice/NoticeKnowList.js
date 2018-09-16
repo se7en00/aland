@@ -35,12 +35,12 @@ class NoticeKnowList extends Component {
     }
 
     componentWillUpdate(nextProps) {
-        // if (nextProps.comments) {
-        //     const { comments: {elements = [], paging = {}} } = nextProps;
-        //     this.elements = rebuildDataWithKey(elements);
-        //     const { size: pageSize = 0, total = 0} = paging;
-        //     this.pagination = {...this.pagination, pageSize, total};
-        // }
+        if (nextProps.comments) {
+            const { comments: {elements = [], paging = {}} } = nextProps;
+            this.elements = rebuildDataWithKey(elements);
+            const { size: pageSize = 0, total = 0} = paging;
+            this.pagination = {...this.pagination, pageSize, total};
+        }
     }
 
     componentDidMount() {
@@ -62,6 +62,7 @@ class NoticeKnowList extends Component {
 
 
     render() {
+        console.log(this.elements)
         return (
             <Fragment>
                 <Header title='知道名单'/>

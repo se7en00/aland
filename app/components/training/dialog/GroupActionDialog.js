@@ -65,7 +65,7 @@ class GroupActionDialog extends Component {
         const {actions:{savaGroupAction}} = this.props;
         var arr = [];
         $(".targetSelect").each(function(){
-            var index = $(".targetSelect").index($(this))+1;
+            var index = $(".targetSelect").index($(this));
            
          $(".targetSelect").eq(index).find('option').each(function(){
             arr.push({

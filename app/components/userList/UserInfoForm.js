@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Radio, Select, message } from 'antd';
 import { resetSpecificField } from 'utils';
 import { reduxForm, Form, Field, SubmissionError } from 'redux-form';
-import { PATHNAME, renderOptions, getLinkByName } from 'constants';
+import { PATHNAME, renderOptions, getLinkByName, renderOptionsExtend } from 'constants';
 import uuid from 'uuid/v4';
 import { renderTextField, UploadImageField, renderDateTimeField, renderSelectField, renderRadioGroupField } from '../shared/form/index';
 import AutoSelectSearch from '../shared/autoSearch/AutoSelectSearch';
@@ -197,7 +197,7 @@ class UserInfoForm extends Component {
                             name="deptSuperior"
                             placeholder="搜索职能上级"
                             label="职能上级"
-                            renderOptions={renderOptions('name', 'name')}
+                            renderOptions={renderOptionsExtend('name', 'name', 'workNum')}
                         />
 
                         <Field
@@ -315,7 +315,7 @@ class UserInfoForm extends Component {
                             name="administrationSuperior"
                             placeholder="搜索行政上级"
                             label="行政上级"
-                            renderOptions={renderOptions('name', 'name')}
+                            renderOptions={renderOptionsExtend('name', 'name','workNum')}
                         />
 
                         <Field

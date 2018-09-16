@@ -63,6 +63,26 @@ export default typeToReducer({
             allNodes: action.payload
         })
     },
+    [TYPES.ASYNC_REMOVE_SECTION]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            allNodes: action.payload
+        })
+    },
+    [TYPES.ASYNC_REMOVE_CHAPTERS]: {
+        REJECTED: (state, action) => ({
+            ...state,
+            error: action.payload
+        }),
+        FULFILLED: (state, action) => ({
+            ...state,
+            allNodes: action.payload
+        })
+    },
 
     //重置
     [TYPES.SYNC_RESET_INITIAL_ONLINE_LESSONS]: (state, action) => ({

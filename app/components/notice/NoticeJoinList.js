@@ -35,12 +35,12 @@ class NoticeJoinList extends Component {
     }
 
     componentWillUpdate(nextProps) {
-        // if (nextProps.comments) {
-        //     const { comments: {elements = [], paging = {}} } = nextProps;
-        //     this.elements = rebuildDataWithKey(elements);
-        //     const { size: pageSize = 0, total = 0} = paging;
-        //     this.pagination = {...this.pagination, pageSize, total};
-        // }
+        if (nextProps.comments) {
+            const { comments: {elements = [], paging = {}} } = nextProps;
+            this.elements = rebuildDataWithKey(elements);
+            const { size: pageSize = 0, total = 0} = paging;
+            this.pagination = {...this.pagination, pageSize, total};
+        }
     }
 
     componentDidMount() {

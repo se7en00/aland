@@ -89,6 +89,31 @@ export const removePoint = (lessonId, point) => ({
     }
 });
 
+export const removeChapters = (lessonId, point) => ({
+    type: TYPES.ASYNC_REMOVE_CHAPTERS,
+    async payload() {
+        try {
+            await Axios.delete(`/api/courseNodes/courses/${lessonId}/chapters/${point.chapterId}`);
+            const allNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`).then(response => response?.data);
+            return allNodes;
+        } catch (error) {
+            return Promise.reject(error?.response?.data);
+        }
+    }
+});
+
+export const removeSection = (lessonId, point) => ({
+    type: TYPES.ASYNC_REMOVE_SECTION,
+    async payload() {
+        try {
+            await Axios.delete(`/api/courseNodes/chapters/${point.chapterId}/sections/${point.sectionId}`);
+            const allNodes = await Axios.get(`/api/courseNodes/courses/${lessonId}`).then(response => response?.data);
+            return allNodes;
+        } catch (error) {
+            return Promise.reject(error?.response?.data);
+        }
+    }
+});
 export const createChapters = (lessonId, chapters) => ({
     type: TYPES.ASYNC_CREATE_CHAPTERS,
     async payload() {

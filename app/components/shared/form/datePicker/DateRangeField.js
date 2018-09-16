@@ -31,6 +31,7 @@ class DateRangeField extends PureComponent {
         } else {
             value = input.value;
         }
+        console.log(value)
         return (
             <RangePicker
                 defaultValue={value}

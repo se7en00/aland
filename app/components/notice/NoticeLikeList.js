@@ -35,18 +35,18 @@ class NoticeLikeList extends Component {
     }
 
     componentWillUpdate(nextProps) {
-        // if (nextProps.comments) {
-        //     const { comments: {elements = [], paging = {}} } = nextProps;
-        //     this.elements = rebuildDataWithKey(elements);
-        //     const { size: pageSize = 0, total = 0} = paging;
-        //     this.pagination = {...this.pagination, pageSize, total};
-        // }
+        if (nextProps.comments) {
+            const { comments: {elements = [], paging = {}} } = nextProps;
+            this.elements = rebuildDataWithKey(elements);
+            const { size: pageSize = 0, total = 0} = paging;
+            this.pagination = {...this.pagination, pageSize, total};
+        }
     }
 
     componentDidMount() {
         const { comments, actions: { getNoticeLike } } = this.props;
-        if (/know/g.test(location.pathname)) {
-            const id = location.pathname.match(/(\w)+(?=\/know)/g)[0];
+        if (/like/g.test(location.pathname)) {
+            const id = location.pathname.match(/(\w)+(?=\/like)/g)[0];
             if (id) {
                 this.id= id;
               //  getNoticeComments(id, {pageSize: paginationSetting.pageSize});
