@@ -25,12 +25,12 @@ class NoticeSreceiversList extends Component {
         }, {
             title: '接收人',
             align: 'center',
-            dataIndex: 'receiverName'
+            dataIndex: 'name'
         }, {
             title: '创建时间',
             align: 'center',
             dataIndex: 'createdAt',
-            render: (text, record) => moment(record.createdAt).format(DATE_FORMAT)
+            render: (text, record) => record.createdAt?moment(record.createdAt).format(DATE_FORMAT):'空'
         }];
     }
 

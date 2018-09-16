@@ -12,16 +12,15 @@ class NewsReceiverDialog extends Component {
 
     getCurrentType = () => {
         const { type } = this.props;
-        if (type === 'ALL') {
+        if (type == 0) {
             return '全体';
-        } else if (type === 'GROUP') {
-            return '群组';
-        }
-        return '个人';
+        } 
+        return '个人/群组';
     };
 
     render() {
         const { visible, onHide, data } = this.props;
+        console.log(data)
         return (
             <Modal
                 visible={visible}
@@ -35,6 +34,13 @@ class NewsReceiverDialog extends Component {
                 <p>当前的接收人类型为: { this.getCurrentType() }</p>
                 <List
                     dataSource={data}
+                    renderItem={item => (
+                        <List.Item>
+                          <List.Item.Meta
+                           title={item.name}
+                          />
+                        </List.Item>
+                      )}
                 />
             </Modal>
         );

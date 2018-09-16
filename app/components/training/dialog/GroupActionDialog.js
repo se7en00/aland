@@ -43,9 +43,9 @@ class GroupActionDialog extends Component {
         console.log(this.props.trainings)
         $(document).on("click", ".add", function() {
             var index = $(document).find('.add').index($(this));
-           
+           console.log($("#select1 option").is(":selected"))
             if (!$("#select1 option").is(":selected")) {
-            alert("请选择移动的选项");
+           // alert("请选择移动的选项");
             } else {
                 var $target = $(".targetSelect").eq(index)
             $("#select1 option:selected").appendTo($target);
@@ -55,7 +55,7 @@ class GroupActionDialog extends Component {
         $(document).on("click", ".remove", function() {
             var index = $(document).find('.remove').index($(this));
             if (!$(".targetSelect").eq(index).find("option").is(":selected")) {
-            alert("请选择移动的选项");
+         //   alert("请选择移动的选项");
             } else {
             $(".targetSelect").eq(index).find("option:selected").appendTo("#select1");
             }

@@ -9,6 +9,7 @@ import Header from '../shared/panel/PanelHeader';
 import styles from './NewsDetail.scss';
 import NewsCommentsList from './NewsCommentsList';
 import NewsReceiverDialog from './NewsReceiverDialog';
+import { Axios } from 'utils/index';
 
 function mapStateToProps(state) {
     return {
@@ -26,7 +27,8 @@ class NewsDetail extends Component {
 
     state = {
         dialogVisible: false,
-        currentDialog: ''
+        currentDialog: '',
+        dataList:[]
     };
 
     componentDidMount() {
@@ -36,6 +38,11 @@ class NewsDetail extends Component {
             if (id) {
                 getNews(id);
                 getNewsComments(id, {pageSize: paginationSetting.pageSize});
+                Axios.get(`/api/news/${id}/receiveUsers`).then(data=>{
+                   this.setState({
+                       dataList:data.data
+                   }) 
+                })
             }
         }
     }
@@ -78,8 +85,9 @@ class NewsDetail extends Component {
     render() {
         const { news = {}, comments, actions } = this.props;
         const { title, content, publishAt, receiverType, receivers } = news;
-        const { currentDialog, dialogVisible } = this.state;
-        const data = receivers?.map(r => r.receiverName);
+        const { currentDialog, dialogVisible,dataList } = this.state;
+        const data = !!dataList.length? dataList:[];
+        const type=dataList.length;
         return (
             <Fragment>
                 <Header title={PANEL_TITLE.NEWS_EDIT}/>
@@ -109,7 +117,7 @@ class NewsDetail extends Component {
                 </div>
                 <NewsReceiverDialog
                     data={data}
-                    type={receiverType}
+                     type={type}
                     visible={dialogVisible && currentDialog === 'receiver'}
                     onHide={this.hideDialog}
                 />

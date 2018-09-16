@@ -62,7 +62,7 @@ export const getNoticeComments = (id, {pageSize = paginationSetting.pageSize, ..
 
 export const getNoticeReceivers = (id, {pageSize = paginationSetting.pageSize, ...rest}) => ({
     type: TYPES.ASYNC_GET_NOTICE_RECEIVERS,
-    payload: () => Axios.get(`/api/notices/${id}/receivers`, {params: {size: pageSize, ...rest}})
+    payload: () => Axios.get(`/api/notices/${id}/receiveUsers`, {params: {size: pageSize, ...rest}})
         .then((response) => response?.data)
         .catch(error => Promise.reject(error?.response?.data))
 });
