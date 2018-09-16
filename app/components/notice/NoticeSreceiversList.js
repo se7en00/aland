@@ -36,19 +36,27 @@ class NoticeSreceiversList extends Component {
 
     componentWillUpdate(nextProps) {
         console.log(nextProps)
-        if (nextProps.comments) {
+        if (nextProps.comments && Object.prototype.toString.call(nextProps.comments)  ===  "[object Array]" ) {
            // const { comments: {elements = [], paging = {}} } = nextProps;
            const { comments=[] } = nextProps;
             this.elements = rebuildDataWithKey(comments);
             console.log(this.elements);
           //  const { size: pageSize = 0, total = 0} = paging;
-           // this.pagination = {...this.pagination, pageSize, total};
+            this.pagination ={pageSize: paginationSetting.pageSize}
         }
+
+        // if (nextProps.comments) {
+        //     const { comments: {elements = [], paging = {}} } = nextProps;
+        //     this.elements = rebuildDataWithKey(elements);
+        //     const { size: pageSize = 0, total = 0} = paging;
+        //     this.pagination = {...this.pagination, pageSize, total};
+        // }
+
     }
 
     componentDidMount() {
         const { comments, actions: { getNoticeReceivers } } = this.props;
-        if (/sreceivers/g.test(location.pathname) && !comments) {
+        if (/sreceivers/g.test(location.pathname)) {
             const id = location.pathname.match(/(\w)+(?=\/sreceivers)/g)[0];
             if (id) {
                 this.id=id;
@@ -60,12 +68,12 @@ class NoticeSreceiversList extends Component {
 
     handelPageChange = (page, pageSize) => {
         const { actions: { getNoticeReceivers } } = this.props;
-        getNoticeReceivers(id,Object.assign({pageSize, page}));
+        getNoticeReceivers(this.id,Object.assign({pageSize, page}));
     };
 
 
     render() {
-        console.log(this.elements)
+        console.log(this.props)
         return (
             <Fragment>
                 <Header title='接收人'/>

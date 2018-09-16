@@ -45,7 +45,7 @@ class NoticeJoinList extends Component {
 
     componentDidMount() {
         const { comments, actions: { getNoticeJoin } } = this.props;
-        if (/sign/g.test(location.pathname) && !comments) {
+        if (/sign/g.test(location.pathname)) {
             const id = location.pathname.match(/(\w)+(?=\/sign)/g)[0];
             if (id) {
                 this.id= id;

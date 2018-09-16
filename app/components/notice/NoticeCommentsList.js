@@ -54,7 +54,7 @@ class NoticeCommentsList extends Component {
 
     componentDidMount() {
         const { comments, actions: { getNoticeComments } } = this.props;
-        if (/comments/g.test(location.pathname) && !comments) {
+        if (/comments/g.test(location.pathname)) {
             const id = location.pathname.match(/(\w)+(?=\/comments)/g)[0];
             if (id) {
                 getNoticeComments(id, {pageSize: paginationSetting.pageSize});
