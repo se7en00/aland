@@ -33,7 +33,7 @@ class OnlineLessonsPointsTable extends Component {
             render: (text, record) => (
                 <div>
                     <Button title="更改章节点" type="primary" ghost onClick={this.props.showDialog(DIALOG.EDITPOINT,record)}><i className="fas fa-retweet"/></Button>
-                    <Button title="内容编辑" onClick={() => this.onEditPoint(record)} type="primary" ghost><i className="far fa-edit"/></Button>
+                   {record.pointId &&  <Button title="内容编辑" onClick={() => this.onEditPoint(record)} type="primary" ghost><i className="far fa-edit"/></Button>}
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button type="primary" ghost><i className="far fa-trash-alt"/></Button>
                     </Popconfirm>

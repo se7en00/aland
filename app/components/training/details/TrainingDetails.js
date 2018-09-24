@@ -157,6 +157,7 @@ class TrainingDetails extends Component {
         const restUserGroup = () => resetSpecificField(dispatch, 'trainingDetails', 'userGroupId', '');
         const resetPersonValue = () => resetSpecificField(dispatch, 'trainingDetails', 'persons', '');
         const restTrainingType = () => resetSpecificField(dispatch, 'trainingDetails', 'trainType', '');
+        const restVendorValue = () => resetSpecificField(dispatch, 'trainingDetails', 'provideId', '');
         return (
             <div>
                 <Form name="form" onSubmit={handleSubmit(this.submit)}>
@@ -233,7 +234,17 @@ class TrainingDetails extends Component {
                     >
                         {this.renderTrainingOptions()}
                     </Field>
-
+                    <AutoSelectSearch
+                        api="/api/provides"
+                        query="name"
+                        resetSelectValue={restVendorValue}
+                        className="col-md-8 col-lg-6"
+                        rowClassName="inputRow"
+                        name="provideId"
+                        placeholder="供应商"
+                        label="供应商"
+                        renderOptions={renderOptions('id', 'name')}
+                    />
                     <Field
                         className="col-md-8 col-lg-6"
                         rowClassName="inputRow"

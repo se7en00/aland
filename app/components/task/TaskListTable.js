@@ -40,10 +40,10 @@ class TaskListTable extends Component {
             align: 'center',
             dataIndex: 'status'
         }, {
-            title: '发布时间',
+            title: '完成时间段',
             align: 'center',
             dataIndex: 'createdAt',
-            render: (text, record) => moment(record.createdAt).format(DATE_FORMAT)
+            render: (text, record) => `${record.startDate?moment(record.startDate).format(DATE_FORMAT):'无'} -- ${record.endDate?moment(record.endDate).format(DATE_FORMAT):'无'}`
         }, {
             title: '操作',
             align: 'center',

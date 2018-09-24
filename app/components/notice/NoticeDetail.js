@@ -60,7 +60,7 @@ class NoticeDetail extends Component {
                     <div className={`col-md-8 col-lg-6 ${styles['notice-detail']}`}>
                         <div>
                             <h2>{title}</h2>
-                            <p>{content}</p>
+                            <p dangerouslySetInnerHTML={{__html: content}}/>
                         </div>
                         <div>
                             <div>接收人: <a href="###" onClick={(e) => this.redirect(e, 'sreceivers')}>点击查看</a></div>
