@@ -18,7 +18,7 @@ export const courseStatusOptions = [
 
 export const COURSE_STATUS_MAPPING = [
     {label: '创建中', value: 'CREATING'},
-    {label: '创建', value: 'CREATED'},
+    {label: '已创建', value: 'CREATED'},
     {label: '已上架', value: 'ISSUED'},
     {label: '已下架', value: 'PASSED'}
 ].reduce((map, type) => {

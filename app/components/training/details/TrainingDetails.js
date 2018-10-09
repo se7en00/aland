@@ -19,13 +19,18 @@ function mapStateToProps(state) {
         return result;
     }
     const values = state.trainings.trainingDetails;
+    console.log(values)
     const rebuildVaules = Object.keys(values).reduce((map, k) => {
+       
         if (!values[k]) return map;
         if (k === 'direction1') {
             map.direction = [values.direction1, values.direction2];
-        } else if (k === 'manager') {
+        } else if (k === 'providerId'){
+            map['provideId'] = {key: values.providerId, label: values.provider};
+        }else if (k === 'manager') {
             map[k] = {key: values.managerId, label: values.manager};
-        } else if (k === 'cover') {
+        }
+         else if (k === 'cover') {
             map[k] = [values[k]];
         } else if (k === 'forms') {
             map[k] = values[k].split(',');
@@ -118,7 +123,11 @@ class TrainingDetails extends Component {
             } else if (k === 'userGroupId' && values.targetType === 'GROUP') {
                 map.receivers = [{receiverId: values[k].key, receiverName: values[k].label}];
              // map.receivers = [ values[k].key];
-            } else {
+            }else if(k === 'provideId'){
+                map.provider =  values[k].label;
+                map.providerId = values[k].key;
+            } 
+            else {
                 map[k] = values[k];
             }
             return map;
@@ -149,8 +158,9 @@ class TrainingDetails extends Component {
         }else{
             value = [{}]
         }
-
+     
         const targetType = fieldValues?.targetType || '';
+     
         const courseDirectionOptions = associations?.courseDirections || [];
         const restManagerValue = () => resetSpecificField(dispatch, 'trainingDetails', 'manager', '');
         const restDirectionValue = () => resetSpecificField(dispatch, 'trainingDetails', 'direction', '');

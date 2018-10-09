@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
+import uuid from 'uuid/v4';
 import { Button, Icon } from 'antd';
 import { resetSpecificField } from 'utils';
 import { renderOptions } from 'constants';
@@ -17,12 +18,14 @@ class InquiriesSearch extends Component {
 
     renderCategoryOptions = () => {
         const {categoryList = []} = this.props;
+        console.log(categoryList)
         return renderOptions('code', 'name')(categoryList);
     }
 
     render() {
         const { submitting, handleSubmit, dispatch } = this.props;
         const restRangeDateTime = () => resetSpecificField(dispatch, 'inquiriesSearch', 'dateTime', '');
+        const restCategory = () => resetSpecificField(dispatch, 'inquiriesSearch', 'categoryCode', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
@@ -50,6 +53,8 @@ class InquiriesSearch extends Component {
                             layout="elementOnly"
                             rowClassName="col-md-3"
                             name="categoryCode"
+                            allowClear={true}
+                            resetSelectValue={restCategory}
                             component={renderSelectField}
                             placeholder="种类"
                         >

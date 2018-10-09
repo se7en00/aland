@@ -17,6 +17,7 @@ class MaterialsSearch extends Component {
     render() {
         const { submitting, handleSubmit, dispatch } = this.props;
         const restRangeDateTime = () => resetSpecificField(dispatch, 'materialsSearch', 'dateTime', '');
+        const restfileTypeValue = () => resetSpecificField(dispatch, 'materialsSearch', 'fileType', '');
         return (
             <div>
                 <form name="form" onSubmit={handleSubmit}>
@@ -42,7 +43,7 @@ class MaterialsSearch extends Component {
 
                         <Field
                             layout="elementOnly"
-                            name="tag"
+                            name="uploadUserName"
                             rowClassName="col-md-2"
                             component={renderTextField}
                             placeholder="上传人"
@@ -55,6 +56,8 @@ class MaterialsSearch extends Component {
                             component={renderSelectField}
                             placeholder="类别"
                             label="类别"
+                            resetSelectValue={restfileTypeValue}
+                            allowClear={true}
                         >
                             {fileTypeOptions}
                         </Field>

@@ -6,9 +6,11 @@ const inquiriesReducer = typeToReducer({
     //列表
     [TYPES.ASYNC_LOAD_INQUIRIES_LIST]: {
         REJECTED: (state, action) => ({
+            ...state,
             error: action.payload
         }),
         FULFILLED: (state, action) => ({
+            ...state,
             list: action.payload
         })
     },

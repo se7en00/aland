@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'antd';
 import PropTypes from 'prop-types';
-import { rebuildDataWithKey, paginationSetting } from 'utils';
+import { rebuildDataWithKey, paginationSetting,rebuildDataWithKeySpecial } from 'utils';
 import { BASE_URL, DATE_FORMAT, getLinkByName, PATHNAME } from 'constants';
 
 class SummaryListTable extends Component {
@@ -101,7 +101,9 @@ class SummaryListTable extends Component {
     componentWillUpdate(nextProps) {
         if (nextProps.dataSource) {
             const { dataSource: {elements = [], paging = {}} } = nextProps;
-            this.elements = rebuildDataWithKey(elements);
+            console.log(elements)
+            this.elements = rebuildDataWithKeySpecial(elements);
+            console.log(this.elements)
             const { size: pageSize = 0, total = 0} = paging;
             this.pagination = {...this.pagination, pageSize, total};
         }

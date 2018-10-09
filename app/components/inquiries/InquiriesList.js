@@ -15,8 +15,9 @@ class InquiriesList extends Component {
     };
 
     componentDidMount() {
-        this.props.actions.getInquiryesList({pageSize: paginationSetting.pageSize});
-        this.props.actions.getCategories();
+        this.props.actions.getInquiryesList({pageSize: paginationSetting.pageSize})
+        .then(() => this.props.actions.getCategories());
+
     }
 
     onSearch = (values) => {

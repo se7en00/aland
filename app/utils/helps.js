@@ -11,6 +11,16 @@ export const rebuildDataWithKey = (data) => {
     }
     return null;
 };
+export const rebuildDataWithKeySpecial = (data) => {
+    if (data) {
+        return data.map((item, index) => ({
+            index: index + 1,
+            key:  uuid(),
+            ...item
+        }));
+    }
+    return null;
+};
 
 export const paginationSetting = {
     showQuickJumper: true,

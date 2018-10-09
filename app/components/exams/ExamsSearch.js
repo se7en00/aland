@@ -17,6 +17,7 @@ class ExamsSearch extends Component {
 
     renderCategoryOptions = () => {
         const {categoryList = []} = this.props;
+        console.log(categoryList)
         return renderOptions('code', 'name')(categoryList);
     }
 

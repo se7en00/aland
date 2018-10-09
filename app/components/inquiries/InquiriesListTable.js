@@ -43,7 +43,7 @@ class InquiriesListTable extends Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <div>
-                    <Button size="small" type="primary" onClick={() => this.redirect(record.id)} ghost>详情/编辑</Button>
+                    {/* <Button size="small" type="primary" onClick={() => this.redirect(record.id)} ghost>详情/编辑</Button> */}
                     <Popconfirm title="你确认要删除吗？" okText="确认" cancelText="取消" onConfirm={() => this.onDelete(record)}>
                         <Button size="small" type="primary" ghost>删除</Button>
                     </Popconfirm>

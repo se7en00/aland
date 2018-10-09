@@ -24,8 +24,10 @@ class NewsList extends Component {
         //search 条件
         const params = Object.keys(values).reduce((map, k) => {
             if (k === 'dateTime') {
-                map.startDate = moment(values[k][0]).format(DATE_FORMAT);
-                map.endDate = moment(values[k][1]).format(DATE_FORMAT);
+                // map.startAt = moment(values[k][0]).format(DATE_FORMAT);
+                // map.endAt = moment(values[k][1]).format(DATE_FORMAT);
+                map.startDate = moment(values[k][0]).valueOf()
+                map.endDate = moment(values[k][1]).valueOf()
             } else {
                 map[k] = values[k];
             }

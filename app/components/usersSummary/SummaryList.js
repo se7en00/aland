@@ -34,6 +34,7 @@ class SummaryList extends Component {
     
     }
     onSearch = (values) => {
+         console.log(values)
         const {setSearchParamsToRedux, getSummaryList} = this.props.actions;
         //search 条件
         const params = Object.keys(values).reduce((map, k) => {
@@ -45,22 +46,33 @@ class SummaryList extends Component {
             }
             return map;
         }, {});
+       let tmpObj = Object.assign({},params);
+       if(tmpObj.manager){
+        tmpObj.managerid = tmpObj.manager.key
+        delete tmpObj.manager;
+       }
+        getSummaryList({pageSize: paginationSetting.pageSize, ...tmpObj})
+            .then(() => setSearchParamsToRedux(tmpObj));
+         this._params = tmpObj;
+        
        
-        getSummaryList({pageSize: paginationSetting.pageSize, ...params})
-            .then(() => setSearchParamsToRedux(params));
-        let _params = Object.assign({},params);
-        let __params =  JSON.parse(JSON.stringify(_params).replace('key','managerId').replace('label','manager'))
-        delete __params.manager.manager;
-      
-           this.__params = this.urlEncode(__params).slice(1)
         
           
     }
 
     export = () => {
-        if(this.__params){
-            
+        if(this._params){
+        //    if(this._params.manager){
+        //        console.log(this._params)
+        //     let __params =  JSON.parse(JSON.stringify(this._params).replace('key','managerId').replace('label','manager'))
+        //     console.log(__params)
+        //     delete __params.manager.manager;
+          
+                this._params = this.urlEncode(this._params).slice(1)
+        //    }
+          
         location.href = `${BASE_URL}/api/userTaskTraining/export?${this.__params}`;// eslint-disable-line
+      //  console.log(`${BASE_URL}/api/userTaskTraining/export?${this._params}`)
         }else{
             location.href = `${BASE_URL}/api/userTaskTraining/export`;// eslint-disable-line
         }
@@ -68,6 +80,7 @@ class SummaryList extends Component {
 
     render() {
         const {userSummary: {list, searchParams}, actions} = this.props;
+
         return (
             <div>
                 <Header title={PANEL_TITLE.USER_SUMMARY}/>

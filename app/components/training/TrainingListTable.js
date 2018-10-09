@@ -111,9 +111,9 @@ class TrainingListTable extends Component {
     }
 
     handelPageChange = (page, pageSize) => {
-        const { getUserGroupList } = this.props.actions;
+        const { getTrainingList } = this.props.actions;
         const { searchParams } = this.props;
-        getUserGroupList(Object.assign({pageSize, page}, searchParams));
+        getTrainingList(Object.assign({pageSize, page}, searchParams));
     }
 
 

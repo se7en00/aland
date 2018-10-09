@@ -43,7 +43,7 @@ class OneClickSearch extends Component {
 
                         <Field
                             layout="elementOnly"
-                            name="createUser"
+                            name="createUserName"
                             rowClassName="col-md-2"
                             component={renderTextField}
                             type="text"
@@ -63,14 +63,14 @@ class OneClickSearch extends Component {
                             <Option value="PASSED">通过</Option>
                         </Field>
 
-                        <Field
+                        {/* <Field
                             layout="elementOnly"
                             name="createUser"
                             rowClassName="col-md-2"
                             component={renderSelectField}
                             placeholder="课程讲师">
                            {this.renderLecturersOptions()}
-                        </Field>
+                        </Field> */}
 
                         <Field
                             layout="elementOnly"

@@ -60,7 +60,7 @@ class SummarySearch extends Component {
                             name="manager"
                             layout="elementOnly"
                             placeholder="创建人"
-                            renderOptions={renderOptions('name', 'name')}
+                            renderOptions={renderOptions('id', 'name')}
                         />
 
                         <Field

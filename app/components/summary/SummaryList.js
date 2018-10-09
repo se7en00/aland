@@ -18,7 +18,21 @@ class SummaryList extends Component {
         const {actions: {getSummaryList}} = this.props;
         getSummaryList({pageSize: paginationSetting.pageSize});
     }
-
+    urlEncode = (param, key, encode)=> {
+        if (param==null) return '';
+        var paramStr = '';
+        var t = typeof (param);
+        if (t == 'string' || t == 'number' || t == 'boolean') {
+            paramStr += '&' + key + '='  + ((encode==null||encode) ? encodeURIComponent(param) : param); 
+        } else {
+            for (var i in param) {
+                var k = key == null ? i : i
+                paramStr += this.urlEncode(param[i], k, encode)
+            }
+        }
+        return paramStr;
+    
+    }
     onSearch = (values) => {
         const {setSearchParamsToRedux, getSummaryList} = this.props.actions;
         //search 条件
@@ -31,12 +45,27 @@ class SummaryList extends Component {
             }
             return map;
         }, {});
-        getSummaryList({pageSize: paginationSetting.pageSize, ...params})
-            .then(() => setSearchParamsToRedux(params));
+        let tmpObj = Object.assign({},params);
+        if(tmpObj.manager){
+         tmpObj.managerid = tmpObj.manager.key
+         delete tmpObj.manager;
+        }
+        getSummaryList({pageSize: paginationSetting.pageSize, ...tmpObj})
+            .then(() => setSearchParamsToRedux(tmpObj));
+            this._params = tmpObj;
     }
 
     export = () => {
-        location.href = `${BASE_URL}/api/taskTraining/export`;// eslint-disable-line
+        if(this._params){
+           
+            this._params = this.urlEncode(this._params).slice(1)
+            console.log(`${BASE_URL}/api/taskTraining/export?${this._params}`)
+           // location.href = `${BASE_URL}/api/taskTraining/export?${this.__params}`;// eslint-disable-line
+        }
+        else{
+            location.href = `${BASE_URL}/api/taskTraining/export`;// eslint-disable-line
+        }
+        
     }
 
     render() {

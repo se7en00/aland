@@ -31,14 +31,14 @@ class LecturersSearch extends Component {
                             
                         </Field>
 
-                        <Field
+                        {/* <Field
                             layout="elementOnly"
                             name="dateTime"
                             rowClassName="col-md-4"
                             allowClear={true}
                             resetSelectValue={restRangeDateTime}
                             component={renderDateRangeField}
-                        />
+                        /> */}
 
                         <Button
                             htmlType="submit"
