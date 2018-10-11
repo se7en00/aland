@@ -1,9 +1,9 @@
 import { paginationSetting, Axios } from 'utils/index';
 import * as TYPES from './oneClickActionTypes';
 
-export const getOneClickList = ({pageSize = paginationSetting.pageSize, page,status,createUser,startDate,endDate}) => ({
+export const getOneClickList = ({pageSize = paginationSetting.pageSize, page,status,createUserName,startDate,endDate}) => ({
     type: TYPES.LOAD_ONE_CLICK_LIST,
-    payload: () => Axios.get('/api/pedias', {params: {size: pageSize, page,status,createUser,startDate,endDate}}).then(response => response.data)
+    payload: () => Axios.get('/api/pedias', {params: {size: pageSize, page,status,createUserName,startDate,endDate}}).then(response => response.data)
 });
 
 export const getLecturers = () => ({
